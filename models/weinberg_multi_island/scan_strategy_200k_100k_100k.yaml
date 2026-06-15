@@ -1,0 +1,249 @@
+scan:
+  engine: basin_scan
+  save_every: 1
+  seed: 13579
+  settings:
+    objective: nll
+    invalid_penalty: 1.0e12
+    save_invalid_points: true
+    verbose: 1
+    progress_interval: 1000
+
+  basin_scan:
+    seed: 13579
+
+    exploration:
+      method: latin_hypercube
+      n_points: 200000
+      keep_fraction: 0.20
+
+    progressive_exploration:
+      enabled: true
+      n_rounds: 1
+      points_per_round: [200000]
+      combine_with_previous_selected: true
+
+      selection:
+        mode: balanced_terms
+        total_top_fraction: 0.25
+        term_quantile_cut: 0.60
+        top_fraction: 0.10
+        max_points: 5000
+        min_points: 20
+        terms: auto
+        fallback_mode: top_fraction
+        near_miss:
+          enabled: true
+          keep_accepted: true
+          keep_per_term_best: true
+          include_invalid: false
+          max_hard_failures: 0
+          max_fit_failures: 3
+          objective_cap: 1.0e6
+          include_full_eval_points: true
+          max_accepted_points: 100
+          max_near_miss_points: 150
+
+      elite_preservation:
+        enabled: true
+        always_keep_global_best: true
+        archive_size: 5000
+        elite_fraction: 0.10
+        min_elite_points: 20
+        max_elite_points: 800
+
+      elite_boxes:
+        enabled: true
+        construction: quantile
+        q_low: 0.02
+        q_high: 0.98
+        padding_fraction: 0.80
+        min_width_fraction: 0.05
+        max_boxes: 4
+
+      best_centered_box:
+        enabled: true
+        width_fraction: 0.30
+        shrink_per_round: 0.8
+        min_width_fraction: 0.04
+
+      sampling:
+        method: latin_hypercube
+        allocate_points: mixed
+        fractions:
+          elite_boxes: 0.40
+          selected_boxes: 0.35
+          global: 0.25
+        min_points_per_box: 2000
+
+      boxes:
+        construction: quantile
+        q_low: 0.02
+        q_high: 0.98
+        padding_fraction: 0.80
+        min_width_fraction: 0.05
+        clip_to_original_bounds: true
+        merge_overlapping: true
+        max_boxes: 8
+
+      output:
+        save_round_points: true
+        save_round_selected: true
+        save_round_boxes: true
+
+    selection:
+      mode: balanced_terms
+      total_top_fraction: 0.25
+      term_quantile_cut: 0.60
+      top_fraction: 0.10
+      max_points: 8000
+      min_points: 20
+      terms: auto
+      fallback_mode: top_fraction
+      near_miss:
+        enabled: true
+        keep_accepted: true
+        keep_per_term_best: true
+        include_invalid: false
+        max_hard_failures: 0
+        max_fit_failures: 3
+        objective_cap: 1.0e6
+        include_full_eval_points: true
+        max_accepted_points: 200
+        max_near_miss_points: 300
+
+    clustering:
+      enabled: true
+      method: dbscan
+      eps_fraction: 0.08
+      min_samples: 4
+      max_clusters: 8
+
+    boxes:
+      construction: quantile
+      q_low: 0.02
+      q_high: 0.98
+      padding_fraction: 0.80
+      min_width_fraction: 0.05
+      clip_to_original_bounds: true
+      merge_overlapping: true
+      max_boxes: 8
+
+    refinement:
+      enabled: true
+      n_rounds: 1
+      points_per_seed: 3
+      max_seeds: 200
+      seed_source: selected_plus_elite
+      jitter_fraction: 0.06
+      apply_proposals: true
+      keep_near_miss: true
+
+    manifold_refocus:
+      enabled: true
+      method: covariance
+      seed: 13579
+      source: selected_plus_exploration
+      max_train_points: 12000
+      min_train_points: 50
+      top_fraction_for_training: 0.30
+      sampling:
+        n_candidates: 100000
+        inflate: 1.4
+        diagonal_jitter: 1.0e-6
+        include_training_points: true
+      box:
+        enabled: true
+        quantile_low: 0.01
+        quantile_high: 0.99
+        padding_fraction: 0.45
+        min_width_fraction: 0.03
+        max_shrink_factor: 100.0
+        clip_to_original_bounds: true
+
+    ml_focus:
+      enabled: true
+      seed: 13579
+      model:
+        type: extra_trees_regressor
+        n_estimators: 80
+        min_samples_leaf: 2
+        max_features: sqrt
+      training:
+        max_train_points: 20000
+        min_train_points: 50
+        require_valid: true
+        finite_objective_only: true
+        target_transform: log10_1p
+        top_fraction_for_training: 0.40
+      candidate_generation:
+        n_candidates: 100000
+        sources:
+          selected_box_fraction: 0.35
+          elite_local_fraction: 0.40
+          global_fraction: 0.25
+      selection:
+        n_ml_selected: 6000
+        include_best_real_points: true
+        n_best_real_points: 1000
+        include_elite_archive: true
+      focused_box:
+        enabled: true
+        quantile_low: 0.01
+        quantile_high: 0.99
+        padding_fraction: 0.65
+        min_width_fraction: 0.03
+        max_shrink_factor: 80.0
+        clip_to_original_bounds: true
+      seeds:
+        enabled: true
+        max_seeds: 2000
+        composition:
+          best_real_fraction: 0.35
+          ml_selected_fraction: 0.45
+          local_mutation_fraction: 0.20
+        local_mutation:
+          relative_sigma: 0.05
+          log_sigma: 0.20
+
+    focused_engine:
+      name: adaptive_diver
+      population_size: 200
+      max_generations: 3000
+      p_best_fraction: 0.20
+      mutation:
+        adaptive: true
+        F_min: 0.05
+        F_max: 0.50
+        initial_mean: 0.30
+        learning_rate: 0.1
+      crossover:
+        adaptive: true
+        CR_min: 0.1
+        CR_max: 0.9
+        initial_mean: 0.50
+        learning_rate: 0.1
+      bounds:
+        handling: reflect
+      convergence:
+        patience: 0
+        population_std_tol: 0.0
+        min_delta_chi2: 1.0e-8
+      local_refinement:
+        enabled: true
+        method: Powell
+        n_elites: 10
+        maxiter: 2000
+      output:
+        save_history: true
+        save_population: true
+        save_elites: true
+
+    output:
+      save_exploration_points: true
+      save_selected_points: true
+      save_clusters: true
+      save_focused_boxes: true
+
+statistics:
+  enabled: false

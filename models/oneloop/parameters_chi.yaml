@@ -1,0 +1,27 @@
+parameters:
+- {name: Mdm, value_type: real, scan: true, lower: 50.0, upper: 1500.0, default: 685.0298193896, prior: log}
+- {name: gap_charged, value_type: real, scan: true, lower: 1.0, upper: 80.0, default: 79.50395280889, prior: flat}
+- {name: gap_H01, value_type: real, scan: true, lower: 1.0, upper: 250.0, default: 36.26313695421, prior: flat}
+- {name: gap_H02, value_type: real, scan: true, lower: 1.0, upper: 350.0, default: 6.647781478029, prior: flat}
+- {name: gap_A01, value_type: real, scan: true, lower: 1.0, upper: 350.0, default: 27.08964264372, prior: flat}
+- {name: MN, value_type: real, scan: true, lower: 100.0, upper: 5000.0, default: 1169.219004969, prior: log}
+- {name: sh, value_type: real, scan: true, lower: 1.0e-3, upper: 0.997, default: 0.108331386547, prior: flat}
+- {name: l2, value_type: real, scan: true, lower: 1.0e-4, upper: 6.0, default: 0.0003035793131227, prior: log}
+- {name: l3, value_type: real, scan: true, lower: 1.0e-4, upper: 6.0, default: 1.731115300762, prior: log}
+- {name: k1, value_type: real, scan: true, lower: -8.0, upper: 8.0, default: 3.567481173699, prior: flat}
+- {name: k4, value_type: real, scan: true, lower: -0.5, upper: 0.5, default: 0.4354320051702, prior: flat}
+- {name: k5, value_type: real, scan: true, lower: -0.5, upper: 0.5, default: 0.4876562044884, prior: flat}
+- {name: ypr11, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 5.363831808236e-06, prior: signed_log, min_abs: 1.0e-8}
+- {name: ypi11, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.0, prior: signed_log, min_abs: 1.0e-8}
+- {name: Y1r1, value_type: real, scan: true, lower: -1.0, upper: 1.0, default: 0.001608676133379, prior: signed_log, min_abs: 1.0e-8}
+- {name: Y1i1, value_type: real, scan: true, lower: -1.0, upper: 1.0, default: -0.00245087575875, prior: signed_log, min_abs: 1.0e-8}
+- {name: Y1r2, value_type: real, scan: true, lower: -1.0, upper: 1.0, default: -0.003543940723969, prior: signed_log, min_abs: 1.0e-8}
+- {name: Y1i2, value_type: real, scan: true, lower: -1.0, upper: 1.0, default: 0.0004431658781404, prior: signed_log, min_abs: 1.0e-8}
+- {name: Y1r3, value_type: real, scan: true, lower: -1.0, upper: 1.0, default: -0.006012512737118, prior: signed_log, min_abs: 1.0e-8}
+- {name: Y1i3, value_type: real, scan: true, lower: -1.0, upper: 1.0, default: 0.003632232814744, prior: signed_log, min_abs: 1.0e-8}
+- {name: ynr1, value_type: real, scan: true, lower: -3.2, upper: 3.2, default: 0.008748562858429, prior: signed_log, min_abs: 1.0e-8}
+- {name: yni1, value_type: real, scan: true, lower: -3.2, upper: 3.2, default: -0.008142091822126, prior: signed_log, min_abs: 1.0e-8}
+- {name: ynr2, value_type: real, scan: true, lower: -3.2, upper: 3.2, default: 0.1198560905959, prior: signed_log, min_abs: 1.0e-8}
+- {name: yni2, value_type: real, scan: true, lower: -3.2, upper: 3.2, default: -0.07218269773237, prior: signed_log, min_abs: 1.0e-8}
+- {name: ynr3, value_type: real, scan: true, lower: -3.2, upper: 3.2, default: 0.08243418422035, prior: signed_log, min_abs: 1.0e-8}
+- {name: yni3, value_type: real, scan: true, lower: -3.2, upper: 3.2, default: -0.01469958211852, prior: signed_log, min_abs: 1.0e-8}

@@ -1,0 +1,314 @@
+observables:
+- name: me_raw
+  value_type: real
+  projection:
+    from: diag__charged_lepton
+    quantity: singular_values
+    index: 2
+- name: mmu_raw
+  value_type: real
+  projection:
+    from: diag__charged_lepton
+    quantity: singular_values
+    index: 1
+- name: mtau_raw
+  value_type: real
+  projection:
+    from: diag__charged_lepton
+    quantity: singular_values
+    index: 0
+- name: me_over_mu
+  value_type: real
+  expression: me_raw / mmu_raw
+- name: mu_over_tau
+  value_type: real
+  expression: mmu_raw / mtau_raw
+- name: mu_over_mtau
+  value_type: real
+  expression: mu_over_tau
+- name: charged_lepton_u_00
+  value_type: complex
+  projection:
+    from: diag__charged_lepton
+    quantity: u_complex
+    row: 0
+    col: 0
+- name: charged_lepton_u_01
+  value_type: complex
+  projection:
+    from: diag__charged_lepton
+    quantity: u_complex
+    row: 0
+    col: 1
+- name: charged_lepton_u_02
+  value_type: complex
+  projection:
+    from: diag__charged_lepton
+    quantity: u_complex
+    row: 0
+    col: 2
+- name: charged_lepton_u_10
+  value_type: complex
+  projection:
+    from: diag__charged_lepton
+    quantity: u_complex
+    row: 1
+    col: 0
+- name: charged_lepton_u_11
+  value_type: complex
+  projection:
+    from: diag__charged_lepton
+    quantity: u_complex
+    row: 1
+    col: 1
+- name: charged_lepton_u_12
+  value_type: complex
+  projection:
+    from: diag__charged_lepton
+    quantity: u_complex
+    row: 1
+    col: 2
+- name: charged_lepton_u_20
+  value_type: complex
+  projection:
+    from: diag__charged_lepton
+    quantity: u_complex
+    row: 2
+    col: 0
+- name: charged_lepton_u_21
+  value_type: complex
+  projection:
+    from: diag__charged_lepton
+    quantity: u_complex
+    row: 2
+    col: 1
+- name: charged_lepton_u_22
+  value_type: complex
+  projection:
+    from: diag__charged_lepton
+    quantity: u_complex
+    row: 2
+    col: 2
+- name: neutrino_u_00
+  value_type: complex
+  projection:
+    from: diag__neutrino
+    quantity: u_complex
+    row: 0
+    col: 0
+- name: neutrino_u_01
+  value_type: complex
+  projection:
+    from: diag__neutrino
+    quantity: u_complex
+    row: 0
+    col: 1
+- name: neutrino_u_02
+  value_type: complex
+  projection:
+    from: diag__neutrino
+    quantity: u_complex
+    row: 0
+    col: 2
+- name: neutrino_u_10
+  value_type: complex
+  projection:
+    from: diag__neutrino
+    quantity: u_complex
+    row: 1
+    col: 0
+- name: neutrino_u_11
+  value_type: complex
+  projection:
+    from: diag__neutrino
+    quantity: u_complex
+    row: 1
+    col: 1
+- name: neutrino_u_12
+  value_type: complex
+  projection:
+    from: diag__neutrino
+    quantity: u_complex
+    row: 1
+    col: 2
+- name: neutrino_u_20
+  value_type: complex
+  projection:
+    from: diag__neutrino
+    quantity: u_complex
+    row: 2
+    col: 0
+- name: neutrino_u_21
+  value_type: complex
+  projection:
+    from: diag__neutrino
+    quantity: u_complex
+    row: 2
+    col: 1
+- name: neutrino_u_22
+  value_type: complex
+  projection:
+    from: diag__neutrino
+    quantity: u_complex
+    row: 2
+    col: 2
+- name: neutrino_observable_epsilon
+  value_type: real
+  expression: "1.0e-16"
+- name: s13
+  value_type: real
+  expression: min(max(abs(Ue3)**2, 0.0), 1.0)
+- name: c13_sq
+  value_type: real
+  expression: max(1.0 - s13, neutrino_observable_epsilon)
+- name: s12
+  value_type: real
+  expression: min(max(abs(Ue2)**2 / c13_sq, 0.0), 1.0)
+- name: s23
+  value_type: real
+  expression: min(max(abs(Umu3)**2 / c13_sq, 0.0), 1.0)
+- name: s12_root
+  value_type: real
+  expression: sqrt(s12)
+- name: c12_root
+  value_type: real
+  expression: sqrt(max(1.0 - s12, 0.0))
+- name: s23_root
+  value_type: real
+  expression: sqrt(s23)
+- name: c23_root
+  value_type: real
+  expression: sqrt(max(1.0 - s23, 0.0))
+- name: s13_root
+  value_type: real
+  expression: sqrt(s13)
+- name: c13_root
+  value_type: real
+  expression: sqrt(c13_sq)
+- name: theta13_angle
+  value_type: real
+  expression: asin(s13_root)
+- name: theta12_angle
+  value_type: real
+  expression: asin(s12_root)
+- name: theta23_angle
+  value_type: real
+  expression: asin(s23_root)
+- name: t12_deg
+  value_type: real
+  expression: theta12_angle * 180 / pi
+- name: t13_deg
+  value_type: real
+  expression: theta13_angle * 180 / pi
+- name: t23_deg
+  value_type: real
+  expression: theta23_angle * 180 / pi
+- name: J
+  value_type: real
+  expression: imag(Ue1 * Umu2 * conj(Ue2) * conj(Umu1))
+- name: Jmax
+  value_type: real
+  expression: s12_root * c12_root * s23_root * c23_root * s13_root * c13_sq
+- name: delta_sin_raw
+  value_type: real
+  expression: J / max(Jmax, neutrino_observable_epsilon)
+- name: delta_sin
+  value_type: real
+  expression: min(max(delta_sin_raw, -1.0), 1.0)
+- name: delta_cos_denominator
+  value_type: real
+  expression: 2.0 * s12_root * c12_root * s23_root * c23_root * s13_root
+- name: delta_cos_raw
+  value_type: real
+  expression: >
+    (
+      abs(Umu1)**2
+      - s12 * c23_root**2
+      - (1.0 - s12) * s23 * s13
+    ) / max(delta_cos_denominator, neutrino_observable_epsilon)
+- name: delta_cos
+  value_type: real
+  expression: min(max(delta_cos_raw, -1.0), 1.0)
+- name: deltaCP_raw
+  value_type: real
+  expression: atan2(delta_sin, delta_cos)
+- name: deltaCP
+  value_type: real
+  expression: >
+    if_else(
+      Jmax > neutrino_observable_epsilon,
+      fmod(fmod(deltaCP_raw, 2*pi) + 2*pi, 2*pi),
+      nan()
+    )
+- name: deltaCP_over_pi
+  value_type: real
+  expression: deltaCP / pi
+- name: d_over_pi
+  value_type: real
+  expression: deltaCP_over_pi
+- name: deltaCP_deg
+  value_type: real
+  expression: deltaCP * 180 / pi
+- name: eta1
+  value_type: real
+  expression: fmod(fmod(arg(Ue1 / Ue3) - deltaCP, 2*pi) + 2*pi, 2*pi) / pi
+- name: eta2
+  value_type: real
+  expression: fmod(fmod(arg(Ue2 / Ue3) - deltaCP, 2*pi) + 2*pi, 2*pi) / pi
+- name: alpha21
+  value_type: real
+  expression: fmod(fmod(2.0 * arg(Ue2 / Ue1), 2*pi) + 2*pi, 2*pi)
+- name: alpha31
+  value_type: real
+  expression: fmod(fmod(2.0 * (arg(Ue3 / Ue1) + deltaCP), 2*pi) + 2*pi, 2*pi)
+- name: alpha21_deg
+  value_type: real
+  expression: alpha21 * 180 / pi
+- name: alpha31_deg
+  value_type: real
+  expression: alpha31 * 180 / pi
+- name: nscale
+  value_type: real
+  expression: sqrt((bf_dm21 / dm21_raw + bf_dm3l / dm3l_raw) / 2)
+- name: scale
+  value_type: real
+  expression: nscale
+- name: Lambda
+  value_type: real
+  expression: nscale
+- name: m1
+  value_type: real
+  expression: m1_raw * nscale
+- name: m2
+  value_type: real
+  expression: m2_raw * nscale
+- name: m3
+  value_type: real
+  expression: m3_raw * nscale
+- name: dm21
+  value_type: real
+  expression: nscale**2 * dm21_raw
+- name: dm3l
+  value_type: real
+  expression: nscale**2 * dm3l_raw
+- name: r
+  value_type: real
+  expression: dm21 / dm3l
+- name: sum_m
+  value_type: real
+  expression: m1 + m2 + m3
+- name: sum_mnu
+  value_type: real
+  expression: sum_m
+- name: log10_dm21
+  value_type: real
+  expression: log(max(dm21, 1.0e-30)) / log(10)
+- name: dm3l_meV
+  value_type: real
+  expression: dm3l * 1.0e3
+- name: m_b
+  value_type: real
+  expression: mbeta
+- name: m_bb
+  value_type: real
+  expression: mbetabeta

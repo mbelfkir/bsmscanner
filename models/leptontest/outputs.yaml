@@ -1,0 +1,22 @@
+outputs:
+  save:
+  - Retau
+  - Imtau
+  - s12
+  - s13
+  - s23
+  - deltaCP
+  - deltaCP_deg
+  - deltaCP_raw
+  - eta1
+  - eta2
+  - m1
+  - m2
+  - m3
+  - dm21
+  - dm3l
+  - sum_m
+  - scale
+  - Lambda
+  - mbeta
+  - mbetabeta

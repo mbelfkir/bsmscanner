@@ -1,0 +1,25 @@
+metadata:
+  name: weinberg_multi_island_no_diver_direct
+  version: 0.1.0
+  description: Weinberg-operator modular S4 normal-ordering model using the native external Diver bridge directly.
+  ordering: normal
+  tags:
+    - arxiv2006_03058
+    - weinberg_operator
+    - normal_ordering
+    - diver
+
+imports:
+  - ../arxiv2006_03058_weinberg/parameters.yaml
+  - ../arxiv2006_03058_weinberg/constants.yaml
+  - ../arxiv2006_03058_weinberg/functions.yaml
+  - ../arxiv2006_03058_weinberg/derived.yaml
+  - ../arxiv2006_03058_weinberg/matrices.yaml
+  - ../../core/constants/physics_constants.yaml
+  - ../arxiv2006_03058_weinberg/constants_no.yaml
+  - ../../core/neutrino/observables_common.yaml
+  - ../../core/neutrino/observables_normal.yaml
+  - ../arxiv2006_03058_weinberg/aliases.yaml
+  - ../arxiv2006_03058_weinberg/likelihoods_no.yaml
+  - ../arxiv2006_03058_weinberg/outputs.yaml
+  - scan_diver_direct.yaml

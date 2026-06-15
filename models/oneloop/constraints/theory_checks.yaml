@@ -1,0 +1,73 @@
+theory_checks:
+- name: positive_mphi_sq
+  condition: mphi_sq > 0 and isfinite(mphi_sq)
+  fatal: true
+  message: Effective charged-scalar squared mass became negative.
+- name: positive_mphip_sq
+  condition: mphip_sq > 0 and isfinite(mphip_sq)
+  fatal: true
+  message: Effective neutral-scalar squared mass became negative.
+- name: valid_MA02
+  condition: MA02sq_denom > 0 and MA02sq > 0 and isfinite(MA02sq)
+  fatal: true
+  message: Derived MA02 mass relation became invalid.
+- name: full_dm_identity
+  condition: Mpsi < MN and Mpsi < Mphi and Mpsi < MA1 and Mpsi < MA2 and Mpsi < MH1 and Mpsi < MH2
+  fatal: true
+  message: The intended fermion dark-matter state is not the lightest odd state.
+- name: mass_splittings_safe
+  condition: abs(mphi**2 - mphip**2) >= mass_split_eps and abs(mphi**2 - Mpsi**2) >= mass_split_eps and abs(mphip**2 - Mpsi**2) >= mass_split_eps
+  fatal: true
+  message: Loop-function denominators became numerically singular.
+- name: i3_mass_order
+  condition: ((mphi > mphip) and (mphi > Mpsi)) or ((mphi < mphip) and (mphi < Mpsi))
+  fatal: true
+  message: The I3 mass ordering condition is violated.
+- name: quartic_bound_12
+  condition: k1 + k2 - abs(k3) > -2*sqrt(lambda1*lambda2)
+  fatal: true
+  message: Vacuum-stability bound k1+k2-|k3| > -2 sqrt(lambda1 lambda2) failed.
+- name: quartic_bound_13
+  condition: k4 > -2*sqrt(lambda1*lambda3)
+  fatal: true
+  message: Vacuum-stability bound k4 > -2 sqrt(lambda1 lambda3) failed.
+- name: quartic_bound_23
+  condition: k5 > -2*sqrt(lambda2*lambda3)
+  fatal: true
+  message: Vacuum-stability bound k5 > -2 sqrt(lambda2 lambda3) failed.
+- name: finite_neutrino_sector
+  condition: isfinite(Theta12) and isfinite(Theta13) and isfinite(Theta23) and isfinite(deltaCP) and isfinite(dm21) and isfinite(dm3l) and isfinite(scale)
+  fatal: true
+  message: Neutrino-sector diagonalization or scaling produced non-finite values.
+- name: finite_precision_sector
+  condition: isfinite(HiggsMass) and isfinite(HiggsRgg) and isfinite(ObliqueS) and isfinite(ObliqueT)
+  fatal: true
+  message: Higgs or electroweak precision sector produced non-finite values.
+- name: finite_lfv_sector
+  condition: isfinite(mu_to_e_gamma) and isfinite(tau_to_e_gamma) and isfinite(tau_to_mu_gamma) and isfinite(mu_to_eee) and isfinite(tau_to_eee) and isfinite(tau_to_mumumu)
+  fatal: true
+  message: LFV sector produced non-finite values.
+- name: unitarity_s1
+  condition: S1_max_abs <= 8*pi
+  fatal: true
+  message: Scalar scattering matrix S1 violates the perturbative unitarity bound.
+- name: unitarity_s2
+  condition: S2_max_abs <= 8*pi
+  fatal: true
+  message: Scalar scattering matrix S2 violates the perturbative unitarity bound.
+- name: unitarity_s3
+  condition: S3_max_abs <= 8*pi
+  fatal: true
+  message: Scalar scattering matrix S3 violates the perturbative unitarity bound.
+- name: unitarity_s4
+  condition: S4_max_abs <= 8*pi
+  fatal: true
+  message: Scalar scattering matrix S4 violates the perturbative unitarity bound.
+- name: unitarity_s5
+  condition: S5_max_abs <= 8*pi
+  fatal: true
+  message: Scalar scattering matrix S5 violates the perturbative unitarity bound.
+- name: unitarity_s6
+  condition: S6_max_abs <= 8*pi
+  fatal: true
+  message: Scalar scattering matrix S6 violates the perturbative unitarity bound.

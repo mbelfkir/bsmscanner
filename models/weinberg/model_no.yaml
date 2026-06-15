@@ -1,0 +1,22 @@
+metadata:
+  name: weinberg_no
+  version: 0.1.0
+  description: Weinberg-operator modular S4 lepton-sector model based on FlavorPy arXiv:2006.03058, normal ordering.
+  ordering: normal
+  tags:
+    - arxiv2006_03058
+    - weinberg_operator
+    - normal_ordering
+
+imports:
+  - parameters.yaml
+  - functions.yaml
+  - derived.yaml
+  - matrices.yaml
+  - ../../core/constants/physics_constants.yaml
+  - ../../core/neutrino/constants_normal.yaml
+  - ../../core/neutrino/observables_common.yaml
+  - ../../core/neutrino/observables_normal.yaml
+  - likelihoods_no.yaml
+  - outputs.yaml
+  - scan.yaml

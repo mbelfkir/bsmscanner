@@ -1,0 +1,13 @@
+imports:
+- ../oneloop/constants.yaml
+
+constants:
+- name: mh_ref
+  value: 125.09
+- name: dm_target_name
+  value: "~chi"
+  value_type: string
+- name: lambda1
+  value: 0.12905312798690105
+- name: dd_pvalue_threshold
+  value: 0.1

@@ -1,0 +1,17 @@
+metadata:
+  name: leptontest
+  version: 0.4.0
+  description: test of the lepton sector of 3x3 matrix
+  ordering: normal
+  tags:
+  - oneloop
+  - normal_ordering
+imports:
+- parameters.yaml
+- functions.yaml
+- derived.yaml
+- matrices.yaml
+- ../../core/neutrino/normal.yaml
+- constraints/likelihood.yaml
+- outputs.yaml
+- scan.yaml

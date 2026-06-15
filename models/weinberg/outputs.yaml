@@ -1,0 +1,32 @@
+outputs:
+  save:
+    - Retau
+    - Imtau
+    - a2t
+    - a3t
+    - g2t
+    - g3t
+    - me_over_mu
+    - mu_over_tau
+    - s12
+    - s13
+    - s23
+    - deltaCP
+    - deltaCP_deg
+    - deltaCP_over_pi
+    - eta1
+    - eta2
+    - r
+    - dm21
+    - dm3l
+    - m1
+    - m2
+    - m3
+    - sum_m
+    - mbeta
+    - mbetabeta
+    - m_b
+    - m_bb
+    - J
+    - Jmax
+    - nscale

@@ -1,0 +1,26 @@
+metadata:
+  name: arxiv2006_03058_weinberg_no_basin_scan_progressive
+  version: 0.1.0
+  description: Progressive basin_scan validation manifest for the arXiv:2006.03058 Weinberg model, normal ordering.
+  ordering: normal
+  tags:
+    - flavorpy
+    - arxiv2006_03058
+    - weinberg_operator
+    - normal_ordering
+    - basin_scan_progressive_validation
+
+imports:
+  - parameters_no_basin_scan_progressive.yaml
+  - constants.yaml
+  - functions.yaml
+  - derived.yaml
+  - matrices.yaml
+  - ../../core/constants/physics_constants.yaml
+  - constants_no.yaml
+  - ../../core/neutrino/observables_common.yaml
+  - ../../core/neutrino/observables_normal.yaml
+  - aliases.yaml
+  - likelihoods_no.yaml
+  - outputs.yaml
+  - scan_basin_scan_progressive.yaml

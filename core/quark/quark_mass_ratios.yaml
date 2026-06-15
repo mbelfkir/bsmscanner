@@ -1,0 +1,62 @@
+constants:
+- name: quark_mass_ratio_epsilon
+  value: 1.0e-15
+
+observables:
+- name: mt_quark
+  value_type: real
+  projection:
+    from: up_quark_masses
+    quantity: vector
+    index: 0
+- name: mc_quark
+  value_type: real
+  projection:
+    from: up_quark_masses
+    quantity: vector
+    index: 1
+- name: mu_quark
+  value_type: real
+  projection:
+    from: up_quark_masses
+    quantity: vector
+    index: 2
+- name: mb_quark
+  value_type: real
+  projection:
+    from: down_quark_masses
+    quantity: vector
+    index: 0
+- name: ms_quark
+  value_type: real
+  projection:
+    from: down_quark_masses
+    quantity: vector
+    index: 1
+- name: md_quark
+  value_type: real
+  projection:
+    from: down_quark_masses
+    quantity: vector
+    index: 2
+- name: mu_over_mc
+  value_type: real
+  expression: mu_quark / max(mc_quark, quark_mass_ratio_epsilon)
+- name: mc_over_mt
+  value_type: real
+  expression: mc_quark / max(mt_quark, quark_mass_ratio_epsilon)
+- name: md_over_ms
+  value_type: real
+  expression: md_quark / max(ms_quark, quark_mass_ratio_epsilon)
+- name: ms_over_mb
+  value_type: real
+  expression: ms_quark / max(mb_quark, quark_mass_ratio_epsilon)
+
+theory_checks:
+- name: quark_mass_ratio_denominators_valid
+  condition: >
+    mc_quark > quark_mass_ratio_epsilon
+    and mt_quark > quark_mass_ratio_epsilon
+    and ms_quark > quark_mass_ratio_epsilon
+    and mb_quark > quark_mass_ratio_epsilon
+  message: quark_mass_ratio_denominator_zero

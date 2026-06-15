@@ -1,0 +1,41 @@
+theory_checks:
+- name: positive_mphi_sq
+  condition: mphi_sq > 0 and isfinite(mphi_sq)
+  fatal: true
+  message: Effective charged-scalar squared mass became negative.
+- name: positive_mphip_sq
+  condition: mphip_sq > 0 and isfinite(mphip_sq)
+  fatal: true
+  message: Effective neutral-scalar squared mass became negative.
+- name: fermion_dm_hierarchy
+  condition: Mpsi < Mphi
+  fatal: true
+  message: Latest-source FCN requires Mpsi < Mphi for the chosen fermion-DM setup.
+- name: valid_MA02
+  condition: MA02sq_denom > 0 and MA02sq > 0 and isfinite(MA02sq)
+  fatal: true
+  message: Derived MA02 mass relation became invalid.
+- name: dm_candidate_valid
+  condition: DM_candidate_valid
+  fatal: true
+  message: micrOMEGAs could not identify a valid odd-particle dark matter candidate.
+- name: dm_target_match
+  condition: DM_target_match
+  fatal: true
+  message: The micrOMEGAs-selected dark matter candidate does not match the intended source-level scan target.
+- name: omega_backend_valid
+  condition: Omega >= 0 and Omega <= 10 and isfinite(Omega)
+  fatal: true
+  message: The micrOMEGAs relic-density backend returned an invalid Omega value.
+- name: finite_neutrino_sector
+  condition: isfinite(Theta12) and isfinite(Theta13) and isfinite(Theta23) and isfinite(deltaCP) and isfinite(dm21) and isfinite(dm3l) and isfinite(scale)
+  fatal: true
+  message: Neutrino-sector diagonalization or scaling produced non-finite values.
+- name: finite_precision_sector
+  condition: isfinite(HiggsMass) and isfinite(HiggsRgg) and isfinite(ObliqueS) and isfinite(ObliqueT)
+  fatal: true
+  message: Higgs or electroweak precision sector produced non-finite values.
+- name: finite_lfv_sector
+  condition: isfinite(mu_to_e_gamma) and isfinite(tau_to_e_gamma) and isfinite(tau_to_mu_gamma) and isfinite(mu_to_eee) and isfinite(tau_to_eee) and isfinite(tau_to_mumumu)
+  fatal: true
+  message: LFV sector produced non-finite values.

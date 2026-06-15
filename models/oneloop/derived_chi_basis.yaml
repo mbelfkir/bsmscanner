@@ -1,0 +1,28 @@
+derived_scalars:
+- {name: Mchi, expression: Mdm}
+- {name: mphich, expression: Mdm + gap_charged}
+- {name: MH01, expression: Mdm + gap_H01}
+- {name: MH02, expression: MH01 + gap_H02}
+- {name: MA01, expression: Mdm + gap_A01}
+- {name: Mpsi, expression: Mchi}
+- {name: Mphi, expression: mphich}
+- {name: MH1, expression: MH01}
+- {name: MH2, expression: MH02}
+- {name: MA1, expression: MA01}
+- {name: lambda2, expression: l2}
+- {name: lambda3, expression: l3}
+- {name: Reye, expression: ynr1}
+- {name: Imgye, expression: yni1}
+- {name: Reymu, expression: ynr2}
+- {name: Imgymu, expression: yni2}
+- {name: Reytau, expression: ynr3}
+- {name: Imgytau, expression: yni3}
+- {name: ReYe, expression: Y1r1}
+- {name: ImgYe, expression: Y1i1}
+- {name: ReYmu, expression: Y1r2}
+- {name: ImgYmu, expression: Y1i2}
+- {name: ReYtau, expression: Y1r3}
+- {name: ImgYtau, expression: Y1i3}
+- {name: Reyp, expression: ypr11}
+- {name: Imgyp, expression: ypi11}
+- {name: yp_abs, expression: sqrt(ypr11**2 + ypi11**2)}

@@ -1,0 +1,44 @@
+# FlavorPy-detailed-example quark-sector reference likelihoods.
+# These reproduce the illustrative table shown in the FlavorPy documentation;
+# they are still reference/example inputs, not a production global fit.
+likelihoods:
+- name: quark_mu_over_mc_term
+  kind: gaussian
+  observable: mu_over_mc
+  mean: 1.9286e-03
+  sigma: 3.0085e-04
+- name: quark_mc_over_mt_term
+  kind: gaussian
+  observable: mc_over_mt
+  mean: 2.8213e-03
+  sigma: 5.975e-05
+- name: quark_md_over_ms_term
+  kind: gaussian
+  observable: md_over_ms
+  mean: 5.0523e-02
+  sigma: 3.0955e-03
+- name: quark_ms_over_mb_term
+  kind: gaussian
+  observable: ms_over_mb
+  mean: 1.8241e-02
+  sigma: 5.025e-04
+- name: quark_t12_term
+  kind: gaussian
+  observable: t12
+  mean: 13.0268
+  sigma: 0.0209
+- name: quark_t13_term
+  kind: gaussian
+  observable: t13
+  mean: 0.199962
+  sigma: 0.003724
+- name: quark_t23_term
+  kind: gaussian
+  observable: t23
+  mean: 2.30043
+  sigma: 0.018335
+- name: quark_dq_term
+  kind: gaussian
+  observable: dq
+  mean: 69.2133
+  sigma: 1.5573

@@ -1,0 +1,5 @@
+theory_checks:
+- name: h01_is_lightest_odd_state
+  condition: MH01 < Mchi and MH01 < mphich and MH01 < MH02 and MH01 < MA01 and MH01 < MA2
+  fatal: true
+  message: The requested H01 dark-matter state is not the lightest odd state.

@@ -1,0 +1,8 @@
+# FlavorPy arXiv:2006.03058 scaling defaults used by calculate_lepton_observables
+# when the experimental data are supplied as chi-square profiles. The core
+# observable formulas stay generic; this model supplies the reference scale.
+constants:
+- name: bf_dm21
+  value: 7.41e-05
+- name: bf_dm3l
+  value: -0.002486

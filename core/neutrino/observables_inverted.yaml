@@ -1,0 +1,87 @@
+observables:
+- name: m1_raw
+  value_type: real
+  projection:
+    from: diag__neutrino
+    quantity: singular_values
+    index: 1
+- name: m2_raw
+  value_type: real
+  projection:
+    from: diag__neutrino
+    quantity: singular_values
+    index: 0
+- name: m3_raw
+  value_type: real
+  projection:
+    from: diag__neutrino
+    quantity: singular_values
+    index: 2
+- name: Ue1
+  value_type: complex
+  expression: >
+    conj(charged_lepton_u_02) * neutrino_u_01
+    + conj(charged_lepton_u_12) * neutrino_u_11
+    + conj(charged_lepton_u_22) * neutrino_u_21
+- name: Ue2
+  value_type: complex
+  expression: >
+    conj(charged_lepton_u_02) * neutrino_u_00
+    + conj(charged_lepton_u_12) * neutrino_u_10
+    + conj(charged_lepton_u_22) * neutrino_u_20
+- name: Ue3
+  value_type: complex
+  expression: >
+    conj(charged_lepton_u_02) * neutrino_u_02
+    + conj(charged_lepton_u_12) * neutrino_u_12
+    + conj(charged_lepton_u_22) * neutrino_u_22
+- name: Umu1
+  value_type: complex
+  expression: >
+    conj(charged_lepton_u_01) * neutrino_u_01
+    + conj(charged_lepton_u_11) * neutrino_u_11
+    + conj(charged_lepton_u_21) * neutrino_u_21
+- name: Umu2
+  value_type: complex
+  expression: >
+    conj(charged_lepton_u_01) * neutrino_u_00
+    + conj(charged_lepton_u_11) * neutrino_u_10
+    + conj(charged_lepton_u_21) * neutrino_u_20
+- name: Umu3
+  value_type: complex
+  expression: >
+    conj(charged_lepton_u_01) * neutrino_u_02
+    + conj(charged_lepton_u_11) * neutrino_u_12
+    + conj(charged_lepton_u_21) * neutrino_u_22
+- name: Utau1
+  value_type: complex
+  expression: >
+    conj(charged_lepton_u_00) * neutrino_u_01
+    + conj(charged_lepton_u_10) * neutrino_u_11
+    + conj(charged_lepton_u_20) * neutrino_u_21
+- name: Utau2
+  value_type: complex
+  expression: >
+    conj(charged_lepton_u_00) * neutrino_u_00
+    + conj(charged_lepton_u_10) * neutrino_u_10
+    + conj(charged_lepton_u_20) * neutrino_u_20
+- name: Utau3
+  value_type: complex
+  expression: >
+    conj(charged_lepton_u_00) * neutrino_u_02
+    + conj(charged_lepton_u_10) * neutrino_u_12
+    + conj(charged_lepton_u_20) * neutrino_u_22
+- name: dm21_raw
+  value_type: real
+  expression: m2_raw**2 - m1_raw**2
+- name: dm3l_raw
+  value_type: real
+  expression: m3_raw**2 - m2_raw**2
+- name: mbeta
+  value_type: real
+  expression: >
+    sqrt(abs(Ue1)**2 * m1**2 + abs(Ue2)**2 * m2**2 + abs(Ue3)**2 * m3**2)
+- name: mbetabeta
+  value_type: real
+  expression: >
+    abs(Ue1**2 * m1 + Ue2**2 * m2 + Ue3**2 * m3)

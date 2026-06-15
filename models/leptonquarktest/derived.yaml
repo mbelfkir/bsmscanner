@@ -1,0 +1,9 @@
+derived_complex:
+- name: tau
+  expression: Retau + 1j*Imtau
+- name: y1
+  expression: Y1(tau)
+- name: y2
+  expression: Y2(tau)
+- name: y3
+  expression: Y3(tau)

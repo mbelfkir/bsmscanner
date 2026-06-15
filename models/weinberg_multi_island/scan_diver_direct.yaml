@@ -1,0 +1,18 @@
+scan:
+  engine: diver
+  save_every: 500
+  seed: 12345
+  settings:
+    objective: nll
+    max_evaluations: 1000000
+    population_size: 96
+    max_generations: 2500
+    convergence_threshold: 1e-14
+    convergence_steps: 100
+    max_init_attempts: 100000
+    invalid_objective: 1.0e12
+    save_invalid_points: true
+    verbose: 1
+
+statistics:
+  enabled: false

@@ -1,0 +1,93 @@
+functions:
+- name: q_tau_4
+  value_type: complex
+  args: [tau]
+  expression: exp((2j*pi*tau)/4.0)
+
+- name: theta
+  value_type: complex
+  args: [tau]
+  expression: >
+    1.0
+    + 2.0*q_tau_4(tau)**4
+    + 2.0*q_tau_4(tau)**16
+
+- name: eps
+  value_type: complex
+  args: [tau]
+  expression: >
+    2.0*q_tau_4(tau)
+    + 2.0*q_tau_4(tau)**9
+    + 2.0*q_tau_4(tau)**25
+
+- name: Y31hp1
+  value_type: complex
+  args: [tau]
+  expression: >
+    sqrt(3.0) * (eps(tau) * theta(tau)**5 - eps(tau)**5 * theta(tau))
+
+- name: Y33h1
+  value_type: complex
+  args: [tau]
+  expression: eps(tau)**5 * theta(tau) + eps(tau) * theta(tau)**5
+
+- name: Y33h2
+  value_type: complex
+  args: [tau]
+  expression: >
+    (1.0/(2.0*sqrt(2.0))) * (5.0*eps(tau)**2*theta(tau)**4 - eps(tau)**6)
+
+- name: Y33h3
+  value_type: complex
+  args: [tau]
+  expression: >
+    (1.0/(2.0*sqrt(2.0))) * (theta(tau)**6 - 5.0*eps(tau)**4*theta(tau)**2)
+
+- name: Y33hp1
+  value_type: complex
+  args: [tau]
+  expression: -2.0*sqrt(2.0)*eps(tau)**3*theta(tau)**3
+
+- name: Y33hp2
+  value_type: complex
+  args: [tau]
+  expression: 0.5 * (theta(tau)**6 + 3.0*eps(tau)**4*theta(tau)**2)
+
+- name: Y33hp3
+  value_type: complex
+  args: [tau]
+  expression: 0.5 * (-3.0*eps(tau)**2*theta(tau)**4 - eps(tau)**6)
+
+- name: Y411
+  value_type: complex
+  args: [tau]
+  expression: >
+    (1.0/(2.0*sqrt(3.0)))
+    * (theta(tau)**8 + 14.0*eps(tau)**4*theta(tau)**4 + eps(tau)**8)
+
+- name: Y421
+  value_type: complex
+  args: [tau]
+  expression: 0.25 * (theta(tau)**8 - 10.0*eps(tau)**4*theta(tau)**4 + eps(tau)**8)
+
+- name: Y422
+  value_type: complex
+  args: [tau]
+  expression: sqrt(3.0) * (eps(tau)**2*theta(tau)**6 + eps(tau)**6*theta(tau)**2)
+
+- name: Y431
+  value_type: complex
+  args: [tau]
+  expression: 1.5 * (eps(tau)**2*theta(tau)**6 - eps(tau)**6*theta(tau)**2)
+
+- name: Y432
+  value_type: complex
+  args: [tau]
+  expression: >
+    (3.0/(2.0*sqrt(2.0))) * (eps(tau)**3*theta(tau)**5 - eps(tau)**7*theta(tau))
+
+- name: Y433
+  value_type: complex
+  args: [tau]
+  expression: >
+    (3.0/(2.0*sqrt(2.0))) * (-eps(tau)*theta(tau)**7 + eps(tau)**5*theta(tau)**3)

@@ -1,0 +1,32 @@
+scan:
+  basin_scan:
+    staged_evaluation:
+      enabled: true
+      cheap_stage:
+        exclude_terms:
+          - relic_density
+          - direct_detection_pvalue
+        exclude_theory_checks:
+          - micromegas_candidate_valid
+          - micromegas_target_match
+          - micromegas_outputs_finite
+        exclude_outputs:
+          - Omega
+          - SIxsec
+          - xsecSI
+          - DD_pvalue
+          - DDexp_ok
+          - DMCandidateMass
+          - darkMatter
+          - DM_target_match
+          - DM_candidate_valid
+      expensive_stage:
+        include_terms:
+          - relic_density
+          - direct_detection_pvalue
+      full_eval_policy:
+        mode: chi2_threshold
+        max_cheap_objective: 100000.0
+        require_no_hard_failures: true
+      save_rejected_cheap_points: true
+      save_full_eval_points: true

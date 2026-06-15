@@ -1,0 +1,22 @@
+observables:
+- {name: R_gammagamma, value_type: real, expression: HiggsRgg}
+- {name: BR_h_gammagamma, value_type: real, expression: 0.00227*HiggsRgg}
+- {name: BR_mu_to_e_gamma, value_type: real, expression: mu_to_e_gamma}
+- {name: BR_tau_to_e_gamma, value_type: real, expression: tau_to_e_gamma}
+- {name: BR_tau_to_mu_gamma, value_type: real, expression: tau_to_mu_gamma}
+- {name: BR_mu_to_3e, value_type: real, expression: mu_to_eee}
+- {name: BR_tau_to_3e, value_type: real, expression: tau_to_eee}
+- {name: BR_tau_to_3mu, value_type: real, expression: tau_to_mumumu}
+- {name: yn_norm, value_type: real, expression: sqrt(ynr1**2 + yni1**2 + ynr2**2 + yni2**2 + ynr3**2 + yni3**2)}
+- name: g_chichi_h
+  value_type: real
+  expression: >
+    if_else(
+      Mchi < mphich,
+      -k1*vev*yn_norm**2
+      * (
+        Mchi**2 + (mphich**2 - Mchi**2)*log(1.0 - (Mchi/mphich)**2)
+      ) / (16*pi**2*Mchi**3),
+      0.0
+    )
+- {name: abs_g_chichi_h, value_type: real, expression: abs(g_chichi_h)}

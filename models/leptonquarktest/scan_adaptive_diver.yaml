@@ -1,0 +1,64 @@
+scan:
+  engine: adaptive_diver
+  save_every: 1
+  seed: 12345
+  settings:
+    objective: nll
+    invalid_penalty: 1.0e12
+    save_invalid_points: true
+    verbose: 1
+    progress_interval: 100
+
+  adaptive_diver:
+    population_size: 80
+    max_generations: 10000
+    # Keep a larger p-best pool and broader mutation range for this toy
+    # lepton+quark surface; otherwise the population collapses quickly onto
+    # the Imtau upper-bound basin before it has explored the modular domain.
+    p_best_fraction: 0.45
+    archive: true
+
+    mutation:
+      F_min: 0.3
+      F_max: 1.8
+      initial_mean: 0.9
+      learning_rate: 0.05
+
+    crossover:
+      CR_min: 0.05
+      CR_max: 0.95
+      initial_mean: 0.5
+      learning_rate: 0.05
+
+    bounds:
+      handling: resample
+
+    convergence:
+      # Disable patience for long exploratory scans. A previous default stopped
+      # around generation 258 because the best value plateaued, even though
+      # max_generations was much larger.
+      patience: 0
+      min_delta_chi2: 1.0e-8
+      population_std_tol: 0.0
+
+    local_refinement:
+      enabled: true
+      method: Powell
+      n_elites: 5
+      maxiter: 1000
+
+    statistics:
+      enabled: true
+      confidence_levels: [0.68, 0.95]
+
+    output:
+      save_history: true
+      save_population: true
+      save_elites: true
+
+statistics:
+  enabled: true
+  method: de_weighted
+  credible_levels: [0.68, 0.95]
+  output_samples: true
+  include_observables: true

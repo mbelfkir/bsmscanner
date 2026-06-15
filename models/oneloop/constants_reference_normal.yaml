@@ -1,0 +1,42 @@
+imports:
+- ../../core/neutrino/constants_normal.yaml
+
+constants:
+- name: vev
+  value: 246.22
+- name: alpha_em
+  value: 0.007815552950371239
+- name: GF
+  value: 1.1663787e-05
+- name: mh_ref
+  value: 125.09
+- name: mW
+  value: 80.377
+- name: mZ
+  value: 91.1876
+- name: mt
+  value: 172.69
+- name: mb
+  value: 4.18
+- name: mtau
+  value: 1.77686
+- name: me_GeV
+  value: 0.00051099895
+- name: mmu_GeV
+  value: 0.1056583755
+- name: mtau_GeV
+  value: 1.77686
+- name: br_mu_to_e_nunu
+  value: 1.0
+- name: br_tau_to_e_nunu
+  value: 0.1782
+- name: br_tau_to_mu_nunu
+  value: 0.1739
+- name: mass_split_eps
+  value: 1.0e-08
+- name: sum_m_upper
+  value: 0.12
+- name: lambda1
+  value: 0.12905312798690105
+- name: dd_pvalue_threshold
+  value: 0.1

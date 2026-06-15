@@ -1,0 +1,26 @@
+metadata:
+  name: arxiv2006_03058_weinberg_no_basin_scan_stress_m10_p10
+  version: 0.1.0
+  description: Extreme [-10, 10]^6 basin_scan stress-test manifest for the arXiv:2006.03058 Weinberg model, normal ordering.
+  ordering: normal
+  tags:
+    - flavorpy
+    - arxiv2006_03058
+    - weinberg_operator
+    - normal_ordering
+    - basin_scan_stress_test
+
+imports:
+  - parameters_no_basin_scan_stress_m10_p10.yaml
+  - constants.yaml
+  - functions.yaml
+  - derived.yaml
+  - matrices.yaml
+  - ../../core/constants/physics_constants.yaml
+  - constants_no.yaml
+  - ../../core/neutrino/observables_common.yaml
+  - ../../core/neutrino/observables_normal.yaml
+  - aliases.yaml
+  - likelihoods_no.yaml
+  - outputs.yaml
+  - scan_basin_scan_stress_m10_p10.yaml

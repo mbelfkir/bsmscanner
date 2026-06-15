@@ -1,0 +1,27 @@
+metadata:
+  name: oneloop_h01_normal_mcmc
+  version: 1.0.0
+  description: One-loop radiative neutrino model, scalar H01 dark matter branch, normal ordering, analytic observables, with posterior MCMC enabled.
+  ordering: normal
+  tags: [oneloop, h01_dm, normal_ordering, analytic, mcmc]
+imports:
+- parameters_h01.yaml
+- constants_reference_normal.yaml
+- functions.yaml
+- derived_h01_basis.yaml
+- derived_backend_reference.yaml
+- derived.yaml
+- matrices.yaml
+- diagonalizations.yaml
+- observables/scalar_sector.yaml
+- observables/neutrino_reference_normal.yaml
+- observables/neutrino_reference_common.yaml
+- observables/higgs.yaml
+- observables/lfv.yaml
+- observables/ew.yaml
+- observables/reference_aliases.yaml
+- constraints/theory_checks_reference_common.yaml
+- constraints/theory_checks_reference_h01.yaml
+- constraints/likelihoods_reference_normal.yaml
+- outputs_reference.yaml
+- scan_reference_mcmc.yaml

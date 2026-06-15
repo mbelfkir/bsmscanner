@@ -1,0 +1,18 @@
+metadata:
+  name: leptontest_de_scipy
+  version: 0.4.0
+  description: leptontest reference model configured for the SciPy differential-evolution reference backend
+  ordering: normal
+  tags:
+  - leptontest
+  - normal_ordering
+  - de_scipy_reference
+imports:
+- parameters.yaml
+- functions.yaml
+- derived.yaml
+- matrices.yaml
+- ../../core/neutrino/normal.yaml
+- constraints/likelihood.yaml
+- outputs.yaml
+- scan_de_scipy.yaml

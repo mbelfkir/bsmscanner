@@ -1,0 +1,50 @@
+metadata:
+  name: quadratic_example
+  version: 0.1.0
+  description: Lightweight deterministic example for installed-package smoke tests.
+
+parameters:
+  - name: x
+    value_type: real
+    scan: true
+    lower: -2.0
+    upper: 2.0
+    default: 0.0
+    prior: flat
+
+observables:
+  - name: x_obs
+    value_type: real
+    expression: x
+  - name: parabola
+    value_type: real
+    expression: (x - 0.25)**2
+
+theory_checks:
+  - name: finite_window
+    condition: abs(x) <= 2.0
+    fatal: true
+    message: x left the declared scan window.
+
+likelihoods:
+  - name: x_target
+    kind: gaussian
+    observable: x_obs
+    mean: 0.25
+    sigma: 0.1
+
+outputs:
+  save:
+    - x_obs
+    - parabola
+
+scan:
+  engine: serial_random
+  save_every: 1
+  seed: 12345
+  settings:
+    objective: nll
+    max_evaluations: 5
+    invalid_objective: 1.0e12
+    save_invalid_points: true
+    verbose: 0

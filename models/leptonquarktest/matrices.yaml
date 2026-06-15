@@ -1,0 +1,50 @@
+matrices:
+  Mnu:
+    value_type: complex_matrix
+    type: majorana_mass
+    role: neutrino
+    diagonalize: true
+    rows:
+      - ["n_scale*2*y1", "-n_scale*y3", "-n_scale*y2"]
+      - ["-n_scale*y3", "n_scale*2*y2", "-n_scale*y1"]
+      - ["-n_scale*y2", "-n_scale*y1", "n_scale*2*y3"]
+
+  Ml:
+    value_type: complex_matrix
+    type: dirac_mass
+    role: charged_lepton
+    diagonalize: true
+    rows:
+      - ["alpha", "0.0", "0.0"]
+      - ["0.0", "beta", "0.0"]
+      - ["0.0", "0.0", "gamma"]
+
+  Mu:
+    value_type: complex_matrix
+    type: complex_general
+    role: up_quark_mass
+    diagonalize:
+      method: svd
+      output:
+        masses: up_quark_masses
+        left_unitary: U_u_L
+        right_unitary: U_u_R
+    rows:
+      - ["Retau", "0.1", "0.0"]
+      - ["0.0", "0.0", "Imtau"]
+      - ["0.0", "1.0", "0.2"]
+
+  Md:
+    value_type: complex_matrix
+    type: complex_general
+    role: down_quark_mass
+    diagonalize:
+      method: svd
+      output:
+        masses: down_quark_masses
+        left_unitary: U_d_L
+        right_unitary: U_d_R
+    rows:
+      - ["y1", "0.0", "0.0"]
+      - ["0.0", "y2", "0.0"]
+      - ["0.0", "0.0", "y3"]

@@ -1,0 +1,5 @@
+# Exact dark-matter observables are intentionally absent in this milestone.
+# The original oneloop implementation delegates relic density and direct
+# detection to micrOMEGAs. This framework freeze only keeps the analytic
+# lightest-odd-state theory check in constraints/theory_checks.yaml.
+observables: []

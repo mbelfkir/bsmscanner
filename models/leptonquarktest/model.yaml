@@ -1,0 +1,23 @@
+metadata:
+  name: leptonquarktest
+  version: 0.1.0
+  description: Full lepton+quark reference model for reusable core observables.
+  ordering: inverted
+  tags:
+    - reference
+    - lepton_quark
+    - inverted_ordering
+
+imports:
+  - parameters.yaml
+  - functions.yaml
+  - derived.yaml
+  - matrices.yaml
+  - ../../core/neutrino/inverted.yaml
+  - ../../core/quark/ckm_from_left_rotations_descending_svd.yaml
+  - ../../core/quark/ckm_observables_from_descending_svd.yaml
+  - ../../core/quark/quark_mass_ratios.yaml
+  - constraints/lepton_likelihood.yaml
+  - constraints/quark_likelihood_toy.yaml
+  - outputs.yaml
+  - scan.yaml

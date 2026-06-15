@@ -1,0 +1,9 @@
+likelihoods:
+- name: relic_density
+  kind: gaussian
+  observable: Omega
+  mean: 0.1200
+  sigma: 0.0012
+- name: direct_detection_pvalue
+  kind: hard_cut
+  observable: DDexp_ok

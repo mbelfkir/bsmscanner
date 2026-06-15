@@ -1,0 +1,30 @@
+metadata:
+  name: oneloop_master_normal_full
+  version: 0.4.0
+  description: Full normal-ordering latest oneloop-master variant derived from config.yaml, with stale config-only parameters removed in favor of the current source formulas.
+  ordering: normal
+  tags:
+  - oneloop
+  - normal_ordering
+  - latest_master
+  - full_variant
+  - micromegas_optional
+imports:
+- parameters_normal_full.yaml
+- constants.yaml
+- ../oneloop/functions.yaml
+- derived_backend.yaml
+- ../oneloop/derived.yaml
+- ../oneloop/matrices.yaml
+- ../oneloop/diagonalizations.yaml
+- ../oneloop/observables/neutrino.yaml
+- observables/neutrino_extra.yaml
+- ../oneloop/observables/higgs.yaml
+- ../oneloop/observables/lfv.yaml
+- ../oneloop/observables/ew.yaml
+- ../oneloop/observables/scalar_sector.yaml
+- observables/dm.yaml
+- constraints/theory_checks.yaml
+- constraints/likelihoods_normal_full.yaml
+- outputs.yaml
+- scan.yaml

@@ -1,0 +1,10 @@
+scan:
+  engine: serial_random
+  save_every: 1
+  seed: 12345
+  settings:
+    objective: nll
+    max_evaluations: 20
+    invalid_objective: 1.0e12
+    save_invalid_points: true
+    verbose: 0

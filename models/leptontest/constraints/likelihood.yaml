@@ -1,0 +1,40 @@
+# Full config.yaml-like normal-ordering likelihood.
+# The original GetnLL() combines dm21 and dm3l in one term and returns early
+# if dm21 is already out of range. We keep that source behavior exact here.
+# addLambdaPenalty() remains disabled, matching the latest source.
+likelihoods:
+- name: s12_term
+  kind: gaussian
+  observable: s12
+  mean: 0.308
+  sigma: 0.0115
+- name: s13_term
+  kind: gaussian
+  observable: s13
+  mean: 0.02215
+  sigma: 0.00057
+- name: s23_term
+  kind: gaussian
+  observable: s23
+  mean: 0.470
+  sigma: 0.015
+- name: deltaCP_term
+  kind: gaussian
+  observable: deltaCP_deg
+  mean: 212
+  sigma: 33.5
+- name: m12_term
+  kind: gaussian
+  observable: dm21
+  mean: 7.49e-5
+  sigma: 0.19e-5
+- name: m3l_term
+  kind: gaussian
+  observable: dm3l
+  mean: 2.513e-3
+  sigma: 0.020e-3
+- name: sumOfMass
+  kind: hard_cut
+  observable: sum_m
+  lower: 0.0
+  upper: 0.12

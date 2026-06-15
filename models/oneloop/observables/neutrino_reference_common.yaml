@@ -1,0 +1,52 @@
+observables:
+- {name: neutrino_epsilon, value_type: real, expression: "1.0e-16"}
+- {name: s13, value_type: real, expression: "min(max(abs(Ue3)**2, 0.0), 1.0)"}
+- {name: c13_sq, value_type: real, expression: "max(1.0 - s13, neutrino_epsilon)"}
+- {name: s12, value_type: real, expression: "min(max(abs(Ue2)**2 / c13_sq, 0.0), 1.0)"}
+- {name: s23, value_type: real, expression: "min(max(abs(Umu3)**2 / c13_sq, 0.0), 1.0)"}
+- {name: Theta12, value_type: real, expression: s12}
+- {name: Theta13, value_type: real, expression: s13}
+- {name: Theta23, value_type: real, expression: s23}
+- {name: s12_root, value_type: real, expression: sqrt(s12)}
+- {name: c12_root, value_type: real, expression: "sqrt(max(1.0 - s12, 0.0))"}
+- {name: s23_root, value_type: real, expression: sqrt(s23)}
+- {name: c23_root, value_type: real, expression: "sqrt(max(1.0 - s23, 0.0))"}
+- {name: s13_root, value_type: real, expression: sqrt(s13)}
+- {name: c13_root, value_type: real, expression: sqrt(c13_sq)}
+- {name: J, value_type: real, expression: imag(Ue1 * Umu2 * conj(Ue2) * conj(Umu1))}
+- {name: Jmax, value_type: real, expression: s12_root*c12_root*s23_root*c23_root*s13_root*c13_sq}
+- {name: delta_sin, value_type: real, expression: "min(max(J / max(Jmax, neutrino_epsilon), -1.0), 1.0)"}
+- name: delta_cos
+  value_type: real
+  expression: >
+    min(max(
+      (
+        abs(Umu1)**2
+        - s12*c23_root**2
+        - (1.0 - s12)*s23*s13
+      ) / max(2.0*s12_root*c12_root*s23_root*c23_root*s13_root, neutrino_epsilon),
+      -1.0
+    ), 1.0)
+- {name: deltaCP_raw, value_type: real, expression: "atan2(delta_sin, delta_cos)"}
+- {name: deltaCP, value_type: real, expression: "fmod(fmod(deltaCP_raw, 2*pi) + 2*pi, 2*pi)"}
+- {name: deltaCP_deg, value_type: real, expression: "if_else(deltaCP*180/pi > 180, deltaCP*180/pi - 360, deltaCP*180/pi)"}
+- {name: delta_cp_rad, value_type: real, expression: deltaCP}
+- {name: delta_cp_deg, value_type: real, expression: deltaCP*180/pi}
+- {name: alpha21, value_type: real, expression: "fmod(fmod(2*arg(Ue2/Ue1), 2*pi) + 2*pi, 2*pi)"}
+- {name: alpha31, value_type: real, expression: "fmod(fmod(2*(arg(Ue3/Ue1) + deltaCP), 2*pi) + 2*pi, 2*pi)"}
+- {name: alpha21_rad, value_type: real, expression: alpha21}
+- {name: alpha31_rad, value_type: real, expression: alpha31}
+- {name: alpha21_deg, value_type: real, expression: alpha21*180/pi}
+- {name: alpha31_deg, value_type: real, expression: alpha31*180/pi}
+- {name: eta1, value_type: real, expression: alpha21/(2*pi)}
+- {name: eta2, value_type: real, expression: alpha31/(2*pi)}
+- {name: sum_m, value_type: real, expression: m1 + m2 + m3}
+- {name: sum_mnu_eV, value_type: real, expression: sum_m}
+- {name: log10_dm21, value_type: real, expression: "log(max(dm21, 1.0e-30))/log(10)"}
+- {name: dm3l_meV, value_type: real, expression: dm3l*1.0e3}
+- {name: mbeta, value_type: real, expression: sqrt(abs(Ue1)**2*m1**2 + abs(Ue2)**2*m2**2 + abs(Ue3)**2*m3**2)}
+- {name: mbetabeta, value_type: real, expression: abs(Ue1**2*m1 + Ue2**2*m2 + Ue3**2*m3)}
+- {name: mbeta_eV, value_type: real, expression: mbeta}
+- {name: mbetabeta_eV, value_type: real, expression: mbetabeta}
+- {name: scale, value_type: real, expression: "1.0"}
+- {name: Lambda, value_type: real, expression: scale}

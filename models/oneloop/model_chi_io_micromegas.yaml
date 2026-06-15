@@ -1,0 +1,7 @@
+imports:
+- model_chi_io.yaml
+- observables/dm_backend_reference_chi.yaml
+- constraints/theory_checks_reference_dm.yaml
+- constraints/likelihoods_reference_dm.yaml
+- outputs_reference_dm.yaml
+- staged_evaluation_micromegas.yaml

@@ -1,0 +1,31 @@
+matrices:
+- name: lepton_mass_matrix
+  value_type: complex_matrix
+  type: dirac_mass
+  role: charged_lepton
+  diagonalize: true
+  rows:
+  - - "me_over_mtau"
+    - "0.0"
+    - "0.0"
+  - - "0.0"
+    - "mmu_over_mtau"
+    - "0.0"
+  - - "0.0"
+    - "0.0"
+    - "1.0"
+- name: neutrino_mass_matrix
+  value_type: complex_matrix
+  type: majorana_mass
+  role: neutrino
+  diagonalize: true
+  rows:
+  - - 2*y1
+    - -1*y3
+    - -1*y2
+  - - -1*y3
+    - 2*y2
+    - -1*y1
+  - - -1*y2
+    - -1*y1
+    - 2*y3

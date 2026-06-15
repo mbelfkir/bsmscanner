@@ -1,0 +1,7 @@
+derived_scalars:
+- name: thetah_backend
+  value_type: real
+  expression: asin(sqrt(max(0.0, min(1.0, sh))))
+- name: thetaa_backend
+  value_type: real
+  expression: -atan(MHA12 / MA02sq_denom)

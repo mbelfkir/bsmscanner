@@ -1,0 +1,97 @@
+[build-system]
+requires = [
+  "scikit-build-core>=0.10",
+  "pybind11>=2.12",
+]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "bsm-scanner"
+version = "0.1.0"
+description = "Graph-compiled BSM model scanner with Python frontend and C++ evaluation core."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "BSMScanner contributors" },
+]
+maintainers = [
+  { name = "BSMScanner contributors" },
+]
+keywords = ["bsm", "physics", "parameter-scan", "likelihood", "neutrino"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: C++",
+  "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+  "numpy>=1.24",
+  "PyYAML>=6.0",
+]
+
+[project.scripts]
+bsm-scanner = "bsm_scanner.cli:main"
+
+[project.optional-dependencies]
+analysis = [
+  "matplotlib>=3.8",
+  "pandas>=2.0",
+]
+de = [
+  "scipy>=1.11",
+]
+posterior = [
+  "emcee>=3.1",
+]
+dev = [
+  "pytest>=8.0",
+  "build>=1.2",
+  "twine>=5.0",
+  "ruff>=0.5",
+]
+
+[tool.scikit-build]
+wheel.packages = ["python/bsm_scanner"]
+minimum-version = "0.10"
+sdist.exclude = [
+  "/.venv",
+  "/archives",
+  "/artifacts",
+  "/build",
+  "/dist",
+  "/results",
+  "/.pytest_cache",
+  "/.mypy_cache",
+  "/.ruff_cache",
+  "/**/__pycache__",
+  "/**/.DS_Store",
+  "/**/*.so",
+  "/**/*.dylib",
+  "/**/*.pyd",
+  "/examples/*/runs",
+  "/models/*/runs",
+  "/benchmarks/runs",
+  "/*.egg-info",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["python"]
+testpaths = ["tests"]
+
+[tool.ruff]
+exclude = [
+  ".venv",
+  "archives",
+  "artifacts",
+  "build",
+  "dist",
+  "results",
+  "examples/*/runs",
+  "models/*/runs",
+  "benchmarks/runs",
+]

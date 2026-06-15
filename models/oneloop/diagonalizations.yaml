@@ -1,0 +1,22 @@
+diagonalizations:
+- name: neutrino_svd
+  input: neutrino_mass_matrix
+  method: svd_complex
+- name: S1_eigen
+  input: S_matrix_1
+  method: self_adjoint_eigen
+- name: S2_eigen
+  input: S_matrix_2
+  method: self_adjoint_eigen
+- name: S3_eigen
+  input: S_matrix_3
+  method: self_adjoint_eigen
+- name: S4_eigen
+  input: S_matrix_4
+  method: self_adjoint_eigen
+- name: S5_eigen
+  input: S_matrix_5
+  method: self_adjoint_eigen
+- name: S6_eigen
+  input: S_matrix_6
+  method: self_adjoint_eigen

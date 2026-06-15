@@ -1,0 +1,79 @@
+# Reorder a CKM matrix built directly from SVD rotations before extracting
+# physical CKM observables. Eigen's SVD returns singular vectors ordered from
+# largest to smallest mass, i.e. (t,c,u) and (b,s,d), while CKM observables use
+# the physical light-to-heavy order (u,c,t) x (d,s,b).
+imports:
+- ckm_observables.yaml
+
+observables:
+- name: V_CKM_desc_00
+  value_type: complex
+  projection:
+    from: V_CKM_descending
+    quantity: matrix
+    row: 0
+    col: 0
+- name: V_CKM_desc_01
+  value_type: complex
+  projection:
+    from: V_CKM_descending
+    quantity: matrix
+    row: 0
+    col: 1
+- name: V_CKM_desc_02
+  value_type: complex
+  projection:
+    from: V_CKM_descending
+    quantity: matrix
+    row: 0
+    col: 2
+- name: V_CKM_desc_10
+  value_type: complex
+  projection:
+    from: V_CKM_descending
+    quantity: matrix
+    row: 1
+    col: 0
+- name: V_CKM_desc_11
+  value_type: complex
+  projection:
+    from: V_CKM_descending
+    quantity: matrix
+    row: 1
+    col: 1
+- name: V_CKM_desc_12
+  value_type: complex
+  projection:
+    from: V_CKM_descending
+    quantity: matrix
+    row: 1
+    col: 2
+- name: V_CKM_desc_20
+  value_type: complex
+  projection:
+    from: V_CKM_descending
+    quantity: matrix
+    row: 2
+    col: 0
+- name: V_CKM_desc_21
+  value_type: complex
+  projection:
+    from: V_CKM_descending
+    quantity: matrix
+    row: 2
+    col: 1
+- name: V_CKM_desc_22
+  value_type: complex
+  projection:
+    from: V_CKM_descending
+    quantity: matrix
+    row: 2
+    col: 2
+
+matrices:
+  V_CKM:
+    value_type: complex_matrix
+    rows:
+      - ["V_CKM_desc_22", "V_CKM_desc_21", "V_CKM_desc_20"]
+      - ["V_CKM_desc_12", "V_CKM_desc_11", "V_CKM_desc_10"]
+      - ["V_CKM_desc_02", "V_CKM_desc_01", "V_CKM_desc_00"]

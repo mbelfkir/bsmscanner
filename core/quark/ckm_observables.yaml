@@ -1,0 +1,218 @@
+constants:
+- name: ckm_epsilon
+  value: 1.0e-15
+
+observables:
+- name: Vud_complex
+  value_type: complex
+  projection:
+    from: V_CKM
+    quantity: matrix
+    row: 0
+    col: 0
+- name: Vus_complex
+  value_type: complex
+  projection:
+    from: V_CKM
+    quantity: matrix
+    row: 0
+    col: 1
+- name: Vub_complex
+  value_type: complex
+  projection:
+    from: V_CKM
+    quantity: matrix
+    row: 0
+    col: 2
+- name: Vcd_complex
+  value_type: complex
+  projection:
+    from: V_CKM
+    quantity: matrix
+    row: 1
+    col: 0
+- name: Vcs_complex
+  value_type: complex
+  projection:
+    from: V_CKM
+    quantity: matrix
+    row: 1
+    col: 1
+- name: Vcb_complex
+  value_type: complex
+  projection:
+    from: V_CKM
+    quantity: matrix
+    row: 1
+    col: 2
+- name: Vtd_complex
+  value_type: complex
+  projection:
+    from: V_CKM
+    quantity: matrix
+    row: 2
+    col: 0
+- name: Vts_complex
+  value_type: complex
+  projection:
+    from: V_CKM
+    quantity: matrix
+    row: 2
+    col: 1
+- name: Vtb_complex
+  value_type: complex
+  projection:
+    from: V_CKM
+    quantity: matrix
+    row: 2
+    col: 2
+
+- name: Vud
+  value_type: real
+  expression: abs(Vud_complex)
+- name: Vus
+  value_type: real
+  expression: abs(Vus_complex)
+- name: Vub
+  value_type: real
+  expression: abs(Vub_complex)
+- name: Vcd
+  value_type: real
+  expression: abs(Vcd_complex)
+- name: Vcs
+  value_type: real
+  expression: abs(Vcs_complex)
+- name: Vcb
+  value_type: real
+  expression: abs(Vcb_complex)
+- name: Vtd
+  value_type: real
+  expression: abs(Vtd_complex)
+- name: Vts
+  value_type: real
+  expression: abs(Vts_complex)
+- name: Vtb
+  value_type: real
+  expression: abs(Vtb_complex)
+
+- name: s13_q
+  value_type: real
+  expression: min(max(Vub, 0.0), 1.0)
+- name: theta13_q
+  value_type: real
+  expression: asin(s13_q)
+- name: theta12_q
+  value_type: real
+  expression: atan(Vus / max(Vud, ckm_epsilon))
+- name: theta23_q
+  value_type: real
+  expression: atan(Vcb / max(Vtb, ckm_epsilon))
+- name: theta12_q_deg
+  value_type: real
+  expression: theta12_q * 180 / pi
+- name: theta13_q_deg
+  value_type: real
+  expression: theta13_q * 180 / pi
+- name: theta23_q_deg
+  value_type: real
+  expression: theta23_q * 180 / pi
+- name: t12
+  value_type: real
+  expression: theta12_q_deg
+- name: t13
+  value_type: real
+  expression: theta13_q_deg
+- name: t23
+  value_type: real
+  expression: theta23_q_deg
+- name: s12_q
+  value_type: real
+  expression: sin(theta12_q)
+- name: s23_q
+  value_type: real
+  expression: sin(theta23_q)
+- name: s12_q_sq
+  value_type: real
+  expression: s12_q**2
+- name: s13_q_sq
+  value_type: real
+  expression: s13_q**2
+- name: s23_q_sq
+  value_type: real
+  expression: s23_q**2
+
+- name: ckm_delta_denominator1
+  value_type: real
+  expression: abs(cos(theta12_q) * cos(theta13_q)**2 * cos(theta23_q) * sin(theta13_q))
+- name: ckm_delta_denominator2
+  value_type: real
+  expression: abs(sin(theta12_q) * sin(theta23_q))
+- name: ckm_delta_phase_argument
+  value_type: complex
+  expression: >
+    (
+      (
+        conj(Vud_complex) * Vub_complex * Vtd_complex * conj(Vtb_complex)
+      ) / max(ckm_delta_denominator1, ckm_epsilon)
+      + cos(theta12_q) * cos(theta23_q) * sin(theta13_q)
+    ) / max(ckm_delta_denominator2, ckm_epsilon)
+- name: deltaCKM_raw
+  value_type: real
+  expression: -arg(ckm_delta_phase_argument)
+- name: deltaCKM
+  value_type: real
+  expression: fmod(fmod(deltaCKM_raw, 2*pi) + 2*pi, 2*pi)
+- name: deltaCKM_deg
+  value_type: real
+  expression: deltaCKM * 180 / pi
+- name: deltaCKM_over_pi
+  value_type: real
+  expression: deltaCKM / pi
+- name: dq
+  value_type: real
+  expression: deltaCKM_deg
+
+- name: J_CKM
+  value_type: real
+  expression: imag(Vud_complex * Vcs_complex * conj(Vus_complex) * conj(Vcd_complex))
+- name: J_CKM_abs
+  value_type: real
+  expression: abs(J_CKM)
+- name: J_CKM_standard
+  value_type: real
+  expression: >
+    cos(theta12_q) * cos(theta23_q) * cos(theta13_q)**2
+    * s12_q * s23_q * s13_q * sin(deltaCKM)
+
+- name: wolfenstein_lambda
+  value_type: real
+  expression: Vus / max(sqrt(Vud**2 + Vus**2), ckm_epsilon)
+- name: wolfenstein_A
+  value_type: real
+  expression: (1 / max(wolfenstein_lambda, ckm_epsilon)) * (Vcb / max(Vus, ckm_epsilon))
+- name: ckm_wolfenstein_denominator_abs
+  value_type: real
+  expression: abs(Vcd_complex * conj(Vcb_complex))
+- name: ckm_wolfenstein_ratio
+  value_type: complex
+  expression: >
+    -(Vud_complex * conj(Vub_complex))
+    / if_else(
+        ckm_wolfenstein_denominator_abs > ckm_epsilon,
+        Vcd_complex * conj(Vcb_complex),
+        ckm_epsilon + 0j
+      )
+- name: wolfenstein_rhobar
+  value_type: real
+  expression: real(ckm_wolfenstein_ratio)
+- name: wolfenstein_etabar
+  value_type: real
+  expression: imag(ckm_wolfenstein_ratio)
+
+theory_checks:
+- name: ckm_phase_denominator_valid
+  condition: ckm_delta_denominator1 > ckm_epsilon and ckm_delta_denominator2 > ckm_epsilon
+  message: ckm_phase_denominator_zero
+- name: ckm_wolfenstein_denominator_valid
+  condition: ckm_wolfenstein_denominator_abs > ckm_epsilon and Vus > ckm_epsilon and wolfenstein_lambda > ckm_epsilon
+  message: wolfenstein_denominator_zero

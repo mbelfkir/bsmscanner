@@ -1,0 +1,28 @@
+observables:
+- name: ObliqueT
+  value_type: real
+  expression: >
+    (
+      ch * F(MH1**2, Mphi**2)
+      + sh * F(MH2**2, Mphi**2)
+      + ca * F(MA1**2, Mphi**2)
+      + sa * F(MA2**2, Mphi**2)
+      - ch * ca * F(MH1**2, MA1**2)
+      - ch * sa * F(MH1**2, MA2**2)
+      - sh * ca * F(MH2**2, MA1**2)
+      - sh * sa * F(MH2**2, MA2**2)
+    ) / (16 * pi * sin_w**2 * mW**2)
+- name: ObliqueS
+  value_type: real
+  expression: >
+    (
+      (2*sin_w**2 - 1) * G(Mphi**2, Mphi**2, mZ**2)
+      + ch * ca * G(MH1**2, MA1**2, mZ**2)
+      + ch * sa * G(MH1**2, MA2**2, mZ**2)
+      + sh * ca * G(MH2**2, MA1**2, mZ**2)
+      + sh * sa * G(MH2**2, MA2**2, mZ**2)
+      + ch * log(MH1**2 / Mphi**2)
+      + sh * log(MH2**2 / Mphi**2)
+      + ca * log(MA1**2 / Mphi**2)
+      + sa * log(MA2**2 / Mphi**2)
+    ) / (24 * pi)
