@@ -1,0 +1,38 @@
+# FlavorPy arXiv:2006.03058 example-style likelihood for normal ordering.
+# The CP phase is intentionally excluded, matching the FlavorPy fit setup.
+likelihoods:
+- name: me_over_mu_term
+  kind: gaussian
+  observable: me_over_mu
+  mean: 0.0048
+  sigma: 0.0002
+- name: mu_over_tau_term
+  kind: gaussian
+  observable: mu_over_tau
+  mean: 0.0565
+  sigma: 0.002
+- name: s12_sq_term
+  kind: gaussian
+  observable: s12_sq
+  mean: 0.305
+  sigma: 0.012
+- name: s13_sq_term
+  kind: gaussian
+  observable: s13_sq
+  mean: 0.0222
+  sigma: 0.0006
+- name: s23_sq_term
+  kind: gaussian
+  observable: s23_sq
+  mean: 0.455
+  sigma: 0.02
+- name: dm21_term
+  kind: gaussian
+  observable: dm21
+  mean: 7.42e-5
+  sigma: 0.21e-5
+- name: dm3l_term
+  kind: gaussian
+  observable: dm3l
+  mean: 2.506e-3
+  sigma: 0.03e-3

@@ -1,0 +1,28 @@
+metadata:
+  name: weinberg_multi_island_no
+  version: 0.1.0
+  description: Fresh Weinberg-operator modular S4 normal-ordering model with multi-island basin_scan strategy.
+  ordering: normal
+  tags:
+    - arxiv2006_03058
+    - weinberg_operator
+    - normal_ordering
+    - basin_scan
+    - manifold_refocus
+    - ml_focus
+
+imports:
+  - ../arxiv2006_03058_weinberg/parameters.yaml
+  - ../arxiv2006_03058_weinberg/constants.yaml
+  - ../arxiv2006_03058_weinberg/functions.yaml
+  - ../arxiv2006_03058_weinberg/derived.yaml
+  - ../arxiv2006_03058_weinberg/matrices.yaml
+  - ../../core/constants/physics_constants.yaml
+  - ../arxiv2006_03058_weinberg/constants_no.yaml
+  - ../../core/neutrino/observables_common.yaml
+  - ../../core/neutrino/observables_normal.yaml
+  - ../arxiv2006_03058_weinberg/aliases.yaml
+  - ../arxiv2006_03058_weinberg/likelihoods_no.yaml
+  - ../arxiv2006_03058_weinberg/outputs.yaml
+  - guided_sampling.yaml
+  - scan_strategy_smoke.yaml

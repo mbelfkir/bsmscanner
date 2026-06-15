@@ -1,0 +1,79 @@
+observables:
+- name: Omega
+  value_type: real
+  plugin_call:
+    plugin: oneloop_micromegas
+    function: omega
+    bindings: &oneloop_micromegas_bindings
+      Mchi: Mpsi
+      MN: MN
+      mphich: Mphi
+      MA01: MA1
+      MA02: MA2
+      MH01: MH1
+      MH02: MH2
+      thetah: thetah_backend
+      thetaa: thetaa_backend
+      l2: lambda2
+      l3: lambda3
+      k1: k1
+      k4: k4
+      k5: k5
+      Y1r1: ReYe
+      Y1r2: ReYmu
+      Y1r3: ReYtau
+      Y1i1: ImgYe
+      Y1i2: ImgYmu
+      Y1i3: ImgYtau
+      ynr1: Reye
+      ynr2: Reymu
+      ynr3: Reytau
+      yni1: Imgye
+      yni2: Imgymu
+      yni3: Imgytau
+      ypr11: Reyp
+      ypi11: Imgyp
+      Mh: mh_ref
+      dm_target_name: dm_target_name
+- name: SIxsec
+  value_type: real
+  plugin_call:
+    plugin: oneloop_micromegas
+    function: sigma_si
+    bindings: *oneloop_micromegas_bindings
+- name: xsecSI
+  value_type: real
+  expression: SIxsec
+- name: DD_pvalue
+  value_type: real
+  plugin_call:
+    plugin: oneloop_micromegas
+    function: dd_pvalue
+    bindings: *oneloop_micromegas_bindings
+- name: DMCandidateMass
+  value_type: real
+  plugin_call:
+    plugin: oneloop_micromegas
+    function: candidate_mass
+    bindings: *oneloop_micromegas_bindings
+- name: darkMatter
+  value_type: string
+  plugin_call:
+    plugin: oneloop_micromegas
+    function: candidate_name
+    bindings: *oneloop_micromegas_bindings
+- name: DM_target_match
+  value_type: bool
+  plugin_call:
+    plugin: oneloop_micromegas
+    function: target_match
+    bindings: *oneloop_micromegas_bindings
+- name: DM_candidate_valid
+  value_type: bool
+  plugin_call:
+    plugin: oneloop_micromegas
+    function: candidate_valid
+    bindings: *oneloop_micromegas_bindings
+- name: DDexp_ok
+  value_type: bool
+  expression: DD_pvalue >= dd_pvalue_threshold

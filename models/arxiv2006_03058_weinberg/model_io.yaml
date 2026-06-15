@@ -1,0 +1,25 @@
+metadata:
+  name: arxiv2006_03058_weinberg_io
+  version: 0.1.0
+  description: Weinberg-operator modular S4 lepton-sector model based on FlavorPy arXiv:2006.03058, inverted ordering.
+  ordering: inverted
+  tags:
+    - flavorpy
+    - arxiv2006_03058
+    - weinberg_operator
+    - inverted_ordering
+
+imports:
+  - parameters.yaml
+  - constants.yaml
+  - functions.yaml
+  - derived.yaml
+  - matrices.yaml
+  - ../../core/constants/physics_constants.yaml
+  - constants_io.yaml
+  - ../../core/neutrino/observables_common.yaml
+  - ../../core/neutrino/observables_inverted.yaml
+  - aliases.yaml
+  - likelihoods_io.yaml
+  - outputs.yaml
+  - scan_de_scipy.yaml

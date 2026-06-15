@@ -1,0 +1,174 @@
+observables:
+- name: m1_raw
+  value_type: real
+  projection:
+    from: neutrino_svd
+    quantity: singular_values
+    index: 1
+- name: m2_raw
+  value_type: real
+  projection:
+    from: neutrino_svd
+    quantity: singular_values
+    index: 0
+- name: m3_raw
+  value_type: real
+  projection:
+    from: neutrino_svd
+    quantity: singular_values
+    index: 2
+- name: Ue1
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 0
+    col: 1
+- name: Ue2
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 0
+    col: 0
+- name: Ue3
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 0
+    col: 2
+- name: Umu1
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 1
+    col: 1
+- name: Umu2
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 1
+    col: 0
+- name: Umu3
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 1
+    col: 2
+- name: Utau1
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 2
+    col: 1
+- name: Utau2
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 2
+    col: 0
+- name: Utau3
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 2
+    col: 2
+- name: theta13_angle
+  value_type: real
+  expression: asin(abs(Ue3))
+- name: theta12_angle
+  value_type: real
+  expression: atan(abs(Ue2) / abs(Ue1))
+- name: theta23_angle
+  value_type: real
+  expression: atan(abs(Umu3) / abs(Utau3))
+- name: delta_numerator
+  value_type: complex
+  expression: conj(Ue1) * Ue3 * Utau1 * conj(Utau3)
+- name: delta_denominator
+  value_type: real
+  expression: >
+    (
+      cos(theta12_angle) * cos(theta13_angle)**2 * cos(theta23_angle) * sin(theta13_angle)
+      +
+      cos(theta12_angle) * cos(theta23_angle) * sin(theta13_angle)
+    ) / (sin(theta12_angle) * sin(theta23_angle))
+- name: deltaCP_raw
+  value_type: real
+  expression: arg(delta_numerator / delta_denominator)
+- name: deltaCP
+  value_type: real
+  expression: if_else(deltaCP_raw < 0, deltaCP_raw + 2*pi, deltaCP_raw)
+- name: eta1
+  value_type: real
+  expression: fmod(arg(Ue1 / Ue3) / pi - deltaCP, 2)
+- name: eta2
+  value_type: real
+  expression: fmod(arg(Ue2 / Ue3) / pi - deltaCP, 2)
+- name: Theta12
+  value_type: real
+  expression: sin(theta12_angle)**2
+- name: Theta13
+  value_type: real
+  expression: sin(theta13_angle)**2
+- name: Theta23
+  value_type: real
+  expression: sin(theta23_angle)**2
+- name: dm21_raw
+  value_type: real
+  expression: m2_raw**2 - m1_raw**2
+- name: dm3l_raw
+  value_type: real
+  expression: m3_raw**2 - m2_raw**2
+- name: scale
+  value_type: real
+  expression: sqrt((bf_dm21 / dm21_raw + bf_dm3l / dm3l_raw) / 2)
+- name: m1
+  value_type: real
+  expression: m1_raw * scale
+- name: m2
+  value_type: real
+  expression: m2_raw * scale
+- name: m3
+  value_type: real
+  expression: m3_raw * scale
+- name: dm21
+  value_type: real
+  expression: scale**2 * dm21_raw
+- name: dm3l
+  value_type: real
+  expression: scale**2 * dm3l_raw
+- name: sum_m
+  value_type: real
+  expression: m1 + m2 + m3
+- name: deltaCP_deg
+  value_type: real
+  expression: >
+    if_else((deltaCP * 180 / pi) > 180, (deltaCP * 180 / pi) - 360, deltaCP * 180 / pi)
+- name: log10_dm21
+  value_type: real
+  expression: log(max(dm21, 1.0e-30)) / log(10)
+- name: dm3l_meV
+  value_type: real
+  expression: dm3l * 1.0e3
+- name: mbeta
+  value_type: real
+  expression: >
+    sqrt(m3**2 + dm21 * (1 - Theta12) * (1 - Theta13) - dm3l * (1 - Theta13))
+- name: mbetabeta
+  value_type: real
+  expression: >
+    abs(
+      m3 * Theta13
+      +
+      sqrt(m3**2 - dm3l) * Theta12 * (1 - Theta13) * exp(1j * 2*pi * (eta2 + deltaCP))
+      +
+      sqrt(m3**2 - dm3l - dm21) * (1 - Theta12) * (1 - Theta13) * exp(1j * 2*pi * (eta1 + deltaCP))
+    )

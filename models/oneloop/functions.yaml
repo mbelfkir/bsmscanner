@@ -1,0 +1,248 @@
+functions:
+- name: I3
+  args:
+  - Mphi_eff
+  - Mphip_eff
+  - Mpsi_eff
+  expression: >
+    -(
+      (Mphi_eff**2 * log((Mpsi_eff**2) / (Mphi_eff**2))) /
+      ((Mphi_eff**2 - Mphip_eff**2) * (Mphi_eff**2 - Mpsi_eff**2))
+      +
+      (Mphip_eff**2 * log((Mpsi_eff**2) / (Mphip_eff**2))) /
+      ((Mphip_eff**2 - Mphi_eff**2) * (Mphip_eff**2 - Mpsi_eff**2))
+    ) / ((4*pi) * (4*pi))
+- name: F
+  args:
+  - x
+  - y
+  expression: >
+    if_else(
+      x == y,
+      0.0,
+      ((x + y) / 2.0) - ((x * y) / (x - y)) * log(x / y)
+    )
+- name: F2
+  args:
+  - x
+  expression: >
+    (1 - 6*x + 3*x**2 + 2*x**3 - 6*x**2*log(x)) / (6 * (1 - x)**4)
+- name: ft
+  args:
+  - t
+  - r
+  expression: >
+    if_else(
+      r == 0.0,
+      0.0,
+      if_else(
+        r > 0.0,
+        sqrt(r) * log(abs((t - sqrt(r)) / (t + sqrt(r)))),
+        2.0 * sqrt(-r) * atan2(sqrt(-r), t)
+      )
+    )
+- name: G
+  args:
+  - x
+  - y
+  - Q
+  expression: >
+    if_else(
+      (x > 0.0) and (y > 0.0) and (abs(x - y) > 0.001 * x),
+      (
+        (-16.0 / 3.0)
+        + 5.0 * ((x + y) / Q)
+        - 2.0 * (((x - y)**2) / Q**2)
+        + (3.0 / Q) *
+          (((x**2 + y**2) / (x - y)) - ((x**2 - y**2) / Q) + (((x - y)**3) / (3.0 * Q**2))) *
+          log(x / y)
+        + ((Q**2 - 2.0 * Q * (x + y) + (x - y)**2) / Q**3) *
+          ft(x + y - Q, Q**2 - 2.0 * Q * (x + y) + (x - y)**2)
+      ),
+      (
+        (-16.0 / 3.0)
+        + 5.0 * ((x + y) / Q)
+        - 2.0 * (((x - y)**2) / Q**2)
+        + (3.0 / Q) *
+          (
+            (
+              (x**2 + y**2)
+              - ((x**2 - y**2) * (x - y) / Q)
+              + (((x - y)**4) / (3.0 * Q**2))
+            ) / y
+          ) *
+          (
+            1.0
+            - ((x - y) / y) / 2.0
+            + (((x - y) / y)**2) / 3.0
+            - (((x - y) / y)**3) / 4.0
+            + (((x - y) / y)**4) / 5.0
+          )
+        + ((Q**2 - 2.0 * Q * (x + y) + (x - y)**2) / Q**3) *
+          ft(x + y - Q, Q**2 - 2.0 * Q * (x + y) + (x - y)**2)
+      )
+    )
+- name: G2
+  args:
+  - x
+  expression: >
+    (2 - 9*x + 18*x**2 - 11*x**3 + 6*x**3*log(x)) / (6 * (1 - x)**4)
+- name: D1
+  args:
+  - x
+  expression: >
+    (-1 + x**2 - 2*x*log(x)) / (1 - x)**3
+- name: D2
+  args:
+  - x
+  expression: >
+    (-2 + 2*x - (1 + x)*log(x)) / (1 - x)**3
+- name: f
+  value_type: complex
+  args:
+  - tau_i
+  expression: >
+    if_else(
+      tau_i >= 1.0,
+      asin(1.0 / sqrt(tau_i))**2,
+      -(1.0 / 4.0) *
+      (log((1 + sqrt(1 - tau_i)) / (1 - sqrt(1 - tau_i))) - 1j*pi)**2
+    )
+- name: LeptonGammaAmplitude
+  value_type: complex
+  args:
+  - y_alpha
+  - y_beta
+  - mpsi
+  - mphi
+  expression: >
+    ((conj(y_beta) * y_alpha) / (2 * (4*pi)**2 * mphi**2)) * F2((mpsi**2) / (mphi**2))
+- name: LeptonGammaBR
+  args:
+  - y_alpha
+  - y_beta
+  - br_ab
+  - mpsi
+  - mphi
+  expression: >
+    ((3 * (4*pi)**3 * alpha_em) / (4 * GF**2)) * abs(LeptonGammaAmplitude(y_alpha, y_beta, mpsi, mphi))**2 * br_ab
+- name: TriLeptonBR
+  args:
+  - m_alpha
+  - m_beta
+  - y_alpha
+  - y_beta
+  - br_ab
+  - mpsi
+  - mphi
+  expression: >
+    (
+      (3 * (4*pi)**2 * alpha_em**2) / (8 * GF**2)
+    ) * (
+      (
+        abs(
+          ((conj(y_beta) * y_alpha) / (6 * (4*pi)**2 * mphi**2)) *
+          G2((mpsi**2) / (mphi**2))
+        )**2
+        +
+        abs(LeptonGammaAmplitude(y_alpha, y_beta, mpsi, mphi))**2 *
+        ((16.0 / 3.0) * log(m_alpha / m_beta) - (22.0 / 3.0))
+      )
+      +
+      (1.0 / 6.0) *
+      abs(
+        (
+          0.5 * D1((mpsi**2) / (mphi**2)) * conj(y_beta) * y_beta * conj(y_beta) * y_alpha
+          +
+          abs((mpsi**2) / (mphi**2)) * D2((mpsi**2) / (mphi**2)) *
+          conj(y_beta) * conj(y_beta) * y_beta * y_alpha
+        ) / (4*pi*mphi*e_em)**2
+      )**2
+      +
+      real(
+        (-2.0) *
+        (
+          ((conj(y_beta) * y_alpha) / (6 * (4*pi)**2 * mphi**2)) *
+          G2((mpsi**2) / (mphi**2))
+        ) * conj(LeptonGammaAmplitude(y_alpha, y_beta, mpsi, mphi))
+        +
+        (1.0 / 3.0) *
+        (
+          ((conj(y_beta) * y_alpha) / (6 * (4*pi)**2 * mphi**2)) *
+          G2((mpsi**2) / (mphi**2))
+        ) *
+        conj(
+          (
+            0.5 * D1((mpsi**2) / (mphi**2)) * conj(y_beta) * y_beta * conj(y_beta) * y_alpha
+            +
+            abs((mpsi**2) / (mphi**2)) * D2((mpsi**2) / (mphi**2)) *
+            conj(y_beta) * conj(y_beta) * y_beta * y_alpha
+          ) / (4*pi*mphi*e_em)**2
+        )
+        -
+        (2.0 / 3.0) *
+        LeptonGammaAmplitude(y_alpha, y_beta, mpsi, mphi) *
+        conj(
+          (
+            0.5 * D1((mpsi**2) / (mphi**2)) * conj(y_beta) * y_beta * conj(y_beta) * y_alpha
+            +
+            abs((mpsi**2) / (mphi**2)) * D2((mpsi**2) / (mphi**2)) *
+            conj(y_beta) * conj(y_beta) * y_beta * y_alpha
+          ) / (4*pi*mphi*e_em)**2
+        )
+        +
+        (-2.0) *
+        conj(
+          ((conj(y_beta) * y_alpha) / (6 * (4*pi)**2 * mphi**2)) *
+          G2((mpsi**2) / (mphi**2))
+        ) * LeptonGammaAmplitude(y_alpha, y_beta, mpsi, mphi)
+        +
+        (1.0 / 3.0) *
+        conj(
+          ((conj(y_beta) * y_alpha) / (6 * (4*pi)**2 * mphi**2)) *
+          G2((mpsi**2) / (mphi**2))
+        ) *
+        (
+          (
+            0.5 * D1((mpsi**2) / (mphi**2)) * conj(y_beta) * y_beta * conj(y_beta) * y_alpha
+            +
+            abs((mpsi**2) / (mphi**2)) * D2((mpsi**2) / (mphi**2)) *
+            conj(y_beta) * conj(y_beta) * y_beta * y_alpha
+          ) / (4*pi*mphi*e_em)**2
+        )
+        -
+        (2.0 / 3.0) *
+        conj(LeptonGammaAmplitude(y_alpha, y_beta, mpsi, mphi)) *
+        (
+          (
+            0.5 * D1((mpsi**2) / (mphi**2)) * conj(y_beta) * y_beta * conj(y_beta) * y_alpha
+            +
+            abs((mpsi**2) / (mphi**2)) * D2((mpsi**2) / (mphi**2)) *
+            conj(y_beta) * conj(y_beta) * y_beta * y_alpha
+          ) / (4*pi*mphi*e_em)**2
+        )
+      )
+      +
+      (1.0 / 3.0) * (
+        2.0 *
+        abs(
+          (
+            (-(g2 / cos_w) * sin_w**2) /
+            (g2**2 * sin_w**2 * mZ**2)
+          ) *
+          ((conj(y_beta) * y_alpha * m_alpha * m_beta * g2) /
+           (2 * (4*pi)**2 * mphi**2 * cos_w)) *
+          F2((mpsi**2) / (mphi**2))
+        )**2
+        +
+        abs(
+          (
+            ((g2 / cos_w) * (0.5 - sin_w**2)) /
+            (g2**2 * sin_w**2 * mZ**2)
+          ) *
+          ((conj(y_beta) * y_alpha * m_alpha * m_beta * g2) /
+           (2 * (4*pi)**2 * mphi**2 * cos_w)) *
+          F2((mpsi**2) / (mphi**2))
+        )**2
+      )
+    ) * br_ab

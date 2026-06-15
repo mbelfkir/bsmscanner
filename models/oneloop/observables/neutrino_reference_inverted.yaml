@@ -1,0 +1,33 @@
+observables:
+- name: m1
+  value_type: real
+  expression: m1_raw_gev*1.0e9
+- name: m2
+  value_type: real
+  expression: m2_raw_gev*1.0e9
+- name: m3
+  value_type: real
+  expression: m3_raw_gev*1.0e9
+- {name: m1_eV, value_type: real, expression: m1}
+- {name: m2_eV, value_type: real, expression: m2}
+- {name: m3_eV, value_type: real, expression: m3}
+- name: m1_raw_gev
+  value_type: real
+  projection: {from: neutrino_svd, quantity: singular_values, index: 1}
+- name: m2_raw_gev
+  value_type: real
+  projection: {from: neutrino_svd, quantity: singular_values, index: 0}
+- name: m3_raw_gev
+  value_type: real
+  projection: {from: neutrino_svd, quantity: singular_values, index: 2}
+- {name: Ue1, value_type: complex, projection: {from: neutrino_svd, quantity: u_complex, row: 0, col: 1}}
+- {name: Ue2, value_type: complex, projection: {from: neutrino_svd, quantity: u_complex, row: 0, col: 0}}
+- {name: Ue3, value_type: complex, projection: {from: neutrino_svd, quantity: u_complex, row: 0, col: 2}}
+- {name: Umu1, value_type: complex, projection: {from: neutrino_svd, quantity: u_complex, row: 1, col: 1}}
+- {name: Umu2, value_type: complex, projection: {from: neutrino_svd, quantity: u_complex, row: 1, col: 0}}
+- {name: Umu3, value_type: complex, projection: {from: neutrino_svd, quantity: u_complex, row: 1, col: 2}}
+- {name: Utau1, value_type: complex, projection: {from: neutrino_svd, quantity: u_complex, row: 2, col: 1}}
+- {name: Utau2, value_type: complex, projection: {from: neutrino_svd, quantity: u_complex, row: 2, col: 0}}
+- {name: Utau3, value_type: complex, projection: {from: neutrino_svd, quantity: u_complex, row: 2, col: 2}}
+- {name: dm21, value_type: real, expression: m2**2 - m1**2}
+- {name: dm3l, value_type: real, expression: m3**2 - m2**2}

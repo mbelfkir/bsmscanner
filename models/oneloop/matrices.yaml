@@ -1,0 +1,269 @@
+matrices:
+- name: neutrino_mass_matrix
+  value_type: complex_matrix
+  type: majorana_mass
+  role: neutrino
+  diagonalize: true
+  rows:
+  - - 2*Ye*ye*normalization
+    - (Ye*ymu + Ymu*ye)*normalization
+    - (Ye*ytau + Ytau*ye)*normalization
+  - - (Ymu*ye + Ye*ymu)*normalization
+    - 2*Ymu*ymu*normalization
+    - (Ymu*ytau + Ytau*ymu)*normalization
+  - - (Ytau*ye + Ye*ytau)*normalization
+    - (Ytau*ymu + Ymu*ytau)*normalization
+    - 2*Ytau*ytau*normalization
+- name: S_matrix_1
+  value_type: real_matrix
+  rows:
+  - - 6*lambda1
+    - 2*lambda1
+    - k1 + k2 + k3
+    - k4
+    - k1 + k2 - k3
+    - k4
+    - 2*lambda1
+    - k1
+  - - 2*lambda1
+    - 6*lambda1
+    - k1 + k2 - k3
+    - k4
+    - k1 + k2 + k3
+    - k4
+    - 2*lambda1
+    - k1
+  - - k1 + k2 + k3
+    - k1 + k2 - k3
+    - 6*lambda2
+    - k5
+    - 2*lambda2
+    - k5
+    - k1
+    - 2*lambda2
+  - - k4
+    - k4
+    - k5
+    - 6*lambda3
+    - k5
+    - 2*lambda3
+    - k4
+    - k5
+  - - k1 + k2 - k3
+    - k1 + k2 + k3
+    - 2*lambda2
+    - k5
+    - 6*lambda2
+    - k5
+    - k1
+    - 2*lambda2
+  - - k4
+    - k4
+    - k5
+    - 2*lambda3
+    - k5
+    - 6*lambda3
+    - k4
+    - k5
+  - - 2*lambda1
+    - 2*lambda1
+    - k1
+    - k4
+    - k1
+    - k4
+    - 4*lambda1
+    - k1 + k2
+  - - k1
+    - k1
+    - 2*lambda2
+    - k5
+    - 2*lambda2
+    - k5
+    - k1 + k2
+    - 4*lambda2
+- name: S_matrix_2
+  value_type: real_matrix
+  rows:
+  - - k1
+    - '0'
+    - k3
+    - '0'
+    - 0.5*(k2 + k3)
+  - - '0'
+    - k4
+    - '0'
+    - '0'
+    - '0'
+  - - k3
+    - '0'
+    - 0.25*(k1 + k2 + k3)
+    - '0'
+    - 0.5*(k2 + k3)
+  - - '0'
+    - '0'
+    - '0'
+    - 0.25*k4
+    - '0'
+  - - 0.5*(k2 + k3)
+    - '0'
+    - 0.5*(k2 + k3)
+    - '0'
+    - 0.5*k3
+- name: S_matrix_3
+  value_type: real_matrix
+  rows:
+  - - 2*lambda1
+    - k3
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+  - - k3
+    - 2*lambda2
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+  - - '0'
+    - '0'
+    - k5
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+  - - '0'
+    - '0'
+    - '0'
+    - k5
+    - '0'
+    - '0'
+    - '0'
+  - - '0'
+    - '0'
+    - '0'
+    - '0'
+    - 2*lambda3
+    - '0'
+    - '0'
+  - - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - 4*lambda1
+    - k1 + k2
+  - - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - k1 + k2
+    - 4*lambda2
+- name: S_matrix_4
+  value_type: real_matrix
+  rows:
+  - - k1 + k2 - k3
+    - '0'
+    - k3
+    - '0'
+    - 0.5*(k2 - k3)
+  - - '0'
+    - k4
+    - '0'
+    - '0'
+    - '0'
+  - - k3
+    - '0'
+    - k1 + k2 - k3
+    - '0'
+    - -0.5*(k2 - k3)
+  - - '0'
+    - '0'
+    - '0'
+    - k4
+    - '0'
+  - - 0.5*(k2 - k3)
+    - '0'
+    - -0.5*(k2 - k3)
+    - '0'
+    - 0.5*k3
+- name: S_matrix_5
+  value_type: real_matrix
+  rows:
+  - - 2*lambda1
+    - '0'
+    - 0.5*(k2 + k3)
+    - '0'
+    - 0.5*(k2 - k3)
+    - '0'
+  - - '0'
+    - 2*lambda1
+    - -0.5*(k2 - k3)
+    - '0'
+    - 0.5*(k2 + k3)
+    - '0'
+  - - 0.5*(k2 + k3)
+    - -0.5*(k2 - k3)
+    - 2*lambda2
+    - '0'
+    - '0'
+    - '0'
+  - - '0'
+    - '0'
+    - '0'
+    - k5
+    - '0'
+    - '0'
+  - - 0.5*(k2 - k3)
+    - 0.5*(k2 + k3)
+    - '0'
+    - '0'
+    - 2*lambda2
+    - '0'
+  - - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - k5
+- name: S_matrix_6
+  value_type: real_matrix
+  rows:
+  - - k1
+    - '0'
+    - 0.5*(k2 + k3)
+    - '0'
+    - 0.5*(k2 - k3)
+    - '0'
+  - - '0'
+    - k1
+    - -0.5*(k2 - k3)
+    - '0'
+    - 0.5*(k2 + k3)
+    - '0'
+  - - 0.5*(k2 + k3)
+    - -0.5*(k2 - k3)
+    - k1
+    - '0'
+    - '0'
+    - '0'
+  - - '0'
+    - '0'
+    - '0'
+    - k4
+    - '0'
+    - '0'
+  - - 0.5*(k2 - k3)
+    - 0.5*(k2 + k3)
+    - '0'
+    - '0'
+    - k1
+    - '0'
+  - - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - k4

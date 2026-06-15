@@ -1,0 +1,241 @@
+observables:
+- name: S1_e0
+  value_type: real
+  projection:
+    from: S1_eigen
+    quantity: eigenvalues
+    index: 0
+- name: S1_e1
+  value_type: real
+  projection:
+    from: S1_eigen
+    quantity: eigenvalues
+    index: 1
+- name: S1_e2
+  value_type: real
+  projection:
+    from: S1_eigen
+    quantity: eigenvalues
+    index: 2
+- name: S1_e3
+  value_type: real
+  projection:
+    from: S1_eigen
+    quantity: eigenvalues
+    index: 3
+- name: S1_e4
+  value_type: real
+  projection:
+    from: S1_eigen
+    quantity: eigenvalues
+    index: 4
+- name: S1_e5
+  value_type: real
+  projection:
+    from: S1_eigen
+    quantity: eigenvalues
+    index: 5
+- name: S1_e6
+  value_type: real
+  projection:
+    from: S1_eigen
+    quantity: eigenvalues
+    index: 6
+- name: S1_e7
+  value_type: real
+  projection:
+    from: S1_eigen
+    quantity: eigenvalues
+    index: 7
+- name: S2_e0
+  value_type: real
+  projection:
+    from: S2_eigen
+    quantity: eigenvalues
+    index: 0
+- name: S2_e1
+  value_type: real
+  projection:
+    from: S2_eigen
+    quantity: eigenvalues
+    index: 1
+- name: S2_e2
+  value_type: real
+  projection:
+    from: S2_eigen
+    quantity: eigenvalues
+    index: 2
+- name: S2_e3
+  value_type: real
+  projection:
+    from: S2_eigen
+    quantity: eigenvalues
+    index: 3
+- name: S2_e4
+  value_type: real
+  projection:
+    from: S2_eigen
+    quantity: eigenvalues
+    index: 4
+- name: S3_e0
+  value_type: real
+  projection:
+    from: S3_eigen
+    quantity: eigenvalues
+    index: 0
+- name: S3_e1
+  value_type: real
+  projection:
+    from: S3_eigen
+    quantity: eigenvalues
+    index: 1
+- name: S3_e2
+  value_type: real
+  projection:
+    from: S3_eigen
+    quantity: eigenvalues
+    index: 2
+- name: S3_e3
+  value_type: real
+  projection:
+    from: S3_eigen
+    quantity: eigenvalues
+    index: 3
+- name: S3_e4
+  value_type: real
+  projection:
+    from: S3_eigen
+    quantity: eigenvalues
+    index: 4
+- name: S3_e5
+  value_type: real
+  projection:
+    from: S3_eigen
+    quantity: eigenvalues
+    index: 5
+- name: S3_e6
+  value_type: real
+  projection:
+    from: S3_eigen
+    quantity: eigenvalues
+    index: 6
+- name: S4_e0
+  value_type: real
+  projection:
+    from: S4_eigen
+    quantity: eigenvalues
+    index: 0
+- name: S4_e1
+  value_type: real
+  projection:
+    from: S4_eigen
+    quantity: eigenvalues
+    index: 1
+- name: S4_e2
+  value_type: real
+  projection:
+    from: S4_eigen
+    quantity: eigenvalues
+    index: 2
+- name: S4_e3
+  value_type: real
+  projection:
+    from: S4_eigen
+    quantity: eigenvalues
+    index: 3
+- name: S4_e4
+  value_type: real
+  projection:
+    from: S4_eigen
+    quantity: eigenvalues
+    index: 4
+- name: S5_e0
+  value_type: real
+  projection:
+    from: S5_eigen
+    quantity: eigenvalues
+    index: 0
+- name: S5_e1
+  value_type: real
+  projection:
+    from: S5_eigen
+    quantity: eigenvalues
+    index: 1
+- name: S5_e2
+  value_type: real
+  projection:
+    from: S5_eigen
+    quantity: eigenvalues
+    index: 2
+- name: S5_e3
+  value_type: real
+  projection:
+    from: S5_eigen
+    quantity: eigenvalues
+    index: 3
+- name: S5_e4
+  value_type: real
+  projection:
+    from: S5_eigen
+    quantity: eigenvalues
+    index: 4
+- name: S5_e5
+  value_type: real
+  projection:
+    from: S5_eigen
+    quantity: eigenvalues
+    index: 5
+- name: S6_e0
+  value_type: real
+  projection:
+    from: S6_eigen
+    quantity: eigenvalues
+    index: 0
+- name: S6_e1
+  value_type: real
+  projection:
+    from: S6_eigen
+    quantity: eigenvalues
+    index: 1
+- name: S6_e2
+  value_type: real
+  projection:
+    from: S6_eigen
+    quantity: eigenvalues
+    index: 2
+- name: S6_e3
+  value_type: real
+  projection:
+    from: S6_eigen
+    quantity: eigenvalues
+    index: 3
+- name: S6_e4
+  value_type: real
+  projection:
+    from: S6_eigen
+    quantity: eigenvalues
+    index: 4
+- name: S6_e5
+  value_type: real
+  projection:
+    from: S6_eigen
+    quantity: eigenvalues
+    index: 5
+- name: S1_max_abs
+  value_type: real
+  expression: max(abs(S1_e0), abs(S1_e1), abs(S1_e2), abs(S1_e3), abs(S1_e4), abs(S1_e5), abs(S1_e6), abs(S1_e7))
+- name: S2_max_abs
+  value_type: real
+  expression: max(abs(S2_e0), abs(S2_e1), abs(S2_e2), abs(S2_e3), abs(S2_e4))
+- name: S3_max_abs
+  value_type: real
+  expression: max(abs(S3_e0), abs(S3_e1), abs(S3_e2), abs(S3_e3), abs(S3_e4), abs(S3_e5), abs(S3_e6))
+- name: S4_max_abs
+  value_type: real
+  expression: max(abs(S4_e0), abs(S4_e1), abs(S4_e2), abs(S4_e3), abs(S4_e4))
+- name: S5_max_abs
+  value_type: real
+  expression: max(abs(S5_e0), abs(S5_e1), abs(S5_e2), abs(S5_e3), abs(S5_e4), abs(S5_e5))
+- name: S6_max_abs
+  value_type: real
+  expression: max(abs(S6_e0), abs(S6_e1), abs(S6_e2), abs(S6_e3), abs(S6_e4), abs(S6_e5))

@@ -1,0 +1,32 @@
+matrices:
+  Me:
+    value_type: complex_matrix
+    type: dirac_mass
+    role: charged_lepton
+    diagonalize: true
+    rows:
+      - - "Y31hp1x/sqrt(3.0)"
+        - "-a2t*Y33hp2x/sqrt(6.0) - a3t*Y33h3x/sqrt(6.0)"
+        - "a2t*Y33hp3x/sqrt(6.0) + a3t*Y33h2x/sqrt(6.0)"
+      - - "-a2t*Y33hp2x/sqrt(6.0) + a3t*Y33h3x/sqrt(6.0)"
+        - "-a2t*Y33hp1x/sqrt(6.0)"
+        - "Y31hp1x/sqrt(3.0) - a3t*Y33h1x/sqrt(6.0)"
+      - - "a2t*Y33hp3x/sqrt(6.0) - a3t*Y33h2x/sqrt(6.0)"
+        - "Y31hp1x/sqrt(3.0) + a3t*Y33h1x/sqrt(6.0)"
+        - "a2t*Y33hp1x/sqrt(6.0)"
+
+  Mn:
+    value_type: complex_matrix
+    type: majorana_mass
+    role: neutrino
+    diagonalize: true
+    rows:
+      - - "n_scale*(Y411x/sqrt(3.0) - g2t*Y421x/sqrt(3.0))"
+        - "n_scale*(-g3t*Y432x/sqrt(6.0))"
+        - "n_scale*(g3t*Y433x/sqrt(6.0))"
+      - - "n_scale*(-g3t*Y432x/sqrt(6.0))"
+        - "n_scale*(-0.5*g2t*Y422x - g3t*Y431x/sqrt(6.0))"
+        - "n_scale*(Y411x/sqrt(3.0) + g2t*Y421x/(2.0*sqrt(3.0)))"
+      - - "n_scale*(g3t*Y433x/sqrt(6.0))"
+        - "n_scale*(Y411x/sqrt(3.0) + g2t*Y421x/(2.0*sqrt(3.0)))"
+        - "n_scale*(-0.5*g2t*Y422x + g3t*Y431x/sqrt(6.0))"

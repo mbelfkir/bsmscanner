@@ -1,0 +1,23 @@
+scan:
+  basin_scan:
+    manifold_refocus:
+      enabled: true
+      method: covariance
+      seed: 12345
+      source: selected_plus_exploration
+      max_train_points: 8000
+      min_train_points: 100
+      top_fraction_for_training: 0.15
+      sampling:
+        n_candidates: 250000
+        inflate: 1.25
+        diagonal_jitter: 1.0e-6
+        include_training_points: true
+      box:
+        enabled: true
+        quantile_low: 0.01
+        quantile_high: 0.99
+        padding_fraction: 0.35
+        min_width_fraction: 0.01
+        max_shrink_factor: 100.0
+        clip_to_original_bounds: true

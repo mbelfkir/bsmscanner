@@ -1,0 +1,95 @@
+# Reduced config_nr-like normal-ordering likelihood.
+# The original GetnLL() combines dm21 and dm3l inside one function called
+# "m12+m3l" and returns early if dm21 is already out of range. We keep that
+# source behavior exact here with one explicit plugin-backed likelihood term.
+# The source contains addLambdaPenalty(), but it is commented out in GetnLL()
+# and therefore intentionally remains inactive here.
+likelihoods:
+- name: theta12_term
+  kind: table_lookup
+  observable: Theta12
+  interpolation: cubic_spline
+  table_file: ../../oneloop/data/Normal/Theta12.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: theta13_term
+  kind: table_lookup
+  observable: Theta13
+  interpolation: cubic_spline
+  table_file: ../../oneloop/data/Normal/Theta13.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: theta23_term
+  kind: table_lookup
+  observable: Theta23
+  interpolation: cubic_spline
+  table_file: ../../oneloop/data/Normal/Theta23.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: deltaCP_term
+  kind: table_lookup
+  observable: deltaCP_deg
+  interpolation: cubic_spline
+  table_file: ../../oneloop/data/Normal/deltaCP.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: m12+m3l
+  kind: custom
+  plugin_call:
+    plugin: oneloop_likelihoods
+    function: neutrino_mass_term
+    output: nll
+    bindings:
+      log10_dm21: log10_dm21
+      dm3l_meV: dm3l_meV
+    options:
+      dm21_table_file: ../../oneloop/data/Normal/dm21.csv
+      dm3l_table_file: ../../oneloop/data/Normal/dm3l.csv
+      interpolation: cubic_spline
+      out_of_range_penalty_scale: 4.0e4
+      out_of_range_penalty_cap: 1.0e6
+      in_range_offset: 0.0
+- name: sumOfMass
+  kind: hard_cut
+  observable: sum_m_source
+  lower: 0.0
+  upper: 0.12
+- name: massPinalety
+  kind: hard_cut
+  observable: mass_penalty_ok
+- name: HiggsRgg_term
+  kind: gaussian
+  observable: HiggsRgg
+  mean: 1.0883
+  sigma: 0.092374
+- name: KPinaleties
+  kind: hard_cut
+  observable: quartic_penalties_ok
+- name: EVPinaleties
+  kind: hard_cut
+  observable: unitarity_penalties_ok
+- name: BRPinaleties
+  kind: hard_cut
+  observable: lfv_penalties_ok
+- name: Oblique_term
+  kind: multivariate_gaussian
+  quadratic_form_prefactor: 1.0
+  observables:
+  - ObliqueS
+  - ObliqueT
+  means:
+  - -0.05
+  - 0.0
+  covariance:
+  - - 0.0049
+    - 0.003906
+  - - 0.003906
+    - 0.0036
+- name: Omega_term
+  kind: gaussian
+  observable: Omega
+  mean: 0.12
+  sigma: 0.0012
+- name: DDexp_term
+  kind: hard_cut
+  observable: DDexp_ok

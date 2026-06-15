@@ -1,0 +1,34 @@
+# Inverted-ordering toy/reference lepton-sector likelihood, matching the
+# FlavorPy detailed modular-form example. The CP phase is intentionally not
+# fitted there, so no deltaCP term is included in this block.
+likelihoods:
+- name: lepton_s12_term
+  kind: gaussian
+  observable: s12
+  mean: 0.303
+  sigma: 0.0115
+- name: lepton_s13_term
+  kind: gaussian
+  observable: s13
+  mean: 0.02223
+  sigma: 0.00058
+- name: lepton_s23_term
+  kind: gaussian
+  observable: s23
+  mean: 0.569
+  sigma: 0.0185
+- name: lepton_m12_term
+  kind: gaussian
+  observable: dm21
+  mean: 7.41e-5
+  sigma: 0.205e-5
+- name: lepton_m3l_term
+  kind: gaussian
+  observable: dm3l
+  mean: -2.486e-3
+  sigma: 0.0265e-3
+- name: lepton_sumOfMass
+  kind: hard_cut
+  observable: sum_m
+  lower: 0.0
+  upper: 0.12

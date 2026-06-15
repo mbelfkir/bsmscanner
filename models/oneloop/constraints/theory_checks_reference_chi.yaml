@@ -1,0 +1,5 @@
+theory_checks:
+- name: chi_is_lightest_odd_state
+  condition: Mchi < mphich and Mchi < MH01 and Mchi < MH02 and Mchi < MA01 and Mchi < MA2
+  fatal: true
+  message: The requested chi dark-matter state is not the lightest odd state.

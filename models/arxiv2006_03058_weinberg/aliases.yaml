@@ -1,0 +1,13 @@
+observables:
+- name: s12_sq
+  value_type: real
+  expression: s12
+- name: s13_sq
+  value_type: real
+  expression: s13
+- name: s23_sq
+  value_type: real
+  expression: s23
+- name: sum_m_i
+  value_type: real
+  expression: sum_m

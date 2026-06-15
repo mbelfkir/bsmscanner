@@ -1,0 +1,41 @@
+observables:
+- name: Lambda
+  value_type: real
+  expression: scale
+- name: sum_m_source
+  value_type: real
+  expression: sqrt(abs(dm21)) + sqrt(abs(dm21) + abs(dm3l))
+- name: sum_m_master
+  value_type: real
+  expression: sum_m_source
+- name: mass_penalty_ok
+  value_type: bool
+  expression: >
+    abs(mphi**2 - mphip**2) >= mass_split_eps
+    and abs(mphi**2 - Mpsi**2) >= mass_split_eps
+    and abs(mphip**2 - Mpsi**2) >= mass_split_eps
+    and (
+      ((mphi > mphip) and (mphi > Mpsi))
+      or
+      ((mphi < mphip) and (mphi < Mpsi))
+    )
+- name: quartic_penalties_ok
+  value_type: bool
+  expression: >
+    (k1 + k2 - abs(k3) > -2*sqrt(lambda1*lambda2))
+    and (k4 > -2*sqrt(lambda1*lambda3))
+    and (k5 > -2*sqrt(lambda2*lambda3))
+- name: unitarity_penalties_ok
+  value_type: bool
+  expression: >
+    S1_max_abs <= 8*pi and S2_max_abs <= 8*pi and S3_max_abs <= 8*pi
+    and S4_max_abs <= 8*pi and S5_max_abs <= 8*pi and S6_max_abs <= 8*pi
+- name: lfv_penalties_ok
+  value_type: bool
+  expression: >
+    mu_to_e_gamma <= 3.1e-13
+    and tau_to_e_gamma <= 3.3e-08
+    and tau_to_mu_gamma <= 4.2e-08
+    and mu_to_eee <= 1.0e-12
+    and tau_to_eee <= 2.7e-08
+    and tau_to_mumumu <= 2.1e-08

@@ -1,0 +1,122 @@
+metadata:
+  name: flavor_toy
+  version: 0.1.0
+  description: Minimal generic flavor-sector diagonalization example.
+
+imports:
+  - ../../core/quark/ckm_observables.yaml
+  - constraints/ckm_likelihoods_toy.yaml
+
+matrices:
+  Mnu:
+    value_type: complex_matrix
+    type: complex_symmetric
+    role: neutrino_mass
+    diagonalize:
+      method: takagi
+      output:
+        masses: neutrino_masses
+        unitary: U_nu
+    rows:
+      - ["0.030", "0.002 + 0.001j", "0.000"]
+      - ["0.002 + 0.001j", "0.012", "0.001"]
+      - ["0.000", "0.001", "0.050"]
+
+  Ml:
+    value_type: complex_matrix
+    type: complex_general
+    role: charged_lepton_mass
+    diagonalize:
+      method: svd
+      output:
+        masses: charged_lepton_masses
+        left_unitary: U_l_L
+        right_unitary: U_l_R
+    rows:
+      - ["0.000511", "0.000105", "0.000000"]
+      - ["-0.000010", "0.10566", "0.000000"]
+      - ["0.000000", "0.000000", "1.77686"]
+
+  Mu:
+    value_type: complex_matrix
+    type: complex_general
+    role: up_quark_mass
+    diagonalize:
+      method: svd
+      output:
+        masses: up_quark_masses
+        left_unitary: U_u_L
+        right_unitary: U_u_R
+    rows:
+      - ["173.0", "0.0000", "0.0000"]
+      - ["0.0000", "1.27", "0.0000"]
+      - ["0.0000", "0.0000", "0.0022"]
+
+  Md:
+    value_type: complex_matrix
+    type: complex_general
+    role: down_quark_mass
+    diagonalize:
+      method: svd
+      output:
+        masses: down_quark_masses
+        left_unitary: U_d_L
+        right_unitary: U_d_R
+    rows:
+      - ["4.07755684353", "0.0211198310393", "6.81232578416e-06 - 1.75223348162e-05j"]
+      - ["-0.919100432878 - 0.000608075641172j", "0.0935718148378 - 3.1495464793e-06j", "0.000187998495994"]
+      - ["0.0308785453925 - 0.015189724648j", "-0.00377650699165 - 7.86756458364e-05j", "0.00469620092474"]
+
+mixing_matrices:
+  PMNS:
+    type: left_mismatch
+    convention: U_left_dagger_U_right
+    left: U_l_L
+    right: U_nu
+    output: U_PMNS
+
+  CKM:
+    type: left_mismatch
+    convention: U_left_dagger_U_right
+    left: U_u_L
+    right: U_d_L
+    output: V_CKM
+
+outputs:
+  save:
+    - neutrino_masses
+    - charged_lepton_masses
+    - up_quark_masses
+    - down_quark_masses
+    - U_PMNS
+    - V_CKM
+    - Vud
+    - Vus
+    - Vub
+    - Vcd
+    - Vcs
+    - Vcb
+    - Vtd
+    - Vts
+    - Vtb
+    - theta12_q
+    - theta13_q
+    - theta23_q
+    - theta12_q_deg
+    - theta13_q_deg
+    - theta23_q_deg
+    - s12_q
+    - s13_q
+    - s23_q
+    - s12_q_sq
+    - s13_q_sq
+    - s23_q_sq
+    - deltaCKM
+    - deltaCKM_deg
+    - deltaCKM_over_pi
+    - J_CKM
+    - J_CKM_abs
+    - wolfenstein_lambda
+    - wolfenstein_A
+    - wolfenstein_rhobar
+    - wolfenstein_etabar

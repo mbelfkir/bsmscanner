@@ -1,0 +1,96 @@
+scan:
+  engine: basin_scan
+  save_every: 1
+  seed: 12345
+  settings:
+    objective: nll
+    invalid_penalty: 1.0e12
+    save_invalid_points: true
+    verbose: 1
+    progress_interval: 1000
+  basin_scan:
+    seed: 12345
+    exploration:
+      method: latin_hypercube
+      n_points: 2000
+      keep_fraction: 0.02
+    selection:
+      mode: balanced_terms
+      total_top_fraction: 0.10
+      term_quantile_cut: 0.50
+      top_fraction: 0.02
+      max_points: 200
+      min_points: 10
+      terms: auto
+      fallback_mode: top_fraction
+    clustering:
+      enabled: true
+      method: dbscan
+      eps_fraction: 0.08
+      min_samples: 5
+      max_clusters: 4
+    boxes:
+      construction: quantile
+      q_low: 0.05
+      q_high: 0.95
+      padding_fraction: 0.25
+      min_width_fraction: 0.02
+      clip_to_original_bounds: true
+      merge_overlapping: true
+      max_boxes: 4
+    focused_engine:
+      name: adaptive_diver
+      population_size: 40
+      max_generations: 200
+      p_best_fraction: 0.1
+      local_refinement:
+        enabled: false
+    output:
+      save_exploration_points: true
+      save_selected_points: true
+      save_clusters: true
+      save_focused_boxes: true
+  posterior:
+    enabled: true
+    method: emcee
+    run_after: scan
+    start_from:
+      source: auto
+      n_walkers: 64
+      initialization: elite_covariance
+      elite_fraction: 0.02
+      max_elite_points: 1000
+      min_elite_points: 20
+      jitter_scale: 0.02
+      covariance_regularization: 1.0e-12
+      max_initialization_attempts: 20000
+    mcmc:
+      n_steps: 2000
+      burn_in: 500
+      thin: 10
+      seed: 12345
+      vectorize: false
+      progress: true
+    objective:
+      use: auto
+      invalid_logprob: -.inf
+      include_log_prior: true
+    priors:
+      use_parameter_priors: true
+      default_prior: flat
+    valid_points:
+      enabled: true
+      delta_nll: [0.5, 2.0, 4.5]
+      delta_chi2: [1.0, 4.0, 9.0]
+      observable_sigma_cuts: [1, 2, 3]
+    outputs:
+      save_chain: true
+      save_flat_samples: true
+      save_observables: true
+      save_likelihood_terms: true
+      save_summary: true
+      save_covariance: true
+      save_diagnostics: true
+      save_valid_points: true
+statistics:
+  enabled: false

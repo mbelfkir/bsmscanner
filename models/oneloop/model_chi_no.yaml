@@ -1,0 +1,28 @@
+metadata:
+  name: oneloop_chi_normal
+  version: 1.0.0
+  description: One-loop radiative neutrino model, fermion chi dark matter branch, normal ordering, analytic observables.
+  ordering: normal
+  tags: [oneloop, chi_dm, normal_ordering, analytic]
+imports:
+- parameters_chi.yaml
+- constants_reference_normal.yaml
+- functions.yaml
+- derived_chi_basis.yaml
+- derived_backend_reference.yaml
+- derived.yaml
+- matrices.yaml
+- diagonalizations.yaml
+- observables/scalar_sector.yaml
+- observables/neutrino_reference_normal.yaml
+- observables/neutrino_reference_common.yaml
+- observables/higgs.yaml
+- observables/lfv.yaml
+- observables/ew.yaml
+- observables/reference_aliases.yaml
+- constraints/theory_checks_reference_common.yaml
+- constraints/theory_checks_reference_chi.yaml
+- constraints/likelihoods_reference_normal.yaml
+- outputs_reference.yaml
+- guided_sampling.yaml
+- scan_reference.yaml

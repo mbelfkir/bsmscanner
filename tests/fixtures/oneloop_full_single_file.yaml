@@ -1,0 +1,1541 @@
+metadata:
+  name: oneloop_full_normal
+  version: 0.2.0
+  description: Full normal-ordering migration of the original oneloop model, with DM backend pieces documented separately when external micrOMEGAs integration is unavailable.
+  ordering: normal
+  tags:
+  - oneloop
+  - normal_ordering
+  - full_migration
+  - micromegas_pending
+parameters:
+- name: Mpsi
+  value_type: real
+  scan: true
+  lower: 1.0
+  upper: 2000.0
+  default: 10.12251149337993
+  prior: log
+- name: MN
+  value_type: real
+  scan: true
+  lower: 100.0
+  upper: 2000.0
+  default: 1140.5137059200472
+  prior: log
+- name: Mphi
+  value_type: real
+  scan: true
+  lower: 60.0
+  upper: 2000.0
+  default: 600.5980647532418
+  prior: log
+- name: MA1
+  value_type: real
+  scan: true
+  lower: 100.0
+  upper: 2000.0
+  default: 522.9792966613403
+  prior: log
+- name: MH1
+  value_type: real
+  scan: true
+  lower: 100.0
+  upper: 2000.0
+  default: 712.8758766040372
+  prior: log
+- name: MH2
+  value_type: real
+  scan: true
+  lower: 100.0
+  upper: 2000.0
+  default: 501.89798124265167
+  prior: log
+- name: sh
+  value_type: real
+  scan: true
+  lower: 1.0e-05
+  upper: 1.0
+  default: 0.3321501249654769
+  prior: flat
+- name: k1
+  value_type: real
+  scan: true
+  lower: -0.1
+  upper: 0.1
+  default: -0.0031676437949630376
+  prior: flat
+- name: k4
+  value_type: real
+  scan: true
+  lower: -0.5
+  upper: 0.5
+  default: 0.11799696022086778
+  prior: flat
+- name: Reye
+  value_type: real
+  scan: true
+  lower: -0.3
+  upper: 0.3
+  default: -0.011478220392316807
+  prior: flat
+- name: Imgye
+  value_type: real
+  scan: true
+  lower: -0.3
+  upper: 0.3
+  default: 0.017430797734482983
+  prior: flat
+- name: Reymu
+  value_type: real
+  scan: true
+  lower: -0.3
+  upper: 0.3
+  default: -0.015713229135338982
+  prior: flat
+- name: Imgymu
+  value_type: real
+  scan: true
+  lower: -0.3
+  upper: 0.3
+  default: 0.005250695802982697
+  prior: flat
+- name: Reytau
+  value_type: real
+  scan: true
+  lower: -0.3
+  upper: 0.3
+  default: 0.005739250837521016
+  prior: flat
+- name: Imgytau
+  value_type: real
+  scan: true
+  lower: -0.3
+  upper: 0.3
+  default: -0.012043977450585443
+  prior: flat
+- name: ReYe
+  value_type: real
+  scan: true
+  lower: -0.3
+  upper: 0.3
+  default: 0.005086070155733324
+  prior: flat
+- name: ImgYe
+  value_type: real
+  scan: true
+  lower: -0.3
+  upper: 0.3
+  default: 0.001967805442413404
+  prior: flat
+- name: ReYmu
+  value_type: real
+  scan: true
+  lower: -0.3
+  upper: 0.3
+  default: 0.004628892469591573
+  prior: flat
+- name: ImgYmu
+  value_type: real
+  scan: true
+  lower: -0.3
+  upper: 0.3
+  default: -0.012596860641314862
+  prior: flat
+- name: ReYtau
+  value_type: real
+  scan: true
+  lower: -0.3
+  upper: 0.3
+  default: -0.0009276633273550029
+  prior: flat
+- name: ImgYtau
+  value_type: real
+  scan: true
+  lower: -0.3
+  upper: 0.3
+  default: 0.013439539333703277
+  prior: flat
+- name: Reyp
+  value_type: real
+  scan: true
+  lower: -0.3
+  upper: 0.3
+  default: 0.0047262599110235795
+  prior: flat
+- name: Imgyp
+  value_type: real
+  scan: true
+  lower: -0.3
+  upper: 0.3
+  default: -0.010251008924842653
+  prior: flat
+- name: lambda1
+  value_type: real
+  scan: true
+  lower: 1.0e-07
+  upper: 0.3
+  default: 0.129
+  prior: log
+- name: lambda2
+  value_type: real
+  scan: true
+  lower: 1.0e-07
+  upper: 0.3
+  default: 0.0012675213127967295
+  prior: log
+- name: lambda3
+  value_type: real
+  scan: true
+  lower: 1.0e-07
+  upper: 0.3
+  default: 0.0798389142274129
+  prior: log
+- name: k5
+  value_type: real
+  scan: true
+  lower: 1.0e-07
+  upper: 0.3
+  default: 0.00014967900562753967
+  prior: log
+constants:
+- name: vev
+  value: 246.22
+- name: alpha_em
+  value: 0.0072973525643
+- name: GF
+  value: 1.1663787e-05
+- name: mW
+  value: 80.3692
+- name: mZ
+  value: 91.188
+- name: mt
+  value: 172.52
+- name: mb
+  value: 4.183
+- name: mtau
+  value: 1.77693
+- name: me_GeV
+  value: 0.00051099895
+- name: mmu_GeV
+  value: 0.1056583755
+- name: mtau_GeV
+  value: 1.77693246513409
+- name: br_mu_to_e_nunu
+  value: 1.0
+- name: br_tau_to_e_nunu
+  value: 0.1782
+- name: br_tau_to_mu_nunu
+  value: 0.1739
+- name: bf_dm21
+  value: 7.49e-05
+- name: bf_dm3l
+  value: 0.002513
+- name: mass_split_eps
+  value: 1.0e-08
+- name: sum_m_upper
+  value: 0.12
+functions:
+- name: I3
+  args:
+  - Mphi_eff
+  - Mphip_eff
+  - Mpsi_eff
+  expression: >
+    -(
+      (Mphi_eff**2 * log((Mpsi_eff**2) / (Mphi_eff**2))) /
+      ((Mphi_eff**2 - Mphip_eff**2) * (Mphi_eff**2 - Mpsi_eff**2))
+      +
+      (Mphip_eff**2 * log((Mpsi_eff**2) / (Mphip_eff**2))) /
+      ((Mphip_eff**2 - Mphi_eff**2) * (Mphip_eff**2 - Mpsi_eff**2))
+    ) / ((4*pi) * (4*pi))
+- name: F
+  args:
+  - x
+  - y
+  expression: >
+    if_else(
+      x == y,
+      0.0,
+      ((x + y) / 2.0) - ((x * y) / (x - y)) * log(x / y)
+    )
+- name: F2
+  args:
+  - x
+  expression: >
+    (1 - 6*x + 3*x**2 + 2*x**3 - 6*x**2*log(x)) / (6 * (1 - x)**4)
+- name: ft
+  args:
+  - t
+  - r
+  expression: >
+    if_else(
+      r == 0.0,
+      0.0,
+      if_else(
+        r > 0.0,
+        sqrt(r) * log(abs((t - sqrt(r)) / (t + sqrt(r)))),
+        2.0 * sqrt(-r) * atan2(sqrt(-r), t)
+      )
+    )
+- name: G
+  args:
+  - x
+  - y
+  - Q
+  expression: >
+    if_else(
+      (x > 0.0) and (y > 0.0) and (abs(x - y) > 0.001 * x),
+      (
+        (-16.0 / 3.0)
+        + 5.0 * ((x + y) / Q)
+        - 2.0 * (((x - y)**2) / Q**2)
+        + (3.0 / Q) *
+          (((x**2 + y**2) / (x - y)) - ((x**2 - y**2) / Q) + (((x - y)**3) / (3.0 * Q**2))) *
+          log(x / y)
+        + ((Q**2 - 2.0 * Q * (x + y) + (x - y)**2) / Q**3) *
+          ft(x + y - Q, Q**2 - 2.0 * Q * (x + y) + (x - y)**2)
+      ),
+      (
+        (-16.0 / 3.0)
+        + 5.0 * ((x + y) / Q)
+        - 2.0 * (((x - y)**2) / Q**2)
+        + (3.0 / Q) *
+          (
+            (
+              (x**2 + y**2)
+              - ((x**2 - y**2) * (x - y) / Q)
+              + (((x - y)**4) / (3.0 * Q**2))
+            ) / y
+          ) *
+          (
+            1.0
+            - ((x - y) / y) / 2.0
+            + (((x - y) / y)**2) / 3.0
+            - (((x - y) / y)**3) / 4.0
+            + (((x - y) / y)**4) / 5.0
+          )
+        + ((Q**2 - 2.0 * Q * (x + y) + (x - y)**2) / Q**3) *
+          ft(x + y - Q, Q**2 - 2.0 * Q * (x + y) + (x - y)**2)
+      )
+    )
+- name: G2
+  args:
+  - x
+  expression: >
+    (2 - 9*x + 18*x**2 - 11*x**3 + 6*x**3*log(x)) / (6 * (1 - x)**4)
+- name: D1
+  args:
+  - x
+  expression: >
+    (-1 + x**2 - 2*x*log(x)) / (1 - x)**3
+- name: D2
+  args:
+  - x
+  expression: >
+    (-2 + 2*x - (1 + x)*log(x)) / (1 - x)**3
+- name: f
+  value_type: complex
+  args:
+  - tau_i
+  expression: >
+    if_else(
+      tau_i >= 1.0,
+      asin(1.0 / sqrt(tau_i))**2,
+      -(1.0 / 4.0) *
+      (log((1 + sqrt(1 - tau_i)) / (1 - sqrt(1 - tau_i))) - 1j*pi)**2
+    )
+- name: LeptonGammaAmplitude
+  value_type: complex
+  args:
+  - y_alpha
+  - y_beta
+  - mpsi
+  - mphi
+  expression: >
+    ((conj(y_beta) * y_alpha) / (2 * (4*pi)**2 * mphi**2)) * F2((mpsi**2) / (mphi**2))
+- name: LeptonGammaBR
+  args:
+  - y_alpha
+  - y_beta
+  - br_ab
+  - mpsi
+  - mphi
+  expression: >
+    ((3 * (4*pi)**3 * alpha_em) / (4 * GF**2)) * abs(LeptonGammaAmplitude(y_alpha, y_beta, mpsi, mphi))**2 * br_ab
+- name: TriLeptonBR
+  args:
+  - m_alpha
+  - m_beta
+  - y_alpha
+  - y_beta
+  - br_ab
+  - mpsi
+  - mphi
+  expression: >
+    (
+      (3 * (4*pi)**2 * alpha_em**2) / (8 * GF**2)
+    ) * (
+      (
+        abs(
+          ((conj(y_beta) * y_alpha) / (6 * (4*pi)**2 * mphi**2)) *
+          G2((mpsi**2) / (mphi**2))
+        )**2
+        +
+        abs(LeptonGammaAmplitude(y_alpha, y_beta, mpsi, mphi))**2 *
+        ((16.0 / 3.0) * log(m_alpha / m_beta) - (22.0 / 3.0))
+      )
+      +
+      (1.0 / 6.0) *
+      abs(
+        (
+          0.5 * D1((mpsi**2) / (mphi**2)) * conj(y_beta) * y_beta * conj(y_beta) * y_alpha
+          +
+          abs((mpsi**2) / (mphi**2)) * D2((mpsi**2) / (mphi**2)) *
+          conj(y_beta) * conj(y_beta) * y_beta * y_alpha
+        ) / (4*pi*mphi*e_em)**2
+      )**2
+      +
+      real(
+        (-2.0) *
+        (
+          ((conj(y_beta) * y_alpha) / (6 * (4*pi)**2 * mphi**2)) *
+          G2((mpsi**2) / (mphi**2))
+        ) * conj(LeptonGammaAmplitude(y_alpha, y_beta, mpsi, mphi))
+        +
+        (1.0 / 3.0) *
+        (
+          ((conj(y_beta) * y_alpha) / (6 * (4*pi)**2 * mphi**2)) *
+          G2((mpsi**2) / (mphi**2))
+        ) *
+        conj(
+          (
+            0.5 * D1((mpsi**2) / (mphi**2)) * conj(y_beta) * y_beta * conj(y_beta) * y_alpha
+            +
+            abs((mpsi**2) / (mphi**2)) * D2((mpsi**2) / (mphi**2)) *
+            conj(y_beta) * conj(y_beta) * y_beta * y_alpha
+          ) / (4*pi*mphi*e_em)**2
+        )
+        -
+        (2.0 / 3.0) *
+        LeptonGammaAmplitude(y_alpha, y_beta, mpsi, mphi) *
+        conj(
+          (
+            0.5 * D1((mpsi**2) / (mphi**2)) * conj(y_beta) * y_beta * conj(y_beta) * y_alpha
+            +
+            abs((mpsi**2) / (mphi**2)) * D2((mpsi**2) / (mphi**2)) *
+            conj(y_beta) * conj(y_beta) * y_beta * y_alpha
+          ) / (4*pi*mphi*e_em)**2
+        )
+        +
+        (-2.0) *
+        conj(
+          ((conj(y_beta) * y_alpha) / (6 * (4*pi)**2 * mphi**2)) *
+          G2((mpsi**2) / (mphi**2))
+        ) * LeptonGammaAmplitude(y_alpha, y_beta, mpsi, mphi)
+        +
+        (1.0 / 3.0) *
+        conj(
+          ((conj(y_beta) * y_alpha) / (6 * (4*pi)**2 * mphi**2)) *
+          G2((mpsi**2) / (mphi**2))
+        ) *
+        (
+          (
+            0.5 * D1((mpsi**2) / (mphi**2)) * conj(y_beta) * y_beta * conj(y_beta) * y_alpha
+            +
+            abs((mpsi**2) / (mphi**2)) * D2((mpsi**2) / (mphi**2)) *
+            conj(y_beta) * conj(y_beta) * y_beta * y_alpha
+          ) / (4*pi*mphi*e_em)**2
+        )
+        -
+        (2.0 / 3.0) *
+        conj(LeptonGammaAmplitude(y_alpha, y_beta, mpsi, mphi)) *
+        (
+          (
+            0.5 * D1((mpsi**2) / (mphi**2)) * conj(y_beta) * y_beta * conj(y_beta) * y_alpha
+            +
+            abs((mpsi**2) / (mphi**2)) * D2((mpsi**2) / (mphi**2)) *
+            conj(y_beta) * conj(y_beta) * y_beta * y_alpha
+          ) / (4*pi*mphi*e_em)**2
+        )
+      )
+      +
+      (1.0 / 3.0) * (
+        2.0 *
+        abs(
+          (
+            (-(g2 / cos_w) * sin_w**2) /
+            (g2**2 * sin_w**2 * mZ**2)
+          ) *
+          ((conj(y_beta) * y_alpha * m_alpha * m_beta * g2) /
+           (2 * (4*pi)**2 * mphi**2 * cos_w)) *
+          F2((mpsi**2) / (mphi**2))
+        )**2
+        +
+        abs(
+          (
+            ((g2 / cos_w) * (0.5 - sin_w**2)) /
+            (g2**2 * sin_w**2 * mZ**2)
+          ) *
+          ((conj(y_beta) * y_alpha * m_alpha * m_beta * g2) /
+           (2 * (4*pi)**2 * mphi**2 * cos_w)) *
+          F2((mpsi**2) / (mphi**2))
+        )**2
+      )
+    ) * br_ab
+derived_scalars:
+- name: ch
+  expression: 1 - sh
+- name: sH
+  expression: sqrt(sh)
+- name: cH
+  expression: sqrt(ch)
+- name: e_em
+  expression: sqrt(4*pi*alpha_em)
+- name: cos_w
+  expression: mW / mZ
+- name: sin_w
+  expression: sqrt(1 - cos_w**2)
+- name: g2
+  expression: (2*mW) / vev
+- name: mphi_sq
+  expression: Mphi**2 - 0.5*k1*vev**2
+- name: mphip_sq
+  expression: sh*MH1**2 + ch*MH2**2 - 0.5*k4*vev**2
+- name: MHA22
+  expression: ch*MH2**2 + sh*MH1**2
+- name: MHA12
+  expression: cH*sH*(MH1**2 - MH2**2)
+- name: MA02sq_denom
+  expression: MHA22 - MA1**2
+- name: MA02sq
+  expression: MHA22 + (MHA12**2) / MA02sq_denom
+- name: MA2
+  expression: sqrt(MA02sq)
+- name: ccommon
+  expression: sh*MH1**2 + ch*MH2**2
+- name: sa_raw
+  expression: (MA2**2 - ccommon) / (MA2**2 - MA1**2)
+- name: sa
+  expression: min(max(sa_raw, 0.0), 1.0)
+- name: ca
+  expression: 1 - sa
+- name: mphi
+  expression: sqrt(mphi_sq)
+- name: mphip
+  expression: sqrt(mphip_sq)
+- name: mu_phi
+  expression: sqrt(2*sh*ch) * (MH1**2 - MH2**2) / vev
+- name: i3
+  expression: I3(mphi, mphip, Mpsi)
+- name: k2
+  expression: >
+    (ch*MH1**2 + sh*MH2**2 + ca*MA1**2 + sa*MA2**2 - 2*Mphi**2) / vev**2
+- name: k3
+  expression: >
+    ((ch*MH1**2 + sh*MH2**2) - (ca*MA1**2 + sa*MA2**2)) / vev**2
+- name: tau_w
+  expression: 4 * (mW / HiggsMass)**2
+- name: tau_t
+  expression: 4 * (mt / HiggsMass)**2
+- name: tau_b
+  expression: 4 * (mb / HiggsMass)**2
+- name: tau_tau
+  expression: 4 * (mtau / HiggsMass)**2
+- name: tau_phi
+  expression: 4 * (Mphi / HiggsMass)**2
+derived_complex:
+- name: ye
+  expression: Reye + 1j*Imgye
+- name: ymu
+  expression: Reymu + 1j*Imgymu
+- name: ytau
+  expression: Reytau + 1j*Imgytau
+- name: Ye
+  expression: ReYe + 1j*ImgYe
+- name: Ymu
+  expression: ReYmu + 1j*ImgYmu
+- name: Ytau
+  expression: ReYtau + 1j*ImgYtau
+- name: Yp
+  expression: Reyp + 1j*Imgyp
+- name: normalization
+  expression: -(mu_phi * vev**2 * Mpsi * i3 / MN) * Yp
+- name: A_w
+  expression: -(2 + 3*tau_w + 3*tau_w*(2 - tau_w)*f(tau_w))
+- name: A_t
+  expression: 3*(2/3.0)**2 * (2*tau_t * (1 + (1 - tau_t)*f(tau_t)))
+- name: A_b
+  expression: 3*(-1/3.0)**2 * (2*tau_b * (1 + (1 - tau_b)*f(tau_b)))
+- name: A_tau
+  expression: (2*tau_tau * (1 + (1 - tau_tau)*f(tau_tau)))
+- name: A_phi
+  expression: ((k1 * vev**2) / (2 * Mphi**2)) * (-tau_phi + tau_phi**2 * f(tau_phi))
+matrices:
+- name: neutrino_mass_matrix
+  value_type: complex_matrix
+  rows:
+  - - 2*Ye*ye*normalization
+    - (Ye*ymu + Ymu*ye)*normalization
+    - (Ye*ytau + Ytau*ye)*normalization
+  - - (Ymu*ye + Ye*ymu)*normalization
+    - 2*Ymu*ymu*normalization
+    - (Ymu*ytau + Ytau*ymu)*normalization
+  - - (Ytau*ye + Ye*ytau)*normalization
+    - (Ytau*ymu + Ymu*ytau)*normalization
+    - 2*Ytau*ytau*normalization
+- name: S_matrix_1
+  value_type: real_matrix
+  rows:
+  - - 6*lambda1
+    - 2*lambda1
+    - k1 + k2 + k3
+    - k4
+    - k1 + k2 - k3
+    - k4
+    - 2*lambda1
+    - k1
+  - - 2*lambda1
+    - 6*lambda1
+    - k1 + k2 - k3
+    - k4
+    - k1 + k2 + k3
+    - k4
+    - 2*lambda1
+    - k1
+  - - k1 + k2 + k3
+    - k1 + k2 - k3
+    - 6*lambda2
+    - k5
+    - 2*lambda2
+    - k5
+    - k1
+    - 2*lambda2
+  - - k4
+    - k4
+    - k5
+    - 6*lambda3
+    - k5
+    - 2*lambda3
+    - k4
+    - k5
+  - - k1 + k2 - k3
+    - k1 + k2 + k3
+    - 2*lambda2
+    - k5
+    - 6*lambda2
+    - k5
+    - k1
+    - 2*lambda2
+  - - k4
+    - k4
+    - k5
+    - 2*lambda3
+    - k5
+    - 6*lambda3
+    - k4
+    - k5
+  - - 2*lambda1
+    - 2*lambda1
+    - k1
+    - k4
+    - k1
+    - k4
+    - 4*lambda1
+    - k1 + k2
+  - - k1
+    - k1
+    - 2*lambda2
+    - k5
+    - 2*lambda2
+    - k5
+    - k1 + k2
+    - 4*lambda2
+- name: S_matrix_2
+  value_type: real_matrix
+  rows:
+  - - k1
+    - '0'
+    - k3
+    - '0'
+    - 0.5*(k2 + k3)
+  - - '0'
+    - k4
+    - '0'
+    - '0'
+    - '0'
+  - - k3
+    - '0'
+    - 0.25*(k1 + k2 + k3)
+    - '0'
+    - 0.5*(k2 + k3)
+  - - '0'
+    - '0'
+    - '0'
+    - 0.25*k4
+    - '0'
+  - - 0.5*(k2 + k3)
+    - '0'
+    - 0.5*(k2 + k3)
+    - '0'
+    - 0.5*k3
+- name: S_matrix_3
+  value_type: real_matrix
+  rows:
+  - - 2*lambda1
+    - k3
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+  - - k3
+    - 2*lambda2
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+  - - '0'
+    - '0'
+    - k5
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+  - - '0'
+    - '0'
+    - '0'
+    - k5
+    - '0'
+    - '0'
+    - '0'
+  - - '0'
+    - '0'
+    - '0'
+    - '0'
+    - 2*lambda3
+    - '0'
+    - '0'
+  - - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - 4*lambda1
+    - k1 + k2
+  - - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - k1 + k2
+    - 4*lambda2
+- name: S_matrix_4
+  value_type: real_matrix
+  rows:
+  - - k1 + k2 - k3
+    - '0'
+    - k3
+    - '0'
+    - 0.5*(k2 - k3)
+  - - '0'
+    - k4
+    - '0'
+    - '0'
+    - '0'
+  - - k3
+    - '0'
+    - k1 + k2 - k3
+    - '0'
+    - -0.5*(k2 - k3)
+  - - '0'
+    - '0'
+    - '0'
+    - k4
+    - '0'
+  - - 0.5*(k2 - k3)
+    - '0'
+    - -0.5*(k2 - k3)
+    - '0'
+    - 0.5*k3
+- name: S_matrix_5
+  value_type: real_matrix
+  rows:
+  - - 2*lambda1
+    - '0'
+    - 0.5*(k2 + k3)
+    - '0'
+    - 0.5*(k2 - k3)
+    - '0'
+  - - '0'
+    - 2*lambda1
+    - -0.5*(k2 - k3)
+    - '0'
+    - 0.5*(k2 + k3)
+    - '0'
+  - - 0.5*(k2 + k3)
+    - -0.5*(k2 - k3)
+    - 2*lambda2
+    - '0'
+    - '0'
+    - '0'
+  - - '0'
+    - '0'
+    - '0'
+    - k5
+    - '0'
+    - '0'
+  - - 0.5*(k2 - k3)
+    - 0.5*(k2 + k3)
+    - '0'
+    - '0'
+    - 2*lambda2
+    - '0'
+  - - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - k5
+- name: S_matrix_6
+  value_type: real_matrix
+  rows:
+  - - k1
+    - '0'
+    - 0.5*(k2 + k3)
+    - '0'
+    - 0.5*(k2 - k3)
+    - '0'
+  - - '0'
+    - k1
+    - -0.5*(k2 - k3)
+    - '0'
+    - 0.5*(k2 + k3)
+    - '0'
+  - - 0.5*(k2 + k3)
+    - -0.5*(k2 - k3)
+    - k1
+    - '0'
+    - '0'
+    - '0'
+  - - '0'
+    - '0'
+    - '0'
+    - k4
+    - '0'
+    - '0'
+  - - 0.5*(k2 - k3)
+    - 0.5*(k2 + k3)
+    - '0'
+    - '0'
+    - k1
+    - '0'
+  - - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - k4
+diagonalizations:
+- name: neutrino_svd
+  input: neutrino_mass_matrix
+  method: svd_complex
+- name: S1_eigen
+  input: S_matrix_1
+  method: self_adjoint_eigen
+- name: S2_eigen
+  input: S_matrix_2
+  method: self_adjoint_eigen
+- name: S3_eigen
+  input: S_matrix_3
+  method: self_adjoint_eigen
+- name: S4_eigen
+  input: S_matrix_4
+  method: self_adjoint_eigen
+- name: S5_eigen
+  input: S_matrix_5
+  method: self_adjoint_eigen
+- name: S6_eigen
+  input: S_matrix_6
+  method: self_adjoint_eigen
+observables:
+- name: m1_raw
+  value_type: real
+  projection:
+    from: neutrino_svd
+    quantity: singular_values
+    index: 2
+- name: m2_raw
+  value_type: real
+  projection:
+    from: neutrino_svd
+    quantity: singular_values
+    index: 1
+- name: m3_raw
+  value_type: real
+  projection:
+    from: neutrino_svd
+    quantity: singular_values
+    index: 0
+- name: Ue1
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 0
+    col: 2
+- name: Ue2
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 0
+    col: 1
+- name: Ue3
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 0
+    col: 0
+- name: Umu1
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 1
+    col: 2
+- name: Umu2
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 1
+    col: 1
+- name: Umu3
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 1
+    col: 0
+- name: Utau1
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 2
+    col: 2
+- name: Utau2
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 2
+    col: 1
+- name: Utau3
+  value_type: complex
+  projection:
+    from: neutrino_svd
+    quantity: u_complex
+    row: 2
+    col: 0
+- name: theta13_angle
+  value_type: real
+  expression: asin(abs(Ue3))
+- name: theta12_angle
+  value_type: real
+  expression: atan(abs(Ue2) / abs(Ue1))
+- name: theta23_angle
+  value_type: real
+  expression: atan(abs(Umu3) / abs(Utau3))
+- name: delta_numerator
+  value_type: complex
+  expression: conj(Ue1) * Ue3 * Utau1 * conj(Utau3)
+- name: delta_denominator
+  value_type: real
+  expression: >
+    (
+      cos(theta12_angle) * cos(theta13_angle)**2 * cos(theta23_angle) * sin(theta13_angle)
+      +
+      cos(theta12_angle) * cos(theta23_angle) * sin(theta13_angle)
+    ) / (sin(theta12_angle) * sin(theta23_angle))
+- name: deltaCP_raw
+  value_type: real
+  expression: arg(delta_numerator / delta_denominator)
+- name: deltaCP
+  value_type: real
+  expression: if_else(deltaCP_raw < 0, deltaCP_raw + 2*pi, deltaCP_raw)
+- name: eta1
+  value_type: real
+  expression: fmod(arg(Ue1 / Ue3) / pi - deltaCP, 2)
+- name: eta2
+  value_type: real
+  expression: fmod(arg(Ue2 / Ue3) / pi - deltaCP, 2)
+- name: Theta12
+  value_type: real
+  expression: sin(theta12_angle)**2
+- name: Theta13
+  value_type: real
+  expression: sin(theta13_angle)**2
+- name: Theta23
+  value_type: real
+  expression: sin(theta23_angle)**2
+- name: dm21_raw
+  value_type: real
+  expression: m2_raw**2 - m1_raw**2
+- name: dm3l_raw
+  value_type: real
+  expression: m3_raw**2 - m1_raw**2
+- name: scale
+  value_type: real
+  expression: sqrt((bf_dm21 / dm21_raw + bf_dm3l / dm3l_raw) / 2)
+- name: m1
+  value_type: real
+  expression: m1_raw * scale
+- name: m2
+  value_type: real
+  expression: m2_raw * scale
+- name: m3
+  value_type: real
+  expression: m3_raw * scale
+- name: dm21
+  value_type: real
+  expression: scale**2 * dm21_raw
+- name: dm3l
+  value_type: real
+  expression: scale**2 * dm3l_raw
+- name: sum_m
+  value_type: real
+  expression: m1 + m2 + m3
+- name: deltaCP_deg
+  value_type: real
+  expression: >
+    if_else((deltaCP * 180 / pi) > 180, (deltaCP * 180 / pi) - 360, deltaCP * 180 / pi)
+- name: log10_dm21
+  value_type: real
+  expression: log(max(dm21, 1.0e-30)) / log(10)
+- name: dm3l_meV
+  value_type: real
+  expression: dm3l * 1.0e3
+- name: mbeta
+  value_type: real
+  expression: >
+    sqrt(m1**2 + dm21 * (1 - (1 - Theta13) * (1 - Theta12)) + dm3l * Theta13)
+- name: mbetabeta
+  value_type: real
+  expression: >
+    abs(
+      m1 * (1 - Theta12) * (1 - Theta13)
+      +
+      sqrt(dm21 + m1**2) * Theta12 * (1 - Theta13) * exp(1j * 2*pi * (eta2 - eta1))
+      +
+      sqrt(dm3l + dm21 + m1**2) * Theta13 * exp(1j * (-2*pi * (deltaCP + eta1)))
+    )
+- name: HiggsMass
+  value_type: real
+  expression: sqrt(2 * lambda1 * vev**2)
+- name: HiggsRgg
+  value_type: real
+  expression: abs(1 + A_phi / (A_t + A_b + A_tau + A_w))**2
+- name: mu_to_e_gamma
+  value_type: real
+  expression: LeptonGammaBR(ymu, ye, br_mu_to_e_nunu, Mpsi, Mphi)
+- name: tau_to_e_gamma
+  value_type: real
+  expression: LeptonGammaBR(ytau, ye, br_tau_to_e_nunu, Mpsi, Mphi)
+- name: tau_to_mu_gamma
+  value_type: real
+  expression: LeptonGammaBR(ytau, ymu, br_tau_to_mu_nunu, Mpsi, Mphi)
+- name: mu_to_eee
+  value_type: real
+  expression: TriLeptonBR(mmu_GeV, me_GeV, ymu, ye, br_mu_to_e_nunu, Mpsi, Mphi)
+- name: tau_to_eee
+  value_type: real
+  expression: TriLeptonBR(mtau_GeV, me_GeV, ytau, ye, br_tau_to_e_nunu, Mpsi, Mphi)
+- name: tau_to_mumumu
+  value_type: real
+  expression: TriLeptonBR(mtau_GeV, mmu_GeV, ytau, ymu, br_tau_to_mu_nunu, Mpsi, Mphi)
+- name: ObliqueT
+  value_type: real
+  expression: >
+    (
+      ch * F(MH1**2, Mphi**2)
+      + sh * F(MH2**2, Mphi**2)
+      + ca * F(MA1**2, Mphi**2)
+      + sa * F(MA2**2, Mphi**2)
+      - ch * ca * F(MH1**2, MA1**2)
+      - ch * sa * F(MH1**2, MA2**2)
+      - sh * ca * F(MH2**2, MA1**2)
+      - sh * sa * F(MH2**2, MA2**2)
+    ) / (16 * pi * sin_w**2 * mW**2)
+- name: ObliqueS
+  value_type: real
+  expression: >
+    (
+      (2*sin_w**2 - 1) * G(Mphi**2, Mphi**2, mZ**2)
+      + ch * ca * G(MH1**2, MA1**2, mZ**2)
+      + ch * sa * G(MH1**2, MA2**2, mZ**2)
+      + sh * ca * G(MH2**2, MA1**2, mZ**2)
+      + sh * sa * G(MH2**2, MA2**2, mZ**2)
+      + ch * log(MH1**2 / Mphi**2)
+      + sh * log(MH2**2 / Mphi**2)
+      + ca * log(MA1**2 / Mphi**2)
+      + sa * log(MA2**2 / Mphi**2)
+    ) / (24 * pi)
+- name: S1_e0
+  value_type: real
+  projection:
+    from: S1_eigen
+    quantity: eigenvalues
+    index: 0
+- name: S1_e1
+  value_type: real
+  projection:
+    from: S1_eigen
+    quantity: eigenvalues
+    index: 1
+- name: S1_e2
+  value_type: real
+  projection:
+    from: S1_eigen
+    quantity: eigenvalues
+    index: 2
+- name: S1_e3
+  value_type: real
+  projection:
+    from: S1_eigen
+    quantity: eigenvalues
+    index: 3
+- name: S1_e4
+  value_type: real
+  projection:
+    from: S1_eigen
+    quantity: eigenvalues
+    index: 4
+- name: S1_e5
+  value_type: real
+  projection:
+    from: S1_eigen
+    quantity: eigenvalues
+    index: 5
+- name: S1_e6
+  value_type: real
+  projection:
+    from: S1_eigen
+    quantity: eigenvalues
+    index: 6
+- name: S1_e7
+  value_type: real
+  projection:
+    from: S1_eigen
+    quantity: eigenvalues
+    index: 7
+- name: S2_e0
+  value_type: real
+  projection:
+    from: S2_eigen
+    quantity: eigenvalues
+    index: 0
+- name: S2_e1
+  value_type: real
+  projection:
+    from: S2_eigen
+    quantity: eigenvalues
+    index: 1
+- name: S2_e2
+  value_type: real
+  projection:
+    from: S2_eigen
+    quantity: eigenvalues
+    index: 2
+- name: S2_e3
+  value_type: real
+  projection:
+    from: S2_eigen
+    quantity: eigenvalues
+    index: 3
+- name: S2_e4
+  value_type: real
+  projection:
+    from: S2_eigen
+    quantity: eigenvalues
+    index: 4
+- name: S3_e0
+  value_type: real
+  projection:
+    from: S3_eigen
+    quantity: eigenvalues
+    index: 0
+- name: S3_e1
+  value_type: real
+  projection:
+    from: S3_eigen
+    quantity: eigenvalues
+    index: 1
+- name: S3_e2
+  value_type: real
+  projection:
+    from: S3_eigen
+    quantity: eigenvalues
+    index: 2
+- name: S3_e3
+  value_type: real
+  projection:
+    from: S3_eigen
+    quantity: eigenvalues
+    index: 3
+- name: S3_e4
+  value_type: real
+  projection:
+    from: S3_eigen
+    quantity: eigenvalues
+    index: 4
+- name: S3_e5
+  value_type: real
+  projection:
+    from: S3_eigen
+    quantity: eigenvalues
+    index: 5
+- name: S3_e6
+  value_type: real
+  projection:
+    from: S3_eigen
+    quantity: eigenvalues
+    index: 6
+- name: S4_e0
+  value_type: real
+  projection:
+    from: S4_eigen
+    quantity: eigenvalues
+    index: 0
+- name: S4_e1
+  value_type: real
+  projection:
+    from: S4_eigen
+    quantity: eigenvalues
+    index: 1
+- name: S4_e2
+  value_type: real
+  projection:
+    from: S4_eigen
+    quantity: eigenvalues
+    index: 2
+- name: S4_e3
+  value_type: real
+  projection:
+    from: S4_eigen
+    quantity: eigenvalues
+    index: 3
+- name: S4_e4
+  value_type: real
+  projection:
+    from: S4_eigen
+    quantity: eigenvalues
+    index: 4
+- name: S5_e0
+  value_type: real
+  projection:
+    from: S5_eigen
+    quantity: eigenvalues
+    index: 0
+- name: S5_e1
+  value_type: real
+  projection:
+    from: S5_eigen
+    quantity: eigenvalues
+    index: 1
+- name: S5_e2
+  value_type: real
+  projection:
+    from: S5_eigen
+    quantity: eigenvalues
+    index: 2
+- name: S5_e3
+  value_type: real
+  projection:
+    from: S5_eigen
+    quantity: eigenvalues
+    index: 3
+- name: S5_e4
+  value_type: real
+  projection:
+    from: S5_eigen
+    quantity: eigenvalues
+    index: 4
+- name: S5_e5
+  value_type: real
+  projection:
+    from: S5_eigen
+    quantity: eigenvalues
+    index: 5
+- name: S6_e0
+  value_type: real
+  projection:
+    from: S6_eigen
+    quantity: eigenvalues
+    index: 0
+- name: S6_e1
+  value_type: real
+  projection:
+    from: S6_eigen
+    quantity: eigenvalues
+    index: 1
+- name: S6_e2
+  value_type: real
+  projection:
+    from: S6_eigen
+    quantity: eigenvalues
+    index: 2
+- name: S6_e3
+  value_type: real
+  projection:
+    from: S6_eigen
+    quantity: eigenvalues
+    index: 3
+- name: S6_e4
+  value_type: real
+  projection:
+    from: S6_eigen
+    quantity: eigenvalues
+    index: 4
+- name: S6_e5
+  value_type: real
+  projection:
+    from: S6_eigen
+    quantity: eigenvalues
+    index: 5
+- name: S1_max_abs
+  value_type: real
+  expression: max(abs(S1_e0), abs(S1_e1), abs(S1_e2), abs(S1_e3), abs(S1_e4), abs(S1_e5), abs(S1_e6), abs(S1_e7))
+- name: S2_max_abs
+  value_type: real
+  expression: max(abs(S2_e0), abs(S2_e1), abs(S2_e2), abs(S2_e3), abs(S2_e4))
+- name: S3_max_abs
+  value_type: real
+  expression: max(abs(S3_e0), abs(S3_e1), abs(S3_e2), abs(S3_e3), abs(S3_e4), abs(S3_e5), abs(S3_e6))
+- name: S4_max_abs
+  value_type: real
+  expression: max(abs(S4_e0), abs(S4_e1), abs(S4_e2), abs(S4_e3), abs(S4_e4))
+- name: S5_max_abs
+  value_type: real
+  expression: max(abs(S5_e0), abs(S5_e1), abs(S5_e2), abs(S5_e3), abs(S5_e4), abs(S5_e5))
+- name: S6_max_abs
+  value_type: real
+  expression: max(abs(S6_e0), abs(S6_e1), abs(S6_e2), abs(S6_e3), abs(S6_e4), abs(S6_e5))
+theory_checks:
+- name: positive_mphi_sq
+  condition: mphi_sq > 0 and isfinite(mphi_sq)
+  fatal: true
+  message: Effective charged-scalar squared mass became negative.
+- name: positive_mphip_sq
+  condition: mphip_sq > 0 and isfinite(mphip_sq)
+  fatal: true
+  message: Effective neutral-scalar squared mass became negative.
+- name: valid_MA02
+  condition: MA02sq_denom > 0 and MA02sq > 0 and isfinite(MA02sq)
+  fatal: true
+  message: Derived MA02 mass relation became invalid.
+- name: full_dm_identity
+  condition: Mpsi < MN and Mpsi < Mphi and Mpsi < MA1 and Mpsi < MA2 and Mpsi < MH1 and Mpsi < MH2
+  fatal: true
+  message: The intended fermion dark-matter state is not the lightest odd state.
+- name: mass_splittings_safe
+  condition: abs(mphi**2 - mphip**2) >= mass_split_eps and abs(mphi**2 - Mpsi**2) >= mass_split_eps and abs(mphip**2 - Mpsi**2) >= mass_split_eps
+  fatal: true
+  message: Loop-function denominators became numerically singular.
+- name: i3_mass_order
+  condition: ((mphi > mphip) and (mphi > Mpsi)) or ((mphi < mphip) and (mphi < Mpsi))
+  fatal: true
+  message: The I3 mass ordering condition is violated.
+- name: quartic_bound_12
+  condition: k1 + k2 - abs(k3) > -2*sqrt(lambda1*lambda2)
+  fatal: true
+  message: Vacuum-stability bound k1+k2-|k3| > -2 sqrt(lambda1 lambda2) failed.
+- name: quartic_bound_13
+  condition: k4 > -2*sqrt(lambda1*lambda3)
+  fatal: true
+  message: Vacuum-stability bound k4 > -2 sqrt(lambda1 lambda3) failed.
+- name: quartic_bound_23
+  condition: k5 > -2*sqrt(lambda2*lambda3)
+  fatal: true
+  message: Vacuum-stability bound k5 > -2 sqrt(lambda2 lambda3) failed.
+- name: finite_neutrino_sector
+  condition: isfinite(Theta12) and isfinite(Theta13) and isfinite(Theta23) and isfinite(deltaCP) and isfinite(dm21) and isfinite(dm3l) and isfinite(scale)
+  fatal: true
+  message: Neutrino-sector diagonalization or scaling produced non-finite values.
+- name: finite_precision_sector
+  condition: isfinite(HiggsMass) and isfinite(HiggsRgg) and isfinite(ObliqueS) and isfinite(ObliqueT)
+  fatal: true
+  message: Higgs or electroweak precision sector produced non-finite values.
+- name: finite_lfv_sector
+  condition: isfinite(mu_to_e_gamma) and isfinite(tau_to_e_gamma) and isfinite(tau_to_mu_gamma) and isfinite(mu_to_eee) and isfinite(tau_to_eee) and isfinite(tau_to_mumumu)
+  fatal: true
+  message: LFV sector produced non-finite values.
+- name: unitarity_s1
+  condition: S1_max_abs <= 8*pi
+  fatal: true
+  message: Scalar scattering matrix S1 violates the perturbative unitarity bound.
+- name: unitarity_s2
+  condition: S2_max_abs <= 8*pi
+  fatal: true
+  message: Scalar scattering matrix S2 violates the perturbative unitarity bound.
+- name: unitarity_s3
+  condition: S3_max_abs <= 8*pi
+  fatal: true
+  message: Scalar scattering matrix S3 violates the perturbative unitarity bound.
+- name: unitarity_s4
+  condition: S4_max_abs <= 8*pi
+  fatal: true
+  message: Scalar scattering matrix S4 violates the perturbative unitarity bound.
+- name: unitarity_s5
+  condition: S5_max_abs <= 8*pi
+  fatal: true
+  message: Scalar scattering matrix S5 violates the perturbative unitarity bound.
+- name: unitarity_s6
+  condition: S6_max_abs <= 8*pi
+  fatal: true
+  message: Scalar scattering matrix S6 violates the perturbative unitarity bound.
+likelihoods:
+- name: theta12_term
+  kind: table_lookup
+  observable: Theta12
+  table_file: ../../models/oneloop/data/Normal/Theta12.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: theta13_term
+  kind: table_lookup
+  observable: Theta13
+  table_file: ../../models/oneloop/data/Normal/Theta13.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: theta23_term
+  kind: table_lookup
+  observable: Theta23
+  table_file: ../../models/oneloop/data/Normal/Theta23.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: deltaCP_term
+  kind: table_lookup
+  observable: deltaCP_deg
+  table_file: ../../models/oneloop/data/Normal/deltaCP.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: dm21_term
+  kind: table_lookup
+  observable: log10_dm21
+  table_file: ../../models/oneloop/data/Normal/dm21.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: dm3l_term
+  kind: table_lookup
+  observable: dm3l_meV
+  table_file: ../../models/oneloop/data/Normal/dm3l.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: sum_m_limit
+  kind: hard_cut
+  observable: sum_m
+  lower: 0.0
+  upper: 0.12
+- name: higgs_mass_term
+  kind: gaussian
+  observable: HiggsMass
+  mean: 125.08
+  sigma: 0.12
+- name: higgs_rgg_term
+  kind: gaussian
+  observable: HiggsRgg
+  mean: 1.0883
+  sigma: 0.092374
+- name: mu_to_e_gamma_limit
+  kind: hard_cut
+  observable: mu_to_e_gamma
+  lower: 0.0
+  upper: 3.1e-13
+- name: tau_to_e_gamma_limit
+  kind: hard_cut
+  observable: tau_to_e_gamma
+  lower: 0.0
+  upper: 3.3e-08
+- name: tau_to_mu_gamma_limit
+  kind: hard_cut
+  observable: tau_to_mu_gamma
+  lower: 0.0
+  upper: 4.2e-08
+- name: mu_to_eee_limit
+  kind: hard_cut
+  observable: mu_to_eee
+  lower: 0.0
+  upper: 1.0e-12
+- name: tau_to_eee_limit
+  kind: hard_cut
+  observable: tau_to_eee
+  lower: 0.0
+  upper: 2.7e-08
+- name: tau_to_mumumu_limit
+  kind: hard_cut
+  observable: tau_to_mumumu
+  lower: 0.0
+  upper: 2.1e-08
+- name: oblique_ST_term
+  kind: multivariate_gaussian
+  observables:
+  - ObliqueS
+  - ObliqueT
+  means:
+  - -0.05
+  - 0.0
+  covariance:
+  - - 0.0049
+    - 0.003906
+  - - 0.003906
+    - 0.0036
+outputs:
+  save:
+  - MA2
+  - sa
+  - k2
+  - k3
+  - mphi
+  - mphip
+  - Theta12
+  - Theta13
+  - Theta23
+  - deltaCP
+  - eta1
+  - eta2
+  - m1
+  - m2
+  - m3
+  - dm21
+  - dm3l
+  - sum_m
+  - scale
+  - mbeta
+  - mbetabeta
+  - HiggsMass
+  - HiggsRgg
+  - mu_to_e_gamma
+  - tau_to_e_gamma
+  - tau_to_mu_gamma
+  - mu_to_eee
+  - tau_to_eee
+  - tau_to_mumumu
+  - ObliqueS
+  - ObliqueT
+scan:
+  engine: diver
+  save_every: 250
+  seed: 12345
+  settings:
+    objective: nll
+    maxgen: 2000
+    NP: 64
+    convthresh: 0.001
+    convsteps: 20
+    max_init_attempts: 50000
+    invalid_objective: 1.0e300
+    save_invalid_points: false
+    verbose: 1

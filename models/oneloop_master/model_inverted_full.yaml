@@ -1,0 +1,30 @@
+metadata:
+  name: oneloop_master_inverted_full
+  version: 0.4.0
+  description: Full inverted-ordering latest oneloop-master variant derived from config_inv.yaml, with source-faithful derived MA2, sa, and lambda1.
+  ordering: inverted
+  tags:
+  - oneloop
+  - inverted_ordering
+  - latest_master
+  - full_variant
+  - micromegas_optional
+imports:
+- parameters_inverted_full.yaml
+- constants_inverted_full.yaml
+- ../oneloop/functions.yaml
+- derived_backend.yaml
+- ../oneloop/derived.yaml
+- ../oneloop/matrices.yaml
+- ../oneloop/diagonalizations.yaml
+- observables/neutrino_inverted.yaml
+- observables/neutrino_extra_inverted.yaml
+- ../oneloop/observables/higgs.yaml
+- ../oneloop/observables/lfv.yaml
+- ../oneloop/observables/ew.yaml
+- ../oneloop/observables/scalar_sector.yaml
+- observables/dm.yaml
+- constraints/theory_checks.yaml
+- constraints/likelihoods_inverted_full.yaml
+- outputs.yaml
+- scan.yaml

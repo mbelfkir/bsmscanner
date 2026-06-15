@@ -1,0 +1,14 @@
+scan:
+  engine: diver
+  save_every: 250
+  seed: 12345
+  settings:
+    objective: nll
+    maxgen: 2000
+    NP: 64
+    convthresh: 0.001
+    convsteps: 20
+    max_init_attempts: 50000
+    invalid_objective: 1.0e300
+    save_invalid_points: false
+    verbose: 1

@@ -1,0 +1,30 @@
+metadata:
+  name: oneloop_master_normal_reduced
+  version: 0.4.0
+  description: Reduced normal-ordering latest oneloop-master variant derived from config_nr.yaml, with exact micrOMEGAs-backed DM observables.
+  ordering: normal
+  tags:
+  - oneloop
+  - normal_ordering
+  - latest_master
+  - reduced_variant
+  - micromegas_optional
+imports:
+- parameters.yaml
+- constants.yaml
+- ../oneloop/functions.yaml
+- derived_backend.yaml
+- ../oneloop/derived.yaml
+- ../oneloop/matrices.yaml
+- ../oneloop/diagonalizations.yaml
+- ../oneloop/observables/neutrino.yaml
+- observables/neutrino_extra.yaml
+- ../oneloop/observables/higgs.yaml
+- ../oneloop/observables/lfv.yaml
+- ../oneloop/observables/ew.yaml
+- ../oneloop/observables/scalar_sector.yaml
+- observables/dm.yaml
+- constraints/theory_checks.yaml
+- constraints/likelihoods.yaml
+- outputs.yaml
+- scan.yaml

@@ -1,0 +1,41 @@
+functions:
+- name: q_tau
+  value_type: complex
+  args:
+  - tau
+  expression: >
+    exp((2j*pi*tau)/3.0)
+
+- name: Y1
+  value_type: complex
+  args:
+  - tau
+  expression: >
+    1.0
+    + 12.0*q_tau(tau)**3
+    + 36.0*q_tau(tau)**6
+    + 12.0*q_tau(tau)**9
+
+- name: Y2
+  value_type: complex
+  args:
+  - tau
+  expression: >
+    -6.0*q_tau(tau)*
+    (
+      1.0
+      + 7.0*q_tau(tau)**3
+      + 8.0*q_tau(tau)**6
+    )
+
+- name: Y3
+  value_type: complex
+  args:
+  - tau
+  expression: >
+    -18.0*q_tau(tau)**2*
+    (
+      1.0
+      + 2.0*q_tau(tau)**3
+      + 5.0*q_tau(tau)**6
+    )

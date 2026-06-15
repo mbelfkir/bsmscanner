@@ -1,0 +1,98 @@
+# Full config_inv.yaml-like inverted-ordering likelihood.
+# The source subtracts an additive 6.1 normalization constant from each
+# interpolated inverted-order table term after spline evaluation. The YAML
+# patch keeps that convention explicit with in_range_offset: -6.1 so the
+# framework now reproduces the old source numerically, not just up to ranking.
+likelihoods:
+- name: theta12_term
+  kind: table_lookup
+  observable: Theta12
+  interpolation: cubic_spline
+  in_range_offset: -6.1
+  table_file: ../../oneloop/data/Inverted/Theta12.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: theta13_term
+  kind: table_lookup
+  observable: Theta13
+  interpolation: cubic_spline
+  in_range_offset: -6.1
+  table_file: ../../oneloop/data/Inverted/Theta13.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: theta23_term
+  kind: table_lookup
+  observable: Theta23
+  interpolation: cubic_spline
+  in_range_offset: -6.1
+  table_file: ../../oneloop/data/Inverted/Theta23.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: deltaCP_term
+  kind: table_lookup
+  observable: deltaCP_deg
+  interpolation: cubic_spline
+  in_range_offset: -6.1
+  table_file: ../../oneloop/data/Inverted/deltaCP.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: m12+m3l
+  kind: custom
+  plugin_call:
+    plugin: oneloop_likelihoods
+    function: neutrino_mass_term
+    output: nll
+    bindings:
+      log10_dm21: log10_dm21
+      dm3l_meV: dm3l_meV
+    options:
+      dm21_table_file: ../../oneloop/data/Inverted/dm21.csv
+      dm3l_table_file: ../../oneloop/data/Inverted/dm3l.csv
+      interpolation: cubic_spline
+      out_of_range_penalty_scale: 4.0e4
+      out_of_range_penalty_cap: 1.0e6
+      in_range_offset: -6.1
+- name: sumOfMass
+  kind: hard_cut
+  observable: sum_m_source
+  lower: 0.0
+  upper: 0.12
+- name: massPinalety
+  kind: hard_cut
+  observable: mass_penalty_ok
+- name: HiggsRgg_term
+  kind: gaussian
+  observable: HiggsRgg
+  mean: 1.0883
+  sigma: 0.092374
+- name: KPinaleties
+  kind: hard_cut
+  observable: quartic_penalties_ok
+- name: EVPinaleties
+  kind: hard_cut
+  observable: unitarity_penalties_ok
+- name: BRPinaleties
+  kind: hard_cut
+  observable: lfv_penalties_ok
+- name: Oblique_term
+  kind: multivariate_gaussian
+  quadratic_form_prefactor: 1.0
+  observables:
+  - ObliqueS
+  - ObliqueT
+  means:
+  - -0.05
+  - 0.0
+  covariance:
+  - - 0.0049
+    - 0.003906
+  - - 0.003906
+    - 0.0036
+- name: Omega_term
+  kind: gaussian
+  observable: Omega
+  mean: 0.12
+  sigma: 0.01
+- name: DDexp_term
+  kind: hard_cut
+  observable: DDexp_ok

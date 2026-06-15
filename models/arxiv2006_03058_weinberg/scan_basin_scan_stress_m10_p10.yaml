@@ -1,0 +1,69 @@
+scan:
+  engine: basin_scan
+  save_every: 1
+  seed: 12345
+  settings:
+    objective: nll
+    invalid_penalty: 1.0e12
+    save_invalid_points: true
+    verbose: 1
+    progress_interval: 25000
+
+  basin_scan:
+    seed: 12345
+
+    exploration:
+      method: latin_hypercube
+      n_points: 300000
+      keep_fraction: 0.005
+
+    selection:
+      mode: top_fraction
+      top_fraction: 0.005
+      max_points: 3000
+
+    clustering:
+      enabled: true
+      method: dbscan
+      eps_fraction: 0.04
+      min_samples: 8
+      max_clusters: 12
+
+    boxes:
+      construction: quantile
+      q_low: 0.01
+      q_high: 0.99
+      padding_fraction: 0.35
+      min_width_fraction: 0.01
+      clip_to_original_bounds: true
+
+    focused_engine:
+      name: adaptive_diver
+      population_size: 100
+      max_generations: 3000
+      p_best_fraction: 0.1
+      archive: true
+      bounds:
+        handling: reflect
+      convergence:
+        patience: 0
+        population_std_tol: 0.0
+      local_refinement:
+        enabled: true
+        method: Powell
+        n_elites: 10
+        maxiter: 2000
+      statistics:
+        enabled: true
+      output:
+        save_history: true
+        save_population: true
+        save_elites: true
+
+    output:
+      save_exploration_points: true
+      save_clusters: true
+      save_focused_boxes: true
+
+statistics:
+  enabled: false

@@ -1,0 +1,51 @@
+scan:
+  engine: de_scipy
+  save_every: 1
+  seed: 24681357
+  settings:
+    objective: nll
+    strategy: best1bin
+    maxiter: 1200
+    popsize: 20
+    tol: 1.0e-9
+    atol: 0.0
+    mutation: [0.5, 1.2]
+    recombination: 0.7
+    init: latinhypercube
+    updating: immediate
+    workers: 1
+    polish: true
+    progress_interval: 25
+    invalid_penalty: 1.0e12
+    save_invalid_points: true
+    verbose: 1
+    x0:
+      - 1345.0912
+      - 56.118094
+      - 50.316526
+      - 136.0279
+      - 185.37906
+      - 2617.0062
+      - 0.090708034
+      - 0.10675343
+      - 0.019597006
+      - 3.3475091
+      - 0.47460689
+      - 0.48529595
+      - 0.00065392809
+      - 0.0
+      - -5.6937552e-07
+      - -2.8014316e-06
+      - -3.3725836e-06
+      - 3.0867978e-06
+      - -5.7380059e-06
+      - 8.3630289e-06
+      - 0.02531377
+      - -0.017406522
+      - 0.060851391
+      - -0.081124054
+      - 0.044405714
+      - -0.035688167
+
+statistics:
+  enabled: false

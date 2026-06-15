@@ -1,0 +1,43 @@
+guided_sampling:
+  enabled: true
+  apply_to:
+    - exploration
+    - progressive_exploration
+    - refinement
+
+  stages:
+    - name: tau_reference_profile
+      type: prior_profile
+      enabled: true
+      probability: 0.35
+      parameters:
+        - name: Retau
+          mean: 0.0
+          sigma: 0.12
+        - name: Imtau
+          mean: 1.2
+          sigma: 0.35
+
+    - name: charged_lepton_coefficient_profile
+      type: prior_profile
+      enabled: true
+      probability: 0.25
+      parameters:
+        - name: a2t
+          mean: 1.7
+          sigma: 1.0
+        - name: a3t
+          mean: -2.5
+          sigma: 1.0
+
+    - name: neutrino_coefficient_profile
+      type: prior_profile
+      enabled: true
+      probability: 0.25
+      parameters:
+        - name: g2t
+          mean: 2.5
+          sigma: 1.2
+        - name: g3t
+          mean: -0.5
+          sigma: 1.2

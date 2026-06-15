@@ -1,0 +1,28 @@
+scan:
+  engine: de_scipy
+  save_every: 1
+  seed: 12345
+  settings:
+    objective: nll
+    strategy: rand1bin
+    maxiter: 10000
+    popsize: 40
+    tol: 1.0e-12
+    atol: 0.0
+    mutation: [0.8, 1.9]
+    recombination: 0.45
+    init: sobol
+    updating: immediate
+    workers: 1
+    polish: true
+    progress_interval: 100
+    invalid_penalty: 1.0e12
+    save_invalid_points: true
+    verbose: 1
+
+statistics:
+  enabled: true
+  method: de_weighted
+  credible_levels: [0.68, 0.95]
+  output_samples: true
+  include_observables: true

@@ -1,0 +1,99 @@
+# No dark-matter likelihood terms are active in this milestone release.
+# Oscillation, Higgs, LFV, and electroweak terms below are implemented in the
+# native evaluator. Relic-density and direct-detection likelihoods remain
+# deferred pending exact micrOMEGAs backend integration.
+likelihoods:
+- name: theta12_term
+  kind: table_lookup
+  observable: Theta12
+  table_file: ../data/Normal/Theta12.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: theta13_term
+  kind: table_lookup
+  observable: Theta13
+  table_file: ../data/Normal/Theta13.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: theta23_term
+  kind: table_lookup
+  observable: Theta23
+  table_file: ../data/Normal/Theta23.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: deltaCP_term
+  kind: table_lookup
+  observable: deltaCP_deg
+  table_file: ../data/Normal/deltaCP.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: dm21_term
+  kind: table_lookup
+  observable: log10_dm21
+  table_file: ../data/Normal/dm21.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: dm3l_term
+  kind: table_lookup
+  observable: dm3l_meV
+  table_file: ../data/Normal/dm3l.csv
+  out_of_range_penalty_scale: 4.0e4
+  out_of_range_penalty_cap: 1.0e6
+- name: sum_m_limit
+  kind: hard_cut
+  observable: sum_m
+  lower: 0.0
+  upper: 0.12
+- name: higgs_mass_term
+  kind: gaussian
+  observable: HiggsMass
+  mean: 125.08
+  sigma: 0.12
+- name: higgs_rgg_term
+  kind: gaussian
+  observable: HiggsRgg
+  mean: 1.0883
+  sigma: 0.092374
+- name: mu_to_e_gamma_limit
+  kind: hard_cut
+  observable: mu_to_e_gamma
+  lower: 0.0
+  upper: 3.1e-13
+- name: tau_to_e_gamma_limit
+  kind: hard_cut
+  observable: tau_to_e_gamma
+  lower: 0.0
+  upper: 3.3e-08
+- name: tau_to_mu_gamma_limit
+  kind: hard_cut
+  observable: tau_to_mu_gamma
+  lower: 0.0
+  upper: 4.2e-08
+- name: mu_to_eee_limit
+  kind: hard_cut
+  observable: mu_to_eee
+  lower: 0.0
+  upper: 1.0e-12
+- name: tau_to_eee_limit
+  kind: hard_cut
+  observable: tau_to_eee
+  lower: 0.0
+  upper: 2.7e-08
+- name: tau_to_mumumu_limit
+  kind: hard_cut
+  observable: tau_to_mumumu
+  lower: 0.0
+  upper: 2.1e-08
+- name: oblique_ST_term
+  kind: multivariate_gaussian
+  observables:
+  - ObliqueS
+  - ObliqueT
+  means:
+  - -0.05
+  - 0.0
+  covariance:
+  - - 0.0049
+    - 0.003906
+  - - 0.003906
+    - 0.0036

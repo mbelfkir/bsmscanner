@@ -1,0 +1,33 @@
+# Toy CKM likelihoods for framework validation only.
+# These values are deliberately broad placeholders, not production global-fit inputs.
+likelihoods:
+- name: ckm_toy_Vus
+  kind: gaussian
+  observable: Vus
+  mean: 0.22
+  sigma: 0.10
+- name: ckm_toy_Vcb
+  kind: gaussian
+  observable: Vcb
+  mean: 0.04
+  sigma: 0.05
+- name: ckm_toy_Vub
+  kind: gaussian
+  observable: Vub
+  mean: 0.004
+  sigma: 0.02
+- name: ckm_toy_delta
+  kind: gaussian
+  observable: deltaCKM_deg
+  mean: 70.0
+  sigma: 120.0
+- name: ckm_toy_jarlskog
+  kind: gaussian
+  observable: J_CKM
+  mean: 3.0e-5
+  sigma: 1.0e-3
+- name: ckm_toy_wolfenstein_lambda
+  kind: gaussian
+  observable: wolfenstein_lambda
+  mean: 0.22
+  sigma: 0.10

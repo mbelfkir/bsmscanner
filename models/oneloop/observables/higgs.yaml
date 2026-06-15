@@ -1,0 +1,7 @@
+observables:
+- name: HiggsMass
+  value_type: real
+  expression: sqrt(2 * lambda1 * vev**2)
+- name: HiggsRgg
+  value_type: real
+  expression: abs(1 + A_phi / (A_t + A_b + A_tau + A_w))**2

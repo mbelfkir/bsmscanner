@@ -1,0 +1,7 @@
+cff-version: 1.2.0
+title: BSMScanner
+message: "If you use BSMScanner, please cite the software and the associated physics model references."
+version: 0.1.0
+date-released: 2026-06-16
+authors:
+  - name: BSMScanner contributors

@@ -1,0 +1,88 @@
+derived_scalars:
+- name: ch
+  expression: 1 - sh
+- name: sH
+  expression: sqrt(sh)
+- name: cH
+  expression: sqrt(ch)
+- name: e_em
+  expression: sqrt(4*pi*alpha_em)
+- name: cos_w
+  expression: mW / mZ
+- name: sin_w
+  expression: sqrt(1 - cos_w**2)
+- name: g2
+  expression: (2*mW) / vev
+- name: mphi_sq
+  expression: Mphi**2 - 0.5*k1*vev**2
+- name: mphip_sq
+  expression: sh*MH1**2 + ch*MH2**2 - 0.5*k4*vev**2
+- name: MHA22
+  expression: ch*MH2**2 + sh*MH1**2
+- name: MHA12
+  expression: cH*sH*(MH1**2 - MH2**2)
+- name: MA02sq_denom
+  expression: MHA22 - MA1**2
+- name: MA02sq
+  expression: MHA22 + (MHA12**2) / MA02sq_denom
+- name: MA2
+  expression: sqrt(MA02sq)
+- name: ccommon
+  expression: sh*MH1**2 + ch*MH2**2
+- name: sa_raw
+  expression: (MA2**2 - ccommon) / (MA2**2 - MA1**2)
+- name: sa
+  expression: min(max(sa_raw, 0.0), 1.0)
+- name: ca
+  expression: 1 - sa
+- name: mphi
+  expression: sqrt(mphi_sq)
+- name: mphip
+  expression: sqrt(mphip_sq)
+- name: mu_phi
+  expression: sqrt(2*sh*ch) * (MH1**2 - MH2**2) / vev
+- name: i3
+  expression: I3(mphi, mphip, Mpsi)
+- name: k2
+  expression: >
+    (ch*MH1**2 + sh*MH2**2 + ca*MA1**2 + sa*MA2**2 - 2*Mphi**2) / vev**2
+- name: k3
+  expression: >
+    ((ch*MH1**2 + sh*MH2**2) - (ca*MA1**2 + sa*MA2**2)) / vev**2
+- name: tau_w
+  expression: 4 * (mW / HiggsMass)**2
+- name: tau_t
+  expression: 4 * (mt / HiggsMass)**2
+- name: tau_b
+  expression: 4 * (mb / HiggsMass)**2
+- name: tau_tau
+  expression: 4 * (mtau / HiggsMass)**2
+- name: tau_phi
+  expression: 4 * (Mphi / HiggsMass)**2
+derived_complex:
+- name: ye
+  expression: Reye + 1j*Imgye
+- name: ymu
+  expression: Reymu + 1j*Imgymu
+- name: ytau
+  expression: Reytau + 1j*Imgytau
+- name: Ye
+  expression: ReYe + 1j*ImgYe
+- name: Ymu
+  expression: ReYmu + 1j*ImgYmu
+- name: Ytau
+  expression: ReYtau + 1j*ImgYtau
+- name: Yp
+  expression: Reyp + 1j*Imgyp
+- name: normalization
+  expression: -(mu_phi * vev**2 * Mpsi * i3 / MN) * Yp
+- name: A_w
+  expression: -(2 + 3*tau_w + 3*tau_w*(2 - tau_w)*f(tau_w))
+- name: A_t
+  expression: 3*(2/3.0)**2 * (2*tau_t * (1 + (1 - tau_t)*f(tau_t)))
+- name: A_b
+  expression: 3*(-1/3.0)**2 * (2*tau_b * (1 + (1 - tau_b)*f(tau_b)))
+- name: A_tau
+  expression: (2*tau_tau * (1 + (1 - tau_tau)*f(tau_tau)))
+- name: A_phi
+  expression: ((k1 * vev**2) / (2 * Mphi**2)) * (-tau_phi + tau_phi**2 * f(tau_phi))

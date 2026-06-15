@@ -1,0 +1,33 @@
+metadata:
+  name: oneloop_chi_inverted_micromegas_ml_focus
+  version: 1.0.0
+  description: One-loop radiative neutrino model, fermion chi dark matter branch, inverted ordering, micrOMEGAs observables, with ML-focused basin scan.
+  ordering: inverted
+  tags: [oneloop, chi_dm, inverted_ordering, micromegas, ml_focus]
+imports:
+- parameters_chi.yaml
+- constants_reference_inverted.yaml
+- functions.yaml
+- derived_chi_basis.yaml
+- derived_backend_reference.yaml
+- derived.yaml
+- matrices.yaml
+- diagonalizations.yaml
+- observables/scalar_sector.yaml
+- observables/neutrino_reference_inverted.yaml
+- observables/neutrino_reference_common.yaml
+- observables/higgs.yaml
+- observables/lfv.yaml
+- observables/ew.yaml
+- observables/reference_aliases.yaml
+- constraints/theory_checks_reference_common.yaml
+- constraints/theory_checks_reference_chi.yaml
+- constraints/likelihoods_reference_inverted.yaml
+- outputs_reference.yaml
+- guided_sampling.yaml
+- observables/dm_backend_reference_chi.yaml
+- constraints/theory_checks_reference_dm.yaml
+- constraints/likelihoods_reference_dm.yaml
+- outputs_reference_dm.yaml
+- staged_evaluation_micromegas.yaml
+- scan_reference_ml_focus.yaml

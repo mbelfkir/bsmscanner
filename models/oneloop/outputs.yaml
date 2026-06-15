@@ -1,0 +1,33 @@
+outputs:
+  save:
+  - MA2
+  - sa
+  - k2
+  - k3
+  - mphi
+  - mphip
+  - Theta12
+  - Theta13
+  - Theta23
+  - deltaCP
+  - eta1
+  - eta2
+  - m1
+  - m2
+  - m3
+  - dm21
+  - dm3l
+  - sum_m
+  - scale
+  - mbeta
+  - mbetabeta
+  - HiggsMass
+  - HiggsRgg
+  - mu_to_e_gamma
+  - tau_to_e_gamma
+  - tau_to_mu_gamma
+  - mu_to_eee
+  - tau_to_eee
+  - tau_to_mumumu
+  - ObliqueS
+  - ObliqueT

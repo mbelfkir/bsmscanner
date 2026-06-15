@@ -1,0 +1,4105 @@
+{
+  "name": "leptontest_inverted",
+  "version": "0.4.0",
+  "nodes": [
+    {
+      "name": "Imtau",
+      "kind": "external_parameter",
+      "value_type": "real",
+      "dependencies": [],
+      "active": true,
+      "literal": {
+        "kind": "real",
+        "value": 1.0
+      },
+      "metadata": {
+        "scan": true,
+        "lower": 0.866,
+        "upper": 3.0,
+        "default": 1.0,
+        "prior": "flat"
+      }
+    },
+    {
+      "name": "Retau",
+      "kind": "external_parameter",
+      "value_type": "real",
+      "dependencies": [],
+      "active": true,
+      "literal": {
+        "kind": "real",
+        "value": 0.1
+      },
+      "metadata": {
+        "scan": true,
+        "lower": -0.5,
+        "upper": 0.5,
+        "default": 0.1,
+        "prior": "flat"
+      }
+    },
+    {
+      "name": "bf_dm21",
+      "kind": "constant",
+      "value_type": "real",
+      "dependencies": [],
+      "active": true,
+      "literal": {
+        "kind": "real",
+        "value": 7.49e-05
+      },
+      "metadata": {
+        "value": 7.49e-05
+      }
+    },
+    {
+      "name": "bf_dm3l",
+      "kind": "constant",
+      "value_type": "real",
+      "dependencies": [],
+      "active": true,
+      "literal": {
+        "kind": "real",
+        "value": -0.002484
+      },
+      "metadata": {
+        "value": -0.002484
+      }
+    },
+    {
+      "name": "me_over_mtau",
+      "kind": "constant",
+      "value_type": "real",
+      "dependencies": [],
+      "active": true,
+      "literal": {
+        "kind": "real",
+        "value": 0.0002712
+      },
+      "metadata": {
+        "value": 0.0002712
+      }
+    },
+    {
+      "name": "mmu_over_mtau",
+      "kind": "constant",
+      "value_type": "real",
+      "dependencies": [],
+      "active": true,
+      "literal": {
+        "kind": "real",
+        "value": 0.0565
+      },
+      "metadata": {
+        "value": 0.0565
+      }
+    },
+    {
+      "name": "lepton_mass_matrix",
+      "kind": "matrix",
+      "value_type": "complex_matrix",
+      "dependencies": [
+        "me_over_mtau",
+        "mmu_over_mtau"
+      ],
+      "active": true,
+      "matrix": {
+        "rows": 3,
+        "cols": 3,
+        "cells": [
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "load",
+                "name": "me_over_mtau"
+              }
+            ],
+            "dependencies": [
+              "me_over_mtau"
+            ]
+          },
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "push_real",
+                "value": 0.0
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "push_real",
+                "value": 0.0
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "push_real",
+                "value": 0.0
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "load",
+                "name": "mmu_over_mtau"
+              }
+            ],
+            "dependencies": [
+              "mmu_over_mtau"
+            ]
+          },
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "push_real",
+                "value": 0.0
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "push_real",
+                "value": 0.0
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "push_real",
+                "value": 0.0
+              }
+            ],
+            "dependencies": []
+          },
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "push_real",
+                "value": 1.0
+              }
+            ],
+            "dependencies": []
+          }
+        ]
+      },
+      "metadata": {
+        "matrix_type": "dirac_mass",
+        "role": "charged_lepton",
+        "diagonalize": true
+      }
+    },
+    {
+      "name": "tau",
+      "kind": "derived",
+      "value_type": "complex",
+      "dependencies": [
+        "Imtau",
+        "Retau"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "complex",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "Retau"
+          },
+          {
+            "op": "push_complex",
+            "re": 0.0,
+            "im": 1.0
+          },
+          {
+            "op": "load",
+            "name": "Imtau"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          }
+        ],
+        "dependencies": [
+          "Imtau",
+          "Retau"
+        ]
+      },
+      "metadata": {
+        "expression": "Retau + 1j*Imtau"
+      }
+    },
+    {
+      "name": "y1",
+      "kind": "derived",
+      "value_type": "complex",
+      "dependencies": [
+        "tau"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "complex",
+        "instructions": [
+          {
+            "op": "push_real",
+            "value": 1.0
+          },
+          {
+            "op": "push_real",
+            "value": 12.0
+          },
+          {
+            "op": "push_complex",
+            "re": 0.0,
+            "im": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "tau"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 3.0
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "call",
+            "name": "exp",
+            "argc": 1
+          },
+          {
+            "op": "push_real",
+            "value": 3.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "push_real",
+            "value": 36.0
+          },
+          {
+            "op": "push_complex",
+            "re": 0.0,
+            "im": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "tau"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 3.0
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "call",
+            "name": "exp",
+            "argc": 1
+          },
+          {
+            "op": "push_real",
+            "value": 6.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "push_real",
+            "value": 12.0
+          },
+          {
+            "op": "push_complex",
+            "re": 0.0,
+            "im": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "tau"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 3.0
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "call",
+            "name": "exp",
+            "argc": 1
+          },
+          {
+            "op": "push_real",
+            "value": 9.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          }
+        ],
+        "dependencies": [
+          "tau"
+        ]
+      },
+      "metadata": {
+        "expression": "Y1(tau)"
+      }
+    },
+    {
+      "name": "y2",
+      "kind": "derived",
+      "value_type": "complex",
+      "dependencies": [
+        "tau"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "complex",
+        "instructions": [
+          {
+            "op": "push_real",
+            "value": 6.0
+          },
+          {
+            "op": "neg"
+          },
+          {
+            "op": "push_complex",
+            "re": 0.0,
+            "im": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "tau"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 3.0
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "call",
+            "name": "exp",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 1.0
+          },
+          {
+            "op": "push_real",
+            "value": 7.0
+          },
+          {
+            "op": "push_complex",
+            "re": 0.0,
+            "im": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "tau"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 3.0
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "call",
+            "name": "exp",
+            "argc": 1
+          },
+          {
+            "op": "push_real",
+            "value": 3.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "push_real",
+            "value": 8.0
+          },
+          {
+            "op": "push_complex",
+            "re": 0.0,
+            "im": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "tau"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 3.0
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "call",
+            "name": "exp",
+            "argc": 1
+          },
+          {
+            "op": "push_real",
+            "value": 6.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "mul"
+          }
+        ],
+        "dependencies": [
+          "tau"
+        ]
+      },
+      "metadata": {
+        "expression": "Y2(tau)"
+      }
+    },
+    {
+      "name": "y3",
+      "kind": "derived",
+      "value_type": "complex",
+      "dependencies": [
+        "tau"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "complex",
+        "instructions": [
+          {
+            "op": "push_real",
+            "value": 18.0
+          },
+          {
+            "op": "neg"
+          },
+          {
+            "op": "push_complex",
+            "re": 0.0,
+            "im": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "tau"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 3.0
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "call",
+            "name": "exp",
+            "argc": 1
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 1.0
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "push_complex",
+            "re": 0.0,
+            "im": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "tau"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 3.0
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "call",
+            "name": "exp",
+            "argc": 1
+          },
+          {
+            "op": "push_real",
+            "value": 3.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "push_real",
+            "value": 5.0
+          },
+          {
+            "op": "push_complex",
+            "re": 0.0,
+            "im": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "tau"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 3.0
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "call",
+            "name": "exp",
+            "argc": 1
+          },
+          {
+            "op": "push_real",
+            "value": 6.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "mul"
+          }
+        ],
+        "dependencies": [
+          "tau"
+        ]
+      },
+      "metadata": {
+        "expression": "Y3(tau)"
+      }
+    },
+    {
+      "name": "neutrino_mass_matrix",
+      "kind": "matrix",
+      "value_type": "complex_matrix",
+      "dependencies": [
+        "y1",
+        "y2",
+        "y3"
+      ],
+      "active": true,
+      "matrix": {
+        "rows": 3,
+        "cols": 3,
+        "cells": [
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "push_real",
+                "value": 2.0
+              },
+              {
+                "op": "load",
+                "name": "y1"
+              },
+              {
+                "op": "mul"
+              }
+            ],
+            "dependencies": [
+              "y1"
+            ]
+          },
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "push_real",
+                "value": 1.0
+              },
+              {
+                "op": "neg"
+              },
+              {
+                "op": "load",
+                "name": "y3"
+              },
+              {
+                "op": "mul"
+              }
+            ],
+            "dependencies": [
+              "y3"
+            ]
+          },
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "push_real",
+                "value": 1.0
+              },
+              {
+                "op": "neg"
+              },
+              {
+                "op": "load",
+                "name": "y2"
+              },
+              {
+                "op": "mul"
+              }
+            ],
+            "dependencies": [
+              "y2"
+            ]
+          },
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "push_real",
+                "value": 1.0
+              },
+              {
+                "op": "neg"
+              },
+              {
+                "op": "load",
+                "name": "y3"
+              },
+              {
+                "op": "mul"
+              }
+            ],
+            "dependencies": [
+              "y3"
+            ]
+          },
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "push_real",
+                "value": 2.0
+              },
+              {
+                "op": "load",
+                "name": "y2"
+              },
+              {
+                "op": "mul"
+              }
+            ],
+            "dependencies": [
+              "y2"
+            ]
+          },
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "push_real",
+                "value": 1.0
+              },
+              {
+                "op": "neg"
+              },
+              {
+                "op": "load",
+                "name": "y1"
+              },
+              {
+                "op": "mul"
+              }
+            ],
+            "dependencies": [
+              "y1"
+            ]
+          },
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "push_real",
+                "value": 1.0
+              },
+              {
+                "op": "neg"
+              },
+              {
+                "op": "load",
+                "name": "y2"
+              },
+              {
+                "op": "mul"
+              }
+            ],
+            "dependencies": [
+              "y2"
+            ]
+          },
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "push_real",
+                "value": 1.0
+              },
+              {
+                "op": "neg"
+              },
+              {
+                "op": "load",
+                "name": "y1"
+              },
+              {
+                "op": "mul"
+              }
+            ],
+            "dependencies": [
+              "y1"
+            ]
+          },
+          {
+            "return_type": "complex",
+            "instructions": [
+              {
+                "op": "push_real",
+                "value": 2.0
+              },
+              {
+                "op": "load",
+                "name": "y3"
+              },
+              {
+                "op": "mul"
+              }
+            ],
+            "dependencies": [
+              "y3"
+            ]
+          }
+        ]
+      },
+      "metadata": {
+        "matrix_type": "majorana_mass",
+        "role": "neutrino",
+        "diagonalize": true
+      }
+    },
+    {
+      "name": "diag__charged_lepton",
+      "kind": "diagonalization",
+      "value_type": "diagonalization",
+      "dependencies": [
+        "lepton_mass_matrix"
+      ],
+      "active": true,
+      "diagonalization": {
+        "input": "lepton_mass_matrix",
+        "method": "svd_complex"
+      }
+    },
+    {
+      "name": "diag__neutrino",
+      "kind": "diagonalization",
+      "value_type": "diagonalization",
+      "dependencies": [
+        "neutrino_mass_matrix"
+      ],
+      "active": true,
+      "diagonalization": {
+        "input": "neutrino_mass_matrix",
+        "method": "svd_complex"
+      }
+    },
+    {
+      "name": "charged_lepton_u_00",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__charged_lepton"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__charged_lepton",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 0,
+        "col": 0
+      }
+    },
+    {
+      "name": "charged_lepton_u_01",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__charged_lepton"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__charged_lepton",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 0,
+        "col": 1
+      }
+    },
+    {
+      "name": "charged_lepton_u_02",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__charged_lepton"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__charged_lepton",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 0,
+        "col": 2
+      }
+    },
+    {
+      "name": "charged_lepton_u_10",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__charged_lepton"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__charged_lepton",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 1,
+        "col": 0
+      }
+    },
+    {
+      "name": "charged_lepton_u_11",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__charged_lepton"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__charged_lepton",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 1,
+        "col": 1
+      }
+    },
+    {
+      "name": "charged_lepton_u_12",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__charged_lepton"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__charged_lepton",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 1,
+        "col": 2
+      }
+    },
+    {
+      "name": "charged_lepton_u_20",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__charged_lepton"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__charged_lepton",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 2,
+        "col": 0
+      }
+    },
+    {
+      "name": "charged_lepton_u_21",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__charged_lepton"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__charged_lepton",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 2,
+        "col": 1
+      }
+    },
+    {
+      "name": "charged_lepton_u_22",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__charged_lepton"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__charged_lepton",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 2,
+        "col": 2
+      }
+    },
+    {
+      "name": "m1_raw",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "diag__neutrino"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__neutrino",
+        "quantity": "singular_values",
+        "index": 1,
+        "row": null,
+        "col": null
+      }
+    },
+    {
+      "name": "m2_raw",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "diag__neutrino"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__neutrino",
+        "quantity": "singular_values",
+        "index": 0,
+        "row": null,
+        "col": null
+      }
+    },
+    {
+      "name": "dm21_raw",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "m1_raw",
+        "m2_raw"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "m2_raw"
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "load",
+            "name": "m1_raw"
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "sub"
+          }
+        ],
+        "dependencies": [
+          "m1_raw",
+          "m2_raw"
+        ]
+      },
+      "metadata": {
+        "expression": "m2_raw**2 - m1_raw**2"
+      }
+    },
+    {
+      "name": "m3_raw",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "diag__neutrino"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__neutrino",
+        "quantity": "singular_values",
+        "index": 2,
+        "row": null,
+        "col": null
+      }
+    },
+    {
+      "name": "dm3l_raw",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "m2_raw",
+        "m3_raw"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "m3_raw"
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "load",
+            "name": "m2_raw"
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "sub"
+          }
+        ],
+        "dependencies": [
+          "m2_raw",
+          "m3_raw"
+        ]
+      },
+      "metadata": {
+        "expression": "m3_raw**2 - m2_raw**2"
+      }
+    },
+    {
+      "name": "neutrino_u_00",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__neutrino"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__neutrino",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 0,
+        "col": 0
+      }
+    },
+    {
+      "name": "neutrino_u_01",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__neutrino"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__neutrino",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 0,
+        "col": 1
+      }
+    },
+    {
+      "name": "neutrino_u_02",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__neutrino"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__neutrino",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 0,
+        "col": 2
+      }
+    },
+    {
+      "name": "neutrino_u_10",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__neutrino"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__neutrino",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 1,
+        "col": 0
+      }
+    },
+    {
+      "name": "neutrino_u_11",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__neutrino"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__neutrino",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 1,
+        "col": 1
+      }
+    },
+    {
+      "name": "neutrino_u_12",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__neutrino"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__neutrino",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 1,
+        "col": 2
+      }
+    },
+    {
+      "name": "neutrino_u_20",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__neutrino"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__neutrino",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 2,
+        "col": 0
+      }
+    },
+    {
+      "name": "Ue2",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "charged_lepton_u_02",
+        "charged_lepton_u_12",
+        "charged_lepton_u_22",
+        "neutrino_u_00",
+        "neutrino_u_10",
+        "neutrino_u_20"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "complex",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "charged_lepton_u_02"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_00"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "charged_lepton_u_12"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_10"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "load",
+            "name": "charged_lepton_u_22"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_20"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          }
+        ],
+        "dependencies": [
+          "charged_lepton_u_02",
+          "charged_lepton_u_12",
+          "charged_lepton_u_22",
+          "neutrino_u_00",
+          "neutrino_u_10",
+          "neutrino_u_20"
+        ]
+      },
+      "metadata": {
+        "expression": "charged_lepton_u_02 * conj(neutrino_u_00) + charged_lepton_u_12 * conj(neutrino_u_10) + charged_lepton_u_22 * conj(neutrino_u_20)\n"
+      }
+    },
+    {
+      "name": "neutrino_u_21",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__neutrino"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__neutrino",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 2,
+        "col": 1
+      }
+    },
+    {
+      "name": "Ue1",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "charged_lepton_u_02",
+        "charged_lepton_u_12",
+        "charged_lepton_u_22",
+        "neutrino_u_01",
+        "neutrino_u_11",
+        "neutrino_u_21"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "complex",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "charged_lepton_u_02"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_01"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "charged_lepton_u_12"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_11"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "load",
+            "name": "charged_lepton_u_22"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_21"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          }
+        ],
+        "dependencies": [
+          "charged_lepton_u_02",
+          "charged_lepton_u_12",
+          "charged_lepton_u_22",
+          "neutrino_u_01",
+          "neutrino_u_11",
+          "neutrino_u_21"
+        ]
+      },
+      "metadata": {
+        "expression": "charged_lepton_u_02 * conj(neutrino_u_01) + charged_lepton_u_12 * conj(neutrino_u_11) + charged_lepton_u_22 * conj(neutrino_u_21)\n"
+      }
+    },
+    {
+      "name": "Utau1",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "charged_lepton_u_00",
+        "charged_lepton_u_10",
+        "charged_lepton_u_20",
+        "neutrino_u_01",
+        "neutrino_u_11",
+        "neutrino_u_21"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "complex",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "charged_lepton_u_00"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_01"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "charged_lepton_u_10"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_11"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "load",
+            "name": "charged_lepton_u_20"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_21"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          }
+        ],
+        "dependencies": [
+          "charged_lepton_u_00",
+          "charged_lepton_u_10",
+          "charged_lepton_u_20",
+          "neutrino_u_01",
+          "neutrino_u_11",
+          "neutrino_u_21"
+        ]
+      },
+      "metadata": {
+        "expression": "charged_lepton_u_00 * conj(neutrino_u_01) + charged_lepton_u_10 * conj(neutrino_u_11) + charged_lepton_u_20 * conj(neutrino_u_21)\n"
+      }
+    },
+    {
+      "name": "neutrino_u_22",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "diag__neutrino"
+      ],
+      "active": true,
+      "projection": {
+        "from": "diag__neutrino",
+        "quantity": "u_complex",
+        "index": null,
+        "row": 2,
+        "col": 2
+      }
+    },
+    {
+      "name": "Ue3",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "charged_lepton_u_02",
+        "charged_lepton_u_12",
+        "charged_lepton_u_22",
+        "neutrino_u_02",
+        "neutrino_u_12",
+        "neutrino_u_22"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "complex",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "charged_lepton_u_02"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_02"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "charged_lepton_u_12"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_12"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "load",
+            "name": "charged_lepton_u_22"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_22"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          }
+        ],
+        "dependencies": [
+          "charged_lepton_u_02",
+          "charged_lepton_u_12",
+          "charged_lepton_u_22",
+          "neutrino_u_02",
+          "neutrino_u_12",
+          "neutrino_u_22"
+        ]
+      },
+      "metadata": {
+        "expression": "charged_lepton_u_02 * conj(neutrino_u_02) + charged_lepton_u_12 * conj(neutrino_u_12) + charged_lepton_u_22 * conj(neutrino_u_22)\n"
+      }
+    },
+    {
+      "name": "Umu3",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "charged_lepton_u_01",
+        "charged_lepton_u_11",
+        "charged_lepton_u_21",
+        "neutrino_u_02",
+        "neutrino_u_12",
+        "neutrino_u_22"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "complex",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "charged_lepton_u_01"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_02"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "charged_lepton_u_11"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_12"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "load",
+            "name": "charged_lepton_u_21"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_22"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          }
+        ],
+        "dependencies": [
+          "charged_lepton_u_01",
+          "charged_lepton_u_11",
+          "charged_lepton_u_21",
+          "neutrino_u_02",
+          "neutrino_u_12",
+          "neutrino_u_22"
+        ]
+      },
+      "metadata": {
+        "expression": "charged_lepton_u_01 * conj(neutrino_u_02) + charged_lepton_u_11 * conj(neutrino_u_12) + charged_lepton_u_21 * conj(neutrino_u_22)\n"
+      }
+    },
+    {
+      "name": "Utau3",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "charged_lepton_u_00",
+        "charged_lepton_u_10",
+        "charged_lepton_u_20",
+        "neutrino_u_02",
+        "neutrino_u_12",
+        "neutrino_u_22"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "complex",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "charged_lepton_u_00"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_02"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "charged_lepton_u_10"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_12"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "load",
+            "name": "charged_lepton_u_20"
+          },
+          {
+            "op": "load",
+            "name": "neutrino_u_22"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          }
+        ],
+        "dependencies": [
+          "charged_lepton_u_00",
+          "charged_lepton_u_10",
+          "charged_lepton_u_20",
+          "neutrino_u_02",
+          "neutrino_u_12",
+          "neutrino_u_22"
+        ]
+      },
+      "metadata": {
+        "expression": "charged_lepton_u_00 * conj(neutrino_u_02) + charged_lepton_u_10 * conj(neutrino_u_12) + charged_lepton_u_20 * conj(neutrino_u_22)\n"
+      }
+    },
+    {
+      "name": "delta_numerator",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "Ue1",
+        "Ue3",
+        "Utau1",
+        "Utau3"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "complex",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "Ue1"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "load",
+            "name": "Ue3"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "Utau1"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "Utau3"
+          },
+          {
+            "op": "call",
+            "name": "conj",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          }
+        ],
+        "dependencies": [
+          "Ue1",
+          "Ue3",
+          "Utau1",
+          "Utau3"
+        ]
+      },
+      "metadata": {
+        "expression": "conj(Ue1) * Ue3 * Utau1 * conj(Utau3)"
+      }
+    },
+    {
+      "name": "nscale",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "bf_dm21",
+        "bf_dm3l",
+        "dm21_raw",
+        "dm3l_raw"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "bf_dm21"
+          },
+          {
+            "op": "load",
+            "name": "dm21_raw"
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "load",
+            "name": "bf_dm3l"
+          },
+          {
+            "op": "load",
+            "name": "dm3l_raw"
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "call",
+            "name": "sqrt",
+            "argc": 1
+          }
+        ],
+        "dependencies": [
+          "bf_dm21",
+          "bf_dm3l",
+          "dm21_raw",
+          "dm3l_raw"
+        ]
+      },
+      "metadata": {
+        "expression": "sqrt((bf_dm21 / dm21_raw + bf_dm3l / dm3l_raw) / 2)"
+      }
+    },
+    {
+      "name": "Lambda",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "nscale"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "nscale"
+          }
+        ],
+        "dependencies": [
+          "nscale"
+        ]
+      },
+      "metadata": {
+        "expression": "nscale"
+      }
+    },
+    {
+      "name": "dm21",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "dm21_raw",
+        "nscale"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "nscale"
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "load",
+            "name": "dm21_raw"
+          },
+          {
+            "op": "mul"
+          }
+        ],
+        "dependencies": [
+          "dm21_raw",
+          "nscale"
+        ]
+      },
+      "metadata": {
+        "expression": "nscale**2 * dm21_raw"
+      }
+    },
+    {
+      "name": "dm3l",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "dm3l_raw",
+        "nscale"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "nscale"
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "load",
+            "name": "dm3l_raw"
+          },
+          {
+            "op": "mul"
+          }
+        ],
+        "dependencies": [
+          "dm3l_raw",
+          "nscale"
+        ]
+      },
+      "metadata": {
+        "expression": "nscale**2 * dm3l_raw"
+      }
+    },
+    {
+      "name": "m1",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "m1_raw",
+        "nscale"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "m1_raw"
+          },
+          {
+            "op": "load",
+            "name": "nscale"
+          },
+          {
+            "op": "mul"
+          }
+        ],
+        "dependencies": [
+          "m1_raw",
+          "nscale"
+        ]
+      },
+      "metadata": {
+        "expression": "m1_raw * nscale"
+      }
+    },
+    {
+      "name": "m2",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "m2_raw",
+        "nscale"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "m2_raw"
+          },
+          {
+            "op": "load",
+            "name": "nscale"
+          },
+          {
+            "op": "mul"
+          }
+        ],
+        "dependencies": [
+          "m2_raw",
+          "nscale"
+        ]
+      },
+      "metadata": {
+        "expression": "m2_raw * nscale"
+      }
+    },
+    {
+      "name": "m3",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "m3_raw",
+        "nscale"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "m3_raw"
+          },
+          {
+            "op": "load",
+            "name": "nscale"
+          },
+          {
+            "op": "mul"
+          }
+        ],
+        "dependencies": [
+          "m3_raw",
+          "nscale"
+        ]
+      },
+      "metadata": {
+        "expression": "m3_raw * nscale"
+      }
+    },
+    {
+      "name": "scale",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "nscale"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "nscale"
+          }
+        ],
+        "dependencies": [
+          "nscale"
+        ]
+      },
+      "metadata": {
+        "expression": "nscale"
+      }
+    },
+    {
+      "name": "sum_m",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "m1",
+        "m2",
+        "m3"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "m1"
+          },
+          {
+            "op": "load",
+            "name": "m2"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "load",
+            "name": "m3"
+          },
+          {
+            "op": "add"
+          }
+        ],
+        "dependencies": [
+          "m1",
+          "m2",
+          "m3"
+        ]
+      },
+      "metadata": {
+        "expression": "m1 + m2 + m3"
+      }
+    },
+    {
+      "name": "theta12_angle",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "Ue1",
+        "Ue2"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "Ue2"
+          },
+          {
+            "op": "call",
+            "name": "abs",
+            "argc": 1
+          },
+          {
+            "op": "load",
+            "name": "Ue1"
+          },
+          {
+            "op": "call",
+            "name": "abs",
+            "argc": 1
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "call",
+            "name": "atan",
+            "argc": 1
+          }
+        ],
+        "dependencies": [
+          "Ue1",
+          "Ue2"
+        ]
+      },
+      "metadata": {
+        "expression": "atan(abs(Ue2) / abs(Ue1))"
+      }
+    },
+    {
+      "name": "s12",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "theta12_angle"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "theta12_angle"
+          },
+          {
+            "op": "call",
+            "name": "sin",
+            "argc": 1
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "pow"
+          }
+        ],
+        "dependencies": [
+          "theta12_angle"
+        ]
+      },
+      "metadata": {
+        "expression": "sin(theta12_angle)**2"
+      }
+    },
+    {
+      "name": "theta13_angle",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "Ue3"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "Ue3"
+          },
+          {
+            "op": "call",
+            "name": "abs",
+            "argc": 1
+          },
+          {
+            "op": "call",
+            "name": "asin",
+            "argc": 1
+          }
+        ],
+        "dependencies": [
+          "Ue3"
+        ]
+      },
+      "metadata": {
+        "expression": "asin(abs(Ue3))"
+      }
+    },
+    {
+      "name": "s13",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "theta13_angle"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "theta13_angle"
+          },
+          {
+            "op": "call",
+            "name": "sin",
+            "argc": 1
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "pow"
+          }
+        ],
+        "dependencies": [
+          "theta13_angle"
+        ]
+      },
+      "metadata": {
+        "expression": "sin(theta13_angle)**2"
+      }
+    },
+    {
+      "name": "mbeta",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "dm21",
+        "dm3l",
+        "m3",
+        "s12",
+        "s13"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "m3"
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "load",
+            "name": "dm21"
+          },
+          {
+            "op": "push_real",
+            "value": 1.0
+          },
+          {
+            "op": "load",
+            "name": "s13"
+          },
+          {
+            "op": "sub"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 1.0
+          },
+          {
+            "op": "load",
+            "name": "s12"
+          },
+          {
+            "op": "sub"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "load",
+            "name": "dm3l"
+          },
+          {
+            "op": "push_real",
+            "value": 1.0
+          },
+          {
+            "op": "load",
+            "name": "s13"
+          },
+          {
+            "op": "sub"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "sub"
+          },
+          {
+            "op": "call",
+            "name": "sqrt",
+            "argc": 1
+          }
+        ],
+        "dependencies": [
+          "dm21",
+          "dm3l",
+          "m3",
+          "s12",
+          "s13"
+        ]
+      },
+      "metadata": {
+        "expression": "sqrt(m3**2 + dm21 * (1 - s13) * (1 - s12) - dm3l * (1 - s13))\n"
+      }
+    },
+    {
+      "name": "theta23_angle",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "Umu3",
+        "Utau3"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "Umu3"
+          },
+          {
+            "op": "call",
+            "name": "abs",
+            "argc": 1
+          },
+          {
+            "op": "load",
+            "name": "Utau3"
+          },
+          {
+            "op": "call",
+            "name": "abs",
+            "argc": 1
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "call",
+            "name": "atan",
+            "argc": 1
+          }
+        ],
+        "dependencies": [
+          "Umu3",
+          "Utau3"
+        ]
+      },
+      "metadata": {
+        "expression": "atan(abs(Umu3) / abs(Utau3))"
+      }
+    },
+    {
+      "name": "delta_prefactor_a",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "theta12_angle",
+        "theta13_angle",
+        "theta23_angle"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "theta12_angle"
+          },
+          {
+            "op": "call",
+            "name": "cos",
+            "argc": 1
+          },
+          {
+            "op": "load",
+            "name": "theta13_angle"
+          },
+          {
+            "op": "call",
+            "name": "cos",
+            "argc": 1
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "theta23_angle"
+          },
+          {
+            "op": "call",
+            "name": "cos",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "theta13_angle"
+          },
+          {
+            "op": "call",
+            "name": "sin",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          }
+        ],
+        "dependencies": [
+          "theta12_angle",
+          "theta13_angle",
+          "theta23_angle"
+        ]
+      },
+      "metadata": {
+        "expression": "cos(theta12_angle) * cos(theta13_angle)**2 * cos(theta23_angle) * sin(theta13_angle)"
+      }
+    },
+    {
+      "name": "delta_prefactor_b",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "theta12_angle",
+        "theta13_angle",
+        "theta23_angle"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "theta12_angle"
+          },
+          {
+            "op": "call",
+            "name": "cos",
+            "argc": 1
+          },
+          {
+            "op": "load",
+            "name": "theta23_angle"
+          },
+          {
+            "op": "call",
+            "name": "cos",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "theta13_angle"
+          },
+          {
+            "op": "call",
+            "name": "sin",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          }
+        ],
+        "dependencies": [
+          "theta12_angle",
+          "theta13_angle",
+          "theta23_angle"
+        ]
+      },
+      "metadata": {
+        "expression": "cos(theta12_angle) * cos(theta23_angle) * sin(theta13_angle)"
+      }
+    },
+    {
+      "name": "delta_prefactor_c",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "theta12_angle",
+        "theta23_angle"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "theta12_angle"
+          },
+          {
+            "op": "call",
+            "name": "sin",
+            "argc": 1
+          },
+          {
+            "op": "load",
+            "name": "theta23_angle"
+          },
+          {
+            "op": "call",
+            "name": "sin",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          }
+        ],
+        "dependencies": [
+          "theta12_angle",
+          "theta23_angle"
+        ]
+      },
+      "metadata": {
+        "expression": "sin(theta12_angle) * sin(theta23_angle)"
+      }
+    },
+    {
+      "name": "delta_phase_argument",
+      "kind": "observable",
+      "value_type": "complex",
+      "dependencies": [
+        "delta_numerator",
+        "delta_prefactor_a",
+        "delta_prefactor_b",
+        "delta_prefactor_c"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "complex",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "delta_numerator"
+          },
+          {
+            "op": "load",
+            "name": "delta_prefactor_a"
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "load",
+            "name": "delta_prefactor_b"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "load",
+            "name": "delta_prefactor_c"
+          },
+          {
+            "op": "div"
+          }
+        ],
+        "dependencies": [
+          "delta_numerator",
+          "delta_prefactor_a",
+          "delta_prefactor_b",
+          "delta_prefactor_c"
+        ]
+      },
+      "metadata": {
+        "expression": "((delta_numerator / delta_prefactor_a) + delta_prefactor_b) / delta_prefactor_c"
+      }
+    },
+    {
+      "name": "deltaCP_raw",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "delta_phase_argument"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "delta_phase_argument"
+          },
+          {
+            "op": "call",
+            "name": "arg",
+            "argc": 1
+          },
+          {
+            "op": "neg"
+          }
+        ],
+        "dependencies": [
+          "delta_phase_argument"
+        ]
+      },
+      "metadata": {
+        "expression": "-arg(delta_phase_argument)"
+      }
+    },
+    {
+      "name": "deltaCP",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "deltaCP_raw"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "deltaCP_raw"
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "call",
+            "name": "fmod",
+            "argc": 2
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "call",
+            "name": "fmod",
+            "argc": 2
+          }
+        ],
+        "dependencies": [
+          "deltaCP_raw"
+        ]
+      },
+      "metadata": {
+        "expression": "fmod(fmod(deltaCP_raw, 2*pi) + 2*pi, 2*pi)"
+      }
+    },
+    {
+      "name": "deltaCP_deg",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "deltaCP"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "deltaCP"
+          },
+          {
+            "op": "push_real",
+            "value": 180.0
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "push_real",
+            "value": 180.0
+          },
+          {
+            "op": "cmp_gt"
+          },
+          {
+            "op": "load",
+            "name": "deltaCP"
+          },
+          {
+            "op": "push_real",
+            "value": 180.0
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "push_real",
+            "value": 360.0
+          },
+          {
+            "op": "sub"
+          },
+          {
+            "op": "load",
+            "name": "deltaCP"
+          },
+          {
+            "op": "push_real",
+            "value": 180.0
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "call",
+            "name": "if_else",
+            "argc": 3
+          }
+        ],
+        "dependencies": [
+          "deltaCP"
+        ]
+      },
+      "metadata": {
+        "expression": "if_else((deltaCP * 180 / pi) > 180, (deltaCP * 180 / pi) - 360, deltaCP * 180 / pi)\n"
+      }
+    },
+    {
+      "name": "eta1",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "Ue1",
+        "Ue3",
+        "deltaCP"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "Ue1"
+          },
+          {
+            "op": "load",
+            "name": "Ue3"
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "call",
+            "name": "arg",
+            "argc": 1
+          },
+          {
+            "op": "load",
+            "name": "deltaCP"
+          },
+          {
+            "op": "sub"
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "call",
+            "name": "fmod",
+            "argc": 2
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "call",
+            "name": "fmod",
+            "argc": 2
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "div"
+          }
+        ],
+        "dependencies": [
+          "Ue1",
+          "Ue3",
+          "deltaCP"
+        ]
+      },
+      "metadata": {
+        "expression": "fmod(fmod(arg(Ue1 / Ue3) - deltaCP, 2*pi) + 2*pi, 2*pi) / pi"
+      }
+    },
+    {
+      "name": "eta2",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "Ue2",
+        "Ue3",
+        "deltaCP"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "Ue2"
+          },
+          {
+            "op": "load",
+            "name": "Ue3"
+          },
+          {
+            "op": "div"
+          },
+          {
+            "op": "call",
+            "name": "arg",
+            "argc": 1
+          },
+          {
+            "op": "load",
+            "name": "deltaCP"
+          },
+          {
+            "op": "sub"
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "call",
+            "name": "fmod",
+            "argc": 2
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "call",
+            "name": "fmod",
+            "argc": 2
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "div"
+          }
+        ],
+        "dependencies": [
+          "Ue2",
+          "Ue3",
+          "deltaCP"
+        ]
+      },
+      "metadata": {
+        "expression": "fmod(fmod(arg(Ue2 / Ue3) - deltaCP, 2*pi) + 2*pi, 2*pi) / pi"
+      }
+    },
+    {
+      "name": "mbetabeta",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "deltaCP",
+        "dm21",
+        "dm3l",
+        "eta1",
+        "eta2",
+        "m3",
+        "s12",
+        "s13"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "m3"
+          },
+          {
+            "op": "load",
+            "name": "s13"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "load",
+            "name": "m3"
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "load",
+            "name": "dm3l"
+          },
+          {
+            "op": "sub"
+          },
+          {
+            "op": "call",
+            "name": "sqrt",
+            "argc": 1
+          },
+          {
+            "op": "load",
+            "name": "s12"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 1.0
+          },
+          {
+            "op": "load",
+            "name": "s13"
+          },
+          {
+            "op": "sub"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_complex",
+            "re": 0.0,
+            "im": 2.0
+          },
+          {
+            "op": "load",
+            "name": "deltaCP"
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "load",
+            "name": "eta2"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "call",
+            "name": "exp",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "load",
+            "name": "m3"
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "pow"
+          },
+          {
+            "op": "load",
+            "name": "dm3l"
+          },
+          {
+            "op": "sub"
+          },
+          {
+            "op": "load",
+            "name": "dm21"
+          },
+          {
+            "op": "sub"
+          },
+          {
+            "op": "call",
+            "name": "sqrt",
+            "argc": 1
+          },
+          {
+            "op": "push_real",
+            "value": 1.0
+          },
+          {
+            "op": "load",
+            "name": "s12"
+          },
+          {
+            "op": "sub"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_real",
+            "value": 1.0
+          },
+          {
+            "op": "load",
+            "name": "s13"
+          },
+          {
+            "op": "sub"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "push_complex",
+            "re": 0.0,
+            "im": 2.0
+          },
+          {
+            "op": "load",
+            "name": "deltaCP"
+          },
+          {
+            "op": "push_real",
+            "value": 3.141592653589793
+          },
+          {
+            "op": "load",
+            "name": "eta1"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "call",
+            "name": "exp",
+            "argc": 1
+          },
+          {
+            "op": "mul"
+          },
+          {
+            "op": "add"
+          },
+          {
+            "op": "call",
+            "name": "abs",
+            "argc": 1
+          }
+        ],
+        "dependencies": [
+          "deltaCP",
+          "dm21",
+          "dm3l",
+          "eta1",
+          "eta2",
+          "m3",
+          "s12",
+          "s13"
+        ]
+      },
+      "metadata": {
+        "expression": "abs(\n  m3 * s13\n  +\n  sqrt(m3**2 - dm3l) * s12 * (1 - s13) * exp(2j * (deltaCP + pi * eta2))\n  +\n  sqrt(m3**2 - dm3l - dm21) * (1 - s12) * (1 - s13) * exp(2j * (deltaCP + pi * eta1))\n)\n"
+      }
+    },
+    {
+      "name": "s23",
+      "kind": "observable",
+      "value_type": "real",
+      "dependencies": [
+        "theta23_angle"
+      ],
+      "active": true,
+      "program": {
+        "return_type": "real",
+        "instructions": [
+          {
+            "op": "load",
+            "name": "theta23_angle"
+          },
+          {
+            "op": "call",
+            "name": "sin",
+            "argc": 1
+          },
+          {
+            "op": "push_real",
+            "value": 2.0
+          },
+          {
+            "op": "pow"
+          }
+        ],
+        "dependencies": [
+          "theta23_angle"
+        ]
+      },
+      "metadata": {
+        "expression": "sin(theta23_angle)**2"
+      }
+    },
+    {
+      "name": "deltaCP_term",
+      "kind": "constraint",
+      "value_type": "real",
+      "dependencies": [
+        "deltaCP_deg"
+      ],
+      "active": true,
+      "constraint": {
+        "kind": "gaussian",
+        "observable": "deltaCP_deg",
+        "observables": [],
+        "mean": 274,
+        "means": [],
+        "sigma": 48.5,
+        "sigma_up": null,
+        "sigma_down": null,
+        "lower": null,
+        "upper": null,
+        "covariance": [],
+        "table": [],
+        "plugin": null,
+        "out_of_range_penalty_scale": null,
+        "out_of_range_penalty_cap": null,
+        "interpolation": "linear",
+        "in_range_offset": 0.0,
+        "quadratic_form_prefactor": 0.5
+      }
+    },
+    {
+      "name": "m12_term",
+      "kind": "constraint",
+      "value_type": "real",
+      "dependencies": [
+        "dm21"
+      ],
+      "active": true,
+      "constraint": {
+        "kind": "gaussian",
+        "observable": "dm21",
+        "observables": [],
+        "mean": 7.49e-05,
+        "means": [],
+        "sigma": 1.9e-06,
+        "sigma_up": null,
+        "sigma_down": null,
+        "lower": null,
+        "upper": null,
+        "covariance": [],
+        "table": [],
+        "plugin": null,
+        "out_of_range_penalty_scale": null,
+        "out_of_range_penalty_cap": null,
+        "interpolation": "linear",
+        "in_range_offset": 0.0,
+        "quadratic_form_prefactor": 0.5
+      }
+    },
+    {
+      "name": "m3l_term",
+      "kind": "constraint",
+      "value_type": "real",
+      "dependencies": [
+        "dm3l"
+      ],
+      "active": true,
+      "constraint": {
+        "kind": "gaussian",
+        "observable": "dm3l",
+        "observables": [],
+        "mean": -0.002484,
+        "means": [],
+        "sigma": 2e-05,
+        "sigma_up": null,
+        "sigma_down": null,
+        "lower": null,
+        "upper": null,
+        "covariance": [],
+        "table": [],
+        "plugin": null,
+        "out_of_range_penalty_scale": null,
+        "out_of_range_penalty_cap": null,
+        "interpolation": "linear",
+        "in_range_offset": 0.0,
+        "quadratic_form_prefactor": 0.5
+      }
+    },
+    {
+      "name": "s12_term",
+      "kind": "constraint",
+      "value_type": "real",
+      "dependencies": [
+        "s12"
+      ],
+      "active": true,
+      "constraint": {
+        "kind": "gaussian",
+        "observable": "s12",
+        "observables": [],
+        "mean": 0.308,
+        "means": [],
+        "sigma": 0.0115,
+        "sigma_up": null,
+        "sigma_down": null,
+        "lower": null,
+        "upper": null,
+        "covariance": [],
+        "table": [],
+        "plugin": null,
+        "out_of_range_penalty_scale": null,
+        "out_of_range_penalty_cap": null,
+        "interpolation": "linear",
+        "in_range_offset": 0.0,
+        "quadratic_form_prefactor": 0.5
+      }
+    },
+    {
+      "name": "s13_term",
+      "kind": "constraint",
+      "value_type": "real",
+      "dependencies": [
+        "s13"
+      ],
+      "active": true,
+      "constraint": {
+        "kind": "gaussian",
+        "observable": "s13",
+        "observables": [],
+        "mean": 0.02231,
+        "means": [],
+        "sigma": 0.00056,
+        "sigma_up": null,
+        "sigma_down": null,
+        "lower": null,
+        "upper": null,
+        "covariance": [],
+        "table": [],
+        "plugin": null,
+        "out_of_range_penalty_scale": null,
+        "out_of_range_penalty_cap": null,
+        "interpolation": "linear",
+        "in_range_offset": 0.0,
+        "quadratic_form_prefactor": 0.5
+      }
+    },
+    {
+      "name": "s23_term",
+      "kind": "constraint",
+      "value_type": "real",
+      "dependencies": [
+        "s23"
+      ],
+      "active": true,
+      "constraint": {
+        "kind": "gaussian",
+        "observable": "s23",
+        "observables": [],
+        "mean": 0.55,
+        "means": [],
+        "sigma": 0.021,
+        "sigma_up": null,
+        "sigma_down": null,
+        "lower": null,
+        "upper": null,
+        "covariance": [],
+        "table": [],
+        "plugin": null,
+        "out_of_range_penalty_scale": null,
+        "out_of_range_penalty_cap": null,
+        "interpolation": "linear",
+        "in_range_offset": 0.0,
+        "quadratic_form_prefactor": 0.5
+      }
+    },
+    {
+      "name": "sumOfMass",
+      "kind": "constraint",
+      "value_type": "real",
+      "dependencies": [
+        "sum_m"
+      ],
+      "active": true,
+      "constraint": {
+        "kind": "hard_cut",
+        "observable": "sum_m",
+        "observables": [],
+        "mean": null,
+        "means": [],
+        "sigma": null,
+        "sigma_up": null,
+        "sigma_down": null,
+        "lower": 0.0,
+        "upper": 0.12,
+        "covariance": [],
+        "table": [],
+        "plugin": null,
+        "out_of_range_penalty_scale": null,
+        "out_of_range_penalty_cap": null,
+        "interpolation": "linear",
+        "in_range_offset": 0.0,
+        "quadratic_form_prefactor": 0.5
+      }
+    },
+    {
+      "name": "output::Imtau",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "Imtau"
+      ],
+      "active": true,
+      "output": {
+        "source": "Imtau",
+        "label": "Imtau"
+      }
+    },
+    {
+      "name": "output::Lambda",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "Lambda"
+      ],
+      "active": true,
+      "output": {
+        "source": "Lambda",
+        "label": "Lambda"
+      }
+    },
+    {
+      "name": "output::Retau",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "Retau"
+      ],
+      "active": true,
+      "output": {
+        "source": "Retau",
+        "label": "Retau"
+      }
+    },
+    {
+      "name": "output::deltaCP",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "deltaCP"
+      ],
+      "active": true,
+      "output": {
+        "source": "deltaCP",
+        "label": "deltaCP"
+      }
+    },
+    {
+      "name": "output::deltaCP_deg",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "deltaCP_deg"
+      ],
+      "active": true,
+      "output": {
+        "source": "deltaCP_deg",
+        "label": "deltaCP_deg"
+      }
+    },
+    {
+      "name": "output::deltaCP_raw",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "deltaCP_raw"
+      ],
+      "active": true,
+      "output": {
+        "source": "deltaCP_raw",
+        "label": "deltaCP_raw"
+      }
+    },
+    {
+      "name": "output::dm21",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "dm21"
+      ],
+      "active": true,
+      "output": {
+        "source": "dm21",
+        "label": "dm21"
+      }
+    },
+    {
+      "name": "output::dm3l",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "dm3l"
+      ],
+      "active": true,
+      "output": {
+        "source": "dm3l",
+        "label": "dm3l"
+      }
+    },
+    {
+      "name": "output::eta1",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "eta1"
+      ],
+      "active": true,
+      "output": {
+        "source": "eta1",
+        "label": "eta1"
+      }
+    },
+    {
+      "name": "output::eta2",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "eta2"
+      ],
+      "active": true,
+      "output": {
+        "source": "eta2",
+        "label": "eta2"
+      }
+    },
+    {
+      "name": "output::m1",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "m1"
+      ],
+      "active": true,
+      "output": {
+        "source": "m1",
+        "label": "m1"
+      }
+    },
+    {
+      "name": "output::m2",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "m2"
+      ],
+      "active": true,
+      "output": {
+        "source": "m2",
+        "label": "m2"
+      }
+    },
+    {
+      "name": "output::m3",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "m3"
+      ],
+      "active": true,
+      "output": {
+        "source": "m3",
+        "label": "m3"
+      }
+    },
+    {
+      "name": "output::mbeta",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "mbeta"
+      ],
+      "active": true,
+      "output": {
+        "source": "mbeta",
+        "label": "mbeta"
+      }
+    },
+    {
+      "name": "output::mbetabeta",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "mbetabeta"
+      ],
+      "active": true,
+      "output": {
+        "source": "mbetabeta",
+        "label": "mbetabeta"
+      }
+    },
+    {
+      "name": "output::s12",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "s12"
+      ],
+      "active": true,
+      "output": {
+        "source": "s12",
+        "label": "s12"
+      }
+    },
+    {
+      "name": "output::s13",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "s13"
+      ],
+      "active": true,
+      "output": {
+        "source": "s13",
+        "label": "s13"
+      }
+    },
+    {
+      "name": "output::s23",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "s23"
+      ],
+      "active": true,
+      "output": {
+        "source": "s23",
+        "label": "s23"
+      }
+    },
+    {
+      "name": "output::scale",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "scale"
+      ],
+      "active": true,
+      "output": {
+        "source": "scale",
+        "label": "scale"
+      }
+    },
+    {
+      "name": "output::sum_m",
+      "kind": "output",
+      "value_type": "real",
+      "dependencies": [
+        "sum_m"
+      ],
+      "active": true,
+      "output": {
+        "source": "sum_m",
+        "label": "sum_m"
+      }
+    }
+  ],
+  "evaluation_order": [
+    "Imtau",
+    "Retau",
+    "bf_dm21",
+    "bf_dm3l",
+    "me_over_mtau",
+    "mmu_over_mtau",
+    "lepton_mass_matrix",
+    "tau",
+    "y1",
+    "y2",
+    "y3",
+    "neutrino_mass_matrix",
+    "diag__charged_lepton",
+    "diag__neutrino",
+    "charged_lepton_u_00",
+    "charged_lepton_u_01",
+    "charged_lepton_u_02",
+    "charged_lepton_u_10",
+    "charged_lepton_u_11",
+    "charged_lepton_u_12",
+    "charged_lepton_u_20",
+    "charged_lepton_u_21",
+    "charged_lepton_u_22",
+    "m1_raw",
+    "m2_raw",
+    "dm21_raw",
+    "m3_raw",
+    "dm3l_raw",
+    "neutrino_u_00",
+    "neutrino_u_01",
+    "neutrino_u_02",
+    "neutrino_u_10",
+    "neutrino_u_11",
+    "neutrino_u_12",
+    "neutrino_u_20",
+    "Ue2",
+    "neutrino_u_21",
+    "Ue1",
+    "Utau1",
+    "neutrino_u_22",
+    "Ue3",
+    "Umu3",
+    "Utau3",
+    "delta_numerator",
+    "nscale",
+    "Lambda",
+    "dm21",
+    "dm3l",
+    "m1",
+    "m2",
+    "m3",
+    "scale",
+    "sum_m",
+    "theta12_angle",
+    "s12",
+    "theta13_angle",
+    "s13",
+    "mbeta",
+    "theta23_angle",
+    "delta_prefactor_a",
+    "delta_prefactor_b",
+    "delta_prefactor_c",
+    "delta_phase_argument",
+    "deltaCP_raw",
+    "deltaCP",
+    "deltaCP_deg",
+    "eta1",
+    "eta2",
+    "mbetabeta",
+    "s23",
+    "deltaCP_term",
+    "m12_term",
+    "m3l_term",
+    "s12_term",
+    "s13_term",
+    "s23_term",
+    "sumOfMass",
+    "output::Imtau",
+    "output::Lambda",
+    "output::Retau",
+    "output::deltaCP",
+    "output::deltaCP_deg",
+    "output::deltaCP_raw",
+    "output::dm21",
+    "output::dm3l",
+    "output::eta1",
+    "output::eta2",
+    "output::m1",
+    "output::m2",
+    "output::m3",
+    "output::mbeta",
+    "output::mbetabeta",
+    "output::s12",
+    "output::s13",
+    "output::s23",
+    "output::scale",
+    "output::sum_m"
+  ],
+  "saved_outputs": [
+    "Retau",
+    "Imtau",
+    "s12",
+    "s13",
+    "s23",
+    "deltaCP",
+    "deltaCP_deg",
+    "deltaCP_raw",
+    "eta1",
+    "eta2",
+    "m1",
+    "m2",
+    "m3",
+    "dm21",
+    "dm3l",
+    "sum_m",
+    "scale",
+    "Lambda",
+    "mbeta",
+    "mbetabeta"
+  ],
+  "scan": {
+    "engine": "diver",
+    "save_every": 200,
+    "seed": 12345,
+    "settings": {
+      "objective": "nll",
+      "max_evaluations": 2000,
+      "population_size": 48,
+      "max_generations": 80,
+      "convergence_threshold": 0.001,
+      "convergence_steps": 20,
+      "verbose": 1
+    }
+  }
+}

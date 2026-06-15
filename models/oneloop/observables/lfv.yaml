@@ -1,0 +1,19 @@
+observables:
+- name: mu_to_e_gamma
+  value_type: real
+  expression: LeptonGammaBR(ymu, ye, br_mu_to_e_nunu, Mpsi, Mphi)
+- name: tau_to_e_gamma
+  value_type: real
+  expression: LeptonGammaBR(ytau, ye, br_tau_to_e_nunu, Mpsi, Mphi)
+- name: tau_to_mu_gamma
+  value_type: real
+  expression: LeptonGammaBR(ytau, ymu, br_tau_to_mu_nunu, Mpsi, Mphi)
+- name: mu_to_eee
+  value_type: real
+  expression: TriLeptonBR(mmu_GeV, me_GeV, ymu, ye, br_mu_to_e_nunu, Mpsi, Mphi)
+- name: tau_to_eee
+  value_type: real
+  expression: TriLeptonBR(mtau_GeV, me_GeV, ytau, ye, br_tau_to_e_nunu, Mpsi, Mphi)
+- name: tau_to_mumumu
+  value_type: real
+  expression: TriLeptonBR(mtau_GeV, mmu_GeV, ytau, ymu, br_tau_to_mu_nunu, Mpsi, Mphi)

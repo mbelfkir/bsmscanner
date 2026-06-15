@@ -1,0 +1,135 @@
+scan:
+  engine: basin_scan
+  save_every: 1
+  seed: 12345
+  settings:
+    objective: nll
+    invalid_penalty: 1.0e12
+    save_invalid_points: true
+    verbose: 1
+    progress_interval: 1000
+
+  basin_scan:
+    seed: 12345
+
+    progressive_exploration:
+      enabled: true
+      n_rounds: 4
+      points_per_round: [1000000, 500000, 500000, 100000]
+      combine_with_previous_selected: false
+
+      selection:
+        mode: balanced_terms
+        total_top_fraction: 0.02
+        term_quantile_cut: 0.20
+        top_fraction: 0.02
+        max_points: 5000
+        min_points: 200
+        terms: auto
+        fallback_mode: top_fraction
+
+      elite_preservation:
+        enabled: true
+        always_keep_global_best: true
+        archive_size: 10000
+        elite_fraction: 0.02
+        min_elite_points: 20
+        max_elite_points: 500
+
+      elite_boxes:
+        enabled: true
+        construction: quantile
+        q_low: 0.10
+        q_high: 0.90
+        padding_fraction: 0.20
+        min_width_fraction: 0.02
+        max_boxes: 8
+
+      best_centered_box:
+        enabled: true
+        width_fraction: 0.25
+        shrink_per_round: 0.8
+        min_width_fraction: 0.02
+
+      sampling:
+        method: latin_hypercube
+        allocate_points: mixed
+        fractions:
+          elite_boxes: 0.40
+          selected_boxes: 0.30
+          global: 0.30
+        min_points_per_box: 2000
+
+      boxes:
+        construction: quantile
+        q_low: 0.10
+        q_high: 0.90
+        padding_fraction: 0.20
+        min_width_fraction: 0.05
+        clip_to_original_bounds: true
+        merge_overlapping: false
+        max_boxes: 12
+
+      output:
+        save_round_points: true
+        save_round_selected: true
+        save_round_boxes: true
+
+    selection:
+      mode: balanced_terms
+      total_top_fraction: 0.03
+      term_quantile_cut: 0.20
+      top_fraction: 0.03
+      max_points: 5000
+      min_points: 200
+      terms: auto
+      fallback_mode: top_fraction
+
+    clustering:
+      enabled: true
+      method: dbscan
+      eps_fraction: 0.025
+      min_samples: 5
+      max_clusters: 12
+
+    boxes:
+      construction: quantile
+      q_low: 0.05
+      q_high: 0.95
+      padding_fraction: 0.50
+      min_width_fraction: 0.15
+      clip_to_original_bounds: true
+      merge_overlapping: false
+      max_boxes: 12
+
+    focused_engine:
+      name: adaptive_diver
+      population_size: 100
+      max_generations: 2500
+      p_best_fraction: 0.1
+      archive: true
+      bounds:
+        handling: reflect
+      convergence:
+        patience: 0
+        population_std_tol: 0.0
+      local_refinement:
+        enabled: true
+        method: Powell
+        n_elites: 10
+        maxiter: 2000
+      statistics:
+        enabled: true
+      output:
+        save_history: true
+        save_population: true
+        save_elites: true
+
+    output:
+      save_exploration_points: true
+      save_selected_points: true
+      save_clusters: true
+      save_focused_boxes: true
+
+statistics:
+  enabled: false

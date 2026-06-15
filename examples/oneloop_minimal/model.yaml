@@ -1,0 +1,258 @@
+metadata:
+  name: oneloop_minimal
+  version: 0.1.0
+  description: Minimal end-to-end oneloop-inspired model for graph compilation tests.
+  ordering: normal
+
+parameters:
+  - name: Mpsi
+    value_type: real
+    scan: true
+    lower: 50.0
+    upper: 2000.0
+    default: 300.0
+    prior: log
+  - name: MN
+    value_type: real
+    scan: true
+    lower: 100.0
+    upper: 3000.0
+    default: 800.0
+    prior: log
+  - name: Mphi
+    value_type: real
+    scan: true
+    lower: 70.0
+    upper: 2000.0
+    default: 350.0
+    prior: log
+  - name: MA1
+    value_type: real
+    scan: true
+    lower: 100.0
+    upper: 2000.0
+    default: 500.0
+    prior: log
+  - name: MH1
+    value_type: real
+    scan: true
+    lower: 100.0
+    upper: 2000.0
+    default: 450.0
+    prior: log
+  - name: MH2
+    value_type: real
+    scan: true
+    lower: 100.0
+    upper: 2500.0
+    default: 700.0
+    prior: log
+  - name: sh
+    value_type: real
+    scan: true
+    lower: 1.0e-4
+    upper: 0.9
+    default: 0.2
+    prior: flat
+  - name: k1
+    value_type: real
+    scan: true
+    lower: -0.1
+    upper: 0.1
+    default: 0.02
+    prior: flat
+  - name: k4
+    value_type: real
+    scan: true
+    lower: -0.3
+    upper: 0.3
+    default: 0.05
+    prior: flat
+  - name: lambda1
+    value_type: real
+    scan: false
+    default: 0.129
+    prior: fixed
+  - name: Reye
+    value_type: real
+    scan: true
+    lower: -0.1
+    upper: 0.1
+    default: 0.01
+    prior: flat
+  - name: Imgye
+    value_type: real
+    scan: true
+    lower: -0.1
+    upper: 0.1
+    default: 0.00
+    prior: flat
+  - name: ReYe
+    value_type: real
+    scan: true
+    lower: -0.1
+    upper: 0.1
+    default: 0.01
+    prior: flat
+  - name: ImgYe
+    value_type: real
+    scan: true
+    lower: -0.1
+    upper: 0.1
+    default: 0.00
+    prior: flat
+  - name: Reyp
+    value_type: real
+    scan: true
+    lower: -0.1
+    upper: 0.1
+    default: 0.03
+    prior: flat
+  - name: Imgyp
+    value_type: real
+    scan: true
+    lower: -0.1
+    upper: 0.1
+    default: 0.00
+    prior: flat
+
+constants:
+  - name: vev
+    value: 246.22
+  - name: pi
+    value: 3.141592653589793
+
+functions:
+  - name: I3
+    args: [mphi, mphip, mpsi]
+    expression: >
+      -(
+        (mphi**2 * log((mpsi**2)/(mphi**2))) /
+        ((mphi**2 - mphip**2) * (mphi**2 - mpsi**2))
+        +
+        (mphip**2 * log((mpsi**2)/(mphip**2))) /
+        ((mphip**2 - mphi**2) * (mphip**2 - mpsi**2))
+      ) / ((4*pi)*(4*pi))
+
+derived_scalars:
+  - name: ch
+    expression: 1 - sh
+  - name: mphi_sq
+    expression: Mphi**2 - 0.5*k1*vev**2
+  - name: mphip_sq
+    expression: sh*MH1**2 + ch*MH2**2 - 0.5*k4*vev**2
+  - name: mphi
+    expression: sqrt(mphi_sq)
+  - name: mphip
+    expression: sqrt(mphip_sq)
+  - name: mu_phi
+    expression: sqrt(2*sh*ch) * (MH1**2 - MH2**2) / vev
+  - name: i3
+    expression: I3(mphi, mphip, Mpsi)
+
+derived_complex:
+  - name: ye
+    expression: Reye + 1j*Imgye
+  - name: Ye
+    expression: ReYe + 1j*ImgYe
+  - name: Yp
+    expression: Reyp + 1j*Imgyp
+  - name: normalization
+    expression: -(mu_phi*vev**2*Mpsi*i3/MN) * Yp
+
+matrices:
+  - name: neutrino_mass_matrix
+    value_type: complex_matrix
+    rows:
+      - ["2*Ye*ye*normalization", "Ye*ye*normalization"]
+      - ["Ye*ye*normalization", "2*Ye*ye*normalization"]
+
+diagonalizations:
+  - name: neutrino_svd
+    input: neutrino_mass_matrix
+    method: svd_complex
+
+observables:
+  - name: m1
+    value_type: real
+    projection:
+      from: neutrino_svd
+      quantity: singular_values
+      index: 1
+  - name: m2
+    value_type: real
+    projection:
+      from: neutrino_svd
+      quantity: singular_values
+      index: 0
+  - name: dm21
+    value_type: real
+    expression: m2**2 - m1**2
+  - name: log10_dm21
+    value_type: real
+    expression: log(max(dm21, 1.0e-30)) / log(10)
+  - name: HiggsMass
+    value_type: real
+    expression: sqrt(2*lambda1*vev**2)
+  - name: mu_to_e_gamma
+    value_type: real
+    expression: abs(ye)**4 / (16*pi*pi*mphi**4)
+
+theory_checks:
+  - name: positive_mphi_sq
+    condition: mphi_sq > 0
+    fatal: true
+    message: Effective charged-scalar squared mass became negative.
+  - name: positive_mphip_sq
+    condition: mphip_sq > 0
+    fatal: true
+    message: Effective neutral-scalar squared mass became negative.
+  - name: dm_identity
+    condition: Mpsi < Mphi
+    fatal: true
+    message: The intended fermion dark-matter hierarchy is violated.
+
+likelihoods:
+  - name: higgs_mass_term
+    kind: gaussian
+    observable: HiggsMass
+    mean: 125.10
+    sigma: 0.20
+  - name: dm21_term
+    kind: table_lookup
+    observable: log10_dm21
+    table_file: data/Normal/dm21.csv
+    out_of_range_penalty_scale: 4.0e4
+    out_of_range_penalty_cap: 1.0e6
+  - name: mu_to_e_gamma_limit
+    kind: upper_limit
+    observable: mu_to_e_gamma
+    upper: 4.2e-13
+    sigma: 1.0e-13
+
+outputs:
+  save:
+    - Mpsi
+    - Mphi
+    - mphi
+    - mphip
+    - m1
+    - m2
+    - dm21
+    - HiggsMass
+    - mu_to_e_gamma
+
+scan:
+  engine: diver
+  save_every: 250
+  seed: 12345
+  settings:
+    objective: nll
+    maxgen: 2000
+    NP: 48
+    convthresh: 1.0e-3
+    convsteps: 20
+    max_init_attempts: 30000
+    invalid_objective: 1.0e300
+    save_invalid_points: false
+    verbose: 1

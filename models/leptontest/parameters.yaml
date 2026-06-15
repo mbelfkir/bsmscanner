@@ -1,0 +1,18 @@
+# Source-faithful config.yaml-style normal-ordering scan.
+# MA2, sa, lambda1, Rep, and Imgp are intentionally omitted because the latest
+# nLLConstructor derives or ignores them rather than using them as live inputs.
+parameters:
+- name: Retau
+  value_type: real
+  scan: true
+  lower: -0.5
+  upper: 0.5
+  default: 0.1
+  prior: flat
+- name: Imtau
+  value_type: real
+  scan: true
+  lower: 0.866
+  upper: 3.0
+  default: 1.0
+  prior: flat

@@ -1,0 +1,13 @@
+theory_checks:
+- name: micromegas_candidate_valid
+  condition: DM_candidate_valid
+  fatal: true
+  message: micrOMEGAs did not return a valid dark-matter candidate.
+- name: micromegas_target_match
+  condition: DM_target_match
+  fatal: true
+  message: The micrOMEGAs candidate does not match the requested model branch.
+- name: micromegas_outputs_finite
+  condition: isfinite(Omega) and Omega >= 0 and isfinite(SIxsec) and SIxsec >= 0 and isfinite(DD_pvalue)
+  fatal: true
+  message: micrOMEGAs returned a non-finite relic-density or direct-detection result.

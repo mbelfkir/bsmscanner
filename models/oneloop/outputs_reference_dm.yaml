@@ -1,0 +1,10 @@
+outputs:
+  save:
+  - Omega
+  - SIxsec
+  - xsecSI
+  - DD_pvalue
+  - DMCandidateMass
+  - darkMatter
+  - DM_target_match
+  - DM_candidate_valid

@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BSMScanner Documentation</title>
+    <meta
+      name="description"
+      content="Public documentation for BSMScanner, a YAML-driven BSM and flavor-model scanning framework."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero" id="top">
+      <nav class="nav" aria-label="Main navigation">
+        <a class="brand" href="#top">BSMScanner</a>
+        <div class="nav-links">
+          <a href="#quickstart">Quickstart</a>
+          <a href="#features">Features</a>
+          <a href="#yaml">YAML</a>
+          <a href="#diagonalization">Diagonalization</a>
+          <a href="#engines">Engines</a>
+          <a href="#examples">Examples</a>
+          <a href="#outputs">Outputs</a>
+        </div>
+      </nav>
+
+      <section class="hero-grid">
+        <div>
+          <p class="eyebrow">YAML-driven BSM and flavor scans</p>
+          <h1>Define physics models declaratively. Scan them with reusable engines.</h1>
+          <p class="lead">
+            BSMScanner is a model-independent framework for Beyond-the-Standard-Model
+            parameter scans. Models are written in YAML, validated and lowered in
+            Python, evaluated through the framework pipeline, and saved as
+            machine-readable artifacts for later analysis.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#quickstart">Run a scan</a>
+            <a class="button secondary" href="#model-authoring">Write a model</a>
+          </div>
+        </div>
+        <aside class="status-card">
+          <h2>Current Status</h2>
+          <dl>
+            <div><dt>Scan engines</dt><dd>serial_random, diver, de_scipy, adaptive_diver, basin_scan</dd></div>
+            <div><dt>Core sectors</dt><dd>neutrino, lepton, quark, CKM/PMNS</dd></div>
+            <div><dt>Statistics</dt><dd>plot-free de_weighted summaries</dd></div>
+            <div><dt>Latest tests</dt><dd>126 passed, 2 skipped</dd></div>
+          </dl>
+        </aside>
+      </section>
+    </header>
+
+    <main>
+      <section class="section" id="quickstart">
+        <div class="section-heading">
+          <p class="eyebrow">Quickstart</p>
+          <h2>Install, test, and run</h2>
+        </div>
+        <div class="cards three">
+          <article class="card">
+            <h3>1. Install locally</h3>
+            <pre><code>python -m venv .venv
+.venv/bin/python -m pip install -e .</code></pre>
+          </article>
+          <article class="card">
+            <h3>2. Run tests</h3>
+            <pre><code>.venv/bin/python -m pytest tests -q</code></pre>
+          </article>
+          <article class="card">
+            <h3>3. Run an example</h3>
+            <pre><code>.venv/bin/python examples/leptontest/run_scan.py \
+  --model examples/leptontest/model_de_scipy.yaml \
+  --run-dir examples/leptontest/runs/demo</code></pre>
+          </article>
+        </div>
+      </section>
+
+      <section class="section split" id="features">
+        <div>
+          <p class="eyebrow">Framework Capabilities</p>
+          <h2>What BSMScanner does</h2>
+          <p>
+            BSMScanner separates model physics from reusable framework logic.
+            Model authors define parameters, functions, matrices, outputs, and
+            likelihood terms. The framework handles validation, dependency
+            ordering, diagonalization, scan orchestration, artifact writing, and
+            statistics.
+          </p>
+        </div>
+        <div class="feature-list">
+          <div><strong>Declarative models</strong><span>YAML manifests with imports, parameters, observables, matrices, likelihoods, outputs, and scan settings.</span></div>
+          <div><strong>Reusable core blocks</strong><span>Shared neutrino, CKM, quark, constants, and likelihood-kernel infrastructure.</span></div>
+          <div><strong>Flavor diagonalization</strong><span>Takagi, SVD, Hermitian eigensolvers, PMNS, CKM, and optional flavor sectors.</span></div>
+          <div><strong>Model-independent engines</strong><span>Random, SciPy DE, native adaptive DE, and basin orchestration scans.</span></div>
+          <div><strong>Validity-aware outputs</strong><span>Separate technical status from physics validity using <code>status</code>, <code>valid</code>, and <code>failure_reason</code>.</span></div>
+          <div><strong>Plot-free statistics</strong><span>Machine-readable likelihood-weighted CSV/JSON outputs ready for external plotting scripts.</span></div>
+        </div>
+      </section>
+
+      <section class="section" id="architecture">
+        <div class="section-heading">
+          <p class="eyebrow">Architecture</p>
+          <h2>Core/model split</h2>
+        </div>
+        <div class="columns">
+          <article class="panel">
+            <h3>Core responsibilities</h3>
+            <ul>
+              <li>Reusable constants and observable blocks.</li>
+              <li>Generic matrix diagonalization infrastructure.</li>
+              <li>PMNS/CKM mixing-matrix construction.</li>
+              <li>Ordering-aware neutrino observable logic.</li>
+              <li>Generic likelihood kernels such as Gaussian, hard cut, and table terms.</li>
+              <li>Scan engine orchestration and artifact writing.</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h3>Model responsibilities</h3>
+            <ul>
+              <li>Scanned and fixed parameters.</li>
+              <li>Analytic functions, helper expressions, and mass matrices.</li>
+              <li>Matrix metadata: <code>type</code>, <code>role</code>, <code>diagonalize</code>.</li>
+              <li>Ordering choice and requested outputs.</li>
+              <li>Model-specific likelihood composition and numerical datasets.</li>
+              <li>Optional model-specific plugins or external backend calls.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="yaml">
+        <div class="section-heading">
+          <p class="eyebrow">Model Authoring</p>
+          <h2>YAML model syntax</h2>
+          <p>
+            A model can be a single YAML file or a manifest importing reusable
+            blocks. The preferred public pattern is a small manifest plus
+            focused files for parameters, functions, matrices, likelihoods,
+            outputs, and scan settings.
+          </p>
+        </div>
+        <pre><code>metadata:
+  name: my_model
+  version: 0.1.0
+
+imports:
+  - parameters.yaml
+  - functions.yaml
+  - matrices.yaml
+  - ../../core/neutrino/normal.yaml
+  - ../../core/neutrino/observables_common.yaml
+  - likelihoods.yaml
+  - outputs.yaml
+  - scan.yaml</code></pre>
+
+        <h3>Parameters</h3>
+        <pre><code>parameters:
+  - name: Retau
+    value_type: real
+    scan: true
+    lower: -0.5
+    upper: 0.5
+    default: 0.0
+    prior: flat</code></pre>
+
+        <h3>Mass matrices and diagonalization</h3>
+        <pre><code>matrices:
+  Mnu:
+    role: neutrino_mass
+    type: complex_symmetric
+    expression: [[...], [...], [...]]
+    diagonalize:
+      method: takagi
+      output:
+        masses: neutrino_masses
+        unitary: U_nu
+
+  Ml:
+    role: charged_lepton_mass
+    type: complex_general
+    expression: [[...], [...], [...]]
+    diagonalize:
+      method: svd
+      output:
+        masses: charged_lepton_masses
+        left_unitary: U_l_L
+        right_unitary: U_l_R</code></pre>
+
+        <h3>Mixing matrices</h3>
+        <pre><code>mixing_matrices:
+  PMNS:
+    type: left_mismatch
+    convention: U_left_dagger_U_right
+    left: U_l_L
+    right: U_nu
+    output: U_PMNS
+
+  CKM:
+    type: left_mismatch
+    convention: U_left_dagger_U_right
+    left: U_u_L
+    right: U_d_L
+    output: V_CKM</code></pre>
+
+        <h3>Likelihood terms</h3>
+        <pre><code>likelihoods:
+  - name: s13_sq_term
+    kind: gaussian
+    observable: s13_sq
+    mean: 0.0222
+    sigma: 0.0006
+
+  - name: perturbativity_cut
+    kind: hard_cut
+    observable: max_coupling
+    lower: 0.0
+    upper: 12.566370614359172</code></pre>
+      </section>
+
+      <section class="section" id="flavor">
+        <div class="section-heading">
+          <p class="eyebrow">Flavor System</p>
+          <h2>Leptons, quarks, PMNS, and CKM</h2>
+        </div>
+        <div class="cards two">
+          <article class="card">
+            <h3>Lepton sector</h3>
+            <p>
+              Majorana neutrino matrices use Takagi factorization:
+              <code>U_nu^T Mnu U_nu = diag(m_i)</code>. Charged-lepton matrices
+              use SVD-like biunitary diagonalization:
+              <code>U_L^† M U_R = diag(m_i)</code>.
+            </p>
+            <p>PMNS is constructed as <code>U_PMNS = U_l_L^† U_nu</code>.</p>
+          </article>
+          <article class="card">
+            <h3>Quark sector</h3>
+            <p>
+              Up- and down-quark matrices are diagonalized with SVD. CKM is
+              constructed as <code>V_CKM = U_u_L^† U_d_L</code>.
+            </p>
+            <p>
+              Reusable CKM observables include matrix-element absolute values,
+              angles, CP phase, Jarlskog invariant, Wolfenstein parameters, and
+              quark mass ratios.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="diagonalization">
+        <div class="section-heading">
+          <p class="eyebrow">Matrix Reconstruction</p>
+          <h2>How diagonalization is declared and checked</h2>
+          <p>
+            BSMScanner stores diagonalization outputs as named quantities. A
+            model declares the matrix, the method, and the names of the masses
+            and rotation matrices. The same outputs can then be used for PMNS,
+            CKM, observables, likelihoods, or external validation.
+          </p>
+        </div>
+
+        <div class="cards three">
+          <article class="card">
+            <h3>Majorana / Takagi</h3>
+            <p>Use for complex symmetric neutrino mass matrices.</p>
+            <pre><code>matrices:
+  Mnu:
+    role: neutrino_mass
+    type: complex_symmetric
+    expression:
+      - [M11, M12, M13]
+      - [M12, M22, M23]
+      - [M13, M23, M33]
+    diagonalize:
+      method: takagi
+      output:
+        masses: neutrino_masses
+        unitary: U_nu</code></pre>
+            <p class="formula">Check: <code>U_nu.T @ Mnu @ U_nu ≈ diag(neutrino_masses)</code></p>
+          </article>
+
+          <article class="card">
+            <h3>Dirac / SVD</h3>
+            <p>Use for charged leptons and quarks with general complex matrices.</p>
+            <pre><code>matrices:
+  Ml:
+    role: charged_lepton_mass
+    type: complex_general
+    expression:
+      - [Ye11, Ye12, Ye13]
+      - [Ye21, Ye22, Ye23]
+      - [Ye31, Ye32, Ye33]
+    diagonalize:
+      method: svd
+      output:
+        masses: charged_lepton_masses
+        left_unitary: U_l_L
+        right_unitary: U_l_R</code></pre>
+            <p class="formula">Check: <code>U_l_L.conj().T @ Ml @ U_l_R ≈ diag(charged_lepton_masses)</code></p>
+          </article>
+
+          <article class="card">
+            <h3>Hermitian / eigh</h3>
+            <p>Use for Hermitian matrices or derived objects such as <code>M M†</code>.</p>
+            <pre><code>matrices:
+  Hq:
+    role: custom_mass_squared
+    type: hermitian
+    expression:
+      - [H11, H12, H13]
+      - [conj(H12), H22, H23]
+      - [conj(H13), conj(H23), H33]
+    diagonalize:
+      method: hermitian_eigh
+      output:
+        eigenvalues: Hq_eigenvalues
+        unitary: U_Hq</code></pre>
+            <p class="formula">Check: <code>U_Hq.conj().T @ Hq @ U_Hq ≈ diag(Hq_eigenvalues)</code></p>
+          </article>
+        </div>
+
+        <h3>Constructing PMNS and CKM from diagonalization outputs</h3>
+        <pre><code>mixing_matrices:
+  PMNS:
+    type: left_mismatch
+    convention: U_left_dagger_U_right
+    left: U_l_L
+    right: U_nu
+    output: U_PMNS
+
+  CKM:
+    type: left_mismatch
+    convention: U_left_dagger_U_right
+    left: U_u_L
+    right: U_d_L
+    output: V_CKM</code></pre>
+
+        <h3>Python-side reconstruction check</h3>
+        <p>
+          During debugging, save the matrix and rotation outputs, then compare
+          reconstruction numerically. Phases of unitary columns are conventional,
+          so prefer reconstruction accuracy, masses, absolute mixing elements,
+          and unitarity over raw element-by-element phase comparisons.
+        </p>
+        <pre><code>import numpy as np
+
+def dagger(matrix):
+    return np.asarray(matrix).conj().T
+
+def check_takagi(Mnu, U_nu, masses):
+    lhs = np.asarray(U_nu).T @ np.asarray(Mnu) @ np.asarray(U_nu)
+    rhs = np.diag(masses)
+    return np.max(np.abs(lhs - rhs))
+
+def check_svd(M, U_L, U_R, masses):
+    lhs = dagger(U_L) @ np.asarray(M) @ np.asarray(U_R)
+    rhs = np.diag(masses)
+    return np.max(np.abs(lhs - rhs))
+
+def check_unitarity(U):
+    U = np.asarray(U)
+    return np.max(np.abs(dagger(U) @ U - np.eye(U.shape[0])))
+
+def construct_pmns(U_l_L, U_nu):
+    return dagger(U_l_L) @ np.asarray(U_nu)
+
+def construct_ckm(U_u_L, U_d_L):
+    return dagger(U_u_L) @ np.asarray(U_d_L)</code></pre>
+
+        <h3>Example output block for validation</h3>
+        <pre><code>outputs:
+  save:
+    - neutrino_masses
+    - U_nu
+    - charged_lepton_masses
+    - U_l_L
+    - U_l_R
+    - U_PMNS
+    - up_quark_masses
+    - down_quark_masses
+    - U_u_L
+    - U_d_L
+    - V_CKM
+    - Vus
+    - Vcb
+    - theta12_q_deg</code></pre>
+
+        <div class="note">
+          <strong>Compatibility fallback:</strong> neutrino-only models may use
+          the documented charged-lepton identity fallback, so
+          <code>U_PMNS = U_nu</code>. General lepton-sector models should define
+          <code>Ml</code> and construct <code>U_PMNS = U_l_L† U_nu</code>.
+        </div>
+      </section>
+
+      <section class="section" id="engines">
+        <div class="section-heading">
+          <p class="eyebrow">Scan Engines</p>
+          <h2>Engines, inputs, and basin orchestration</h2>
+          <p>
+            All engines receive the same compiled model evaluator, deterministic
+            scanned-parameter order, parameter bounds and priors, objective mode,
+            invalid-point policy, seed, selected outputs, and likelihood-term
+            names. They differ only in how they propose parameter vectors.
+          </p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Engine</th><th>Rule and technique</th><th>Inputs and free parameters</th><th>Outputs</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>serial_random</code></td>
+                <td>Native baseline engine. Draws independent bounded random points using linear, log, or signed-log prior coordinates.</td>
+                <td>Requires <code>max_evaluations &gt; 0</code>. Uses <code>seed</code>, <code>objective</code>, <code>invalid_penalty</code>, <code>save_invalid_points</code>, and <code>save_every</code>.</td>
+                <td>Standard <code>points.csv</code>, <code>metadata.json</code>, <code>best_fit.json</code>, and <code>summary.json</code>.</td>
+              </tr>
+              <tr>
+                <td><code>diver</code></td>
+                <td>External Diver bridge. BSMScanner supplies a bounded objective callback; Diver drives the population search.</td>
+                <td>Requires a Diver-enabled build and <code>max_generations</code> or <code>max_evaluations</code>. Uses <code>NP</code>, <code>convthresh</code>, <code>convsteps</code>, and initialization controls.</td>
+                <td>Standard BSMScanner artifacts. Diver raw file output is disabled by the bridge.</td>
+              </tr>
+              <tr>
+                <td><code>de_scipy</code></td>
+                <td>Python reference backend using <code>scipy.optimize.differential_evolution</code>.</td>
+                <td>Uses SciPy strategy, <code>maxiter</code>, <code>popsize</code>, <code>tol</code>, <code>atol</code>, <code>mutation</code>, <code>recombination</code>, <code>init</code>, <code>polish</code>, and <code>x0</code>. <code>workers</code> must be <code>1</code>.</td>
+                <td>Standard artifacts plus <code>history.json</code> with DE progress and convergence metadata.</td>
+              </tr>
+              <tr>
+                <td><code>adaptive_diver</code></td>
+                <td>Native JADE-like current-to-pbest Differential Evolution with adaptive <code>F</code>/<code>CR</code>, archive support, bound handling, convergence checks, and optional SciPy local refinement.</td>
+                <td>Requires population size at least four. Controls include <code>population_size</code>, <code>max_generations</code>, <code>p_best_fraction</code>, mutation/crossover ranges, <code>bounds.handling</code>, convergence, local refinement, and statistics.</td>
+                <td>Standard artifacts plus <code>history.json</code>, <code>final_population.csv</code>, <code>elite_points.csv</code>, and optional population summaries.</td>
+              </tr>
+              <tr>
+                <td><code>basin_scan</code></td>
+                <td>Model-agnostic orchestration: broad exploration, proposal/staged evaluation, selection, clustering, focused-box construction, optional refocus stages, then focused <code>adaptive_diver</code> runs.</td>
+                <td>Uses exploration, selection, clustering, boxes, progressive exploration, proposals, refinement, manifold/ML focus, and focused-engine options. Focused engine is currently <code>adaptive_diver</code>.</td>
+                <td>Standard artifacts plus exploration, selection, cluster, box, basin-ranking, progress, refocus, and focused-run artifacts.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note">
+          <strong>Full manuscript:</strong> a complete academic reference for
+          every engine and every <code>basin_scan</code> option is available at
+          <a href="../scan_engines_manuscript.md">docs/scan_engines_manuscript.md</a>.
+        </div>
+
+        <h3><code>de_scipy</code> example</h3>
+        <pre><code>scan:
+  engine: de_scipy
+  settings:
+    objective: nll
+    invalid_penalty: 1.0e12
+  de_scipy:
+    strategy: rand1bin
+    maxiter: 100
+    popsize: 15
+    tol: 0.01
+    mutation: [0.5, 1.0]
+    recombination: 0.7
+    seed: 12345
+    polish: false
+    workers: 1</code></pre>
+
+        <h3><code>adaptive_diver</code> example</h3>
+        <pre><code>scan:
+  engine: adaptive_diver
+  adaptive_diver:
+    seed: 12345
+    population_size: 80
+    max_generations: 1500
+    p_best_fraction: 0.1
+    local_refinement:
+      enabled: true
+      method: Powell
+      n_elites: 5
+    output:
+      save_history: true
+      save_population: true
+      save_elites: true</code></pre>
+
+        <h3><code>basin_scan</code> with likelihood-balanced selection</h3>
+        <pre><code>scan:
+  engine: basin_scan
+  basin_scan:
+    progressive_exploration:
+      enabled: true
+      n_rounds: 3
+      points_per_round: [100000, 60000, 60000]
+      selection:
+        mode: balanced_terms
+        total_top_fraction: 0.10
+        term_quantile_cut: 0.30
+        max_points: 2000
+        min_points: 100
+        terms: auto
+        fallback_mode: top_fraction
+
+    selection:
+      mode: balanced_terms
+      total_top_fraction: 0.10
+      term_quantile_cut: 0.30
+      max_points: 2000
+      terms: auto
+
+    focused_engine:
+      name: adaptive_diver
+      population_size: 100
+      max_generations: 2500</code></pre>
+
+        <h3><code>basin_scan</code> option catalogue</h3>
+        <div class="table-wrap compact">
+          <table>
+            <thead>
+              <tr><th>Block</th><th>Rule</th><th>Principal options</th><th>Main outputs</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>exploration</code></td>
+                <td>Draws the initial cloud in the full parameter box using Latin hypercube, Sobol, or uniform random sampling.</td>
+                <td><code>method</code>, <code>n_points</code>, <code>keep_fraction</code>.</td>
+                <td><code>exploration_points.csv</code>.</td>
+              </tr>
+              <tr>
+                <td><code>selection</code></td>
+                <td>Keeps promising points by total objective, chi-square window, or likelihood-term-balanced cuts.</td>
+                <td><code>mode</code>, <code>top_fraction</code>, <code>total_top_fraction</code>, <code>term_quantile_cut</code>, <code>terms</code>, <code>max_points</code>, <code>min_points</code>, <code>fallback_mode</code>, <code>near_miss</code>.</td>
+                <td><code>selected_points.csv</code>, <code>accepted_points.csv</code>, <code>near_miss_points.csv</code>, <code>selection_summary.json</code>.</td>
+              </tr>
+              <tr>
+                <td><code>clustering</code></td>
+                <td>Clusters selected points in normalized parameter coordinates with DBSCAN; falls back to one cluster if none is found.</td>
+                <td><code>enabled</code>, <code>method: dbscan</code>, <code>eps_fraction</code>, <code>min_samples</code>, <code>max_clusters</code>.</td>
+                <td><code>clusters.csv</code>.</td>
+              </tr>
+              <tr>
+                <td><code>boxes</code></td>
+                <td>Builds quantile boxes around clusters, pads them, enforces minimum width, optionally clips and merges them.</td>
+                <td><code>construction: quantile</code>, <code>q_low</code>, <code>q_high</code>, <code>padding_fraction</code>, <code>min_width_fraction</code>, <code>clip_to_original_bounds</code>, <code>merge_overlapping</code>, <code>max_boxes</code>.</td>
+                <td><code>focused_boxes.json</code>.</td>
+              </tr>
+              <tr>
+                <td><code>progressive_exploration</code></td>
+                <td>Replaces one-shot exploration with staged rounds that repeatedly select, box, and resample promising regions.</td>
+                <td><code>enabled</code>, <code>n_rounds</code>, <code>points_per_round</code>, nested <code>selection</code>, <code>sampling.allocate_points</code>, elite preservation, elite boxes, best-centered box, and round output switches.</td>
+                <td><code>progressive_exploration_summary.json</code> and round files under <code>progressive_exploration/</code>.</td>
+              </tr>
+              <tr>
+                <td><code>proposals</code> / <code>guided_sampling</code></td>
+                <td>Transforms sampled points before evaluation and clips them to bounds.</td>
+                <td>Stage <code>type</code>: <code>prior_profile</code>, <code>complex_vector_norm</code>, <code>parameter_rescale</code>, or <code>point_function</code>; plus <code>probability</code>, <code>enabled</code>, and <code>apply_to</code>.</td>
+                <td><code>proposal_summary.json</code>; proposal labels in point tables.</td>
+              </tr>
+              <tr>
+                <td><code>staged_evaluation</code></td>
+                <td>Evaluates a cheap filtered graph first and fully evaluates only points passing the cheap-objective and hard-failure policy.</td>
+                <td>Cheap include/exclude terms, theory checks, outputs; expensive terms; <code>max_cheap_objective</code>; <code>require_no_hard_failures</code>.</td>
+                <td><code>staged_evaluation_summary.json</code> and staged diagnostic columns.</td>
+              </tr>
+              <tr>
+                <td><code>refinement</code></td>
+                <td>Jitters selected seeds, optionally reapplies proposals, evaluates new points, and reruns selection before clustering.</td>
+                <td><code>enabled</code>, <code>n_rounds</code>, <code>points_per_seed</code>, <code>max_seeds</code>, <code>jitter_fraction</code>, <code>apply_proposals</code>, <code>keep_near_miss</code>.</td>
+                <td><code>refinement_points.csv</code>, <code>refinement_summary.json</code>.</td>
+              </tr>
+              <tr>
+                <td><code>manifold_refocus</code></td>
+                <td>Learns a covariance cloud in prior-aware transformed coordinates and converts sampled candidates into a smaller focused box.</td>
+                <td><code>method: covariance</code>, <code>source</code>, training caps, <code>top_fraction_for_training</code>, candidate count, covariance inflation, jitter, and focused-box quantiles.</td>
+                <td><code>manifold_refocus_training.csv</code>, <code>manifold_refocus_candidates.csv</code>, <code>manifold_refocus_box.json</code>, diagnostics.</td>
+              </tr>
+              <tr>
+                <td><code>ml_focus</code></td>
+                <td>Trains an Extra Trees surrogate on evaluated points, ranks candidates, forms a focused box, and supplies optional seeds.</td>
+                <td><code>model.type: extra_trees_regressor</code>, estimator settings, training filters, candidate-source fractions, selected counts, focused-box options, and seed composition.</td>
+                <td>ML focus diagnostics, candidates, selected points, focused box, and seeds.</td>
+              </tr>
+              <tr>
+                <td><code>focused_engine</code></td>
+                <td>Runs one focused optimizer per focused box.</td>
+                <td><code>name: adaptive_diver</code>, <code>population_size</code>, <code>max_generations</code>, <code>p_best_fraction</code>, mutation/crossover, convergence, output, and local refinement options.</td>
+                <td><code>basin_00/</code>, <code>basin_01/</code>, ... and <code>basin_results.json</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="statistics">
+        <div class="section-heading">
+          <p class="eyebrow">Statistics</p>
+          <h2>Plot-free post-processing</h2>
+        </div>
+        <p>
+          BSMScanner intentionally does not generate plots inside scan engines.
+          Engines produce complete machine-readable outputs; external scripts or
+          notebooks handle visualization.
+        </p>
+        <pre><code>statistics:
+  enabled: true
+  method: de_weighted
+  credible_levels: [0.68, 0.95]
+  output_samples: true
+  include_observables: true</code></pre>
+        <p>
+          <code>de_weighted</code> computes likelihood weights from evaluated DE
+          points using <code>exp[-0.5 * (chi2 - chi2_min)]</code>. It is not a
+          posterior sampler.
+        </p>
+      </section>
+
+      <section class="section" id="outputs">
+        <div class="section-heading">
+          <p class="eyebrow">Artifacts</p>
+          <h2>Standard output structure</h2>
+        </div>
+        <pre><code>run_directory/
+  points.csv
+  metadata.json
+  best_fit.json
+  summary.json
+  history.json
+  final_population.csv        # adaptive_diver when enabled
+  elite_points.csv            # adaptive_diver when enabled
+  exploration_points.csv      # basin_scan
+  selected_points.csv         # basin_scan
+  clusters.csv                # basin_scan
+  focused_boxes.json          # basin_scan
+  basin_results.json          # basin_scan
+  selection_summary.json      # basin_scan
+  statistics/
+    de_weighted_samples.csv
+    de_weighted_summary.json
+    de_credible_intervals.json
+    diagnostics.json</code></pre>
+        <p>
+          Important CSV columns include <code>status</code>, <code>valid</code>,
+          <code>failure_reason</code>, <code>scanner_target</code>,
+          <code>metric_value</code>, <code>param::...</code>,
+          <code>output::...</code>, and generic likelihood components
+          <code>like__...</code>.
+        </p>
+      </section>
+
+      <section class="section" id="examples">
+        <div class="section-heading">
+          <p class="eyebrow">Examples</p>
+          <h2>Runnable public examples</h2>
+        </div>
+        <div class="cards two">
+          <article class="card">
+            <h3>Leptontest</h3>
+            <p>Canonical compact neutrino-sector reference example.</p>
+            <pre><code>.venv/bin/python examples/leptontest/run_scan.py \
+  --model examples/leptontest/model_inverted_de_scipy.yaml \
+  --run-dir examples/leptontest/runs/inverted_demo</code></pre>
+          </article>
+          <article class="card">
+            <h3>Leptonquarktest</h3>
+            <p>Full lepton+quark pedagogical model with PMNS, CKM, and mass ratios.</p>
+            <pre><code>.venv/bin/python examples/leptonquarktest/run_scan.py \
+  --model examples/leptonquarktest/model_adaptive_diver.yaml \
+  --run-dir examples/leptonquarktest/runs/adaptive_demo</code></pre>
+          </article>
+          <article class="card">
+            <h3>Flavor toy</h3>
+            <p>Minimal flavor-sector diagonalization and mixing-matrix validation example.</p>
+            <pre><code>.venv/bin/python -m pytest tests/test_flavor_diagonalization.py -q</code></pre>
+          </article>
+          <article class="card">
+            <h3>arXiv:2006.03058 Weinberg</h3>
+            <p>FlavorPy-inspired Weinberg-operator model with NO/IO manifests.</p>
+            <pre><code>.venv/bin/python examples/arxiv2006_03058_weinberg/run_scan.py \
+  --model examples/arxiv2006_03058_weinberg/model_no.yaml \
+  --run-dir examples/arxiv2006_03058_weinberg/runs/no_demo</code></pre>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="api">
+        <div class="section-heading">
+          <p class="eyebrow">Python API</p>
+          <h2>Use BSMScanner from scripts</h2>
+        </div>
+        <pre><code>from pathlib import Path
+from bsm_scanner import compile_model, load_model, run_scan
+
+model = load_model(Path("examples/leptontest/model_de_scipy.yaml"))
+compiled = compile_model(model, build_backend=False)
+results = run_scan(model, compiled, run_directory=Path("runs/leptontest"))
+
+print(results.summary)
+print(results.best_fit_path)</code></pre>
+      </section>
+
+      <section class="section" id="reference">
+        <div class="section-heading">
+          <p class="eyebrow">Reference Docs</p>
+          <h2>More detailed files</h2>
+        </div>
+        <div class="link-grid">
+          <a href="../scan_engines_manuscript.md">Engine manuscript</a>
+          <a href="../model_schema.md">Model schema</a>
+          <a href="../matrix_diagonalization.md">Matrix diagonalization</a>
+          <a href="../core_model_split.md">Core/model split</a>
+          <a href="../ckm_observables.md">CKM observables</a>
+          <a href="../scan_runner.md">Scan runner</a>
+          <a href="../adaptive_diver.md">adaptive_diver</a>
+          <a href="../basin_scan.md">basin_scan</a>
+          <a href="../statistics.md">Statistics</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>BSMScanner public documentation. Open this page directly from <code>docs/site/index.html</code> or host the folder as a static website.</p>
+      <a href="#top">Back to top</a>
+    </footer>
+  </body>
+</html>

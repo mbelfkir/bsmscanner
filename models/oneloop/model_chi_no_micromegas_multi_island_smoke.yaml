@@ -1,0 +1,40 @@
+metadata:
+  name: oneloop_chi_normal_micromegas_multi_island_smoke
+  version: 1.0.0
+  description: One-loop chi normal-ordering micrOMEGAs smoke scan with balanced near-miss selection, refinement, manifold refocus, ML focus, and adaptive_diver.
+  ordering: normal
+  tags:
+    - oneloop
+    - chi_dm
+    - normal_ordering
+    - micromegas
+    - basin_scan
+    - multi_island_smoke
+
+imports:
+  - parameters_chi.yaml
+  - constants_reference_normal.yaml
+  - functions.yaml
+  - derived_chi_basis.yaml
+  - derived_backend_reference.yaml
+  - derived.yaml
+  - matrices.yaml
+  - diagonalizations.yaml
+  - observables/scalar_sector.yaml
+  - observables/neutrino_reference_normal.yaml
+  - observables/neutrino_reference_common.yaml
+  - observables/higgs.yaml
+  - observables/lfv.yaml
+  - observables/ew.yaml
+  - observables/reference_aliases.yaml
+  - constraints/theory_checks_reference_common.yaml
+  - constraints/theory_checks_reference_chi.yaml
+  - constraints/likelihoods_reference_normal.yaml
+  - outputs_reference.yaml
+  - guided_sampling.yaml
+  - observables/dm_backend_reference_chi.yaml
+  - constraints/theory_checks_reference_dm.yaml
+  - constraints/likelihoods_reference_dm.yaml
+  - outputs_reference_dm.yaml
+  - staged_evaluation_micromegas.yaml
+  - scan_multi_island_smoke.yaml

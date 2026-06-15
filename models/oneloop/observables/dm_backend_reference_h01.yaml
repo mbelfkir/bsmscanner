@@ -1,0 +1,7 @@
+constants:
+- name: dm_target_name
+  value: "~H01"
+  value_type: string
+
+imports:
+- ../../oneloop_master/observables/dm.yaml

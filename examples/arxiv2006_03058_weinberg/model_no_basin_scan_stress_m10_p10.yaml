@@ -1,0 +1,2 @@
+imports:
+  - ../../models/arxiv2006_03058_weinberg/model_no_basin_scan_stress_m10_p10.yaml

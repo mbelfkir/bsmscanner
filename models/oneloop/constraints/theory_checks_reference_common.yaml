@@ -1,0 +1,67 @@
+theory_checks:
+- name: physical_scalar_quadratic_masses
+  condition: mphi_sq > 0 and mphip_sq > 0 and isfinite(mphi_sq) and isfinite(mphip_sq)
+  fatal: true
+  message: A reconstructed scalar quadratic mass is non-positive.
+- name: physical_cp_odd_sector
+  condition: abs(MA02sq_denom) >= mass_split_eps and MA02sq > 0 and isfinite(MA02sq)
+  fatal: true
+  message: The reconstructed CP-odd scalar sector is singular or non-physical.
+- name: safe_loop_mass_splittings
+  condition: >
+    abs(mphi**2 - mphip**2) >= mass_split_eps
+    and abs(mphi**2 - Mpsi**2) >= mass_split_eps
+    and abs(mphip**2 - Mpsi**2) >= mass_split_eps
+  fatal: true
+  message: The I3 loop masses are numerically degenerate.
+- name: quartics_non_negative
+  condition: lambda1 >= 0 and lambda2 >= 0 and lambda3 >= 0
+  fatal: true
+  message: A scalar self-quartic is negative.
+- name: bounded_from_below_12
+  condition: k1 + k2 - abs(k3) >= -2*sqrt(lambda1*lambda2)
+  fatal: true
+  message: The doublet bounded-from-below condition failed.
+- name: bounded_from_below_13
+  condition: k4 >= -2*sqrt(lambda1*lambda3)
+  fatal: true
+  message: The Higgs-singlet bounded-from-below condition failed.
+- name: bounded_from_below_23
+  condition: k5 >= -2*sqrt(lambda2*lambda3)
+  fatal: true
+  message: The inert-singlet bounded-from-below condition failed.
+- name: bounded_from_below_mixed
+  condition: >
+    sqrt(lambda1*lambda2*lambda3)
+    + 0.5*((k1+k2-abs(k3))*sqrt(lambda3) + k4*sqrt(lambda2) + k5*sqrt(lambda1))
+    >= 0
+  fatal: true
+  message: The mixed three-field bounded-from-below condition failed.
+- name: perturbative_quartics
+  condition: >
+    abs(lambda1) < 4*pi and abs(lambda2) < 4*pi and abs(lambda3) < 4*pi
+    and abs(k1) < 4*pi and abs(k2) < 4*pi and abs(k3) < 4*pi
+    and abs(k4) < 4*pi and abs(k5) < 4*pi
+  fatal: true
+  message: A scalar coupling exceeds the perturbativity bound.
+- name: perturbative_yukawas
+  condition: >
+    ynr1**2+yni1**2 < 4*pi and ynr2**2+yni2**2 < 4*pi and ynr3**2+yni3**2 < 4*pi
+    and Y1r1**2+Y1i1**2 < 4*pi and Y1r2**2+Y1i2**2 < 4*pi and Y1r3**2+Y1i3**2 < 4*pi
+    and yp_abs**2 < 4*pi
+  fatal: true
+  message: A Yukawa coupling exceeds the perturbativity bound.
+- name: scalar_unitarity
+  condition: >
+    S1_max_abs < 8*pi and S2_max_abs < 8*pi and S3_max_abs < 8*pi
+    and S4_max_abs < 8*pi and S5_max_abs < 8*pi and S6_max_abs < 8*pi
+  fatal: true
+  message: A scalar scattering eigenvalue exceeds 8 pi.
+- name: finite_reference_observables
+  condition: >
+    isfinite(s12) and isfinite(s13) and isfinite(s23) and isfinite(deltaCP)
+    and isfinite(dm21) and isfinite(dm3l) and isfinite(sum_m)
+    and isfinite(ObliqueS) and isfinite(ObliqueT) and isfinite(HiggsRgg)
+    and isfinite(mu_to_e_gamma) and isfinite(tau_to_mumumu)
+  fatal: true
+  message: An analytic observable is non-finite.

@@ -1,0 +1,39 @@
+# Full config_inv.yaml-like inverted-ordering likelihood.
+# The oscillation targets stay the same except for dm3l, whose best-fit value
+# is negative in the inverted convention.
+likelihoods:
+- name: s12_term
+  kind: gaussian
+  observable: s12
+  mean: 0.308
+  sigma: 0.0115
+- name: s13_term
+  kind: gaussian
+  observable: s13
+  mean: 0.02231
+  sigma: 0.00056
+- name: s23_term
+  kind: gaussian
+  observable: s23
+  mean: 0.550
+  sigma: 0.021
+- name: deltaCP_term
+  kind: gaussian
+  observable: deltaCP_deg
+  mean: 274
+  sigma: 48.5
+- name: m12_term
+  kind: gaussian
+  observable: dm21
+  mean: 7.49e-5
+  sigma: 0.19e-5
+- name: m3l_term
+  kind: gaussian
+  observable: dm3l
+  mean: -2.484e-3
+  sigma: 0.020e-3
+- name: sumOfMass
+  kind: hard_cut
+  observable: sum_m
+  lower: 0.0
+  upper: 0.12

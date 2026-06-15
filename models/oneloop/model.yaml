@@ -1,0 +1,28 @@
+metadata:
+  name: oneloop_full_normal
+  version: 0.2.0
+  description: Full normal-ordering migration of the original oneloop model, with DM backend pieces documented separately when external micrOMEGAs integration is unavailable.
+  ordering: normal
+  tags:
+  - oneloop
+  - normal_ordering
+  - full_migration
+  - micromegas_pending
+imports:
+- parameters.yaml
+- constants.yaml
+- functions.yaml
+- derived.yaml
+- matrices.yaml
+- diagonalizations.yaml
+- observables/neutrino.yaml
+- observables/higgs.yaml
+- observables/lfv.yaml
+- observables/ew.yaml
+- observables/scalar_sector.yaml
+- observables/dm.yaml
+- constraints/theory_checks.yaml
+- constraints/likelihoods.yaml
+- outputs.yaml
+- guided_sampling.yaml
+- scan.yaml

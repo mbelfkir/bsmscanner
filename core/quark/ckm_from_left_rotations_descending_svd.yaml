@@ -1,0 +1,12 @@
+# Construct a CKM matrix from quark left-handed rotations produced by SVD.
+#
+# The raw mismatch matrix is written as `V_CKM_descending` because SVD singular
+# vectors are ordered from largest to smallest mass, i.e. (t,c,u) x (b,s,d).
+# Import `ckm_observables_from_descending_svd.yaml` afterward to reorder this
+# raw matrix into physical CKM order before extracting scalar observables.
+mixing_matrices:
+  CKM:
+    type: ckm
+    up: U_u_L
+    down: U_d_L
+    output: V_CKM_descending

@@ -1,0 +1,132 @@
+guided_sampling:
+  enabled: true
+  apply_to:
+    - exploration
+    - progressive_exploration
+    - refinement
+
+  stages:
+    - name: balanced_yukawa_norms
+      type: complex_vector_norm
+      enabled: true
+      probability: 0.75
+      vectors:
+        - components:
+            real: [ynr1, ynr2, ynr3]
+            imag: [yni1, yni2, yni3]
+          norm_range: [1.0e-4, 3.0]
+          scale: log
+
+        - components:
+            real: [Y1r1, Y1r2, Y1r3]
+            imag: [Y1i1, Y1i2, Y1i3]
+          norm_range: [1.0e-5, 1.0]
+          scale: log
+
+    - name: yprime_neutrino_scale_probe
+      type: parameter_rescale
+      enabled: true
+      probability: 0.25
+      parameters: [ypr11, ypi11]
+      factor_range: [1.0e-2, 1.0e2]
+      scale: log
+
+    - name: physical_neutrino_targets_NO
+      type: point_function
+      enabled: true
+      probability: 0.30
+      function: models/oneloop/guided_sampling.py:construct_yukawas_from_neutrino_targets
+      apply_to: [exploration, progressive_exploration, refinement]
+      options:
+        hierarchy: "NO"
+        target_dm: auto
+        yprime_abs_min: 1.0e-7
+        yprime_abs_max: 3.0
+        balance_min: 1.0e-3
+        balance_max: 1.0e3
+
+    - name: physical_neutrino_targets_IO
+      type: point_function
+      enabled: true
+      probability: 0.30
+      function: models/oneloop/guided_sampling.py:construct_yukawas_from_neutrino_targets
+      apply_to: [exploration, progressive_exploration, refinement]
+      options:
+        hierarchy: "IO"
+        target_dm: auto
+        yprime_abs_min: 1.0e-7
+        yprime_abs_max: 3.0
+        balance_min: 1.0e-3
+        balance_max: 1.0e3
+
+    - name: neutrino_scale_sum_NO
+      type: point_function
+      enabled: true
+      probability: 0.30
+      function: models/oneloop/guided_sampling.py:rescale_yprime_to_neutrino_sum
+      apply_to: [exploration, progressive_exploration, refinement]
+      options:
+        hierarchy: "NO"
+        target_dm: auto
+        target_sum_min_eV: 0.045
+        target_sum_max_eV: 0.119
+
+    - name: neutrino_scale_sum_IO
+      type: point_function
+      enabled: true
+      probability: 0.30
+      function: models/oneloop/guided_sampling.py:rescale_yprime_to_neutrino_sum
+      apply_to: [exploration, progressive_exploration, refinement]
+      options:
+        hierarchy: "IO"
+        target_dm: auto
+        target_sum_min_eV: 0.095
+        target_sum_max_eV: 0.160
+
+    - name: chi_visible_si_corridor_NO
+      type: point_function
+      enabled: true
+      probability: 0.20
+      function: models/oneloop/guided_sampling.py:visible_si_corridor
+      apply_to: [exploration, progressive_exploration]
+      options:
+        hierarchy: "NO"
+        target_dm: chi
+        attempts: 8
+        gap_charged_min: 5.0
+        gap_charged_max: 60.0
+        k1_abs_min: 1.5
+        k1_abs_max: 7.5
+        negative_k1_fraction: 0.25
+
+    - name: chi_visible_si_corridor_IO
+      type: point_function
+      enabled: true
+      probability: 0.20
+      function: models/oneloop/guided_sampling.py:visible_si_corridor
+      apply_to: [exploration, progressive_exploration]
+      options:
+        hierarchy: "IO"
+        target_dm: chi
+        attempts: 8
+        gap_charged_min: 5.0
+        gap_charged_max: 60.0
+        k1_abs_min: 1.5
+        k1_abs_max: 7.5
+        negative_k1_fraction: 0.25
+
+    - name: h01_scalar_dm_corridor
+      type: point_function
+      enabled: true
+      probability: 0.25
+      function: models/oneloop/guided_sampling.py:h01_scalar_dm_corridor
+      apply_to: [exploration, progressive_exploration]
+      options:
+        target_dm: H01
+        higgs_funnel_fraction: 0.25
+        high_mass_fraction: 0.55
+        compressed_fraction: 0.85
+        funnel_mass_min: 62.8
+        funnel_mass_max: 75.0
+        high_mass_min: 500.0
+        high_mass_max: 1500.0
