@@ -65,6 +65,7 @@ set(BSM_SCANNER_CORE_SOURCES
   src/functions.cpp
   src/plugins.cpp
   src/status.cpp
+  src/table_interpolation.cpp
   src/scan/adapter.cpp
   src/scan/config.cpp
   src/scan/mapper.cpp

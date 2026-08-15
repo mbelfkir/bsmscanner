@@ -1,4 +1,5 @@
 #include "bsm/core/plugins.hpp"
+#include "bsm/core/table_interpolation.hpp"
 
 #include <algorithm>
 #include <cmath>
@@ -113,18 +114,10 @@ InterpolationKind option_as_interpolation(
 
 void validate_table(const std::vector<std::vector<double>>& table,
                     const std::string& path) {
-  if (table.empty()) {
-    throw std::runtime_error("Lookup table '" + path + "' is empty.");
-  }
-  if (table.size() <= 1) {
-    return;
-  }
-  for (std::size_t i = 1; i < table.size(); ++i) {
-    if (!(table[i - 1].at(0) < table[i].at(0))) {
-      throw std::runtime_error(
-          "Lookup table '" + path + "' must have strictly increasing x-values.");
-    }
-  }
+  bsm::core::table::validate_ascending(
+      table,
+      "Lookup table '" + path + "' is empty.",
+      "Lookup table '" + path + "' must have strictly increasing x-values.");
 }
 
 std::vector<std::vector<double>> load_two_column_table(const std::string& path) {
@@ -158,97 +151,6 @@ std::vector<std::vector<double>> load_two_column_table(const std::string& path) 
   return rows;
 }
 
-std::vector<double> build_natural_cubic_spline_second_derivatives(
-    const std::vector<std::vector<double>>& table) {
-  const std::size_t n = table.size();
-  std::vector<double> second(n, 0.0);
-  if (n <= 2) {
-    return second;
-  }
-
-  std::vector<double> u(n - 1, 0.0);
-  for (std::size_t i = 1; i + 1 < n; ++i) {
-    const double x_im1 = table[i - 1].at(0);
-    const double x_i = table[i].at(0);
-    const double x_ip1 = table[i + 1].at(0);
-    const double y_im1 = table[i - 1].at(1);
-    const double y_i = table[i].at(1);
-    const double y_ip1 = table[i + 1].at(1);
-
-    const double sig = (x_i - x_im1) / (x_ip1 - x_im1);
-    const double p = sig * second[i - 1] + 2.0;
-    second[i] = (sig - 1.0) / p;
-    u[i] = (6.0 *
-                (((y_ip1 - y_i) / (x_ip1 - x_i)) -
-                 ((y_i - y_im1) / (x_i - x_im1))) /
-                (x_ip1 - x_im1) -
-            sig * u[i - 1]) /
-           p;
-  }
-
-  for (std::size_t k = n - 1; k-- > 0;) {
-    second[k] = second[k] * second[k + 1] + u[k];
-  }
-  return second;
-}
-
-double interpolate_linear(const std::vector<std::vector<double>>& table,
-                          double x) {
-  if (x <= table.front().at(0)) {
-    return table.front().at(1);
-  }
-  if (x >= table.back().at(0)) {
-    return table.back().at(1);
-  }
-  for (std::size_t i = 1; i < table.size(); ++i) {
-    const auto& left = table[i - 1];
-    const auto& right = table[i];
-    if (x <= right.at(0)) {
-      const double span = right.at(0) - left.at(0);
-      const double weight = (x - left.at(0)) / span;
-      return (1.0 - weight) * left.at(1) + weight * right.at(1);
-    }
-  }
-  return table.back().at(1);
-}
-
-double interpolate_cubic_spline(const std::vector<std::vector<double>>& table,
-                                const std::vector<double>& second,
-                                double x) {
-  if (table.size() <= 1) {
-    return table.front().at(1);
-  }
-  if (x <= table.front().at(0)) {
-    x = table.front().at(0);
-  } else if (x >= table.back().at(0)) {
-    x = table.back().at(0);
-  }
-
-  auto upper = std::lower_bound(
-      table.begin(),
-      table.end(),
-      x,
-      [](const std::vector<double>& row, double value) { return row.at(0) < value; });
-  std::size_t hi = static_cast<std::size_t>(upper - table.begin());
-  if (hi == 0) {
-    hi = 1;
-  } else if (hi >= table.size()) {
-    hi = table.size() - 1;
-  }
-  const std::size_t lo = hi - 1;
-
-  const double x_lo = table[lo].at(0);
-  const double x_hi = table[hi].at(0);
-  const double y_lo = table[lo].at(1);
-  const double y_hi = table[hi].at(1);
-  const double h = x_hi - x_lo;
-  const double a = (x_hi - x) / h;
-  const double b = (x - x_lo) / h;
-  return a * y_lo + b * y_hi +
-         ((a * a * a - a) * second[lo] + (b * b * b - b) * second[hi]) *
-             (h * h) / 6.0;
-}
-
 const TableData& get_table(const std::string& path, InterpolationKind interpolation) {
   const std::string cache_key =
       path + "::" + (interpolation == InterpolationKind::CubicSpline ? "cubic" : "linear");
@@ -264,7 +166,7 @@ const TableData& get_table(const std::string& path, InterpolationKind interpolat
   data.interpolation = interpolation;
   if (interpolation == InterpolationKind::CubicSpline) {
     data.second_derivatives =
-        build_natural_cubic_spline_second_derivatives(data.rows);
+        bsm::core::table::build_natural_cubic_spline_second_derivatives(data.rows);
   }
   return cache.emplace(cache_key, std::move(data)).first->second;
 }
@@ -272,9 +174,10 @@ const TableData& get_table(const std::string& path, InterpolationKind interpolat
 double interpolate(const TableData& table, double x) {
   switch (table.interpolation) {
     case InterpolationKind::Linear:
-      return interpolate_linear(table.rows, x);
+      return bsm::core::table::interpolate_linear(table.rows, x);
     case InterpolationKind::CubicSpline:
-      return interpolate_cubic_spline(table.rows, table.second_derivatives, x);
+      return bsm::core::table::interpolate_cubic_spline(
+          table.rows, table.second_derivatives, x);
   }
   throw std::runtime_error("Unhandled oneloop likelihood interpolation.");
 }
