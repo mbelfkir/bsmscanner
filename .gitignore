@@ -26,3 +26,5 @@ archives/
 htmlcov/
 release_audit.json
 .pypirc
+output/
+_to_delete/
