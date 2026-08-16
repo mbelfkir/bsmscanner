@@ -30,9 +30,9 @@ expression compiler.
 ### Kept Model-Specific By Design
 
 - the `oneloop_micromegas` plugin implementation under
-  `/Users/mbelfkir/HEP/BSMScanner/src/plugins/oneloop_micromegas.cpp`
+  `src/plugins/oneloop_micromegas.cpp`
 - the backend variable mapping declared in
-  `/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/observables/dm.yaml`
+  `models/oneloop_master/observables/dm.yaml`
 
 ## What Belongs Where
 
@@ -138,11 +138,11 @@ The stable oneloop baseline remains plugin-free.
 The latest-master exact path now uses:
 
 - generic `plugin_call` nodes in
-  `/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/observables/dm.yaml`
+  `models/oneloop_master/observables/dm.yaml`
 - a model-specific plugin in
-  `/Users/mbelfkir/HEP/BSMScanner/src/plugins/oneloop_micromegas.cpp`
+  `src/plugins/oneloop_micromegas.cpp`
 - a source-specific likelihood helper in
-  `/Users/mbelfkir/HEP/BSMScanner/src/plugins/oneloop_likelihoods.cpp`
+  `src/plugins/oneloop_likelihoods.cpp`
 - generic runtime capability checks through
   `has_plugin_support("oneloop_micromegas")`
 

@@ -8,7 +8,7 @@ Current baseline:
 
 - framework package version: `0.1.0`
 - modular oneloop model version: `0.2.0`
-- canonical full model manifest: `/Users/mbelfkir/HEP/BSMScanner/models/oneloop/model.yaml`
+- canonical full model manifest: `models/oneloop/model.yaml`
 - main remaining gap: exact micrOMEGAs-backed dark-matter observables and likelihoods
 
 ## Release Audit
@@ -16,7 +16,7 @@ Current baseline:
 Recommended audit command:
 
 ```bash
-python /Users/mbelfkir/HEP/BSMScanner/scripts/release_audit.py
+python scripts/release_audit.py
 ```
 
 The audit verifies:
@@ -35,7 +35,7 @@ Audit note:
 
 Local generated run output was removed from:
 
-- `/Users/mbelfkir/HEP/BSMScanner/examples/oneloop_minimal/runs/serial_random_2026-04-08`
+- `examples/oneloop_minimal/runs/serial_random_2026-04-08`
 
 Generated or environment-specific paths that should not be treated as release source:
 
@@ -66,10 +66,10 @@ git tag -a oneloop-milestone-2026-04-10 -m "Stable oneloop milestone after table
 
 ## Required Reading Before Production Scans
 
-- `/Users/mbelfkir/HEP/BSMScanner/docs/current_status.md`
-- `/Users/mbelfkir/HEP/BSMScanner/docs/implemented_vs_deferred.md`
-- `/Users/mbelfkir/HEP/BSMScanner/docs/dm_status.md`
-- `/Users/mbelfkir/HEP/BSMScanner/docs/release_notes_oneloop.md`
+- `docs/current_status.md`
+- `docs/implemented_vs_deferred.md`
+- `docs/dm_status.md`
+- `docs/release_notes_oneloop.md`
 
 ## Milestone Claim
 

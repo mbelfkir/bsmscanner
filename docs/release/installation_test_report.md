@@ -4,8 +4,8 @@ Date: 2026-06-16
 
 ## Artifacts
 
-- Wheel: `/Users/mbelfkir/HEP/BSMScanner/dist/bsm_scanner-0.1.0-cp313-cp313-macosx_15_0_arm64.whl`
-- Source distribution: `/Users/mbelfkir/HEP/BSMScanner/dist/bsm_scanner-0.1.0.tar.gz`
+- Wheel: `dist/bsm_scanner-0.1.0-cp313-cp313-macosx_15_0_arm64.whl`
+- Source distribution: `dist/bsm_scanner-0.1.0.tar.gz`
 
 ## Build Checks
 

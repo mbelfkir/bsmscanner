@@ -31,7 +31,7 @@ Bug description:
 
 Fix location:
 
-- `/Users/mbelfkir/HEP/BSMScanner/src/constraints.cpp`
+- `src/constraints.cpp`
 
 Fix date:
 
@@ -48,12 +48,12 @@ Known obsolete results include:
 
 Corrected superseding run:
 
-- `/home/mohamed/HEP/BSMScanner/examples/oneloop_full/runs/diver_oscillation_only_fixed_2026-04-09`
+- `examples/oneloop_full/runs/diver_oscillation_only_fixed_2026-04-09`
 - corrected best minimum: `152.56087916897076`
 
 ## Remaining Scientific Limitation
 
-The frozen milestone model under `/Users/mbelfkir/HEP/BSMScanner/models/oneloop`
+The frozen milestone model under `models/oneloop`
 does not claim exact parity with the original DM backend path.
 
 Still deferred in that baseline model:
@@ -64,12 +64,12 @@ Still deferred in that baseline model:
 
 New optional exact-path implementation:
 
-- `/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/model.yaml`
+- `models/oneloop_master/model.yaml`
 - requires a build with the optional micrOMEGAs backend enabled
 
 See:
 
-- `/Users/mbelfkir/HEP/BSMScanner/docs/dm_status.md`
+- `docs/dm_status.md`
 
 ## Recommended Citation / Usage Language
 

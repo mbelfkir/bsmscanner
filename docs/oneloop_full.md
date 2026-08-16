@@ -2,16 +2,16 @@
 
 The full migrated normal-ordering oneloop model now lives in modular form at:
 
-- `/Users/mbelfkir/HEP/BSMScanner/models/oneloop/model.yaml`
+- `models/oneloop/model.yaml`
 
 The old example path remains as a compatibility wrapper:
 
-- `/Users/mbelfkir/HEP/BSMScanner/examples/oneloop_full/model.yaml`
+- `examples/oneloop_full/model.yaml`
 
 The modular layout is:
 
 ```text
-/Users/mbelfkir/HEP/BSMScanner/models/oneloop/
+models/oneloop/
   model.yaml
   parameters.yaml
   constants.yaml
@@ -96,29 +96,29 @@ The remaining gap is the micrOMEGAs-dependent dark-matter backend layer:
 
 These are not faked in the example. The current model metadata marks the example as `micromegas_pending`, and the migration status is documented in:
 
-- `/Users/mbelfkir/HEP/BSMScanner/docs/migration_oneloop.md`
-- `/Users/mbelfkir/HEP/BSMScanner/docs/current_status.md`
-- `/Users/mbelfkir/HEP/BSMScanner/docs/dm_status.md`
+- `docs/migration_oneloop.md`
+- `docs/current_status.md`
+- `docs/dm_status.md`
 
 If you need the exact latest-master DM backend path rather than the frozen
 baseline example, use:
 
-- `/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/model.yaml`
-- `/Users/mbelfkir/HEP/BSMScanner/docs/oneloop_master.md`
+- `models/oneloop_master/model.yaml`
+- `docs/oneloop_master.md`
 
 ## Running The Example
 
 Compile and evaluate the default point:
 
 ```bash
-python /Users/mbelfkir/HEP/BSMScanner/examples/oneloop_full/run_example.py
+python examples/oneloop_full/run_example.py
 ```
 
 Run a scan:
 
 ```bash
-python /Users/mbelfkir/HEP/BSMScanner/examples/oneloop_full/run_scan.py \
-  --run-dir /Users/mbelfkir/HEP/BSMScanner/examples/oneloop_full/runs/example_scan
+python examples/oneloop_full/run_scan.py \
+  --run-dir examples/oneloop_full/runs/example_scan
 ```
 
 ## Validation

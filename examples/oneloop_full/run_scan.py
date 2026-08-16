@@ -36,7 +36,7 @@ def main() -> None:
     if "micromegas_pending" in model.metadata.tags:
         print(
             "Warning: the exact micrOMEGAs-backed DM sector is still deferred in this "
-            "milestone. See /Users/mbelfkir/HEP/BSMScanner/docs/dm_status.md"
+            "milestone. See docs/dm_status.md"
         )
     if model.scan.engine == "diver" and (_core is None or not _core.has_diver_support()):
         raise SystemExit(

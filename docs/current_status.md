@@ -12,7 +12,7 @@ Working baseline:
 - generic plugin dispatch for backend-backed observables
 - matrix metadata with automatic diagonalization support for declared reusable sectors
 - native scan execution
-- Diver integration on `mohamed@belfkir-server`
+- Diver integration on `your remote build host`
 - a temporary SciPy-backed `de_scipy` reference engine for DE-interface validation
 - a native model-agnostic `adaptive_diver` Differential Evolution engine with
   adaptive `F/CR`, final-population artifacts, and optional elite local
@@ -29,9 +29,9 @@ Working baseline:
 - reusable CKM scalar observables under `core/quark/ckm_observables.yaml`
 - reusable quark mass-ratio observables under `core/quark/quark_mass_ratios.yaml`
 - machine-readable outputs
-- modular full oneloop model under `/Users/mbelfkir/HEP/BSMScanner/models/oneloop`
+- modular full oneloop model under `models/oneloop`
 - active oscillation table likelihoods with the corrected `table_lookup` behavior
-- canonical latest-master-faithful model under `/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master`
+- canonical latest-master-faithful model under `models/oneloop_master`
 - optional exact micrOMEGAs-backed oneloop DM backend on builds where it is enabled
 - reusable core-level neutrino YAML blocks prototyped through `models/leptontest`
 
@@ -50,23 +50,23 @@ The framework organization now supports a cleaner split for future models:
 
 The current proof of concept is the leptontest neutrino sector, where shared
 constants and ordering-aware neutrino observable logic live under
-`/Users/mbelfkir/HEP/BSMScanner/core`, while the model keeps its own likelihood
-blocks under `/Users/mbelfkir/HEP/BSMScanner/models/leptontest/constraints`.
+`core`, while the model keeps its own likelihood
+blocks under `models/leptontest/constraints`.
 
 The canonical reference example for this split is now:
 
-- `/Users/mbelfkir/HEP/BSMScanner/examples/leptontest`
-- `/Users/mbelfkir/HEP/BSMScanner/models/leptontest`
+- `examples/leptontest`
+- `models/leptontest`
 
 The minimal reference example for generic flavor diagonalization is:
 
-- `/Users/mbelfkir/HEP/BSMScanner/models/flavor_toy`
-- `/Users/mbelfkir/HEP/BSMScanner/examples/flavor_toy`
+- `models/flavor_toy`
+- `examples/flavor_toy`
 
 The full lepton+quark reference example is:
 
-- `/Users/mbelfkir/HEP/BSMScanner/models/leptonquarktest`
-- `/Users/mbelfkir/HEP/BSMScanner/examples/leptonquarktest`
+- `models/leptonquarktest`
+- `examples/leptonquarktest`
 
 It follows the FlavorPy detailed modular-flavor example for its parameters and
 analytic mass matrices, demonstrating a complete optional-sector model with
@@ -105,10 +105,10 @@ through oneloop-specific core builtins.
 Use:
 
 - canonical one-loop production manifest:
-  `/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/model.yaml`
+  `models/oneloop_master/model.yaml`
 - exact normal or inverted variants when needed:
-  `/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/model_normal_full.yaml`
-  `/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/model_inverted_full.yaml`
+  `models/oneloop_master/model_normal_full.yaml`
+  `models/oneloop_master/model_inverted_full.yaml`
 - the frozen `models/oneloop` baseline only when you explicitly want the older
   milestone reference without exact DM parity
 
@@ -138,12 +138,12 @@ Those items remain deferred only for the frozen baseline model. They are impleme
 
 See:
 
-- `/Users/mbelfkir/HEP/BSMScanner/docs/dm_status.md`
-- `/Users/mbelfkir/HEP/BSMScanner/docs/implemented_vs_deferred.md`
+- `docs/dm_status.md`
+- `docs/implemented_vs_deferred.md`
 
 ## Historical Caveat
 
-Before the April 9, 2026 fix in `/Users/mbelfkir/HEP/BSMScanner/src/constraints.cpp`, `table_lookup` likelihoods returned zero for any point inside the table domain instead of using the interpolated table value.
+Before the April 9, 2026 fix in `src/constraints.cpp`, `table_lookup` likelihoods returned zero for any point inside the table domain instead of using the interpolated table value.
 
 Consequences:
 
@@ -152,7 +152,7 @@ Consequences:
 
 Corrected runs supersede those earlier scans. See:
 
-- `/Users/mbelfkir/HEP/BSMScanner/docs/release_notes_oneloop.md`
+- `docs/release_notes_oneloop.md`
 
 ## Validation Basis
 

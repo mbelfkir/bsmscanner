@@ -3,11 +3,11 @@
 This note is the compact developer-facing reference for the canonical
 production one-loop model under:
 
-- [model_normal_reduced.yaml](/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/model_normal_reduced.yaml)
-- [model_normal_full.yaml](/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/model_normal_full.yaml)
-- [model_inverted_full.yaml](/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/model_inverted_full.yaml)
+- [model_normal_reduced.yaml](../models/oneloop_master/model_normal_reduced.yaml)
+- [model_normal_full.yaml](../models/oneloop_master/model_normal_full.yaml)
+- [model_inverted_full.yaml](../models/oneloop_master/model_inverted_full.yaml)
 
-The compatibility manifest [model.yaml](/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/model.yaml)
+The compatibility manifest [model.yaml](../models/oneloop_master/model.yaml)
 points to the reduced normal-ordering variant.
 
 ## YAML Variants
@@ -80,13 +80,13 @@ The following are declarative and stay entirely in YAML:
 
 Two pieces remain outside pure YAML on purpose:
 
-1. [oneloop_micromegas.cpp](/Users/mbelfkir/HEP/BSMScanner/src/plugins/oneloop_micromegas.cpp)
+1. [oneloop_micromegas.cpp](../src/plugins/oneloop_micromegas.cpp)
 
 - genuinely backend-specific
 - handles micrOMEGAs assignment, candidate selection, relic density, SI cross
   section, and direct-detection p-value
 
-2. [oneloop_likelihoods.cpp](/Users/mbelfkir/HEP/BSMScanner/src/plugins/oneloop_likelihoods.cpp)
+2. [oneloop_likelihoods.cpp](../src/plugins/oneloop_likelihoods.cpp)
 
 - not a generic framework concern
 - preserves the latest source’s grouped `m12+m3l` behavior exactly, including
@@ -102,6 +102,6 @@ without changing the generic framework core.
 - keep plugin code only for true backend calls or source-specific behavior that
   the generic kernels cannot yet represent declaratively
 - use the invariant helpers in
-  [validation.py](/Users/mbelfkir/HEP/BSMScanner/python/bsm_scanner/model/validation.py)
+  [validation.py](../python/bsm_scanner/model/validation.py)
   to guard free/derived separation, likelihood coverage, dead scan parameters,
   and parity reporting

@@ -14,15 +14,15 @@ It demonstrates:
 
 Files:
 
-- `/Users/mbelfkir/HEP/BSMScanner/examples/leptontest/model.yaml`
+- `examples/leptontest/model.yaml`
   - normal-order wrapper
-- `/Users/mbelfkir/HEP/BSMScanner/examples/leptontest/model_inverted.yaml`
+- `examples/leptontest/model_inverted.yaml`
   - inverted-order wrapper
-- `/Users/mbelfkir/HEP/BSMScanner/examples/leptontest/model_de_scipy.yaml`
+- `examples/leptontest/model_de_scipy.yaml`
   - normal-order wrapper configured for the SciPy DE reference engine
-- `/Users/mbelfkir/HEP/BSMScanner/examples/leptontest/model_inverted_de_scipy.yaml`
+- `examples/leptontest/model_inverted_de_scipy.yaml`
   - inverted-order wrapper configured for the SciPy DE reference engine
-- `/Users/mbelfkir/HEP/BSMScanner/models/leptontest`
+- `models/leptontest`
   - the actual model implementation
 
 What this example is meant to teach:

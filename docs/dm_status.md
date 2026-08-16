@@ -6,16 +6,16 @@ This document is the precise gap analysis for the dark-matter sector of the migr
 
 The short version is:
 
-- the frozen milestone model under `/Users/mbelfkir/HEP/BSMScanner/models/oneloop` does not provide exact micrOMEGAs-backed DM observables
-- the new latest-master variant under `/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master` does provide exact micrOMEGAs-backed DM observables when built with the optional backend
+- the frozen milestone model under `models/oneloop` does not provide exact micrOMEGAs-backed DM observables
+- the new latest-master variant under `models/oneloop_master` does provide exact micrOMEGAs-backed DM observables when built with the optional backend
 - the baseline and latest-master variants now have intentionally different DM status
 
 ## Original Oneloop Workflow
 
 Reference implementation:
 
-- `/Users/mbelfkir/Downloads/oneloop-master2/src/nLLConstructor.cxx`
-- `/Users/mbelfkir/Downloads/oneloop-master2/config/config_nr.yaml`
+- `oneloop-master2/src/nLLConstructor.cxx`
+- `oneloop-master2/config/config_nr.yaml`
 
 ### Candidate Identity In The Original Code
 
@@ -27,7 +27,7 @@ It then loops over the micrOMEGAs-provided odd states, records their names and m
 
 Relevant source region:
 
-- `/Users/mbelfkir/Downloads/oneloop-master2/src/nLLConstructor.cxx:1149`
+- `oneloop-master2/src/nLLConstructor.cxx:1149`
 
 In the main FCN, the original code hard-rejects the point if:
 
@@ -35,7 +35,7 @@ In the main FCN, the original code hard-rejects the point if:
 
 Relevant source region:
 
-- `/Users/mbelfkir/Downloads/oneloop-master2/src/nLLConstructor.cxx:1582`
+- `oneloop-master2/src/nLLConstructor.cxx:1582`
 
 ### Relic Density In The Original Code
 
@@ -52,12 +52,12 @@ It returns an invalid marker if the backend errors out or produces a non-finite 
 
 Relevant source region:
 
-- `/Users/mbelfkir/Downloads/oneloop-master2/src/nLLConstructor.cxx:1160`
+- `oneloop-master2/src/nLLConstructor.cxx:1160`
 
 The original likelihood contribution is a Gaussian built from the configured `Omega` interval:
 
-- observable in config: `/Users/mbelfkir/Downloads/oneloop-master2/config/config_nr.yaml:345`
-- likelihood implementation: `/Users/mbelfkir/Downloads/oneloop-master2/src/nLLConstructor.cxx:1430`
+- observable in config: `oneloop-master2/config/config_nr.yaml:345`
+- likelihood implementation: `oneloop-master2/src/nLLConstructor.cxx:1430`
 
 ### Direct Detection In The Original Code
 
@@ -69,7 +69,7 @@ and stores a spin-independent nucleon cross section for the selected candidate.
 
 Relevant source region:
 
-- `/Users/mbelfkir/Downloads/oneloop-master2/src/nLLConstructor.cxx:1181`
+- `oneloop-master2/src/nLLConstructor.cxx:1181`
 
 The original direct-detection likelihood is backend-driven:
 
@@ -82,7 +82,7 @@ It returns:
 
 Relevant source region:
 
-- `/Users/mbelfkir/Downloads/oneloop-master2/src/nLLConstructor.cxx:1440`
+- `oneloop-master2/src/nLLConstructor.cxx:1440`
 
 ### DM Outputs In The Original Code
 
@@ -94,27 +94,27 @@ The original output CSV includes:
 
 Reference:
 
-- `/Users/mbelfkir/Downloads/oneloop-master2/output/output.rank0.csv`
+- `oneloop-master2/output/output.rank0.csv`
 
 ## Current Framework State
 
 Current modular model:
 
-- `/Users/mbelfkir/HEP/BSMScanner/models/oneloop/model.yaml`
+- `models/oneloop/model.yaml`
 
 Latest-master-faithful variant:
 
-- `/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/model.yaml`
+- `models/oneloop_master/model.yaml`
 
 ### What Is Present Now
 
 - analytic DM identity check:
-  - `/Users/mbelfkir/HEP/BSMScanner/models/oneloop/constraints/theory_checks.yaml`
+  - `models/oneloop/constraints/theory_checks.yaml`
   - implemented as `Mpsi < MN, Mphi, MA1, MA2, MH1, MH2`
 - metadata tag documenting the backend gap:
   - `micromegas_pending`
 - explicit DM observable fragment:
-  - `/Users/mbelfkir/HEP/BSMScanner/models/oneloop/observables/dm.yaml`
+  - `models/oneloop/observables/dm.yaml`
   - currently empty on purpose
 
 ### What Is Not Present Now
@@ -134,11 +134,11 @@ The repository now also contains an exact-path DM implementation for the latest
 That path consists of:
 
 - model-specific plugin:
-  - `/Users/mbelfkir/HEP/BSMScanner/src/plugins/oneloop_micromegas.cpp`
+  - `src/plugins/oneloop_micromegas.cpp`
 - latest-master model:
-  - `/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/model.yaml`
+  - `models/oneloop_master/model.yaml`
 - declarative backend bindings:
-  - `/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/observables/dm.yaml`
+  - `models/oneloop_master/observables/dm.yaml`
 
 ### What Is Present In `models/oneloop_master`
 

@@ -23,7 +23,7 @@ This document classifies the current repository state conservatively. It is inte
 
 - Diver integration: validated by smoke and medium-size scans on the server, but not yet certified as a long-production-campaign benchmark.
 - Full-model scan behavior: validated through smoke tests and targeted reruns, but not yet benchmarked point-by-point against a large original oneloop sample.
-- Compatibility wrapper model at `/Users/mbelfkir/HEP/BSMScanner/examples/oneloop_full/model.yaml`: validated as a loader path, but the canonical source of truth is the modular model under `/Users/mbelfkir/HEP/BSMScanner/models/oneloop`.
+- Compatibility wrapper model at `examples/oneloop_full/model.yaml`: validated as a loader path, but the canonical source of truth is the modular model under `models/oneloop`.
 
 ### Implemented Approximately / Placeholder-Backed
 
@@ -78,7 +78,7 @@ This document classifies the current repository state conservatively. It is inte
 
 ### Implemented But Only Partially Validated
 
-- Full normal-ordering migration as a whole: validated by tests and scan smoke checks, but not yet benchmarked against a large reference sample from `/Users/mbelfkir/Downloads/oneloop-master2/output/output.rank0.csv`.
+- Full normal-ordering migration as a whole: validated by tests and scan smoke checks, but not yet benchmarked against a large reference sample from `oneloop-master2/output/output.rank0.csv`.
 - Inverted-ordering table assets: copied into the repository, but not yet wrapped in a dedicated validated inverted-ordering model manifest and example workflow.
 
 ### Implemented Approximately / Placeholder-Backed
@@ -97,7 +97,7 @@ This document classifies the current repository state conservatively. It is inte
   - `SIxsec`
 
 This deferred classification applies to the frozen baseline model under
-`/Users/mbelfkir/HEP/BSMScanner/models/oneloop`.
+`models/oneloop`.
 
 ### Blocked By External Backend / Toolchain Dependency
 
@@ -109,15 +109,15 @@ This remains the highest-priority deferred area for the frozen baseline model.
 
 ### Implemented And Validated
 
-- Analytic DM identity theory check through `/Users/mbelfkir/HEP/BSMScanner/models/oneloop/constraints/theory_checks.yaml`.
-- Explicit model metadata tag `micromegas_pending` in `/Users/mbelfkir/HEP/BSMScanner/models/oneloop/model.yaml`.
-- Explicitly empty DM observable file `/Users/mbelfkir/HEP/BSMScanner/models/oneloop/observables/dm.yaml`, with comments documenting the deferral.
+- Analytic DM identity theory check through `models/oneloop/constraints/theory_checks.yaml`.
+- Explicit model metadata tag `micromegas_pending` in `models/oneloop/model.yaml`.
+- Explicitly empty DM observable file `models/oneloop/observables/dm.yaml`, with comments documenting the deferral.
 - Separate exact-path model variant:
-  - `/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/model.yaml`
+  - `models/oneloop_master/model.yaml`
 - Optional native micrOMEGAs wrapper:
-  - `/Users/mbelfkir/HEP/BSMScanner/src/plugins/oneloop_micromegas.cpp`
+  - `src/plugins/oneloop_micromegas.cpp`
 - Generic plugin dispatch for backend-backed observables:
-  - `/Users/mbelfkir/HEP/BSMScanner/include/bsm/core/plugins.hpp`
+  - `include/bsm/core/plugins.hpp`
 - Server-validated optional backend support for:
   - `Omega`
   - `SIxsec`
@@ -158,7 +158,7 @@ These items remain intentionally deferred only in the frozen baseline model.
 
 Historical bug:
 
-- Before the April 9, 2026 fix in `/Users/mbelfkir/HEP/BSMScanner/src/constraints.cpp`, the `table_lookup` likelihood path returned zero for all points inside the table x-range.
+- Before the April 9, 2026 fix in `src/constraints.cpp`, the `table_lookup` likelihood path returned zero for all points inside the table x-range.
 
 Correct behavior now:
 
@@ -168,12 +168,12 @@ Correct behavior now:
 Affected results:
 
 - any scan using `table_lookup` terms before the fix
-- known obsolete oscillation-only run: `/home/mohamed/HEP/BSMScanner/examples/oneloop_full/runs/diver_oscillation_only_2026-04-09`
+- known obsolete oscillation-only run: `examples/oneloop_full/runs/diver_oscillation_only_2026-04-09`
 - earlier local and server runs using the old `table_lookup` implementation
 
 Superseding corrected run:
 
-- `/home/mohamed/HEP/BSMScanner/examples/oneloop_full/runs/diver_oscillation_only_fixed_2026-04-09`
+- `examples/oneloop_full/runs/diver_oscillation_only_fixed_2026-04-09`
 
 Required policy:
 

@@ -1,14 +1,14 @@
 # Oneloop Migration Status
 
-The original reference code lives at `/Users/mbelfkir/Downloads/oneloop-master2`.
+The original reference code lives at `oneloop-master2`.
 
 The migrated normal-ordering example now lives at:
 
-- `/Users/mbelfkir/HEP/BSMScanner/models/oneloop/model.yaml`
+- `models/oneloop/model.yaml`
 
 The example wrapper remains available at:
 
-- `/Users/mbelfkir/HEP/BSMScanner/examples/oneloop_full/model.yaml`
+- `examples/oneloop_full/model.yaml`
 
 It is a real compiled model in the framework, not a design stub.
 
@@ -146,20 +146,20 @@ Directly mapped from the current `config_nr.yaml` parameterization:
 
 The repository now carries the original oscillation tables under:
 
-- `/Users/mbelfkir/HEP/BSMScanner/examples/oneloop_full/data/Normal`
-- `/Users/mbelfkir/HEP/BSMScanner/examples/oneloop_full/data/Inverted`
+- `examples/oneloop_full/data/Normal`
+- `examples/oneloop_full/data/Inverted`
 
 ## How To Run
 
 Compile and evaluate the default seed point:
 
 ```bash
-python /Users/mbelfkir/HEP/BSMScanner/examples/oneloop_full/run_example.py
+python examples/oneloop_full/run_example.py
 ```
 
 Launch a scan:
 
 ```bash
-python /Users/mbelfkir/HEP/BSMScanner/examples/oneloop_full/run_scan.py \
-  --run-dir /Users/mbelfkir/HEP/BSMScanner/examples/oneloop_full/runs/example_scan
+python examples/oneloop_full/run_scan.py \
+  --run-dir examples/oneloop_full/runs/example_scan
 ```
