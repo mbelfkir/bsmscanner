@@ -10,7 +10,7 @@ metadata:
 
 imports:
   - parameters.yaml
-  - functions.yaml
+  - ../../core/modular/level4_s4.yaml
   - derived.yaml
   - matrices.yaml
   - ../../core/constants/physics_constants.yaml

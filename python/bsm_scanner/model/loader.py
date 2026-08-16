@@ -7,6 +7,7 @@ from typing import Any, Mapping
 import yaml
 
 from bsm_scanner.exceptions import ModelValidationError
+from bsm_scanner.library import is_library_reference, resolve_library_reference
 
 
 IMPORT_KEYS = ("imports", "includes")
@@ -61,7 +62,10 @@ class ModelFragmentLoader:
 
         imports = self._extract_imports(raw, path)
         for import_name in imports:
-            child_path = (path.parent / import_name).resolve()
+            if is_library_reference(import_name):
+                child_path = resolve_library_reference(import_name)
+            else:
+                child_path = (path.parent / import_name).resolve()
             self._merge_fragment_into(target, child_path, (*stack, path))
 
         local = {key: value for key, value in raw.items() if key not in IMPORT_KEYS}
@@ -261,11 +265,14 @@ def _resolve_external_assets_in_value(value: Any, base_dir: Path) -> Any:
 
     table_file = resolved.get("table_file")
     if isinstance(table_file, str):
-        table_path = (base_dir / table_file).resolve()
-        if not table_path.exists():
-            raise FileNotFoundError(
-                f"Table file '{table_file}' was not found relative to '{base_dir}'."
-            )
+        if is_library_reference(table_file):
+            table_path = resolve_library_reference(table_file)
+        else:
+            table_path = (base_dir / table_file).resolve()
+            if not table_path.exists():
+                raise FileNotFoundError(
+                    f"Table file '{table_file}' was not found relative to '{base_dir}'."
+                )
         resolved["table"] = _load_two_column_table(table_path)
 
     plugin_call = resolved.get("plugin_call")
@@ -279,7 +286,10 @@ def _resolve_external_assets_in_value(value: Any, base_dir: Path) -> Any:
                     and isinstance(option_value, str)
                     and (key.endswith("_file") or key.endswith("_path"))
                 ):
-                    resolved_options[key] = str((base_dir / option_value).resolve())
+                    if is_library_reference(option_value):
+                        resolved_options[key] = str(resolve_library_reference(option_value))
+                    else:
+                        resolved_options[key] = str((base_dir / option_value).resolve())
             plugin_call = dict(plugin_call)
             plugin_call["options"] = resolved_options
             resolved["plugin_call"] = plugin_call

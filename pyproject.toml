@@ -11,6 +11,8 @@ version = "0.1.0"
 description = "Graph-compiled BSM model scanner with Python frontend and C++ evaluation core."
 readme = "README.md"
 requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
   { name = "BSMScanner contributors" },
 ]
@@ -29,6 +31,7 @@ classifiers = [
   "Programming Language :: C++",
   "Topic :: Scientific/Engineering :: Physics",
 ]
+
 dependencies = [
   "numpy>=1.24",
   "PyYAML>=6.0",
