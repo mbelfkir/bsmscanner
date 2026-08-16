@@ -60,16 +60,26 @@ double evaluate_table_lookup(const ConstraintSpec& spec, double x) {
   if (x >= lower && x <= upper) {
     return interpolate_table(spec, x) + spec.in_range_offset;
   }
+  // Outside the tabulated domain the interpolators clamp to the nearest
+  // endpoint, so `interpolate_table` returns the boundary value here.
+  const double boundary_value = interpolate_table(spec, x) + spec.in_range_offset;
+
   if (!(spec.out_of_range_penalty_scale > 0.0) ||
       !std::isfinite(spec.out_of_range_penalty_scale)) {
-    return interpolate_table(spec, x);
+    return boundary_value;
   }
   const double distance = (x < lower) ? (lower - x) : (x - upper);
   double penalty = spec.out_of_range_penalty_scale * distance * distance;
   if (std::isfinite(spec.out_of_range_penalty_cap)) {
     penalty = std::min(penalty, spec.out_of_range_penalty_cap);
   }
-  return penalty;
+  // Anchor the penalty to the boundary value so the objective is CONTINUOUS at
+  // the edge of the table. Returning the penalty alone made leaving the table
+  // arbitrarily cheap compared with sitting just inside it (for the NuFIT
+  // Theta13 table: 2842.93 just inside vs 0.0004 just outside), which built a
+  // barrier that trapped optimizers in unphysical regions and prevented them
+  // from ever reaching the true minimum.
+  return boundary_value + penalty;
 }
 
 }  // namespace
