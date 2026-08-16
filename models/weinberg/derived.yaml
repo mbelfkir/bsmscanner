@@ -1,29 +1,3 @@
 derived_complex:
 - name: tau
   expression: Retau + 1j*Imtau
-- name: Y31hp1x
-  expression: Y31hp1(tau)
-- name: Y33h1x
-  expression: Y33h1(tau)
-- name: Y33h2x
-  expression: Y33h2(tau)
-- name: Y33h3x
-  expression: Y33h3(tau)
-- name: Y33hp1x
-  expression: Y33hp1(tau)
-- name: Y33hp2x
-  expression: Y33hp2(tau)
-- name: Y33hp3x
-  expression: Y33hp3(tau)
-- name: Y411x
-  expression: Y411(tau)
-- name: Y421x
-  expression: Y421(tau)
-- name: Y422x
-  expression: Y422(tau)
-- name: Y431x
-  expression: Y431(tau)
-- name: Y432x
-  expression: Y432(tau)
-- name: Y433x
-  expression: Y433(tau)

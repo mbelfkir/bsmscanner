@@ -7,6 +7,9 @@ except PackageNotFoundError:  # pragma: no cover - source tree without installat
 
 __all__ = [
     "CompiledModel",
+    "core_library_path",
+    "describe_core_block",
+    "list_core_blocks",
     "ScanSession",
     "ScanRequest",
     "ScanResults",
@@ -30,6 +33,7 @@ __all__ = [
 def __getattr__(name: str):
     if name in __all__:
         from .core import delta_deg_signed, pmns_observables_from_matrix, wrap_2pi
+        from .library import core_library_path, describe_core_block, list_core_blocks
         from .api import (
             CompiledModel,
             ScanSession,
@@ -52,6 +56,9 @@ def __getattr__(name: str):
 
         namespace = {
             "CompiledModel": CompiledModel,
+            "core_library_path": core_library_path,
+            "describe_core_block": describe_core_block,
+            "list_core_blocks": list_core_blocks,
             "ScanSession": ScanSession,
             "ScanRequest": ScanRequest,
             "ScanResults": ScanResults,

@@ -219,3 +219,13 @@ foreach(BSM_SCANNER_PLUGIN_CMAKE_FILE IN LISTS BSM_SCANNER_PLUGIN_CMAKE)
 endforeach()
 
 install(TARGETS _core LIBRARY DESTINATION bsm_scanner)
+
+# Ship the framework-owned reusable YAML library (and its data tables) inside
+# the wheel, so that `pip install bsm-scanner` users can reference the blocks
+# from their own models via the location-independent `core:` prefix.
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/core/
+        DESTINATION bsm_scanner/library/core
+        FILES_MATCHING
+          PATTERN "*.yaml"
+          PATTERN "*.yml"
+          PATTERN "*.csv")
