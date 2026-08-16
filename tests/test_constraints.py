@@ -172,7 +172,15 @@ def test_table_lookup_applies_in_range_offset_only_to_interpolated_values():
     assert result["total_nll"] == pytest.approx(0.6875 - 6.1)
 
 
-def test_table_lookup_uses_quadratic_penalty_out_of_range():
+def test_table_lookup_adds_quadratic_penalty_on_top_of_the_boundary_value():
+    """Out-of-range = boundary value + quadratic penalty.
+
+    Updated when the out-of-range branch was made continuous. It previously
+    returned the penalty ALONE, discarding the table value at the edge, which
+    made leaving a steep table far cheaper than sitting inside it. Here the
+    table ends at (2.0, 9.0) and the probe sits one unit past the edge with
+    scale 4.0, so the expected term is 9.0 + 4.0*1**2 = 13.0.
+    """
     pytest.importorskip("bsm_scanner._core")
 
     raw = {
@@ -196,8 +204,8 @@ def test_table_lookup_uses_quadratic_penalty_out_of_range():
     result = compiled.evaluate({})
 
     assert result["status"] == "ok"
-    assert result["likelihood_terms"]["obs_table"] == pytest.approx(4.0)
-    assert result["total_nll"] == pytest.approx(4.0)
+    assert result["likelihood_terms"]["obs_table"] == pytest.approx(13.0)
+    assert result["total_nll"] == pytest.approx(13.0)
 
 
 def test_multivariate_constraint_supports_full_quadratic_form_prefactor():
@@ -229,3 +237,70 @@ def test_multivariate_constraint_supports_full_quadratic_form_prefactor():
     assert result["status"] == "ok"
     assert result["likelihood_terms"]["st_like"] == pytest.approx(5.0)
     assert result["total_nll"] == pytest.approx(5.0)
+
+
+def _table_lookup_model(table, *, scale=4.0e4, cap=1.0e6, offset=0.0):
+    return {
+        "metadata": {"name": "table-oor"},
+        "parameters": [
+            {"name": "x", "value_type": "real", "scan": True,
+             "lower": -10.0, "upper": 10.0, "default": 0.0, "prior": "flat"}
+        ],
+        "observables": [{"name": "obs", "expression": "x"}],
+        "likelihoods": [
+            {
+                "name": "t",
+                "kind": "table_lookup",
+                "observable": "obs",
+                "table": table,
+                "interpolation": "linear",
+                "out_of_range_penalty_scale": scale,
+                "out_of_range_penalty_cap": cap,
+                "in_range_offset": offset,
+            }
+        ],
+        "outputs": {"save": ["obs"]},
+    }
+
+
+def test_table_lookup_is_continuous_at_the_domain_edge():
+    """Out-of-range must be anchored to the boundary value, not the penalty alone.
+
+    Regression test. Previously the out-of-range branch returned only the
+    quadratic penalty, so a table whose edge value was large became far cheaper
+    to leave than to sit inside: for the NuFIT Theta13 table the term dropped
+    from 2842.93 just inside to 0.0004 just outside. That discontinuity is a
+    barrier which traps optimizers in unphysical regions.
+    """
+    table = [[0.0, 0.0], [1.0, 1000.0]]          # steep: edge value is large
+    compiled = compile_model(ModelDefinition.from_mapping(_table_lookup_model(table)),
+                             build_backend=True)
+
+    inside = compiled.evaluate({"x": 1.0})["likelihood_terms"]["t"]
+    just_outside = compiled.evaluate({"x": 1.0 + 1e-6})["likelihood_terms"]["t"]
+
+    assert inside == pytest.approx(1000.0)
+    # continuity: leaving the table must not discard the boundary value
+    assert just_outside == pytest.approx(inside, abs=1e-3)
+    assert just_outside >= inside
+
+
+def test_table_lookup_penalty_grows_monotonically_outside():
+    table = [[0.0, 0.0], [1.0, 1000.0]]
+    compiled = compile_model(ModelDefinition.from_mapping(_table_lookup_model(table)),
+                             build_backend=True)
+    values = [compiled.evaluate({"x": x})["likelihood_terms"]["t"]
+              for x in (1.0, 1.001, 1.01, 1.05, 1.2)]
+    assert values == sorted(values), "penalty must increase with distance outside"
+    assert values[-1] > values[0]
+
+
+def test_table_lookup_interior_minimum_is_still_reachable():
+    """The physical optimum inside the table must remain the global minimum."""
+    table = [[0.0, 500.0], [0.5, 0.0], [1.0, 1000.0]]
+    compiled = compile_model(ModelDefinition.from_mapping(_table_lookup_model(table)),
+                             build_backend=True)
+    best = compiled.evaluate({"x": 0.5})["likelihood_terms"]["t"]
+    assert best == pytest.approx(0.0)
+    for x in (-2.0, -0.1, 0.9, 1.5, 5.0):
+        assert compiled.evaluate({"x": x})["likelihood_terms"]["t"] > best
