@@ -43,16 +43,22 @@ Secret-like scan:
 
 - No tracked private keys, `.pypirc`, passwords, API tokens, or access tokens were detected by the text scan.
 
-Publication blockers:
+Publication blockers (status):
 
-- Missing `LICENSE`.
-- Missing `pyproject.toml` license metadata.
-- Many tracked docs and scripts contain absolute local paths such as `/Users/mbelfkir/...`.
-- Tracked docs/scripts contain private server names and paths such as `mohamed@belfkir-server` and `/home/mohamed/...`.
-- Redistribution rights for bundled data/document artifacts are not documented.
+- ~~Missing `LICENSE`~~ — resolved: MIT license added.
+- ~~Missing `pyproject.toml` license metadata~~ — resolved.
+- ~~Absolute local paths such as `/Users/...` in tracked docs and scripts~~ —
+  resolved: rewritten to repository-relative paths.
+- ~~Private server names and paths in tracked docs/scripts~~ — resolved: the
+  remote-build scripts are now `scripts/sync_to_remote.sh` and
+  `scripts/build_on_remote.sh` and require `REMOTE_HOST`/`REMOTE_DIR` to be set.
+- Redistribution rights for the bundled oscillation tables under
+  `core/data/nufit` are still undocumented. The tables now ship inside the
+  wheel, so the NuFIT release they correspond to should be recorded and cited
+  before results are published.
 
 ## Decision
 
-Do not publish to TestPyPI or PyPI yet.
-
-The release workflow and readiness reports are prepared, but publication must wait until license, redistribution, and public-path blockers are resolved.
+The license, local-path and private-hostname blockers are cleared. The one
+remaining item is documenting the provenance and citation of the bundled
+oscillation tables.

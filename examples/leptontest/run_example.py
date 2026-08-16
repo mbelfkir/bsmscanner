@@ -12,7 +12,7 @@ def main() -> None:
     if "micromegas_pending" in model.metadata.tags:
         print(
             "Warning: the exact micrOMEGAs-backed DM sector is still deferred in this "
-            "milestone. See /Users/mbelfkir/HEP/BSMScanner/docs/dm_status.md"
+            "milestone. See docs/dm_status.md"
         )
     compiled = compile_model(model, build_backend=True)
     plan_path = ROOT / "compiled_plan.json"

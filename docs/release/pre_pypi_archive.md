@@ -4,7 +4,7 @@ Date: 2026-06-16 00:06 +04
 
 ## Repository State
 
-- Repository root: `/Users/mbelfkir/HEP/BSMScanner`
+- Repository root: `the repository root`
 - Git repository: not available in this working tree (`git status` reports `fatal: not a git repository`)
 - Archive branch: not created because `.git` is absent
 - Archive tag: not created because `.git` is absent
@@ -14,7 +14,7 @@ Date: 2026-06-16 00:06 +04
 
 ## Archive
 
-- Archive file: `/Users/mbelfkir/HEP/BSMScanner/archives/BSMScanner_pre_pypi_20260616_000644.tar.gz`
+- Archive file: `archives/BSMScanner_pre_pypi_20260616_000644.tar.gz`
 - Archive size: 888 KiB
 - Verification: `tar -tzf` completed successfully
 - Excluded generated/reproducible heavy paths: `.venv`, `build`, `dist`, `archives`, `artifacts`, `results`, `examples/*/runs`, `models/*/runs`, `benchmarks/runs`, caches, `__pycache__`, `.DS_Store`

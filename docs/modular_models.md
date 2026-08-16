@@ -119,8 +119,8 @@ models/oneloop/
 
 The full migrated oneloop model now follows this pattern under:
 
-- `/Users/mbelfkir/HEP/BSMScanner/models/oneloop/model.yaml`
+- `models/oneloop/model.yaml`
 
 The old example path remains available as a compatibility wrapper:
 
-- `/Users/mbelfkir/HEP/BSMScanner/examples/oneloop_full/model.yaml`
+- `examples/oneloop_full/model.yaml`

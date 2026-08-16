@@ -32,7 +32,7 @@ The repository chooses a unified model schema with clear sections instead of req
 The Python layer validates these sections, resolves dependencies, rejects cycles, expands reusable analytic functions, and lowers the active subgraph into a compact plan that the C++ core evaluates point by point.
 
 The framework also supports a second layer of reuse through imported YAML blocks
-under `/Users/mbelfkir/HEP/BSMScanner/core`. This is where genuinely
+under `core`. This is where genuinely
 model-independent building blocks now live, such as shared physics constants and
 ordering-aware neutrino observable definitions. Models still own their
 likelihood composition and choose which reusable blocks to import.
@@ -189,7 +189,7 @@ This repository is a serious scaffold, not a monolithic finished physics package
 - diagonalization and matrix hooks,
 - an `oneloop_minimal` smoke-test example model,
 - a substantially migrated `oneloop_full` example covering the original neutrino, LFV, Higgs, EW, and theory-check sectors,
-- an optional `oneloop_master` variant that matches the latest `/Users/mbelfkir/Downloads/oneloop-master` constraint structure and exact micrOMEGAs-backed DM observables when that backend is enabled,
+- an optional `oneloop_master` variant that matches the latest `oneloop-master` constraint structure and exact micrOMEGAs-backed DM observables when that backend is enabled,
 - a native scan runner with Diver integration and deterministic output writing,
 - modular multi-file model manifests with relative imports and duplicate protection,
 - a generic plugin-call path for backend-backed observables without model-specific core hacks,
@@ -323,7 +323,7 @@ silently echoed into metadata.
 
 ## Core Reusable YAML
 
-The `/Users/mbelfkir/HEP/BSMScanner/core` tree is for framework-owned YAML that
+The `core` tree is for framework-owned YAML that
 is still declarative rather than hardcoded into the evaluator. The current
 prototype centralizes:
 
@@ -342,16 +342,20 @@ Models are expected to keep their own:
 
 `models/leptontest` is the first clean example of this split.
 
-## Server Sync And Build
+## Remote Sync And Build
 
-To sync this workspace to `mohamed@belfkir-server` and build it there:
+To sync this workspace to a remote build host and build it there, set the
+destination first:
 
 ```bash
-./scripts/sync_to_belfkir_server.sh
-./scripts/build_on_belfkir_server.sh
+export REMOTE_HOST=user@host
+export REMOTE_DIR=/path/on/remote/BSMScanner
+
+./scripts/sync_to_remote.sh
+./scripts/build_on_remote.sh
 ```
 
-By default the project is synced to `/home/mohamed/HEP/BSMScanner`.
+Both variables are required; the scripts exit with a message if either is unset.
 
 ## Documentation
 

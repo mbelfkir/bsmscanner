@@ -63,7 +63,7 @@ Duplicate named entries across concatenated sections are rejected at load time w
 
 This same import mechanism is how models consume reusable framework-owned YAML
 blocks. A model may, for example, import
-`/Users/mbelfkir/HEP/BSMScanner/core/neutrino/normal.yaml` for generic
+`core/neutrino/normal.yaml` for generic
 ordering-aware neutrino observables while keeping its own likelihood blocks
 under the model directory.
 
@@ -317,7 +317,7 @@ That block assumes ordered SVD aliases named `up_quark_masses` and
 ## Reusable Core Blocks
 
 The framework may ship declarative YAML under
-`/Users/mbelfkir/HEP/BSMScanner/core` for calculations that are genuinely
+`core` for calculations that are genuinely
 model-independent.
 
 Example:
@@ -514,7 +514,7 @@ For `table_lookup`, the framework accepts either:
 - `table`: inline `[[x, nll], ...]` rows
 - `table_file`: a relative path to a two-column CSV or whitespace-separated file
 
-When `table_file` is used through [load_model](/Users/mbelfkir/HEP/BSMScanner/python/bsm_scanner/api.py), the file is resolved relative to the fragment that contains it and loaded into the compiled constraint payload before graph construction.
+When `table_file` is used through [load_model](../python/bsm_scanner/api.py), the file is resolved relative to the fragment that contains it and loaded into the compiled constraint payload before graph construction.
 
 Optional table-lookup controls:
 

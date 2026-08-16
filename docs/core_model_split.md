@@ -19,7 +19,7 @@ Current examples:
 - generic flavor mixing-matrix construction from declared rotations
 - ordering-aware neutrino observable logic
 - reusable neutrino observable blocks under
-  `/Users/mbelfkir/HEP/BSMScanner/core/neutrino`
+  `core/neutrino`
 - generic likelihood kernels implemented in the evaluator:
   - `gaussian`
   - `asymmetric_gaussian`
@@ -126,8 +126,8 @@ Ordering is selected at the model level through:
 
 The current reusable neutrino blocks are:
 
-- `/Users/mbelfkir/HEP/BSMScanner/core/neutrino/normal.yaml`
-- `/Users/mbelfkir/HEP/BSMScanner/core/neutrino/inverted.yaml`
+- `core/neutrino/normal.yaml`
+- `core/neutrino/inverted.yaml`
 
 These blocks centralize the standard ordering-aware neutrino observable mapping
 without moving model-specific likelihood composition into the core.
@@ -136,11 +136,11 @@ without moving model-specific likelihood composition into the core.
 
 The reusable CKM observable block is:
 
-- `/Users/mbelfkir/HEP/BSMScanner/core/quark/ckm_observables.yaml`
+- `core/quark/ckm_observables.yaml`
 
 CKM construction from standard SVD left rotations is provided by:
 
-- `/Users/mbelfkir/HEP/BSMScanner/core/quark/ckm_from_left_rotations_descending_svd.yaml`
+- `core/quark/ckm_from_left_rotations_descending_svd.yaml`
 
 That construction uses:
 
@@ -182,7 +182,7 @@ imports:
 
 ## Why `leptontest` Is The Reference Example
 
-`/Users/mbelfkir/HEP/BSMScanner/models/leptontest` is now the clean reference
+`models/leptontest` is now the clean reference
 example because it shows the intended split without one-loop-specific baggage:
 
 - model-owned parameters and analytic matrices

@@ -48,5 +48,5 @@ Result: passed.
 
 ## Remaining Audit Items
 
-- Many existing docs contain absolute local paths such as `/Users/mbelfkir/...` and server-specific names. These were not rewritten in this pass because several are historical provenance notes, but they remain a publication-readiness issue.
+- Absolute local paths and server-specific names in docs/scripts were a publication-readiness issue at the time of this audit. They have since been rewritten to repository-relative paths; upstream provenance references were kept but stripped of the personal directory prefix.
 - No broad dead-code removal was performed because baseline protection and packaging were higher priority, and static-analysis-only removals would be unsafe for YAML/dynamic references.

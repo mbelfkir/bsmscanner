@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REMOTE_HOST="${REMOTE_HOST:-mohamed@belfkir-server}"
-REMOTE_DIR="${REMOTE_DIR:-/home/mohamed/HEP/BSMScanner}"
+# Configure your own remote build host, e.g.
+#   export REMOTE_HOST=user@host
+#   export REMOTE_DIR=/path/on/remote/BSMScanner
+REMOTE_HOST="${REMOTE_HOST:?set REMOTE_HOST, e.g. export REMOTE_HOST=user@host}"
+REMOTE_DIR="${REMOTE_DIR:?set REMOTE_DIR, e.g. export REMOTE_DIR=/home/you/BSMScanner}"
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 CMAKE_ARGS_VALUE="${CMAKE_ARGS:-}"
 ENABLE_DIVER="${ENABLE_DIVER:-auto}"

@@ -1,15 +1,15 @@
 # Latest-Master Oneloop YAML Variants
 
 The repository now tracks the latest
-`/Users/mbelfkir/Downloads/oneloop-master-3.zip` source through explicit YAML
+`oneloop-master-3.zip` source through explicit YAML
 model variants under:
 
-- `/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/model_normal_reduced.yaml`
-- `/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/model_normal_full.yaml`
-- `/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/model_inverted_full.yaml`
+- `models/oneloop_master/model_normal_reduced.yaml`
+- `models/oneloop_master/model_normal_full.yaml`
+- `models/oneloop_master/model_inverted_full.yaml`
 
 The compatibility manifest
-`/Users/mbelfkir/HEP/BSMScanner/models/oneloop_master/model.yaml` points to the
+`models/oneloop_master/model.yaml` points to the
 reduced normal-ordering variant.
 
 ## Source Reconciliation
@@ -108,7 +108,7 @@ source `GetnLL()`.
 
 The developer-facing canonical summary now lives in:
 
-- [oneloop_master_canonical.md](/Users/mbelfkir/HEP/BSMScanner/docs/oneloop_master_canonical.md)
+- [oneloop_master_canonical.md](oneloop_master_canonical.md)
 
 ## DM / Backend Wiring
 
@@ -127,12 +127,12 @@ nodes:
 The imperative backend interaction still lives only in the dedicated plugin
 source:
 
-- `/Users/mbelfkir/HEP/BSMScanner/src/plugins/oneloop_micromegas.cpp`
+- `src/plugins/oneloop_micromegas.cpp`
 
 The one source-specific likelihood behavior that still cannot be expressed as a
 plain declarative kernel also lives in plugin code:
 
-- `/Users/mbelfkir/HEP/BSMScanner/src/plugins/oneloop_likelihoods.cpp`
+- `src/plugins/oneloop_likelihoods.cpp`
 
 The binding map comes from YAML, so changing backend assignment names still does
 not require edits to the generic framework core.
@@ -142,21 +142,21 @@ not require edits to the generic framework core.
 Default reduced-normal example:
 
 ```bash
-python /Users/mbelfkir/HEP/BSMScanner/examples/oneloop_master/run_example.py
+python examples/oneloop_master/run_example.py
 ```
 
 Alternate manifests can be passed directly to the scan launcher:
 
 ```bash
-python /Users/mbelfkir/HEP/BSMScanner/examples/oneloop_master/run_scan.py \
-  --model /Users/mbelfkir/HEP/BSMScanner/examples/oneloop_master/model_normal_full.yaml \
-  --run-dir /Users/mbelfkir/HEP/BSMScanner/examples/oneloop_master/runs/normal_full
+python examples/oneloop_master/run_scan.py \
+  --model examples/oneloop_master/model_normal_full.yaml \
+  --run-dir examples/oneloop_master/runs/normal_full
 ```
 
 ```bash
-python /Users/mbelfkir/HEP/BSMScanner/examples/oneloop_master/run_scan.py \
-  --model /Users/mbelfkir/HEP/BSMScanner/examples/oneloop_master/model_inverted_full.yaml \
-  --run-dir /Users/mbelfkir/HEP/BSMScanner/examples/oneloop_master/runs/inverted_full
+python examples/oneloop_master/run_scan.py \
+  --model examples/oneloop_master/model_inverted_full.yaml \
+  --run-dir examples/oneloop_master/runs/inverted_full
 ```
 
 ## Build Requirement
@@ -164,7 +164,7 @@ python /Users/mbelfkir/HEP/BSMScanner/examples/oneloop_master/run_scan.py \
 These variants require the optional micrOMEGAs-backed native build for exact DM
 evaluation. The plugin-local build logic lives in:
 
-- `/Users/mbelfkir/HEP/BSMScanner/cmake/plugins/oneloop_micromegas.cmake`
+- `cmake/plugins/oneloop_micromegas.cmake`
 
 Local build example:
 

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-`/Users/mbelfkir/HEP/BSMScanner/core` contains declarative YAML that is owned by
+`core` contains declarative YAML that is owned by
 the framework rather than by a specific model. These blocks are still loaded
 through the normal model import mechanism, so they remain inspectable and
 editable instead of being hidden inside evaluator code.
@@ -146,7 +146,7 @@ the core `[0, 360)` phase convention.
 
 ## Leptontest Prototype
 
-`/Users/mbelfkir/HEP/BSMScanner/models/leptontest` is the first model using this
+`models/leptontest` is the first model using this
 layout.
 
 Normal ordering:
