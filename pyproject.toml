@@ -104,3 +104,10 @@ exclude = [
   "models/*/runs",
   "benchmarks/runs",
 ]
+
+[tool.ruff.lint]
+# Deliberately selected: pyflakes (F) + pycodestyle errors (E4/E7/E9, ruff's own
+# stable defaults) + import sorting (I). Skips ruff's optional, opinionated extra
+# rule sets (flake8-bandit, flake8-blind-except, pyupgrade, etc.) that were never
+# consciously adopted for this project.
+select = ["E4", "E7", "E9", "F", "I"]

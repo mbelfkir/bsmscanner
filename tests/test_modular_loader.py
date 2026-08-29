@@ -1,10 +1,8 @@
 from pathlib import Path
 
 import pytest
-
 from bsm_scanner import compile_model, load_model
 from bsm_scanner.exceptions import ModelValidationError
-
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULAR_ONeloop = ROOT / "models" / "oneloop" / "model.yaml"

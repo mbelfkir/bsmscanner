@@ -17,7 +17,6 @@ from pathlib import Path
 from statistics import median
 from typing import Any
 
-
 PARAMETERS = ["Retau", "Imtau", "a2t", "a3t", "g2t", "g3t"]
 
 REFERENCE_POSITIVE = {

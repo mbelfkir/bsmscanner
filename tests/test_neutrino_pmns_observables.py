@@ -5,9 +5,7 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-
 from bsm_scanner import compile_model, load_model, pmns_observables_from_matrix
-
 
 pytest.importorskip("bsm_scanner._core")
 

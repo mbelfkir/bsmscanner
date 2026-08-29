@@ -14,7 +14,6 @@ from pathlib import Path
 
 import pytest
 import yaml
-
 from bsm_scanner.exceptions import ModelValidationError
 from bsm_scanner.model.loader import ScannerYamlLoader
 from bsm_scanner.model.schema import _require_number

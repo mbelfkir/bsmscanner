@@ -6,7 +6,6 @@ from pathlib import Path
 
 from bsm_scanner import compile_model, load_model, run_scan
 
-
 ROOT = Path(__file__).resolve().parent
 DEFAULT_MODEL = ROOT / "model_chi_no_micromegas.yaml"
 DEFAULT_RUN_DIR = ROOT / "runs" / "chi_no_micromegas_scan"

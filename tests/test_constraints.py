@@ -1,5 +1,4 @@
 import pytest
-
 from bsm_scanner import compile_model
 from bsm_scanner.compiler.lowering import GraphLowerer
 from bsm_scanner.model.schema import ModelDefinition

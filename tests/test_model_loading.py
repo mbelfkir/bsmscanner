@@ -2,7 +2,6 @@ from pathlib import Path
 
 from bsm_scanner.api import load_model
 
-
 EXAMPLE = Path(__file__).resolve().parents[1] / "examples" / "oneloop_minimal" / "model.yaml"
 
 

@@ -6,7 +6,6 @@ from typing import Any
 
 import numpy as np
 
-
 PI = math.pi
 GEV_TO_EV = 1.0e9
 V_HIGGS = 246.22

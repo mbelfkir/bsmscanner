@@ -4,7 +4,6 @@ from pathlib import Path
 
 from bsm_scanner import compile_model, load_model, run_scan
 
-
 ROOT = Path(__file__).resolve().parent
 MODEL = ROOT / "model_no.yaml"
 

@@ -9,7 +9,6 @@ from typing import Any
 
 from bsm_scanner.model.schema import StatisticsSpec
 
-
 _NOT_IMPLEMENTED_METHODS = {"de_mcmc", "profile_likelihood", "nested_sampling"}
 
 

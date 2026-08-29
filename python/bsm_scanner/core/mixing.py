@@ -8,7 +8,6 @@ from typing import TypedDict
 import numpy as np
 from numpy.typing import ArrayLike
 
-
 _EPSILON = 1.0e-16
 
 

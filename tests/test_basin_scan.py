@@ -6,22 +6,20 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-
 from bsm_scanner import compile_model, run_scan
 from bsm_scanner.exceptions import ModelValidationError
 from bsm_scanner.model.schema import ModelDefinition
 from bsm_scanner.scan import (
     _AdaptiveDiverObjective,
-    _PythonScanArtifactsWriter,
     _apply_initial_population_seeds,
     _build_staged_evaluation_context,
     _evaluate_basin_points,
     _ml_focus_box_from_points,
     _ml_focus_transform_values,
+    _PythonScanArtifactsWriter,
     _select_basin_points,
     build_scan_request,
 )
-
 
 pytest.importorskip("bsm_scanner._core")
 

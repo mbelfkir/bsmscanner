@@ -6,11 +6,9 @@ from math import exp
 from types import SimpleNamespace
 
 import pytest
-
 from bsm_scanner import compile_model, run_scan, run_statistics
 from bsm_scanner.model.schema import ModelDefinition, StatisticsSpec
 from bsm_scanner.statistics import normalize_shifted_weights, weighted_quantile
-
 
 pytest.importorskip("bsm_scanner._core")
 

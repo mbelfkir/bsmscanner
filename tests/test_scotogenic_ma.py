@@ -1,9 +1,7 @@
 from pathlib import Path
 
 import pytest
-
 from bsm_scanner import compile_model, load_model
-
 
 pytest.importorskip("bsm_scanner._core")
 
