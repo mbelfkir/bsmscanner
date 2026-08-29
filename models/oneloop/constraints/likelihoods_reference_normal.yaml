@@ -1,10 +1,10 @@
 likelihoods:
-- {name: s12_nufit, kind: table_lookup, observable: s12, table_file: ../data/Normal/Theta12.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e4, out_of_range_penalty_cap: 1.0e6}
-- {name: s13_nufit, kind: table_lookup, observable: s13, table_file: ../data/Normal/Theta13.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e4, out_of_range_penalty_cap: 1.0e6}
-- {name: s23_nufit, kind: table_lookup, observable: s23, table_file: ../data/Normal/Theta23.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e4, out_of_range_penalty_cap: 1.0e6}
-- {name: delta_cp_nufit, kind: table_lookup, observable: deltaCP_deg, table_file: ../data/Normal/deltaCP.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e4, out_of_range_penalty_cap: 1.0e6}
-- {name: dm21_nufit, kind: table_lookup, observable: log10_dm21, table_file: ../data/Normal/dm21.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e4, out_of_range_penalty_cap: 1.0e6}
-- {name: dm3l_nufit, kind: table_lookup, observable: dm3l_meV, table_file: ../data/Normal/dm3l.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e4, out_of_range_penalty_cap: 1.0e6}
+- {name: s12_nufit, kind: table_lookup, observable: s12, table_file: ../data/Normal/Theta12.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
+- {name: s13_nufit, kind: table_lookup, observable: s13, table_file: ../data/Normal/Theta13.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
+- {name: s23_nufit, kind: table_lookup, observable: s23, table_file: ../data/Normal/Theta23.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
+- {name: delta_cp_nufit, kind: table_lookup, observable: deltaCP_deg, table_file: ../data/Normal/deltaCP.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
+- {name: dm21_nufit, kind: table_lookup, observable: log10_dm21, table_file: ../data/Normal/dm21.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
+- {name: dm3l_nufit, kind: table_lookup, observable: dm3l_meV, table_file: ../data/Normal/dm3l.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
 - {name: sum_mnu_limit, kind: hard_cut, observable: sum_m, lower: 0.0, upper: 0.12}
 - {name: higgs_diphoton, kind: gaussian, observable: HiggsRgg, mean: 1.088, sigma: 0.092}
 - name: oblique_ST

@@ -15,7 +15,7 @@ scan:
     updating: immediate
     workers: 1
     polish: true
-    invalid_penalty: 1.0e12
+    invalid_penalty: 1.0e+12
     save_invalid_points: true
     verbose: 1
 

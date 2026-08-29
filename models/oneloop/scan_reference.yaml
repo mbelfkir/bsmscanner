@@ -4,7 +4,7 @@ scan:
   seed: 12345
   settings:
     objective: nll
-    invalid_penalty: 1.0e12
+    invalid_penalty: 1.0e+12
     save_invalid_points: true
     verbose: 1
     progress_interval: 1000

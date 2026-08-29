@@ -1,0 +1,18 @@
+metadata:
+  name: scotogenic_ma_normal
+  version: 0.1.0
+  description: Ernest Ma scotogenic radiative-seesaw model with inert doublet scalars, three Z2-odd singlet fermions, and physical one-loop neutrino masses.
+  ordering: normal
+  tags: [scotogenic, ma_2006, radiative_neutrino_mass, inert_doublet, dark_matter, normal_ordering]
+imports:
+- parameters.yaml
+- constants.yaml
+- functions.yaml
+- derived.yaml
+- matrices.yaml
+- observables/neutrino_normal.yaml
+- observables/scalar_sector.yaml
+- constraints/theory_checks.yaml
+- constraints/likelihoods_normal.yaml
+- outputs.yaml
+- scan.yaml

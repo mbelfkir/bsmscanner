@@ -1,0 +1,45 @@
+metadata:
+  name: zprime_simplified_dm
+  version: 0.1.0
+  description: Vector-mediator Zprime simplified dark-matter benchmark with quark, lepton, and Dirac-DM couplings plus width, resonance, and collider-proxy observables.
+  tags: [zprime, simplified_model, dark_matter, vector_mediator]
+parameters:
+- {name: MZp, value_type: real, scan: true, lower: 100.0, upper: 10000.0, default: 3000.0, prior: log}
+- {name: mchi, value_type: real, scan: true, lower: 1.0, upper: 5000.0, default: 500.0, prior: log}
+- {name: gq, value_type: real, scan: true, lower: 0.001, upper: 2.0, default: 0.25, prior: log}
+- {name: gl, value_type: real, scan: true, lower: 0.0, upper: 1.0, default: 0.0, prior: flat}
+- {name: gchi, value_type: real, scan: true, lower: 0.001, upper: 2.0, default: 1.0, prior: log}
+constants:
+- {name: pi_ref, value: 3.141592653589793}
+derived_scalars:
+- {name: beta_chi, value_type: real, expression: "sqrt(max(1.0 - 4.0*mchi**2/MZp**2, 0.0))"}
+- {name: width_quarks_proxy, value_type: real, expression: "18.0*gq**2*MZp/(12.0*pi_ref)"}
+- {name: width_leptons_proxy, value_type: real, expression: "6.0*gl**2*MZp/(12.0*pi_ref)"}
+- {name: width_chi_proxy, value_type: real, expression: "if_else(MZp > 2.0*mchi, gchi**2*MZp*(1.0 + 2.0*mchi**2/MZp**2)*beta_chi/(12.0*pi_ref), 0.0)"}
+- {name: width_total_proxy, value_type: real, expression: "width_quarks_proxy + width_leptons_proxy + width_chi_proxy"}
+- {name: width_fraction_proxy, value_type: real, expression: "width_total_proxy/MZp"}
+- {name: monojet_rate_proxy, value_type: real, expression: "gq**2*gchi**2/(MZp/1000.0)**4"}
+- {name: dilepton_rate_proxy, value_type: real, expression: "gq**2*gl**2/(MZp/1000.0)**4"}
+- {name: resonant_dm_open, value_type: real, expression: "if_else(MZp > 2.0*mchi, 1.0, 0.0)"}
+observables:
+- {name: MediatorMass, value_type: real, expression: MZp}
+- {name: DarkMatterMass, value_type: real, expression: mchi}
+- {name: WidthFractionProxy, value_type: real, expression: width_fraction_proxy}
+- {name: MonojetRateProxy, value_type: real, expression: monojet_rate_proxy}
+- {name: DileptonRateProxy, value_type: real, expression: dilepton_rate_proxy}
+- {name: ResonantDMOpen, value_type: real, expression: resonant_dm_open}
+theory_checks:
+- {name: positive_masses, condition: "MZp > 0 and mchi > 0", fatal: true, message: Zprime simplified masses must be positive.}
+- {name: perturbative_couplings, condition: "gq < sqrt(4*pi_ref) and gl < sqrt(4*pi_ref) and gchi < sqrt(4*pi_ref)", fatal: true, message: A Zprime simplified coupling is non-perturbative.}
+likelihoods:
+- {name: narrow_width, kind: hard_cut, observable: WidthFractionProxy, lower: 0.0, upper: 0.30}
+- {name: monojet_proxy_limit, kind: hard_cut, observable: MonojetRateProxy, lower: 0.0, upper: 0.20}
+- {name: dilepton_proxy_limit, kind: hard_cut, observable: DileptonRateProxy, lower: 0.0, upper: 0.02}
+outputs:
+  save: [MediatorMass, DarkMatterMass, WidthFractionProxy, MonojetRateProxy, DileptonRateProxy, ResonantDMOpen]
+scan:
+  engine: serial_random
+  save_every: 100
+  seed: 150700966
+  settings: {objective: nll, max_evaluations: 2000, invalid_penalty: 1000000000000.0, save_invalid_points: true, verbose: 1}
+statistics: {enabled: true, method: de_weighted, credible_levels: [0.68, 0.95], output_samples: true, include_observables: true}

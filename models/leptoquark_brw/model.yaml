@@ -1,0 +1,45 @@
+metadata:
+  name: leptoquark_brw_scalar
+  version: 0.1.0
+  description: Buchmuller-Ruckl-Wyler-style scalar leptoquark benchmark with generation-resolved couplings, LFV proxies, pair-production mass bound, and effective-contact observables.
+  tags: [leptoquark, brw, scalar_leptoquark, flavor]
+parameters:
+- {name: MLQ, value_type: real, scan: true, lower: 500.0, upper: 10000.0, default: 1800.0, prior: log}
+- {name: yeq, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.05, prior: signed_log, min_abs: 0.00000001}
+- {name: ymuq, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.05, prior: signed_log, min_abs: 0.00000001}
+- {name: ytauq, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.10, prior: signed_log, min_abs: 0.00000001}
+- {name: ybnu, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.10, prior: signed_log, min_abs: 0.00000001}
+constants:
+- {name: pi_ref, value: 3.141592653589793}
+derived_scalars:
+- {name: coupling_norm_sq, value_type: real, expression: "yeq**2 + ymuq**2 + ytauq**2 + ybnu**2"}
+- {name: width_proxy, value_type: real, expression: "coupling_norm_sq*MLQ/(16.0*pi_ref)"}
+- {name: width_fraction_proxy, value_type: real, expression: "width_proxy/MLQ"}
+- {name: contact_eeqq_proxy, value_type: real, expression: "abs(yeq)**2/(MLQ/1000.0)**2"}
+- {name: contact_mumuqq_proxy, value_type: real, expression: "abs(ymuq)**2/(MLQ/1000.0)**2"}
+- {name: mue_lfv_proxy, value_type: real, expression: "abs(yeq*ymuq)**2/(MLQ/1000.0)**4"}
+- {name: tautau_proxy, value_type: real, expression: "abs(ytauq)**2/(MLQ/1000.0)**2"}
+- {name: pair_production_mass, value_type: real, expression: MLQ}
+observables:
+- {name: LeptoquarkMass, value_type: real, expression: MLQ}
+- {name: WidthFractionProxy, value_type: real, expression: width_fraction_proxy}
+- {name: ElectronContactProxy, value_type: real, expression: contact_eeqq_proxy}
+- {name: MuonContactProxy, value_type: real, expression: contact_mumuqq_proxy}
+- {name: MuEFlavorProxy, value_type: real, expression: mue_lfv_proxy}
+- {name: TauContactProxy, value_type: real, expression: tautau_proxy}
+theory_checks:
+- {name: positive_lq_mass, condition: "MLQ > 0", fatal: true, message: Leptoquark mass must be positive.}
+- {name: perturbative_lq_yukawas, condition: "abs(yeq) < sqrt(4*pi_ref) and abs(ymuq) < sqrt(4*pi_ref) and abs(ytauq) < sqrt(4*pi_ref) and abs(ybnu) < sqrt(4*pi_ref)", fatal: true, message: A leptoquark Yukawa is non-perturbative.}
+likelihoods:
+- {name: pair_mass_bound_proxy, kind: hard_cut, observable: LeptoquarkMass, lower: 1500.0, upper: 1000000000.0}
+- {name: narrow_width_proxy, kind: hard_cut, observable: WidthFractionProxy, lower: 0.0, upper: 0.20}
+- {name: electron_contact_proxy, kind: hard_cut, observable: ElectronContactProxy, lower: 0.0, upper: 0.10}
+- {name: mu_e_lfv_proxy, kind: hard_cut, observable: MuEFlavorProxy, lower: 0.0, upper: 0.0001}
+outputs:
+  save: [LeptoquarkMass, WidthFractionProxy, ElectronContactProxy, MuonContactProxy, MuEFlavorProxy, TauContactProxy, coupling_norm_sq]
+scan:
+  engine: serial_random
+  save_every: 100
+  seed: 19870442
+  settings: {objective: nll, max_evaluations: 2000, invalid_penalty: 1000000000000.0, save_invalid_points: true, verbose: 1}
+statistics: {enabled: true, method: de_weighted, credible_levels: [0.68, 0.95], output_samples: true, include_observables: true}

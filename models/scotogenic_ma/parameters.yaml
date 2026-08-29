@@ -1,0 +1,27 @@
+parameters:
+- {name: m_eta_sq, value_type: real, scan: true, lower: 10000.0, upper: 4000000.0, default: 100000.0, prior: log, description: Inert-doublet quadratic mass parameter in GeV^2.}
+- {name: lambda2, value_type: real, scan: true, lower: 0.00001, upper: 4.0, default: 0.1, prior: log, description: Inert-doublet self quartic.}
+- {name: lambda3, value_type: real, scan: true, lower: -4.0, upper: 4.0, default: 0.2, prior: flat}
+- {name: lambda4, value_type: real, scan: true, lower: -4.0, upper: 4.0, default: -0.1, prior: flat}
+- {name: lambda5, value_type: real, scan: true, lower: -0.01, upper: 0.01, default: 0.00000001, prior: signed_log, min_abs: 0.000000000001, description: Lepton-number-violating inert-doublet quartic.}
+- {name: MN1, value_type: real, scan: true, lower: 10.0, upper: 100000.0, default: 900.0, prior: log}
+- {name: MN2, value_type: real, scan: true, lower: 10.0, upper: 100000.0, default: 1400.0, prior: log}
+- {name: MN3, value_type: real, scan: true, lower: 10.0, upper: 100000.0, default: 2600.0, prior: log}
+- {name: he1_re, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.018, prior: signed_log, min_abs: 0.00000001}
+- {name: he1_im, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.004, prior: signed_log, min_abs: 0.00000001}
+- {name: he2_re, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: -0.011, prior: signed_log, min_abs: 0.00000001}
+- {name: he2_im, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.007, prior: signed_log, min_abs: 0.00000001}
+- {name: he3_re, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.006, prior: signed_log, min_abs: 0.00000001}
+- {name: he3_im, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: -0.003, prior: signed_log, min_abs: 0.00000001}
+- {name: hmu1_re, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: -0.022, prior: signed_log, min_abs: 0.00000001}
+- {name: hmu1_im, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.010, prior: signed_log, min_abs: 0.00000001}
+- {name: hmu2_re, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.030, prior: signed_log, min_abs: 0.00000001}
+- {name: hmu2_im, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: -0.012, prior: signed_log, min_abs: 0.00000001}
+- {name: hmu3_re, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.015, prior: signed_log, min_abs: 0.00000001}
+- {name: hmu3_im, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.002, prior: signed_log, min_abs: 0.00000001}
+- {name: htau1_re, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.028, prior: signed_log, min_abs: 0.00000001}
+- {name: htau1_im, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: -0.006, prior: signed_log, min_abs: 0.00000001}
+- {name: htau2_re, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.018, prior: signed_log, min_abs: 0.00000001}
+- {name: htau2_im, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.014, prior: signed_log, min_abs: 0.00000001}
+- {name: htau3_re, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: -0.021, prior: signed_log, min_abs: 0.00000001}
+- {name: htau3_im, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.009, prior: signed_log, min_abs: 0.00000001}

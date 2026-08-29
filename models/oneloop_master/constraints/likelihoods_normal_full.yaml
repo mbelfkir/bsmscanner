@@ -8,29 +8,29 @@ likelihoods:
   observable: Theta12
   interpolation: cubic_spline
   table_file: ../../oneloop/data/Normal/Theta12.csv
-  out_of_range_penalty_scale: 4.0e4
-  out_of_range_penalty_cap: 1.0e6
+  out_of_range_penalty_scale: 4.0e+4
+  out_of_range_penalty_cap: 1.0e+6
 - name: theta13_term
   kind: table_lookup
   observable: Theta13
   interpolation: cubic_spline
   table_file: ../../oneloop/data/Normal/Theta13.csv
-  out_of_range_penalty_scale: 4.0e4
-  out_of_range_penalty_cap: 1.0e6
+  out_of_range_penalty_scale: 4.0e+4
+  out_of_range_penalty_cap: 1.0e+6
 - name: theta23_term
   kind: table_lookup
   observable: Theta23
   interpolation: cubic_spline
   table_file: ../../oneloop/data/Normal/Theta23.csv
-  out_of_range_penalty_scale: 4.0e4
-  out_of_range_penalty_cap: 1.0e6
+  out_of_range_penalty_scale: 4.0e+4
+  out_of_range_penalty_cap: 1.0e+6
 - name: deltaCP_term
   kind: table_lookup
   observable: deltaCP_deg
   interpolation: cubic_spline
   table_file: ../../oneloop/data/Normal/deltaCP.csv
-  out_of_range_penalty_scale: 4.0e4
-  out_of_range_penalty_cap: 1.0e6
+  out_of_range_penalty_scale: 4.0e+4
+  out_of_range_penalty_cap: 1.0e+6
 - name: m12+m3l
   kind: custom
   plugin_call:
@@ -44,8 +44,8 @@ likelihoods:
       dm21_table_file: ../../oneloop/data/Normal/dm21.csv
       dm3l_table_file: ../../oneloop/data/Normal/dm3l.csv
       interpolation: cubic_spline
-      out_of_range_penalty_scale: 4.0e4
-      out_of_range_penalty_cap: 1.0e6
+      out_of_range_penalty_scale: 4.0e+4
+      out_of_range_penalty_cap: 1.0e+6
       in_range_offset: 0.0
 - name: sumOfMass
   kind: hard_cut

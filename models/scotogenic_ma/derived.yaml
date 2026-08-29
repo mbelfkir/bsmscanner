@@ -1,0 +1,25 @@
+derived_complex:
+- {name: he1, value_type: complex, expression: he1_re + 1j*he1_im}
+- {name: he2, value_type: complex, expression: he2_re + 1j*he2_im}
+- {name: he3, value_type: complex, expression: he3_re + 1j*he3_im}
+- {name: hmu1, value_type: complex, expression: hmu1_re + 1j*hmu1_im}
+- {name: hmu2, value_type: complex, expression: hmu2_re + 1j*hmu2_im}
+- {name: hmu3, value_type: complex, expression: hmu3_re + 1j*hmu3_im}
+- {name: htau1, value_type: complex, expression: htau1_re + 1j*htau1_im}
+- {name: htau2, value_type: complex, expression: htau2_re + 1j*htau2_im}
+- {name: htau3, value_type: complex, expression: htau3_re + 1j*htau3_im}
+derived_scalars:
+- {name: lambda1, value_type: real, expression: mh_sm**2/(2*v_sm**2)}
+- {name: meta_charged_sq, value_type: real, expression: m_eta_sq + 0.5*lambda3*v_sm**2}
+- {name: meta_R_sq, value_type: real, expression: m_eta_sq + 0.5*(lambda3 + lambda4 + lambda5)*v_sm**2}
+- {name: meta_I_sq, value_type: real, expression: m_eta_sq + 0.5*(lambda3 + lambda4 - lambda5)*v_sm**2}
+- {name: meta_charged, value_type: real, expression: sqrt(meta_charged_sq)}
+- {name: meta_R, value_type: real, expression: sqrt(meta_R_sq)}
+- {name: meta_I, value_type: real, expression: sqrt(meta_I_sq)}
+- {name: loop_N1, value_type: real, expression: "ma_loop(MN1, meta_R, meta_I)"}
+- {name: loop_N2, value_type: real, expression: "ma_loop(MN2, meta_R, meta_I)"}
+- {name: loop_N3, value_type: real, expression: "ma_loop(MN3, meta_R, meta_I)"}
+- {name: lightest_singlet_mass, value_type: real, expression: "min(MN1, min(MN2, MN3))"}
+- {name: lightest_scalar_mass, value_type: real, expression: "min(meta_R, meta_I)"}
+- {name: lightest_z2_odd_mass, value_type: real, expression: "min(lightest_singlet_mass, lightest_scalar_mass)"}
+- {name: yukawa_norm_sq, value_type: real, expression: abs(he1)**2 + abs(he2)**2 + abs(he3)**2 + abs(hmu1)**2 + abs(hmu2)**2 + abs(hmu3)**2 + abs(htau1)**2 + abs(htau2)**2 + abs(htau3)**2}

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import re
+
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, Mapping
@@ -736,11 +738,11 @@ class ModelDefinition:
                 name=item["name"],
                 value_type=ValueType(item.get("value_type", "real")),
                 scan=item.get("scan", True),
-                lower=item.get("lower"),
-                upper=item.get("upper"),
-                default=item.get("default"),
+                lower=_optional_number(item.get("lower"), "lower", f"parameter '{item.get('name', '?')}'"),
+                upper=_optional_number(item.get("upper"), "upper", f"parameter '{item.get('name', '?')}'"),
+                default=_optional_number(item.get("default"), "default", f"parameter '{item.get('name', '?')}'"),
                 prior=PriorKind(item.get("prior", "flat")),
-                min_abs=item.get("min_abs"),
+                min_abs=_optional_number(item.get("min_abs"), "min_abs", f"parameter '{item.get('name', '?')}'"),
                 description=item.get("description", ""),
             )
             for item in raw.get("parameters", [])
@@ -749,7 +751,7 @@ class ModelDefinition:
         constants = [
             ConstantSpec(
                 name=item["name"],
-                value=item["value"],
+                value=_coerce_constant_value(item["value"], item["name"]),
                 value_type=ValueType(item["value_type"]) if "value_type" in item else None,
             )
             for item in raw.get("constants", [])
@@ -890,12 +892,12 @@ class ModelDefinition:
                 plugin=item.get("plugin"),
                 plugin_call=_parse_plugin_call(item),
                 out_of_range_penalty_scale=(
-                    float(item["out_of_range_penalty_scale"])
+                    _require_number(item["out_of_range_penalty_scale"], "out_of_range_penalty_scale", f"likelihood '{item.get('name', '?')}'")
                     if item.get("out_of_range_penalty_scale") is not None
                     else None
                 ),
                 out_of_range_penalty_cap=(
-                    float(item["out_of_range_penalty_cap"])
+                    _require_number(item["out_of_range_penalty_cap"], "out_of_range_penalty_cap", f"likelihood '{item.get('name', '?')}'")
                     if item.get("out_of_range_penalty_cap") is not None
                     else None
                 ),
@@ -1020,6 +1022,48 @@ def _parse_diagonalize_output(item: Mapping[str, Any]) -> DiagonalizationOutputS
             str(output["right_unitary"]) if output.get("right_unitary") is not None else None
         ),
     )
+
+
+_NUMERIC_TEXT = re.compile(
+    r"^[-+]?(?:[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?|\.?(?:inf|Inf|INF))$"
+)
+
+
+def _require_number(value: Any, field: str, owner: str) -> float:
+    """Coerce a numeric field, refusing text that silently poisons the model.
+
+    YAML 1.1 loads ``1.0e9`` as a string.  The shipped loader resolves floats the
+    YAML 1.2 way, but models may also be built in Python or loaded by a third
+    party, so numeric fields are checked here as well and fail with a message
+    that names the field instead of surfacing later as a type error.
+    """
+    if isinstance(value, bool):
+        raise ModelValidationError(
+            f"{owner}: '{field}' must be a number, got the boolean {value!r}."
+        )
+    if isinstance(value, (int, float)):
+        return float(value)
+    if isinstance(value, str) and _NUMERIC_TEXT.match(value.strip()):
+        return float(value)
+    raise ModelValidationError(
+        f"{owner}: '{field}' must be a number, got {value!r}. "
+        "If this came from YAML, note that an exponent without a sign "
+        "(1.0e9) is parsed as a string by YAML 1.1 -- write 1.0e+9."
+    )
+
+
+def _optional_number(value: Any, field: str, owner: str) -> float | None:
+    """Like :func:`_require_number` but tolerates an absent field."""
+    if value is None:
+        return None
+    return _require_number(value, field, owner)
+
+
+def _coerce_constant_value(value: Any, name: str) -> Any:
+    """Turn numeric-looking text into a float; leave genuine strings alone."""
+    if isinstance(value, str) and _NUMERIC_TEXT.match(value.strip()):
+        return float(value)
+    return value
 
 
 def _coerce_plugin_option(name: Any, value: Any) -> bool | float | str:

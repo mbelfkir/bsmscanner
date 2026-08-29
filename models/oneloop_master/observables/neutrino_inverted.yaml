@@ -157,7 +157,7 @@ observables:
   expression: log(max(dm21, 1.0e-30)) / log(10)
 - name: dm3l_meV
   value_type: real
-  expression: dm3l * 1.0e3
+  expression: dm3l * 1.0e+3
 - name: mbeta
   value_type: real
   expression: >
