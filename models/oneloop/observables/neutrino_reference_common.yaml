@@ -43,7 +43,7 @@ observables:
 - {name: sum_m, value_type: real, expression: m1 + m2 + m3}
 - {name: sum_mnu_eV, value_type: real, expression: sum_m}
 - {name: log10_dm21, value_type: real, expression: "log(max(dm21, 1.0e-30))/log(10)"}
-- {name: dm3l_meV, value_type: real, expression: dm3l*1.0e3}
+- {name: dm3l_meV, value_type: real, expression: dm3l*1.0e+3}
 - {name: mbeta, value_type: real, expression: sqrt(abs(Ue1)**2*m1**2 + abs(Ue2)**2*m2**2 + abs(Ue3)**2*m3**2)}
 - {name: mbetabeta, value_type: real, expression: abs(Ue1**2*m1 + Ue2**2*m2 + Ue3**2*m3)}
 - {name: mbeta_eV, value_type: real, expression: mbeta}

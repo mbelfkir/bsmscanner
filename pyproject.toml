@@ -37,6 +37,12 @@ dependencies = [
   "PyYAML>=6.0",
 ]
 
+[project.urls]
+Homepage = "https://github.com/mbelfkir/BSMScanner"
+Repository = "https://github.com/mbelfkir/BSMScanner"
+Issues = "https://github.com/mbelfkir/BSMScanner/issues"
+Changelog = "https://github.com/mbelfkir/BSMScanner/blob/main/CHANGELOG.md"
+
 [project.scripts]
 bsm-scanner = "bsm_scanner.cli:main"
 

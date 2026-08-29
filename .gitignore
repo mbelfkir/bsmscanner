@@ -28,3 +28,5 @@ release_audit.json
 .pypirc
 output/
 _to_delete/
+tmp/
+.git_lock_holding/

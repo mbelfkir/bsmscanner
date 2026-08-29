@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import re
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -8,6 +9,34 @@ import yaml
 
 from bsm_scanner.exceptions import ModelValidationError
 from bsm_scanner.library import is_library_reference, resolve_library_reference
+
+
+class ScannerYamlLoader(yaml.SafeLoader):
+    """SafeLoader with YAML 1.2 float resolution.
+
+    PyYAML implements YAML 1.1, whose implicit float pattern requires a sign on
+    the exponent.  Scalars such as ``1.0e9``, ``4.0e4`` or ``1e12`` therefore
+    load as *strings*, which silently propagates a text value into a numeric
+    field: a penalty scale becomes inert, a constant becomes unusable, and the
+    only symptom is a confusing downstream failure.  Resolving floats the way
+    YAML 1.2 (and every physicist) expects removes the whole class of bug.
+    """
+
+
+ScannerYamlLoader.add_implicit_resolver(
+    "tag:yaml.org,2002:float",
+    re.compile(
+        r"""^(?:
+             [-+]?(?:[0-9][0-9_]*)\.[0-9_]*(?:[eE][-+]?[0-9]+)?
+            |[-+]?\.[0-9][0-9_]*(?:[eE][-+]?[0-9]+)?
+            |[-+]?(?:[0-9][0-9_]*)(?:[eE][-+]?[0-9]+)
+            |[-+]?\.(?:inf|Inf|INF)
+            |\.(?:nan|NaN|NAN)
+            )$""",
+        re.X,
+    ),
+    list("-+0123456789."),
+)
 
 
 IMPORT_KEYS = ("imports", "includes")
@@ -51,7 +80,7 @@ class ModelFragmentLoader:
             raise FileNotFoundError(f"Model fragment '{path}' does not exist.")
 
         with path.open("r", encoding="utf-8") as handle:
-            raw = yaml.safe_load(handle)
+            raw = yaml.load(handle, Loader=ScannerYamlLoader)
 
         if raw is None:
             raw = {}

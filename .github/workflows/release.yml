@@ -26,6 +26,9 @@ jobs:
         with:
           python-version: "3.13"
 
+      - name: Install Eigen3 (required by the native build)
+        run: brew install eigen
+
       - name: Install validation dependencies
         run: |
           python -m pip install --upgrade pip

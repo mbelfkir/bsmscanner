@@ -1,0 +1,8 @@
+functions:
+- name: ma_loop
+  args: [MN, mR, mI]
+  expression: >
+    MN/(16*pi*pi) * (
+      (mR**2/(mR**2 - MN**2))*log((mR**2)/(MN**2))
+      - (mI**2/(mI**2 - MN**2))*log((mI**2)/(MN**2))
+    )

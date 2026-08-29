@@ -28,7 +28,7 @@ guided_sampling:
       enabled: true
       probability: 0.25
       parameters: [ypr11, ypi11]
-      factor_range: [1.0e-2, 1.0e2]
+      factor_range: [1.0e-2, 1.0e+2]
       scale: log
 
     - name: physical_neutrino_targets_NO
@@ -43,7 +43,7 @@ guided_sampling:
         yprime_abs_min: 1.0e-7
         yprime_abs_max: 3.0
         balance_min: 1.0e-3
-        balance_max: 1.0e3
+        balance_max: 1.0e+3
 
     - name: physical_neutrino_targets_IO
       type: point_function
@@ -57,7 +57,7 @@ guided_sampling:
         yprime_abs_min: 1.0e-7
         yprime_abs_max: 3.0
         balance_min: 1.0e-3
-        balance_max: 1.0e3
+        balance_max: 1.0e+3
 
     - name: neutrino_scale_sum_NO
       type: point_function

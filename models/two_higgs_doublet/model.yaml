@@ -1,0 +1,54 @@
+metadata:
+  name: two_higgs_doublet_cp_conserving
+  version: 0.1.0
+  description: CP-conserving softly-broken Z2 two-Higgs-doublet benchmark in physical-mass variables with Higgs-signal, oblique-T, perturbativity, and stability proxy observables.
+  tags: [2hdm, two_higgs_doublet, higgs_sector, cp_conserving]
+parameters:
+- {name: mH, value_type: real, scan: true, lower: 130.0, upper: 2000.0, default: 600.0, prior: log}
+- {name: mA, value_type: real, scan: true, lower: 130.0, upper: 2000.0, default: 620.0, prior: log}
+- {name: mHp, value_type: real, scan: true, lower: 130.0, upper: 2000.0, default: 650.0, prior: log}
+- {name: tanb, value_type: real, scan: true, lower: 0.5, upper: 60.0, default: 2.0, prior: log}
+- {name: cos_ba, value_type: real, scan: true, lower: -0.3, upper: 0.3, default: 0.02, prior: flat}
+- {name: m12sq, value_type: real, scan: true, lower: 0.0, upper: 1000000.0, default: 120000.0, prior: flat}
+constants:
+- {name: mh, value: 125.25}
+- {name: v_sm, value: 246.22}
+- {name: pi_ref, value: 3.141592653589793}
+derived_scalars:
+- {name: sin_ba, value_type: real, expression: "sqrt(max(1.0 - cos_ba**2, 0.0))"}
+- {name: beta, value_type: real, expression: "atan(tanb)"}
+- {name: sinb, value_type: real, expression: "tanb/sqrt(1.0 + tanb**2)"}
+- {name: cosb, value_type: real, expression: "1.0/sqrt(1.0 + tanb**2)"}
+- {name: soft_M_sq, value_type: real, expression: "m12sq/max(sinb*cosb, 1.0e-12)"}
+- {name: lambda1_proxy, value_type: real, expression: "(mh**2 + mH**2 - soft_M_sq)/(v_sm**2)"}
+- {name: lambda2_proxy, value_type: real, expression: "(mh**2 + mH**2 - soft_M_sq)/(v_sm**2)"}
+- {name: lambda3_proxy, value_type: real, expression: "(2.0*mHp**2 - soft_M_sq)/(v_sm**2)"}
+- {name: lambda4_proxy, value_type: real, expression: "(mA**2 - 2.0*mHp**2 + soft_M_sq)/(v_sm**2)"}
+- {name: lambda5_proxy, value_type: real, expression: "(soft_M_sq - mA**2)/(v_sm**2)"}
+- {name: max_abs_quartic_proxy, value_type: real, expression: "max(max(abs(lambda1_proxy), abs(lambda2_proxy)), max(max(abs(lambda3_proxy), abs(lambda4_proxy)), abs(lambda5_proxy)))"}
+- {name: higgs_signal_strength, value_type: real, expression: "sin_ba**2"}
+- {name: oblique_T_proxy, value_type: real, expression: "((mHp - mA)*(mHp - mH))/(1600.0*pi_ref*v_sm)"}
+- {name: charged_higgs_floor, value_type: real, expression: mHp}
+observables:
+- {name: HiggsSignalStrength, value_type: real, expression: higgs_signal_strength}
+- {name: ObliqueTProxy, value_type: real, expression: oblique_T_proxy}
+- {name: ChargedHiggsMass, value_type: real, expression: charged_higgs_floor}
+- {name: HeavyCPEvenMass, value_type: real, expression: mH}
+- {name: CPoddMass, value_type: real, expression: mA}
+- {name: MaxAbsQuarticProxy, value_type: real, expression: max_abs_quartic_proxy}
+theory_checks:
+- {name: positive_physical_masses, condition: "mH > mh and mA > 0 and mHp > 0 and tanb > 0", fatal: true, message: 2HDM physical masses or tan beta are invalid.}
+- {name: perturbative_quartic_proxy, condition: "MaxAbsQuarticProxy < 4*pi_ref", fatal: true, message: A 2HDM quartic proxy exceeds 4 pi.}
+- {name: stability_proxy, condition: "lambda1_proxy > -4*pi_ref and lambda2_proxy > -4*pi_ref and lambda3_proxy + sqrt(abs(lambda1_proxy*lambda2_proxy)) > -4*pi_ref", fatal: true, message: 2HDM stability proxy failed.}
+likelihoods:
+- {name: alignment_higgs_signal, kind: gaussian, observable: HiggsSignalStrength, mean: 1.0, sigma: 0.07}
+- {name: oblique_T_constraint, kind: gaussian, observable: ObliqueTProxy, mean: 0.0, sigma: 0.08}
+- {name: charged_higgs_lower_bound_proxy, kind: hard_cut, observable: ChargedHiggsMass, lower: 130.0, upper: 1000000000.0}
+outputs:
+  save: [HeavyCPEvenMass, CPoddMass, ChargedHiggsMass, HiggsSignalStrength, ObliqueTProxy, MaxAbsQuarticProxy, lambda1_proxy, lambda2_proxy, lambda3_proxy, lambda4_proxy, lambda5_proxy]
+scan:
+  engine: serial_random
+  save_every: 100
+  seed: 11060034
+  settings: {objective: nll, max_evaluations: 2000, invalid_penalty: 1000000000000.0, save_invalid_points: true, verbose: 1}
+statistics: {enabled: true, method: de_weighted, credible_levels: [0.68, 0.95], output_samples: true, include_observables: true}

@@ -4,7 +4,7 @@ scan:
   seed: 13579
   settings:
     objective: nll
-    invalid_penalty: 1.0e12
+    invalid_penalty: 1.0e+12
     save_invalid_points: true
     verbose: 1
     progress_interval: 1000
@@ -39,7 +39,7 @@ scan:
           include_invalid: false
           max_hard_failures: 0
           max_fit_failures: 3
-          objective_cap: 1.0e6
+          objective_cap: 1.0e+6
           include_full_eval_points: true
           max_accepted_points: 100
           max_near_miss_points: 150
@@ -107,7 +107,7 @@ scan:
         include_invalid: false
         max_hard_failures: 0
         max_fit_failures: 3
-        objective_cap: 1.0e6
+        objective_cap: 1.0e+6
         include_full_eval_points: true
         max_accepted_points: 200
         max_near_miss_points: 300

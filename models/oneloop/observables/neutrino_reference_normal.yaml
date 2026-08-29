@@ -1,13 +1,13 @@
 observables:
 - name: m1
   value_type: real
-  expression: m1_raw_gev*1.0e9
+  expression: m1_raw_gev*1.0e+9
 - name: m2
   value_type: real
-  expression: m2_raw_gev*1.0e9
+  expression: m2_raw_gev*1.0e+9
 - name: m3
   value_type: real
-  expression: m3_raw_gev*1.0e9
+  expression: m3_raw_gev*1.0e+9
 - {name: m1_eV, value_type: real, expression: m1}
 - {name: m2_eV, value_type: real, expression: m2}
 - {name: m3_eV, value_type: real, expression: m3}

@@ -194,7 +194,31 @@ This repository is a serious scaffold, not a monolithic finished physics package
 - modular multi-file model manifests with relative imports and duplicate protection,
 - a generic plugin-call path for backend-backed observables without model-specific core hacks,
 - migration notes from the reference code,
+- seven published benchmark models (see Benchmark Models below) plus a
+  `basin_scan` engine (broad exploration, clustering, focused refinement)
+  alongside `serial_random`, `de_scipy`, and `adaptive_diver`,
+- a YAML loader with YAML-1.2-compliant float resolution, so numeric scalars
+  such as `1.0e9` are never silently read as text (YAML 1.1's default
+  behaviour, since it requires a signed exponent for a bare token to parse as
+  a float),
 - tests for the Python frontend.
+
+## Prerequisites
+
+- Python >= 3.10
+- A C++20 compiler (tested with GCC >= 11 and Apple Clang)
+- CMake >= 3.20
+- **Eigen3 >= 3.4** -- a system dependency, not vendored. Install it first:
+
+  ```bash
+  brew install eigen              # macOS
+  sudo apt-get install libeigen3-dev   # Debian/Ubuntu
+  conda install -c conda-forge eigen   # conda
+  ```
+
+  `CMakeLists.txt` also looks under `/usr/include`, `/usr/local/include`, and
+  `/opt/homebrew/include` directly, or you can point it at a specific install
+  with `-DEigen3_DIR=/path/to/eigen/share/eigen3/cmake`.
 
 ## Build
 
@@ -289,6 +313,7 @@ Available scan engines now include:
 - `diver`
 - `de_scipy`
 - `adaptive_diver`
+- `basin_scan`
 
 `de_scipy` is a temporary reference backend built on
 `scipy.optimize.differential_evolution`. It exists to validate the framework’s
@@ -299,6 +324,13 @@ implementation is added.
 engine. It uses the same evaluator/objective pipeline as the other engines,
 supports final-population diagnostics, and can optionally refine elite points
 with SciPy local minimizers.
+
+`basin_scan` explores broadly first, clusters the surviving valid points,
+builds a focused sub-box around each cluster, and runs `adaptive_diver` inside
+each box. It is the strongest strategy on benchmarks with a sparse, clustered
+valid region (see `docs/published_benchmark_validation.md`), and the weakest
+on benchmarks where the valid region is a broad, degenerate plateau -- engine
+choice should follow the shape of the likelihood, not a fixed default.
 
 An optional statistics layer can also post-process completed scan outputs into
 plot-ready CSV and JSON artifacts. It is configured through a top-level
@@ -357,6 +389,27 @@ export REMOTE_DIR=/path/on/remote/BSMScanner
 
 Both variables are required; the scripts exit with a message if either is unset.
 
+## Benchmark Models
+
+`models/` includes seven published benchmark models used in a companion
+methodology study comparing the four scan engines at matched budget, in
+addition to the framework's own development models (`oneloop`,
+`oneloop_master`, `leptontest`, ...):
+
+- `scotogenic_ma` -- radiative (one-loop) neutrino mass with dark matter
+- `minimal_bl` -- gauged U(1)_B-L with a seesaw and a Z'
+- `two_higgs_doublet` -- CP-conserving two-Higgs-doublet model
+- `smeft_wilson` -- SMEFT, Warsaw basis, 10 Wilson coefficients
+- `zprime_simplified` -- Z' simplified dark matter (LHC DM Forum benchmark)
+- `leptoquark_brw` -- Buchmuller-Ruckl-Wyler scalar leptoquark
+- `alp_effective` -- axion-like-particle effective couplings
+
+Each ships as a standalone model directory under `models/<name>/` with a
+matching runnable example under `examples/<name>/`. See
+`docs/published_benchmark_validation.md` for what is validated
+formula-by-formula against the cited reference versus what remains a
+simplified analytic proxy for each benchmark.
+
 ## Documentation
 
 - [Architecture](docs/architecture.md)
@@ -373,4 +426,11 @@ Both variables are required; the scripts exit with a message if either is unset.
 - [Full oneloop example](docs/oneloop_full.md)
 - [Latest-master oneloop example](docs/oneloop_master.md)
 - [Oneloop release notes](docs/release_notes_oneloop.md)
+- [Basin scan engine](docs/basin_scan.md)
+- [Adaptive Diver engine](docs/adaptive_diver.md)
+- [Guided sampling](docs/guided_sampling.md)
+- [Matrix diagonalization](docs/matrix_diagonalization.md)
+- [Posterior MCMC](docs/posterior_mcmc.md)
+- [Statistics post-processing](docs/statistics.md)
+- [Published benchmark validation](docs/published_benchmark_validation.md)
 - [Release readiness snapshot](RELEASE_READY.md)

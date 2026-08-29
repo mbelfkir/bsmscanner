@@ -15,7 +15,7 @@ scan:
     updating: deferred
     workers: 1
     polish: false
-    invalid_penalty: 1.0e12
+    invalid_penalty: 1.0e+12
     save_invalid_points: true
     verbose: 2
 

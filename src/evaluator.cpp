@@ -16,7 +16,7 @@ namespace bsm::core {
 
 namespace {
 
-ScalarValue scalar_from_value(const Value& value) {
+ScalarValue scalar_from_value(const Value& value, const std::string& name = std::string()) {
   if (const auto* real = std::get_if<double>(&value)) {
     return *real;
   }
@@ -26,7 +26,27 @@ ScalarValue scalar_from_value(const Value& value) {
   if (const auto* complex = std::get_if<std::complex<double>>(&value)) {
     return *complex;
   }
-  throw std::runtime_error("Expression attempted to read a non-scalar node.");
+  // Name the node and say what it actually held.  A text value here almost
+  // always means a numeric YAML field was written with an unsigned exponent
+  // (1.0e9), which YAML 1.1 parses as a string.
+  std::string held = "a non-scalar value";
+  if (std::holds_alternative<std::string>(value)) {
+    held = "the text \"" + std::get<std::string>(value) + "\"";
+  } else if (std::holds_alternative<std::monostate>(value)) {
+    held = "an unset value";
+  } else if (std::holds_alternative<Eigen::MatrixXd>(value) ||
+             std::holds_alternative<Eigen::MatrixXcd>(value)) {
+    held = "a matrix";
+  } else if (std::holds_alternative<Eigen::VectorXd>(value) ||
+             std::holds_alternative<Eigen::VectorXcd>(value)) {
+    held = "a vector";
+  }
+  const std::string where = name.empty() ? std::string("An expression")
+                                         : ("Node '" + name + "'");
+  throw std::runtime_error(
+      where + " was used as a scalar but holds " + held +
+      ". If this value came from YAML, note that an exponent without a sign "
+      "(1.0e9) is parsed as text by YAML 1.1 -- write 1.0e+9.");
 }
 
 ScalarValue add_values(const ScalarValue& lhs, const ScalarValue& rhs) {
@@ -214,7 +234,7 @@ PointResult CompiledModel::evaluate(
       } else if (instruction.op == "push_complex") {
         stack.emplace_back(std::complex<double>(instruction.re, instruction.im));
       } else if (instruction.op == "load") {
-        stack.emplace_back(scalar_from_value(resolver(instruction.name)));
+        stack.emplace_back(scalar_from_value(resolver(instruction.name), instruction.name));
       } else if (instruction.op == "neg") {
         const auto rhs = stack.back();
         stack.back() = mul_values(ScalarValue{-1.0}, rhs);

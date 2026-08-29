@@ -9,6 +9,6 @@ scan:
     convthresh: 0.001
     convsteps: 20
     max_init_attempts: 50000
-    invalid_objective: 1.0e300
+    invalid_objective: 1.0e+300
     save_invalid_points: false
     verbose: 1
