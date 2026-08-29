@@ -5,11 +5,9 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-
 from bsm_scanner import compile_model, load_model, run_scan
 from bsm_scanner.exceptions import ModelValidationError
 from bsm_scanner.model.schema import ModelDefinition
-
 
 ROOT = Path(__file__).resolve().parents[1]
 

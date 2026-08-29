@@ -4,7 +4,6 @@ import math
 
 import numpy as np
 import pytest
-
 from bsm_scanner import delta_deg_signed, pmns_observables_from_matrix, wrap_2pi
 
 

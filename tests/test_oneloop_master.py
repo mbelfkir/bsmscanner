@@ -3,14 +3,11 @@ import math
 from pathlib import Path
 
 import pytest
-
 from bsm_scanner import compile_model, load_model, run_scan
 from bsm_scanner.scan import evaluate_scan_point
 
-
 pytest.importorskip("bsm_scanner._core")
 from bsm_scanner import _core  # type: ignore[attr-defined]
-
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "examples" / "oneloop_master"
 MASTER_EXAMPLE = EXAMPLES / "model.yaml"

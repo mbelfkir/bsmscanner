@@ -2,10 +2,8 @@ import json
 from pathlib import Path
 
 import pytest
-
 from bsm_scanner import compile_model, load_model, run_scan
 from bsm_scanner.scan import build_scan_request, evaluate_scan_point
-
 
 pytest.importorskip("bsm_scanner._core")
 

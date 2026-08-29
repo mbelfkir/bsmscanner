@@ -32,8 +32,6 @@ __all__ = [
 
 def __getattr__(name: str):
     if name in __all__:
-        from .core import delta_deg_signed, pmns_observables_from_matrix, wrap_2pi
-        from .library import core_library_path, describe_core_block, list_core_blocks
         from .api import (
             CompiledModel,
             ScanSession,
@@ -42,6 +40,8 @@ def __getattr__(name: str):
             load_results,
             run_scan,
         )
+        from .core import delta_deg_signed, pmns_observables_from_matrix, wrap_2pi
+        from .library import core_library_path, describe_core_block, list_core_blocks
         from .scan import (
             ScanRequest,
             ScanResults,

@@ -1,12 +1,10 @@
-from pathlib import Path
 import math
+from pathlib import Path
 
 import pytest
-
 from bsm_scanner import compile_model, load_model
 from bsm_scanner.compiler.lowering import GraphLowerer
 from bsm_scanner.model.schema import MatrixKind, ModelDefinition
-
 
 ROOT = Path(__file__).resolve().parents[1]
 LEPTONTEST_MODEL = ROOT / "models" / "leptontest" / "model.yaml"

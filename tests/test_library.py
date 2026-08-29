@@ -17,7 +17,6 @@ import textwrap
 from pathlib import Path
 
 import pytest
-
 from bsm_scanner.exceptions import ModelValidationError
 from bsm_scanner.library import (
     LIBRARY_ENV_VAR,

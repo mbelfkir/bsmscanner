@@ -16,11 +16,10 @@ PYTHON = ROOT / "python"
 if str(PYTHON) not in sys.path:
     sys.path.insert(0, str(PYTHON))
 
-import matplotlib
+import matplotlib  # noqa: E402
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
-
 from bsm_scanner import compile_model, load_model, run_scan  # noqa: E402
 
 

@@ -1,14 +1,12 @@
 from pathlib import Path
 
 import pytest
-
 from bsm_scanner.api import load_model
 from bsm_scanner.compiler.expressions import BUILTIN_FUNCTIONS
 from bsm_scanner.compiler.lowering import GraphLowerer
 from bsm_scanner.exceptions import GraphCycleError
 from bsm_scanner.model.graph import build_model_graph
 from bsm_scanner.model.schema import ModelDefinition
-
 
 EXAMPLE = Path(__file__).resolve().parents[1] / "examples" / "oneloop_minimal" / "model.yaml"
 

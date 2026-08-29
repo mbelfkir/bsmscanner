@@ -17,7 +17,6 @@ from bsm_scanner.posterior.log_probability import LogProbabilityContext, log_pro
 from bsm_scanner.posterior.priors import ParameterInfo
 from bsm_scanner.scan import build_scan_request
 
-
 FIXED_TIMESTAMP = "2026-05-21T00:00:00+00:00"
 
 

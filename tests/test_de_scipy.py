@@ -6,11 +6,9 @@ from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
-
 from bsm_scanner import compile_model, run_scan
 from bsm_scanner.model.schema import ModelDefinition
 from bsm_scanner.scan import build_scan_request
-
 
 pytest.importorskip("bsm_scanner._core")
 

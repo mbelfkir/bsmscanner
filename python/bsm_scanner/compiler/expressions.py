@@ -8,7 +8,6 @@ from typing import Iterable, Mapping
 from bsm_scanner.exceptions import ExpressionCompileError
 from bsm_scanner.model.schema import FunctionSpec, ValueType
 
-
 BUILTIN_CONSTANTS = {
     "pi": 3.141592653589793,
     "e": 2.718281828459045,

@@ -13,7 +13,6 @@ from bsm_scanner.model.validation import (
     summarize_model_invariants,
 )
 
-
 ROOT = Path(__file__).resolve().parents[1]
 MASTER_REDUCED = ROOT / "examples" / "oneloop_master" / "model_normal_reduced.yaml"
 

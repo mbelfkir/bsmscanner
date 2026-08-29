@@ -9,7 +9,12 @@ from .config import PosteriorConfig
 from .diagnostics import build_diagnostics
 from .initialization import initialize_walkers
 from .io import write_json, write_rows_csv
-from .log_probability import LogProbabilityContext, log_probability, metadata_for_theta, objective_mode_for_posterior
+from .log_probability import (
+    LogProbabilityContext,
+    log_probability,
+    metadata_for_theta,
+    objective_mode_for_posterior,
+)
 from .priors import ParameterInfo, parameter_order
 from .summaries import build_summary
 

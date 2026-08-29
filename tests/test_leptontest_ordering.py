@@ -1,14 +1,12 @@
 from pathlib import Path
 
 import pytest
-
 from bsm_scanner import compile_model, load_model
 from bsm_scanner.model.schema import ModelDefinition
 from bsm_scanner.model.validation import (
     require_likelihood_coverage,
     require_no_dead_scanned_parameters,
 )
-
 
 ROOT = Path(__file__).resolve().parents[1]
 LEPTONTEST = ROOT / "models" / "leptontest"

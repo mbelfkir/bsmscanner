@@ -20,7 +20,6 @@ if str(PYTHON) not in sys.path:
 from bsm_scanner import compile_model, run_scan  # noqa: E402
 from bsm_scanner.model.schema import ModelDefinition  # noqa: E402
 
-
 OBJECTIVES: dict[str, dict[str, Any]] = {
     "quadratic": {
         "minimum": {"x": 1.0, "y": -2.0},

@@ -6,10 +6,8 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-
 from bsm_scanner import compile_model, load_model, run_scan
 from bsm_scanner.model.graph import build_model_graph
-
 
 pytest.importorskip("bsm_scanner._core")
 
