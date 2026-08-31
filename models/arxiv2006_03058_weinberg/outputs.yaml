@@ -36,4 +36,4 @@ outputs:
     - m_bb
     - J
     - Jmax
-    - nscale
+    - scale

@@ -19,7 +19,7 @@ Retau, Imtau, a2t, a3t, g2t, g3t
 
 `n_scale` is fixed to `1.0` as a constant for formula compatibility and is not
 a scanned parameter. The reusable core neutrino block computes the physical
-mass scale through `nscale`.
+mass scale through `scale`.
 
 Available manifests:
 

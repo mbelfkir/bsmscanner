@@ -137,6 +137,6 @@ corresponding CMake options; see the README.
 
 - Record which NuFIT release the bundled tables correspond to, and cite it.
 - Check the mass-scale normalization convention in
-  `core:neutrino/observables_common.yaml` (`nscale`) matches the one your
+  `core:neutrino/observables_common.yaml` (`scale`) matches the one your
   reference uses — normalizing to Δm²₃ₗ alone and to the average of both
   splittings differ at the sub-percent level in every mass output.
