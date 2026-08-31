@@ -27,6 +27,27 @@
 - Added a CI workflow that runs the test suite on Linux and macOS, in
   addition to the existing manual release/publish workflow.
 
+## 0.1.1
+
+- `core:neutrino/observables_common.yaml`: consolidated the redundant
+  `nscale`/`scale`/`Lambda` names (all three represented the same overall
+  neutrino mass scale) into a single `scale` observable, computed from
+  NuFit's best-fit `dm21`/`dm3l`, same as before. `m1`, `m2`, `m3`, `dm21`,
+  `dm3l` (and everything derived from them) now reference `scale` instead of
+  `nscale`.
+- Removed the standalone `core/neutrino/nscale_bestfit.yaml` -- its content
+  is folded directly into `observables_common.yaml` as the `scale` entry
+  above, so `core:neutrino/normal.yaml` no longer needs a separate import
+  for it.
+- Note for model authors: `scale` (and everything computed from it --
+  `m1`/`m2`/`m3`/`dm21`/`dm3l`/`mbeta`/`mbetabeta`) encodes a specific
+  physics assumption -- fixing the overall neutrino mass normalization from
+  oscillation best-fit data. That's the right default for a model whose mass
+  matrix only predicts *ratios* between the three masses. A model with its
+  own independent prediction for the absolute scale should define its own
+  scale-dependent mass observables locally, under different names, rather
+  than importing these from core.
+
 ## 0.1.0 - Release Candidate
 
 - Added standard `bsm-scanner` CLI entry point.

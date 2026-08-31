@@ -267,30 +267,37 @@ observables:
 - name: alpha31_deg
   value_type: real
   expression: alpha31 * 180 / pi
-- name: nscale
-  value_type: real
-  expression: sqrt((bf_dm21 / dm21_raw + bf_dm3l / dm3l_raw) / 2)
 - name: scale
   value_type: real
-  expression: nscale
-- name: Lambda
-  value_type: real
-  expression: nscale
+  # The overall absolute neutrino mass scale. A general mass matrix only
+  # predicts *ratios* between the three masses (m1_raw, m2_raw, m3_raw are
+  # dimensionless/relative); this fixes the missing overall factor by
+  # matching dm21_raw/dm3l_raw to NuFit's best-fit dm21/dm3l. This is the
+  # right default for a model whose mass matrix has no independent
+  # prediction for the absolute scale. A model that DOES predict the
+  # absolute scale itself (e.g. from a one-loop function of couplings
+  # already in the scan) has an independent, falsifiable prediction here --
+  # reusing this best-fit-anchored `scale`/`m1`/`m2`/`m3`/`dm21`/`dm3l`/
+  # `mbeta`/`mbetabeta` for such a model would be tautological (it would
+  # always fit NuFit exactly, by construction). That kind of model should
+  # define its own scale and its own mass observables locally, under their
+  # own names, instead of importing this chain.
+  expression: sqrt((bf_dm21 / dm21_raw + bf_dm3l / dm3l_raw) / 2)
 - name: m1
   value_type: real
-  expression: m1_raw * nscale
+  expression: m1_raw * scale
 - name: m2
   value_type: real
-  expression: m2_raw * nscale
+  expression: m2_raw * scale
 - name: m3
   value_type: real
-  expression: m3_raw * nscale
+  expression: m3_raw * scale
 - name: dm21
   value_type: real
-  expression: nscale**2 * dm21_raw
+  expression: scale**2 * dm21_raw
 - name: dm3l
   value_type: real
-  expression: nscale**2 * dm3l_raw
+  expression: scale**2 * dm3l_raw
 - name: r
   value_type: real
   expression: dm21 / dm3l
