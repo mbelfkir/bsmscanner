@@ -37,7 +37,7 @@ LEPTON_OUTPUTS = [
     "mbetabeta",
     "m_b",
     "m_bb",
-    "nscale",
+    "scale",
 ]
 
 CKM_OUTPUTS = [

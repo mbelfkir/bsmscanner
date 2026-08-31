@@ -29,7 +29,7 @@ outputs:
     - mbetabeta
     - m_b
     - m_bb
-    - nscale
+    - scale
     - Vud
     - Vus
     - Vub
