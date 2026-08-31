@@ -7,7 +7,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "bsm-scanner"
-version = "0.1.1"
+version = "0.1.2"
 description = "Graph-compiled BSM model scanner with Python frontend and C++ evaluation core."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -63,6 +63,21 @@ dev = [
   "twine>=5.0",
   "ruff>=0.5",
 ]
+
+[tool.cibuildwheel]
+build = "cp310-* cp311-* cp312-* cp313-*"
+skip = ["*-musllinux*", "*_i686", "*-win32"]
+build-verbosity = 1
+test-command = "python -c \"import bsm_scanner; print('bsm_scanner', bsm_scanner.__version__)\""
+
+[tool.cibuildwheel.linux]
+archs = ["x86_64"]
+manylinux-x86_64-image = "manylinux_2_28"
+before-all = "curl -fsSL https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz -o /tmp/eigen.tar.gz && mkdir -p /usr/local/include/eigen3 && tar -xzf /tmp/eigen.tar.gz -C /tmp && cp -r /tmp/eigen-3.4.0/Eigen /usr/local/include/eigen3/ && cp -r /tmp/eigen-3.4.0/unsupported /usr/local/include/eigen3/ && rm -rf /tmp/eigen.tar.gz /tmp/eigen-3.4.0"
+
+[tool.cibuildwheel.macos]
+archs = ["x86_64", "arm64"]
+before-all = "brew install eigen"
 
 [tool.scikit-build]
 wheel.packages = ["python/bsm_scanner"]
