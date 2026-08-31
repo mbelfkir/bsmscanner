@@ -76,7 +76,7 @@ manylinux-x86_64-image = "manylinux_2_28"
 before-all = "curl -fsSL https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz -o /tmp/eigen.tar.gz && mkdir -p /usr/local/include/eigen3 && tar -xzf /tmp/eigen.tar.gz -C /tmp && cp -r /tmp/eigen-3.4.0/Eigen /usr/local/include/eigen3/ && cp -r /tmp/eigen-3.4.0/unsupported /usr/local/include/eigen3/ && rm -rf /tmp/eigen.tar.gz /tmp/eigen-3.4.0"
 
 [tool.cibuildwheel.macos]
-archs = ["x86_64", "arm64"]
+archs = ["arm64"]
 before-all = "brew install eigen"
 
 [tool.scikit-build]

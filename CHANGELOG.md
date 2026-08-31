@@ -30,14 +30,18 @@
 ## 0.1.2
 
 - CI now builds real distributable wheels via `cibuildwheel` for macOS
-  (x86_64 + arm64) and Linux (manylinux_2_28 x86_64), covering CPython
-  3.10-3.13, instead of publishing only the single wheel produced by the
-  validate job's own runner/Python version. Eigen3 (header-only, not
-  vendored) is fetched and installed into each build environment via
-  `cibuildwheel`'s `before-all` hook -- Homebrew on macOS, a direct header
-  extraction from the upstream 3.4.0 tarball on Linux (manylinux images
-  don't reliably have a usable `eigen3-devel` package across flavors).
-  Windows is not built; the CMake build has not been validated there.
+  (arm64) and Linux (manylinux_2_28 x86_64), covering CPython 3.10-3.13,
+  instead of publishing only the single wheel produced by the validate
+  job's own runner/Python version. Eigen3 (header-only, not vendored) is
+  fetched and installed into each build environment via `cibuildwheel`'s
+  `before-all` hook -- Homebrew on macOS, a direct header extraction from
+  the upstream 3.4.0 tarball on Linux (manylinux images don't reliably
+  have a usable `eigen3-devel` package across flavors).
+  macOS x86_64 (Intel) is not built: cross-compiling this project's CMake/
+  scikit-build-core extension for x86_64 from GitHub's arm64 macos-14
+  runners failed in CI, and GitHub no longer offers a free Intel macOS
+  runner to build it natively. Windows is not built either; the CMake
+  build has not been validated there. Both remain a known gap.
 - The release workflow now has separate `build_wheels` (matrix over
   macOS/Linux), `build_sdist`, and `check_distributions` jobs feeding the
   existing publish jobs, replacing the old single-platform "build one
