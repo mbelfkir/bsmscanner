@@ -17,6 +17,5 @@ outputs:
   - dm3l
   - sum_m
   - scale
-  - Lambda
   - mbeta
   - mbetabeta
