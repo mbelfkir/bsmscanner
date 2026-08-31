@@ -27,6 +27,27 @@
 - Added a CI workflow that runs the test suite on Linux and macOS, in
   addition to the existing manual release/publish workflow.
 
+## 0.1.2
+
+- CI now builds real distributable wheels via `cibuildwheel` for macOS
+  (x86_64 + arm64) and Linux (manylinux_2_28 x86_64), covering CPython
+  3.10-3.13, instead of publishing only the single wheel produced by the
+  validate job's own runner/Python version. Eigen3 (header-only, not
+  vendored) is fetched and installed into each build environment via
+  `cibuildwheel`'s `before-all` hook -- Homebrew on macOS, a direct header
+  extraction from the upstream 3.4.0 tarball on Linux (manylinux images
+  don't reliably have a usable `eigen3-devel` package across flavors).
+  Windows is not built; the CMake build has not been validated there.
+- The release workflow now has separate `build_wheels` (matrix over
+  macOS/Linux), `build_sdist`, and `check_distributions` jobs feeding the
+  existing publish jobs, replacing the old single-platform "build one
+  wheel and one sdist" step inside `validate`.
+- Without this, `pip install bsm-scanner` only worked out of the box on
+  the exact platform/Python version CI happened to build on (macOS
+  arm64 + Python 3.13 for 0.1.1); everyone else silently fell back to a
+  from-source build that hard-fails without a pre-installed system Eigen3
+  and CMake.
+
 ## 0.1.1
 
 - `core:neutrino/observables_common.yaml`: consolidated the redundant
