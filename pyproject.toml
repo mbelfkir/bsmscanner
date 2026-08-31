@@ -7,7 +7,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "bsm-scanner"
-version = "0.1.0"
+version = "0.1.1"
 description = "Graph-compiled BSM model scanner with Python frontend and C++ evaluation core."
 readme = "README.md"
 requires-python = ">=3.10"
