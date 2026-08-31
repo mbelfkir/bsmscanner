@@ -39,10 +39,10 @@ jobs:
       - name: Run tests
         run: |
           set +e
-          pytest -q --tb=short > /tmp/pytest_output.txt 2>&1
+          pytest -q --tb=line -ra > /tmp/pytest_output.txt 2>&1
           code=$?
           if [ $code -ne 0 ]; then
-            tail -n 120 /tmp/pytest_output.txt | while IFS= read -r line; do
+            grep -A 200 "short test summary info" /tmp/pytest_output.txt | head -n 40 | while IFS= read -r line; do
               esc=$(printf '%s' "$line" | sed -e 's/%/%25/g' -e 's/\r/%0D/g' -e 's/\n/%0A/g')
               printf '::error::%s\n' "$esc"
             done
