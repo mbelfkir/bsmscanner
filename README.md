@@ -203,7 +203,56 @@ This repository is a serious scaffold, not a monolithic finished physics package
   a float),
 - tests for the Python frontend.
 
+## Installation
+
+### From a published wheel (recommended)
+
+```bash
+pip install bsm-scanner
+```
+
+While the package is only published to TestPyPI (a real PyPI release is not out
+yet), dependencies have to come from the real index instead, since TestPyPI does
+not mirror them:
+
+```bash
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ bsm-scanner
+```
+
+CI publishes prebuilt wheels via `cibuildwheel` for:
+
+| Platform | Architecture             | Python      |
+| -------- | ------------------------ | ----------- |
+| macOS    | arm64 (Apple Silicon)    | 3.10 - 3.13 |
+| Linux    | x86_64, glibc >= 2.28 (`manylinux_2_28`) | 3.10 - 3.13 |
+
+On a matching machine, installation needs nothing beyond `pip`. Eigen3 -- the
+only native dependency besides pybind11 -- is header-only, so it is only needed
+while *building* the C++ extension, not at install or runtime; nothing links
+against it once compiled. The Linux wheels are also passed through `auditwheel
+repair` as part of the build, which fails the build outright (rather than
+shipping a broken wheel) if the compiled extension ends up depending on any
+shared library outside the `manylinux_2_28` baseline. So on either platform
+above, there is nothing to separately install for Eigen3, CMake, or a C++
+compiler.
+
+Outside that matrix -- Windows, Linux aarch64, macOS x86_64 (Intel), musllinux
+(Alpine), or a Python version other than 3.10-3.13 -- `pip install` silently
+falls back to building from the source distribution instead, which needs
+everything in [Prerequisites](#prerequisites) below already installed on your
+machine, and will fail with a `CMake not found` or `Eigen3 was not found` error
+otherwise.
+
+### From source
+
+Clone the repository, install the [Prerequisites](#prerequisites) below, then
+see [Build](#build).
+
 ## Prerequisites
+
+These are only needed for a from-source build -- i.e. cloning this repository,
+or installing on a platform/Python version outside the prebuilt-wheel matrix
+above.
 
 - Python >= 3.10
 - A C++20 compiler (tested with GCC >= 11 and Apple Clang)
