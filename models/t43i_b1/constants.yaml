@@ -1,0 +1,10 @@
+constants:
+- {name: vev, value: 246.22}
+- {name: alpha_em, value: 0.0072973525643}
+- {name: GF, value: 1.1663787e-05}
+- {name: mW, value: 80.3692}
+- {name: mZ, value: 91.188}
+- {name: mt, value: 172.52}
+- {name: HiggsMass, value: 125.25}
+- {name: br_mu_to_e_nunu, value: 1.0}
+- {name: GeV_to_eV, value: 1.0e+9}

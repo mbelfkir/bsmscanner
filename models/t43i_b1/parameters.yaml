@@ -1,0 +1,27 @@
+parameters:
+- {name: Mpsi, value_type: real, scan: true, lower: 50.0, upper: 2000.0, default: 316.0, prior: log}
+- {name: MN, value_type: real, scan: true, lower: 100.0, upper: 5000.0, default: 707.0, prior: log}
+- {name: MH1, value_type: real, scan: true, lower: 60.0, upper: 2000.0, default: 346.0, prior: log}
+- {name: MH2, value_type: real, scan: true, lower: 60.0, upper: 2000.0, default: 346.0, prior: log}
+- {name: MA1, value_type: real, scan: true, lower: 60.0, upper: 2000.0, default: 346.0, prior: log}
+- {name: Mphipm, value_type: real, scan: true, lower: 80.0, upper: 2000.0, default: 400.0, prior: log}
+- {name: sh, value_type: real, scan: true, lower: 1.0e-3, upper: 0.997, default: 0.1, prior: flat}
+- {name: k1, value_type: real, scan: true, lower: -8.0, upper: 8.0, default: 0.1, prior: flat}
+- {name: k4, value_type: real, scan: true, lower: -0.5, upper: 0.5, default: 0.05, prior: flat}
+- {name: k5, value_type: real, scan: true, lower: -0.5, upper: 0.5, default: 0.05, prior: flat}
+- {name: lambda2, value_type: real, scan: true, lower: 1.0e-4, upper: 6.0, default: 0.1, prior: log}
+- {name: lambda3, value_type: real, scan: true, lower: 1.0e-4, upper: 6.0, default: 0.1, prior: log}
+- {name: ReYe, value_type: real, scan: true, lower: -1.0, upper: 1.0, default: 1.0e-3, prior: signed_log, min_abs: 1.0e-9}
+- {name: ImYe, value_type: real, scan: true, lower: -1.0, upper: 1.0, default: 1.0e-3, prior: signed_log, min_abs: 1.0e-9}
+- {name: ReYmu, value_type: real, scan: true, lower: -1.0, upper: 1.0, default: 1.0e-3, prior: signed_log, min_abs: 1.0e-9}
+- {name: ImYmu, value_type: real, scan: true, lower: -1.0, upper: 1.0, default: 1.0e-3, prior: signed_log, min_abs: 1.0e-9}
+- {name: ReYtau, value_type: real, scan: true, lower: -1.0, upper: 1.0, default: 1.0e-3, prior: signed_log, min_abs: 1.0e-9}
+- {name: ImYtau, value_type: real, scan: true, lower: -1.0, upper: 1.0, default: 1.0e-3, prior: signed_log, min_abs: 1.0e-9}
+- {name: Reye, value_type: real, scan: true, lower: -3.2, upper: 3.2, default: 1.0e-2, prior: signed_log, min_abs: 1.0e-9}
+- {name: Imye, value_type: real, scan: true, lower: -3.2, upper: 3.2, default: 1.0e-2, prior: signed_log, min_abs: 1.0e-9}
+- {name: Reymu, value_type: real, scan: true, lower: -3.2, upper: 3.2, default: 1.0e-2, prior: signed_log, min_abs: 1.0e-9}
+- {name: Imymu, value_type: real, scan: true, lower: -3.2, upper: 3.2, default: 1.0e-2, prior: signed_log, min_abs: 1.0e-9}
+- {name: Reytau, value_type: real, scan: true, lower: -3.2, upper: 3.2, default: 1.0e-2, prior: signed_log, min_abs: 1.0e-9}
+- {name: Imytau, value_type: real, scan: true, lower: -3.2, upper: 3.2, default: 1.0e-2, prior: signed_log, min_abs: 1.0e-9}
+- {name: Reyp, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 1.0e-5, prior: signed_log, min_abs: 1.0e-9}
+- {name: Imyp, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 1.0e-5, prior: signed_log, min_abs: 1.0e-9}

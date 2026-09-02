@@ -1,0 +1,19 @@
+theory_checks:
+- {name: scalar_masses_positive, condition: 'mphi_sq > 0'}
+- {name: singlet_mass_positive,  condition: 'mphip_sq > 0'}
+- {name: a2_denominator_safe,    condition: 'abs(MA2sq_den) > 1.0'}
+- {name: a2_positive,            condition: 'MA2sq > 0'}
+- {name: h1_lighter_than_h2,     condition: 'MH2 > MH1'}
+# perturbativity, Eq. (IV.50)
+
+
+- {name: perturbative_Y,         condition: 'abs(Ye)**2 + abs(Ymu)**2 + abs(Ytau)**2 < 4*pi'}
+- {name: perturbative_yp,        condition: 'abs(Yp)**2 < 4*pi'}
+# boundedness from below, Eq. (IV.48)
+- {name: bfb_l2, condition: 'lambda2 > 0'}
+- {name: bfb_l3, condition: 'lambda3 > 0'}
+- {name: bfb_k12, condition: 'k1 + k2 - abs(k3) >= -2*sqrt(0.129*lambda2)'}
+- {name: bfb_k4,  condition: 'k4 >= -2*sqrt(0.129*lambda3)'}
+- {name: bfb_k5,  condition: 'k5 >= -2*sqrt(lambda2*lambda3)'}
+- {name: perturbative_quartics, condition: 'max_coupling < 4*pi'}
+- {name: perturbative_yukawas, condition: 'yukawa_norm < 4*pi'}

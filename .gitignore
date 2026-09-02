@@ -18,6 +18,7 @@ venv/
 *.ninja_log
 examples/**/runs/
 models/**/runs/
+notebooks/**/runs/
 benchmarks/runs/
 artifacts/
 results/

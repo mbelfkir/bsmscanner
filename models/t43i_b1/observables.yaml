@@ -1,0 +1,37 @@
+observables:
+# --- neutrino masses (eV) straight from the Takagi factorisation: NO RESCALING.
+# The absolute scale is a prediction of Lambda, not a normalisation.
+- {name: mn3, value_type: real, projection: {from: diag__neutrino, quantity: singular_values, index: 0}}
+- {name: mn2, value_type: real, projection: {from: diag__neutrino, quantity: singular_values, index: 1}}
+- {name: mn1, value_type: real, projection: {from: diag__neutrino, quantity: singular_values, index: 2}}
+- {name: Ue1, value_type: complex, projection: {from: diag__neutrino, quantity: u_complex, row: 0, col: 2}}
+- {name: Ue2, value_type: complex, projection: {from: diag__neutrino, quantity: u_complex, row: 0, col: 1}}
+- {name: Ue3, value_type: complex, projection: {from: diag__neutrino, quantity: u_complex, row: 0, col: 0}}
+- {name: Umu3, value_type: complex, projection: {from: diag__neutrino, quantity: u_complex, row: 1, col: 0}}
+- {name: Utau1, value_type: complex, projection: {from: diag__neutrino, quantity: u_complex, row: 2, col: 2}}
+- {name: Utau3, value_type: complex, projection: {from: diag__neutrino, quantity: u_complex, row: 2, col: 0}}
+- {name: theta13_angle, value_type: real, expression: asin(abs(Ue3))}
+- {name: theta12_angle, value_type: real, expression: atan(abs(Ue2)/abs(Ue1))}
+- {name: theta23_angle, value_type: real, expression: atan(abs(Umu3)/abs(Utau3))}
+- {name: s12, value_type: real, expression: sin(theta12_angle)**2}
+- {name: s13, value_type: real, expression: sin(theta13_angle)**2}
+- {name: s23, value_type: real, expression: sin(theta23_angle)**2}
+- {name: delta_numerator, value_type: complex, expression: conj(Ue1)*Ue3*Utau1*conj(Utau3)}
+- {name: deltaCP_raw, value_type: real, expression: arg(delta_numerator)}
+- {name: deltaCP, value_type: real, expression: 'if_else(deltaCP_raw < 0, deltaCP_raw + 2*pi, deltaCP_raw)'}
+- {name: deltaCP_deg, value_type: real, expression: 'if_else((deltaCP*180/pi) > 180, (deltaCP*180/pi) - 360, deltaCP*180/pi)'}
+# ordering-independent splittings (NO: mn1 = 0)
+- {name: dm21, value_type: real, expression: mn2**2 - mn1**2}
+- {name: dm3l, value_type: real, expression: mn3**2 - mn1**2}
+- {name: log10_dm21, value_type: real, expression: 'log(max(dm21, 1.0e-30))/log(10)'}
+- {name: dm3l_meV, value_type: real, expression: dm3l*1.0e+3}
+- {name: sum_m, value_type: real, expression: mn1 + mn2 + mn3}
+# exact definitions, Sec. III A of the paper
+- {name: mbeta, value_type: real, expression: 'sqrt(abs(Ue1)**2*mn1**2 + abs(Ue2)**2*mn2**2 + abs(Ue3)**2*mn3**2)'}
+- {name: mbetabeta, value_type: real, expression: 'abs(Ue1**2*mn1 + Ue2**2*mn2 + Ue3**2*mn3)'}
+# --- Higgs diphoton, Eq. (IV.52): top + W in the SM loop, as in the paper
+- {name: Rgg, value_type: real, expression: abs(1 + A_phi/(A_t + A_w))**2}
+# --- radiative cLFV, Eqs. (III.34)-(III.35)
+- {name: br_mu_e_gamma, value_type: real, expression: 'LeptonGammaBR(ymu, ye, br_mu_to_e_nunu, Mpsi, Mphipm)'}
+- {name: yukawa_norm, value_type: real, expression: 'abs(ye)**2 + abs(ymu)**2 + abs(ytau)**2'}
+- {name: max_coupling, value_type: real, expression: 'max(max(abs(k1), abs(k2)), max(max(abs(k3), abs(k4)), max(abs(k5), max(lambda2, lambda3))))'}

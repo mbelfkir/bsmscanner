@@ -160,6 +160,16 @@ BSMScanner/
 │   │   ├── result_writer.cpp
 │   │   └── runner.cpp
 │   └── pybind_module.cpp
+├── notebooks/
+│   ├── README.md
+│   ├── scotogenic_ma.ipynb
+│   ├── minimal_bl.ipynb
+│   ├── two_higgs_doublet.ipynb
+│   ├── smeft_wilson.ipynb
+│   ├── zprime_simplified.ipynb
+│   ├── leptoquark_brw.ipynb
+│   ├── alp_effective.ipynb
+│   └── t43i_b1.ipynb
 └── tests/
     ├── test_constraints.py
     ├── test_graph.py
@@ -482,4 +492,5 @@ simplified analytic proxy for each benchmark.
 - [Posterior MCMC](docs/posterior_mcmc.md)
 - [Statistics post-processing](docs/statistics.md)
 - [Published benchmark validation](docs/published_benchmark_validation.md)
+- [Tutorial notebooks](notebooks/README.md)
 - [Release readiness snapshot](RELEASE_READY.md)

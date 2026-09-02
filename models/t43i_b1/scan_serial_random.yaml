@@ -1,0 +1,4 @@
+scan:
+  engine: serial_random
+  seed: 20260816
+  settings: {objective: nll, invalid_penalty: 1.0e+12, save_invalid_points: false, max_evaluations: 30000, progress_interval: 10000}

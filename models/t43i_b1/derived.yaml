@@ -1,0 +1,41 @@
+# Scalar sector reconstruction, Eqs. (II.14)-(II.25) of arXiv:2608.12646.
+# NOTE: `sh` is sin^2(theta_H), matching Table V of the paper.
+derived_scalars:
+- {name: e_em, expression: sqrt(4*pi*alpha_em)}
+- {name: cos_w, expression: mW / mZ}
+- {name: sin_w, expression: 'sqrt(1 - cos_w**2)'}
+- {name: g2, expression: (2*mW) / vev}
+- {name: sH, expression: sqrt(sh)}
+- {name: cH, expression: sqrt(1 - sh)}
+- {name: mphi_sq,  expression: Mphipm**2 - 0.5*k1*vev**2}
+- {name: ccommon,  expression: sh*MH1**2 + (1 - sh)*MH2**2}
+- {name: mphip_sq, expression: ccommon - 0.5*k4*vev**2}
+- {name: bmix,     expression: sH*cH*(MH1**2 - MH2**2)}
+- {name: mu_phi,   expression: sqrt(2.0)*bmix/vev}
+- {name: MA2sq_den, expression: ccommon - MA1**2}
+- {name: MA2sq,    expression: ccommon + bmix**2 / MA2sq_den}
+- {name: MA2,      expression: 'sqrt(max(MA2sq, 1.0))'}
+- {name: mphi,     expression: 'sqrt(max(mphi_sq, 1.0))'}
+- {name: mphip,    expression: 'sqrt(max(mphip_sq, 1.0))'}
+- {name: i3,       expression: 'I3(mphi, mphip, Mpsi)'}
+- {name: k2, expression: ((1-sh)*MH1**2 + sh*MH2**2 + sa*MA1**2 + (1-sa)*MA2**2 - 2*Mphipm**2) / vev**2}
+- {name: k3, expression: (((1-sh)*MH1**2 + sh*MH2**2) - (sa*MA1**2 + (1-sa)*MA2**2)) / vev**2}
+- {name: sa_raw, expression: (MA2sq - ccommon) / (MA2sq - MA1**2)}
+- {name: sa, expression: 'min(max(sa_raw, 0.0), 1.0)'}
+- {name: tau_w,   expression: 4*(mW/HiggsMass)**2}
+- {name: tau_t,   expression: 4*(mt/HiggsMass)**2}
+- {name: tau_phi, expression: 4*(Mphipm/HiggsMass)**2}
+derived_complex:
+- {name: ye,   expression: Reye + 1j*Imye}
+- {name: ymu,  expression: Reymu + 1j*Imymu}
+- {name: ytau, expression: Reytau + 1j*Imytau}
+- {name: Ye,   expression: ReYe + 1j*ImYe}
+- {name: Ymu,  expression: ReYmu + 1j*ImYmu}
+- {name: Ytau, expression: ReYtau + 1j*ImYtau}
+- {name: Yp,   expression: Reyp + 1j*Imyp}
+# Lambda of Eq. (III.29).  The published benchmarks require <H0>^2 -> vev^2
+# (see validation note); masses converted GeV -> eV so M_nu comes out in eV.
+- {name: normalization, expression: -(mu_phi * vev**2 * Mpsi * i3 / MN) * Yp * GeV_to_eV}
+- {name: A_w,   expression: -(2 + 3*tau_w + 3*tau_w*(2 - tau_w)*f(tau_w))}
+- {name: A_t,   expression: 3*(2/3.0)**2 * (2*tau_t*(1 + (1 - tau_t)*f(tau_t)))}
+- {name: A_phi, expression: ((k1*vev**2)/(2*Mphipm**2)) * (-tau_phi + tau_phi**2*f(tau_phi))}

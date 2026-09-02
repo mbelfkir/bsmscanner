@@ -1,0 +1,12 @@
+scan:
+  engine: adaptive_diver
+  seed: 20260816
+  settings: {objective: nll, invalid_penalty: 1.0e+12, save_invalid_points: false, progress_interval: 10000}
+  adaptive_diver:
+    population_size: 100
+    max_generations: 300
+    p_best_fraction: 0.2
+    mutation: {adaptive: true, F_min: 0.05, F_max: 0.7, initial_mean: 0.35, learning_rate: 0.1}
+    crossover: {adaptive: true, CR_min: 0.1, CR_max: 0.9, initial_mean: 0.55, learning_rate: 0.1}
+    bounds: {handling: reflect}
+    local_refinement: {enabled: false}

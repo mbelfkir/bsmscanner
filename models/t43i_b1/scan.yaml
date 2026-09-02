@@ -1,0 +1,3 @@
+scan:
+  engine: adaptive_diver
+  settings: {max_evaluations: 30000, seed: 20260816}
