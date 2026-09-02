@@ -1,0 +1,11 @@
+# M_nu = Lambda (Y y^T + y Y^T), Eq. (III.30).  Rank 2 => one massless neutrino.
+matrices:
+- name: neutrino_mass_matrix
+  value_type: complex_matrix
+  type: majorana_mass
+  role: neutrino
+  diagonalize: true
+  rows:
+  - ['2*Ye*ye*normalization', '(Ye*ymu + Ymu*ye)*normalization', '(Ye*ytau + Ytau*ye)*normalization']
+  - ['(Ymu*ye + Ye*ymu)*normalization', '2*Ymu*ymu*normalization', '(Ymu*ytau + Ytau*ymu)*normalization']
+  - ['(Ytau*ye + Ye*ytau)*normalization', '(Ytau*ymu + Ymu*ytau)*normalization', '2*Ytau*ytau*normalization']

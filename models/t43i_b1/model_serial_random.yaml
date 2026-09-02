@@ -1,0 +1,17 @@
+metadata:
+  name: t43i_b1_no
+  version: 0.1.0
+  description: T4-3-i-B1 one-loop Majorana neutrino mass and dark matter, normal ordering.
+  ordering: normal
+  tags: [t43i, oneloop, normal_ordering]
+imports:
+- parameters.yaml
+- constants.yaml
+- ../oneloop/functions.yaml
+- derived.yaml
+- matrices.yaml
+- observables.yaml
+- theory_checks.yaml
+- likelihoods_no.yaml
+- outputs.yaml
+- scan_serial_random.yaml

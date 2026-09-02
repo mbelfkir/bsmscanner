@@ -1,0 +1,16 @@
+scan:
+  engine: de_scipy
+  seed: 20260816
+  settings:
+    objective: nll
+    invalid_penalty: 1.0e+12
+    save_invalid_points: false
+    strategy: rand1bin
+    maxiter: 45
+    popsize: 26
+    tol: 1.0e-10
+    mutation: [0.5, 1.5]
+    recombination: 0.7
+    init: sobol
+    polish: true
+    progress_interval: 10000

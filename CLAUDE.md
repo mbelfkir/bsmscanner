@@ -56,6 +56,12 @@ the full default rule set.
   documented in `docs/model_schema.md`.
 - `examples/` — small runnable end-to-end examples paired with some of the
   models above.
+- `notebooks/` — pre-executed Jupyter tutorial notebooks, one per published
+  benchmark model, loading `../models/...` and `../python` by relative path.
+  Re-run cells write scratch output to `notebooks/**/runs/` (gitignored); a
+  cell explicitly marked as not executed in the original notebook (the
+  full matched-budget, ~30k-evaluation reproduction) should stay that way
+  when refreshing outputs.
 - `tests/` — pytest suite; `tests/fixtures/` for shared fixtures.
 - `docs/` — one Markdown file per subsystem (architecture, scan runner, basin
   scan, adaptive Diver engine, posterior MCMC, statistics layer, matrix

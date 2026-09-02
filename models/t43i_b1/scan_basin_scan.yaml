@@ -1,0 +1,16 @@
+scan:
+  engine: basin_scan
+  seed: 20260816
+  settings: {objective: nll, invalid_penalty: 1.0e+12, save_invalid_points: false, progress_interval: 10000}
+  basin_scan:
+    seed: 20260816
+    exploration: {n_points: 12000}
+    selection: {mode: top_fraction, top_fraction: 0.02, max_points: 400, min_points: 50}
+    clustering: {enabled: true, method: dbscan, eps_fraction: 0.05, min_samples: 4, max_clusters: 6}
+    boxes: {construction: quantile, q_low: 0.05, q_high: 0.95, padding_fraction: 0.5, min_width_fraction: 0.15, clip_to_original_bounds: true, max_boxes: 6}
+    focused_engine:
+      name: adaptive_diver
+      population_size: 60
+      max_generations: 90
+      bounds: {handling: reflect}
+      local_refinement: {enabled: false}
