@@ -2,6 +2,27 @@
 
 ## Unreleased
 
+## 0.1.3
+
+- Fixed `adaptive_diver`'s differential-mutation step for `log`/`signed_log`
+  -prior parameters: previously `prior` only shaped the *initial* population
+  sample (`_sample_prior_points`) -- every mutation thereafter combined
+  population members in raw physical space, applying the same fixed
+  *absolute* step size regardless of prior. For a parameter spanning several
+  decades (e.g. a mass scanned from 100 GeV to 2 TeV), this meant the search
+  could not take proportionally small steps near the low end of the range,
+  making it very hard to converge precisely there, and made mutation
+  differences dominated entirely by whichever population member happened to
+  sit in the highest decade. Mutation now runs through `_de_mutate_vector`,
+  which maps `log`/`signed_log` dimensions through `_to_search_space` /
+  `_from_search_space` (log10 / signed-log10) before combining them and back
+  afterward -- the same convention already used by the ML-focus/guided
+  -sampling proposal code elsewhere in this module -- so a step of a given
+  size is now a proportional change in physical space for those priors, as
+  the prior declaration intends. `flat`/`fixed` dimensions are unaffected
+  (the transform is the identity for them), so this does not change behavior
+  for any existing flat-prior model.
+
 - Added the `basin_scan` engine (broad exploration, clustering, focused
   per-cluster refinement) alongside `serial_random`, `de_scipy`, and
   `adaptive_diver`.
