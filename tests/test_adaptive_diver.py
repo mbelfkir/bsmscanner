@@ -4,10 +4,17 @@ import csv
 import json
 from pathlib import Path
 
+import numpy as np
 import pytest
 from bsm_scanner import compile_model, run_scan
 from bsm_scanner.model.schema import ModelDefinition
-from bsm_scanner.scan import build_scan_request
+from bsm_scanner.scan import (
+    ScanParameterSpec,
+    _de_mutate_vector,
+    _from_search_space,
+    _to_search_space,
+    build_scan_request,
+)
 
 pytest.importorskip("bsm_scanner._core")
 
@@ -522,3 +529,160 @@ def test_existing_engines_still_available():
 
     assert de_request.engine == "de_scipy"
     assert serial_request.engine == "serial_random"
+
+
+def test_to_search_space_log_prior_is_log10_and_invertible():
+    parameters = [ScanParameterSpec(name="m", index=0, lower=1.0e-3, upper=1.0e3, prior="log", default=1.0)]
+    physical = np.array([0.05])
+
+    transformed = _to_search_space(physical, parameters)
+    assert transformed[0] == pytest.approx(np.log10(0.05))
+
+    roundtrip = _from_search_space(transformed, parameters)
+    assert roundtrip[0] == pytest.approx(0.05)
+
+
+def test_to_search_space_signed_log_prior_is_invertible():
+    parameters = [
+        ScanParameterSpec(
+            name="c", index=0, lower=-10.0, upper=10.0, prior="signed_log", default=0.0, min_abs=1.0e-3
+        )
+    ]
+    for physical_value in (-3.5, 3.5):
+        physical = np.array([physical_value])
+        transformed = _to_search_space(physical, parameters)
+        roundtrip = _from_search_space(transformed, parameters)
+        assert roundtrip[0] == pytest.approx(physical_value)
+
+
+def test_to_search_space_flat_prior_is_identity():
+    parameters = [ScanParameterSpec(name="x", index=0, lower=-5.0, upper=5.0, prior="flat", default=0.0)]
+    physical = np.array([-1.2345])
+
+    assert _to_search_space(physical, parameters)[0] == pytest.approx(-1.2345)
+    assert _from_search_space(physical, parameters)[0] == pytest.approx(-1.2345)
+
+
+def make_wide_log_prior_model() -> ModelDefinition:
+    """A single log-prior parameter spanning 8 decades, peaked at a small value.
+
+    Differential mutation that operates in raw (linear) parameter space takes
+    steps sized against the population's *absolute* spread, which for a
+    parameter ranging from 1e-4 to 1e4 is dominated by the upper decades --
+    making it very hard to home in precisely on a small target value within a
+    short budget. Mutating in log-space (this model's regression target)
+    takes proportional steps instead, so the same short budget should recover
+    the small target to good precision.
+    """
+    return ModelDefinition.from_mapping(
+        {
+            "metadata": {"name": "adaptive-diver-wide-log-prior"},
+            "parameters": [
+                {
+                    "name": "m",
+                    "value_type": "real",
+                    "scan": True,
+                    "lower": 1.0e-4,
+                    "upper": 1.0e4,
+                    "default": 1.0,
+                    "prior": "log",
+                },
+            ],
+            "observables": [{"name": "m_obs", "expression": "m"}],
+            "likelihoods": [
+                {
+                    "name": "m_term",
+                    "kind": "gaussian",
+                    "observable": "m_obs",
+                    "mean": 0.03,
+                    "sigma": 0.001,
+                },
+            ],
+            "outputs": {"save": ["m_obs"]},
+            "scan": {
+                "engine": "adaptive_diver",
+                "save_every": 1,
+                "seed": 2468,
+                "settings": {
+                    "objective": "nll",
+                    "invalid_penalty": 1.0e12,
+                    "save_invalid_points": False,
+                    "verbose": 0,
+                },
+                "adaptive_diver": {
+                    "population_size": 16,
+                    "max_generations": 60,
+                    "p_best_fraction": 0.25,
+                    "archive": True,
+                    "mutation": {
+                        "F_min": 0.1,
+                        "F_max": 1.0,
+                        "initial_mean": 0.5,
+                        "learning_rate": 0.1,
+                    },
+                    "crossover": {
+                        "CR_min": 0.0,
+                        "CR_max": 1.0,
+                        "initial_mean": 0.9,
+                        "learning_rate": 0.1,
+                    },
+                    "bounds": {"handling": "reflect"},
+                    "convergence": {
+                        "patience": 0,
+                        "population_std_tol": 0.0,
+                    },
+                    "local_refinement": {"enabled": False},
+                },
+            },
+        }
+    )
+
+
+def test_adaptive_diver_log_prior_mutation_is_a_proportional_step_not_an_absolute_one():
+    """Regression test for the mutation step itself, not just end-to-end recovery.
+
+    Differential mutation combines population members as
+    `base + F*(pbest - base) + F*(r1 - r2)`. For a `log`-prior parameter
+    spanning many decades, doing that arithmetic in raw (physical) space makes
+    the step's magnitude dominated entirely by whichever of r1/r2 happens to
+    sit in a high decade -- destroying any notion of a "local" move around
+    `base`, regardless of where base itself is. Doing it in log10-space (this
+    regression's target behavior) keeps the step a bounded, proportional
+    change in decades instead.
+    """
+    parameters = [ScanParameterSpec(name="m", index=0, lower=1.0e-4, upper=1.0e4, prior="log", default=1.0)]
+    base = np.array([0.01])
+    pbest = np.array([0.01])  # identical to base: the p-best term should vanish
+    r1 = np.array([1000.0])
+    r2 = np.array([0.01])
+    f = 0.4
+
+    mutant = _de_mutate_vector(base, pbest, r1, r2, f, parameters)
+
+    # log10(0.01) = -2, log10(1000) = 3 -> mutant_t = -2 + 0 + 0.4*5 = 0 -> mutant = 1.0
+    assert mutant[0] == pytest.approx(1.0)
+
+    # Contrast with what the old raw-linear mutation computed (same inputs):
+    # it is dominated by the absolute r1-r2 gap and loses any connection to
+    # the decade `base` was actually in.
+    old_style_mutant = base + f * (pbest - base) + f * (r1 - r2)
+    assert old_style_mutant[0] == pytest.approx(400.0, rel=1.0e-3)
+    assert abs(np.log10(mutant[0]) - np.log10(base[0])) < abs(np.log10(old_style_mutant[0]) - np.log10(base[0]))
+
+
+def test_adaptive_diver_log_prior_end_to_end_smoke(tmp_path):
+    model = make_wide_log_prior_model()
+    compiled = compile_model(model, build_backend=False)
+
+    results = run_scan(
+        model,
+        compiled,
+        run_directory=tmp_path / "wide-log-prior",
+        run_id="adaptive-wide-log-prior",
+        timestamp_utc=FIXED_TIMESTAMP,
+    )
+
+    best_fit = json.loads(results.best_fit_path.read_text(encoding="utf-8"))
+
+    assert best_fit["has_best_point"] is True
+    assert 1.0e-4 <= best_fit["parameters"]["m"] <= 1.0e4

@@ -2340,6 +2340,63 @@ def _sample_parameter_bounds_from_unit(
     return float(out) if np.isscalar(unit) else out
 
 
+def _to_search_space(vector: np.ndarray, parameters: Sequence[ScanParameterSpec]) -> np.ndarray:
+    """Map a physical-space point to the space differential mutation should operate in.
+
+    `log`-prior dimensions are mapped through log10 and `signed_log`-prior
+    dimensions through a signed log10, so that a DE step of a given size is a
+    *proportional* (multiplicative) change in physical space rather than a
+    fixed absolute one -- matching the intent of those priors instead of only
+    honoring it at initial-population sampling time. `flat`/`fixed` dimensions
+    are left unchanged.
+    """
+    out = np.asarray(vector, dtype=float).copy()
+    for index, parameter in enumerate(parameters):
+        if parameter.prior == "log":
+            out[index] = np.log10(out[index])
+        elif parameter.prior == "signed_log":
+            scale = _parameter_min_abs(parameter)
+            value = out[index]
+            out[index] = np.sign(value) * np.log10(1.0 + abs(value) / scale)
+    return out
+
+
+def _from_search_space(vector: np.ndarray, parameters: Sequence[ScanParameterSpec]) -> np.ndarray:
+    """Inverse of `_to_search_space`."""
+    out = np.asarray(vector, dtype=float).copy()
+    for index, parameter in enumerate(parameters):
+        if parameter.prior == "log":
+            out[index] = 10.0 ** out[index]
+        elif parameter.prior == "signed_log":
+            scale = _parameter_min_abs(parameter)
+            value = out[index]
+            out[index] = np.sign(value) * scale * (10.0 ** abs(value) - 1.0)
+    return out
+
+
+def _de_mutate_vector(
+    base: np.ndarray,
+    pbest: np.ndarray,
+    r1: np.ndarray,
+    r2: np.ndarray,
+    f: float,
+    parameters: Sequence[ScanParameterSpec],
+) -> np.ndarray:
+    """Current-to-pbest/1 differential mutation, done in search space.
+
+    Equivalent to `base + f*(pbest-base) + f*(r1-r2)` in physical space for
+    `flat`/`fixed` dimensions, but takes a proportional (multiplicative) step
+    for `log`/`signed_log` dimensions instead of a fixed absolute one -- see
+    `_to_search_space`.
+    """
+    base_t = _to_search_space(base, parameters)
+    pbest_t = _to_search_space(pbest, parameters)
+    r1_t = _to_search_space(r1, parameters)
+    r2_t = _to_search_space(r2, parameters)
+    mutant_t = base_t + f * (pbest_t - base_t) + f * (r1_t - r2_t)
+    return _from_search_space(mutant_t, parameters)
+
+
 def _scale_unit_points(
     unit: np.ndarray,
     parameters: Sequence[ScanParameterSpec],
@@ -2778,10 +2835,13 @@ def _run_adaptive_diver_scan(
                 ]
                 r2 = population[int(rng.choice(r2_candidates))]
 
-            mutant = (
-                population[index]
-                + f * (population[pbest_index] - population[index])
-                + f * (population[r1_index] - r2)
+            mutant = _de_mutate_vector(
+                population[index],
+                population[pbest_index],
+                population[r1_index],
+                r2,
+                f,
+                request.scanned_parameters,
             )
             mutant = _repair_bounds(mutant, lower, upper, rng, str(options["bounds_handling"]))
             crossover_mask = rng.random(dimension) < cr
