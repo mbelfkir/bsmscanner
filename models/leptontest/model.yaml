@@ -4,7 +4,6 @@ metadata:
   description: test of the lepton sector of 3x3 matrix
   ordering: normal
   tags:
-  - oneloop
   - normal_ordering
 imports:
 - parameters.yaml

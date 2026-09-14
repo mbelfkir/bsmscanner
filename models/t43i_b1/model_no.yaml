@@ -7,7 +7,7 @@ metadata:
 imports:
 - parameters.yaml
 - constants.yaml
-- ../oneloop/functions.yaml
+- functions.yaml
 - derived.yaml
 - matrices.yaml
 - observables.yaml

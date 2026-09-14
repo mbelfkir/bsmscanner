@@ -6,8 +6,7 @@ result loading; a C++ extension (built via `pybind11` + CMake + `scikit-build-co
 owns hot-loop point evaluation, matrix algebra/diagonalization, and likelihood
 accumulation. The core abstraction is a user-defined analytic model (YAML) that
 gets lowered into a compiled dependency graph before a scan starts. See
-`README.md` for the full repository layout and `docs/architecture.md` for the
-architectural rationale.
+`README.md` for the full repository layout and architectural rationale.
 
 ## Setup / build
 
@@ -52,8 +51,8 @@ the full default rule set.
   the package is installed). See `docs/authoring_models.md` for the full
   authoring guide, including `bsm-scanner core list/show/path`.
 - `models/` — the framework's own example/benchmark models, each with
-  `model.yaml`, `parameters.yaml`, `outputs.yaml`, etc. following the schema
-  documented in `docs/model_schema.md`.
+  `model.yaml`, `parameters.yaml`, `outputs.yaml`, etc. See
+  `docs/authoring_models.md` for the model YAML schema and authoring guide.
 - `examples/` — small runnable end-to-end examples paired with some of the
   models above.
 - `notebooks/` — pre-executed Jupyter tutorial notebooks, one per published
@@ -63,11 +62,9 @@ the full default rule set.
   full matched-budget, ~30k-evaluation reproduction) should stay that way
   when refreshing outputs.
 - `tests/` — pytest suite; `tests/fixtures/` for shared fixtures.
-- `docs/` — one Markdown file per subsystem (architecture, scan runner, basin
-  scan, adaptive Diver engine, posterior MCMC, statistics layer, matrix
-  diagonalization, etc.) plus `docs/current_status.md` for the current
-  implemented/deferred milestone state — check that file before assuming
-  something is or isn't implemented.
+- `docs/` — one Markdown file per subsystem (basin scan, adaptive Diver
+  engine, posterior MCMC, statistics layer, matrix diagonalization, model
+  authoring, etc.).
 
 ## Versioning & release process
 

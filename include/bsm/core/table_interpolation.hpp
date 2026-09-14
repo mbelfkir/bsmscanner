@@ -8,15 +8,11 @@ namespace bsm::core::table {
 
 // Shared two-column [x, y] lookup-table interpolation.
 //
-// This is used both by the generic `table_lookup` constraint kind
-// (src/constraints.cpp) and by plugin-specific table-based likelihood terms
-// (e.g. the oneloop_likelihoods.neutrino_mass_term plugin in
-// src/plugins/oneloop_likelihoods.cpp). The two previously carried
-// independent, hand-copied implementations of this exact numerical logic;
-// it is centralized here so a future fix to the interpolation math applies
-// to every caller automatically instead of requiring the same patch in
-// multiple files. See docs/dm_status.md and docs/release_notes_oneloop.md
-// for the April 2026 table_lookup bug that motivated this consolidation.
+// This is used by the generic `table_lookup` constraint kind
+// (src/constraints.cpp) and is available to any plugin-specific table-based
+// likelihood term under src/plugins/. It is centralized here so a fix to the
+// interpolation math applies to every caller automatically instead of
+// requiring the same patch in multiple files.
 
 // Validates that `table` is non-empty and that its x-values (column 0) are
 // strictly increasing. A table with a single row is always valid. Throws

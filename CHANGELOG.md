@@ -2,6 +2,28 @@
 
 ## Unreleased
 
+## 0.1.4
+
+- Removed the `oneloop` and `oneloop_master` reference models, their
+  examples, tests, and backend plugins (`oneloop_micromegas`,
+  `oneloop_likelihoods`). They were the framework's original monolithic
+  reference implementation, superseded by the modular per-model layout
+  (see `docs/core_model_split.md`); `models/t43i_b1` depended on
+  `models/oneloop/functions.yaml` and now carries its own copy of those
+  one-loop physics functions instead.
+- Removed the internal-development-status docs that tracked that
+  migration (`architecture.md`, `current_status.md`, `dm_status.md`,
+  `implemented_vs_deferred.md`, `migration_oneloop.md`, `modular_models.md`,
+  `model_schema.md`, `oneloop_full.md`, `oneloop_master.md`,
+  `oneloop_master_canonical.md`, `release_notes_oneloop.md`,
+  `scan_runner.md`, `core_neutrino_blocks.md`, `core_plugin_boundaries.md`),
+  `RELEASE_READY.md`, and the archived pre-PyPI milestone reports under
+  `docs/release/` and `docs/results/`.
+- Rewrote `README.md` as a general package README -- install, a real
+  model-syntax example, the `core:` import mechanism, and the CLI/Python
+  API -- with the oneloop-specific content removed.
+
+
 ## 0.1.3
 
 - Fixed `adaptive_diver`'s differential-mutation step for `log`/`signed_log`

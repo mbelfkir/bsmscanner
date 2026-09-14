@@ -192,13 +192,3 @@ example because it shows the intended split without one-loop-specific baggage:
 - normal and inverted manifests with minimal duplication
 
 It is the preferred example to follow when adding a new model.
-
-## Migration Direction
-
-`oneloop_master` remains the canonical physics model and must preserve its
-current behavior. Its migration to this split should therefore be incremental:
-
-- align constants and matrix metadata where safe
-- keep model-side likelihood blocks model-side
-- keep one-loop-specific plugins and grouped likelihood behavior out of the core
-- only replace duplicated generic neutrino pieces when parity risk is low
