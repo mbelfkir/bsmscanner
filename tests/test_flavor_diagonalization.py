@@ -492,24 +492,6 @@ def test_pmns_identity_fallback_preserves_neutrino_only_models():
     )
 
 
-def test_full_flavor_toy_model_loads_lowers_and_evaluates():
-    pytest.importorskip("bsm_scanner._core")
-
-    model = load_model(ROOT / "models" / "flavor_toy" / "model.yaml")
-    result = compile_model(model, build_backend=True).evaluate({})
-
-    assert result["status"] == "ok"
-    assert result["valid"] is True
-    assert "U_PMNS" in result["outputs"]
-    assert "V_CKM" in result["outputs"]
-    assert "Vus" in result["outputs"]
-    assert "deltaCKM" in result["outputs"]
-    assert "J_CKM" in result["outputs"]
-    assert "wolfenstein_lambda" in result["outputs"]
-    assert "ckm_toy_Vus" in result["likelihood_terms"]
-    _unitary_close(np.asarray(result["outputs"]["U_PMNS"]), atol=1.0e-9)
-    _unitary_close(np.asarray(result["outputs"]["V_CKM"]), atol=1.0e-9)
-
 
 def test_invalid_ckm_request_reports_missing_rotation():
     with pytest.raises(ModelValidationError, match="down"):

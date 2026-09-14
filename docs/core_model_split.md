@@ -180,15 +180,19 @@ imports:
   - scan.yaml
 ```
 
-## Why `leptontest` Is The Reference Example
+## An Example Of The Split In Practice
 
-`models/leptontest` is now the clean reference
-example because it shows the intended split without one-loop-specific baggage:
+`models/scotogenic_ma` shows the intended split at full scale:
 
-- model-owned parameters and analytic matrices
+- model-owned parameters, constants, and analytic matrices split into their
+  own files (`parameters.yaml`, `constants.yaml`, `matrices.yaml`, ...)
 - matrix metadata with automatic diagonalization
-- imported core neutrino logic
-- imported model-side likelihood blocks
-- normal and inverted manifests with minimal duplication
+  (`diagonalize: true` on the charged-lepton mass matrix, an explicit
+  `diagonalizations` entry for the neutrino sector)
+- imported model-side likelihood and observable blocks
+  (`observables/`, `constraints/`)
+- normal-ordering and other manifests assembled from the same shared files
+  with minimal duplication
 
-It is the preferred example to follow when adding a new model.
+`models/minimal_bl` is the simplest complete example when a single-file
+model is enough -- see the Quickstart in the top-level `README.md`.

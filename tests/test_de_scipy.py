@@ -13,7 +13,6 @@ from bsm_scanner.scan import build_scan_request
 pytest.importorskip("bsm_scanner._core")
 
 ROOT = Path(__file__).resolve().parents[1]
-LEPTONTEST_DE_MODEL = ROOT / "examples" / "leptontest" / "model_de_scipy.yaml"
 
 
 def make_de_model() -> ModelDefinition:
@@ -123,26 +122,6 @@ def test_de_scipy_engine_is_registered_and_parses_settings():
     assert request.engine_options["progress_interval"] == 100
     assert request.invalid_objective == pytest.approx(1.0e12)
 
-
-def test_leptontest_de_scipy_manifest_loads_with_reference_engine():
-    from bsm_scanner import load_model
-
-    model = load_model(LEPTONTEST_DE_MODEL)
-    compiled = compile_model(model, build_backend=False)
-    request = build_scan_request(
-        model,
-        compiled,
-        run_directory=Path("unused"),
-        run_id="leptontest-de-scipy",
-        timestamp_utc="2026-04-24T00:00:00+00:00",
-    )
-
-    assert model.metadata.name == "leptontest_de_scipy"
-    assert request.engine == "de_scipy"
-    assert request.engine_options["strategy"] == "rand1bin"
-    assert request.engine_options["polish"] is False
-    assert model.statistics.enabled is True
-    assert model.statistics.method == "de_weighted"
 
 
 def test_de_scipy_rejects_invalid_x0_shape():

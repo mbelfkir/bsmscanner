@@ -70,9 +70,9 @@
           </article>
           <article class="card">
             <h3>3. Run an example</h3>
-            <pre><code>.venv/bin/python examples/leptontest/run_scan.py \
-  --model examples/leptontest/model_de_scipy.yaml \
-  --run-dir examples/leptontest/runs/demo</code></pre>
+            <pre><code>.venv/bin/python examples/scotogenic_ma/run_scan.py \
+  --model models/scotogenic_ma/model_no.yaml \
+  --run-dir examples/scotogenic_ma/runs/demo</code></pre>
           </article>
         </div>
       </section>
@@ -657,30 +657,29 @@ def construct_ckm(U_u_L, U_d_L):
         </div>
         <div class="cards two">
           <article class="card">
-            <h3>Leptontest</h3>
-            <p>Canonical compact neutrino-sector reference example.</p>
-            <pre><code>.venv/bin/python examples/leptontest/run_scan.py \
-  --model examples/leptontest/model_inverted_de_scipy.yaml \
-  --run-dir examples/leptontest/runs/inverted_demo</code></pre>
+            <h3>Scotogenic Ma</h3>
+            <p>Radiative (one-loop) neutrino mass with a dark matter candidate.</p>
+            <pre><code>.venv/bin/python examples/scotogenic_ma/run_scan.py \
+  --model models/scotogenic_ma/model_no.yaml \
+  --run-dir examples/scotogenic_ma/runs/demo</code></pre>
           </article>
           <article class="card">
-            <h3>Leptonquarktest</h3>
-            <p>Full lepton+quark pedagogical model with PMNS, CKM, and mass ratios.</p>
-            <pre><code>.venv/bin/python examples/leptonquarktest/run_scan.py \
-  --model examples/leptonquarktest/model_adaptive_diver.yaml \
-  --run-dir examples/leptonquarktest/runs/adaptive_demo</code></pre>
+            <h3>Minimal B-L</h3>
+            <p>Gauged U(1)_B-L with a seesaw and a Z', the simplest single-file model.</p>
+            <pre><code>.venv/bin/python examples/minimal_bl/run_scan.py \
+  --run-dir examples/minimal_bl/runs/example_scan</code></pre>
           </article>
           <article class="card">
-            <h3>Flavor toy</h3>
-            <p>Minimal flavor-sector diagonalization and mixing-matrix validation example.</p>
-            <pre><code>.venv/bin/python -m pytest tests/test_flavor_diagonalization.py -q</code></pre>
+            <h3>SMEFT Wilson</h3>
+            <p>SMEFT, Warsaw basis, 10 Wilson coefficients.</p>
+            <pre><code>.venv/bin/python examples/smeft_wilson/run_scan.py \
+  --run-dir examples/smeft_wilson/runs/demo</code></pre>
           </article>
           <article class="card">
-            <h3>arXiv:2006.03058 Weinberg</h3>
-            <p>FlavorPy-inspired Weinberg-operator model with NO/IO manifests.</p>
-            <pre><code>.venv/bin/python examples/arxiv2006_03058_weinberg/run_scan.py \
-  --model examples/arxiv2006_03058_weinberg/model_no.yaml \
-  --run-dir examples/arxiv2006_03058_weinberg/runs/no_demo</code></pre>
+            <h3>Z' Simplified</h3>
+            <p>Z' simplified dark matter (LHC DM Forum benchmark).</p>
+            <pre><code>.venv/bin/python examples/zprime_simplified/run_scan.py \
+  --run-dir examples/zprime_simplified/runs/demo</code></pre>
           </article>
         </div>
       </section>
@@ -693,9 +692,9 @@ def construct_ckm(U_u_L, U_d_L):
         <pre><code>from pathlib import Path
 from bsm_scanner import compile_model, load_model, run_scan
 
-model = load_model(Path("examples/leptontest/model_de_scipy.yaml"))
+model = load_model(Path("models/minimal_bl/model.yaml"))
 compiled = compile_model(model, build_backend=False)
-results = run_scan(model, compiled, run_directory=Path("runs/leptontest"))
+results = run_scan(model, compiled, run_directory=Path("runs/minimal_bl"))
 
 print(results.summary)
 print(results.best_fit_path)</code></pre>

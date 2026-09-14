@@ -311,7 +311,8 @@ Models are expected to keep their own:
 - likelihood blocks and dataset choices
 - plugins or custom likelihood terms when they are genuinely model-specific
 
-`models/leptontest` is a clean, minimal example of this split. See
+`models/scotogenic_ma` is a full-scale example of this split, and
+`models/minimal_bl` the simplest single-file case. See
 `docs/core_model_split.md` for the full rationale.
 
 ## Remote Sync And Build
@@ -331,10 +332,9 @@ Both variables are required; the scripts exit with a message if either is unset.
 
 ## Benchmark Models
 
-`models/` includes seven published benchmark models used in a companion
-methodology study comparing the four scan engines at matched budget, plus a
-handful of smaller internal reference/test models (`leptontest`, `t43i_b1`,
-`weinberg`, ...):
+`models/` includes exactly the seven published benchmark models used in a
+companion methodology study comparing the four scan engines at matched
+budget:
 
 - `scotogenic_ma` -- radiative (one-loop) neutrino mass with dark matter
 - `minimal_bl` -- gauged U(1)_B-L with a seesaw and a Z'

@@ -2,6 +2,27 @@
 
 ## Unreleased
 
+## 0.1.5
+
+- Removed the seven non-benchmark models (and their `examples/` and
+  `notebooks/` entries): `arxiv2006_03058_weinberg`, `flavor_toy`,
+  `leptonquarktest`, `leptontest`, `t43i_b1`, `weinberg`, and
+  `weinberg_multi_island`. `models/`, `examples/`, and `notebooks/` now hold
+  exactly the seven published benchmark models from the companion
+  methodology study (`scotogenic_ma`, `minimal_bl`, `two_higgs_doublet`,
+  `smeft_wilson`, `zprime_simplified`, `leptoquark_brw`, `alp_effective`).
+- Removed the dedicated tests for those models
+  (`test_arxiv2006_03058_weinberg.py`, `test_leptonquarktest.py`,
+  `test_leptontest_ordering.py`) and the model-specific test cases inside
+  `test_flavor_diagonalization.py`, `test_de_scipy.py`, and
+  `test_core_model_split.py` that loaded them; `docs/core_model_split.md`'s
+  worked example now points at `models/scotogenic_ma` and `models/minimal_bl`
+  instead of the removed `models/leptontest`.
+- Removed model-specific diagnostic docs/scripts left over from the removed
+  `weinberg`/`arxiv2006_03058_weinberg` models (`docs/benchmarks/`,
+  `scripts/diagnose_weinberg_scan_failure.py`) and updated `docs/site/index.html`
+  and `docs/ckm_observables.md` to stop referencing removed models.
+
 ## 0.1.4
 
 - Removed the `oneloop` and `oneloop_master` reference models, their

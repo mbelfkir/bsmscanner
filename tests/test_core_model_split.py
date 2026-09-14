@@ -1,4 +1,3 @@
-import math
 from pathlib import Path
 
 import pytest
@@ -7,9 +6,6 @@ from bsm_scanner.compiler.lowering import GraphLowerer
 from bsm_scanner.model.schema import MatrixKind, ModelDefinition
 
 ROOT = Path(__file__).resolve().parents[1]
-LEPTONTEST_MODEL = ROOT / "models" / "leptontest" / "model.yaml"
-LEPTONTEST_INVERTED_MODEL = ROOT / "models" / "leptontest" / "model_inverted.yaml"
-LEPTONTEST_EXAMPLE = ROOT / "examples" / "leptontest"
 
 
 def test_matrix_metadata_parses_and_propagates_through_lowering():
@@ -146,32 +142,3 @@ def test_imported_model_side_likelihood_blocks_work_with_generic_kernels(tmp_pat
     assert result["likelihood_terms"]["gauss_term"] == pytest.approx(0.125)
     assert result["likelihood_terms"]["cut_term"] == pytest.approx(0.0)
     assert result["likelihood_terms"]["table_term"] == pytest.approx(0.5)
-
-
-def test_leptontest_is_the_reference_example_for_the_core_model_split():
-    model = load_model(LEPTONTEST_MODEL)
-    example_wrapper = (LEPTONTEST_EXAMPLE / "model.yaml").read_text(encoding="utf-8")
-
-    assert "../../core/neutrino/normal.yaml" in (LEPTONTEST_MODEL).read_text(encoding="utf-8")
-    assert "constraints/likelihood.yaml" in (LEPTONTEST_MODEL).read_text(encoding="utf-8")
-    assert "models/leptontest/model.yaml" in example_wrapper
-    assert (LEPTONTEST_EXAMPLE / "README.md").exists()
-    assert not any((ROOT / "models" / "leptontest" / "observables").glob("*.yaml"))
-    assert model.metadata.ordering == "normal"
-
-
-def test_leptontest_inverted_reference_point_keeps_expected_flavorpy_like_behavior():
-    pytest.importorskip("bsm_scanner._core")
-
-    compiled = compile_model(load_model(LEPTONTEST_INVERTED_MODEL), build_backend=True)
-    result = compiled.evaluate({"Retau": -0.011631, "Imtau": 0.994666})
-
-    assert result["status"] == "ok"
-    assert result["outputs"]["s12"] == pytest.approx(0.3049707474234188)
-    assert result["outputs"]["s13"] == pytest.approx(0.04468384687081638)
-    assert result["outputs"]["s23"] == pytest.approx(0.3488737876539934)
-    assert result["outputs"]["deltaCP"] / math.pi == pytest.approx(1.4542548212954466)
-    assert result["outputs"]["dm21"] == pytest.approx(7.437257128517098e-05)
-    assert result["outputs"]["dm3l"] == pytest.approx(-0.0025017416263552793)
-    assert result["outputs"]["mbeta"] == pytest.approx(0.0483852644806731)
-    assert result["outputs"]["mbetabeta"] == pytest.approx(0.04500866403110994)

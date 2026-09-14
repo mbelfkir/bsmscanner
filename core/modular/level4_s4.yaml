@@ -1,7 +1,7 @@
 # Level-4 (Gamma_4 / S4) modular forms.
 # Pure mathematics: Jacobi theta/eps series in the modulus tau and the
 # resulting S4 modular multiplets. Model-independent -- identical text was
-# previously duplicated in models/weinberg and models/arxiv2006_03058_weinberg.
+# previously duplicated across several modular-symmetry benchmark models.
 # The modulus `tau` itself stays model-side (it is built from scan parameters).
 functions:
 - name: q_tau_4

@@ -1,3 +1,0 @@
-derived_complex:
-- name: tau
-  expression: Retau + 1j*Imtau

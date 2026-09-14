@@ -176,15 +176,6 @@ likelihoods:
     sigma: 0.01
 ```
 
-The repository includes toy CKM likelihoods under:
-
-```text
-models/flavor_toy/constraints/ckm_likelihoods_toy.yaml
-```
-
-Those numbers are broad placeholders for framework validation only. They are
-not production PDG, CKMfitter, or UTfit global-fit inputs.
-
 ## Quark Mass Ratios
 
 Quark mass ratios live in a separate reusable block because they require the
