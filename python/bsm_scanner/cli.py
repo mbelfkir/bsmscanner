@@ -63,6 +63,54 @@ def _build_parser() -> argparse.ArgumentParser:
     show = core_sub.add_parser("show", help="Show what a core block defines.")
     show.add_argument("block", help="Block reference, e.g. core:neutrino/observables_common.yaml")
 
+    dm_parser = subparsers.add_parser(
+        "generate-dm-config",
+        help="Assemble plugin_call YAML + a CMake cache script for the generic "
+             "micromegas dark-matter plugin, from a binding map you supply.",
+    )
+    dm_parser.add_argument(
+        "--map", type=Path, required=True,
+        help="YAML (or JSON) file mapping CalcHEP parameter name -> model.yaml node "
+             "name, e.g. 'MH01: MH1'. You author this; nothing is auto-matched.",
+    )
+    dm_parser.add_argument(
+        "--dm-target-name", default=None,
+        help="micrOMEGAs particle name of the intended dark-matter candidate, e.g. '~chi'. "
+             "Omit to let micrOMEGAs choose the candidate itself (no target-match check "
+             "is generated in that case).",
+    )
+    dm_parser.add_argument(
+        "--vars-mdl", type=Path, default=None,
+        help="Optional: the CalcHEP model's vars1.mdl, used only to validate that every "
+             "--map key is a real independent CalcHEP parameter (catches typos early).",
+    )
+    dm_parser.add_argument(
+        "--CalcHEP", dest="calchep_model_root", type=Path, default=None,
+        help="Path to the compiled CalcHEP model directory (e.g. containing lib/aLib.a). "
+             "Together with --micromegas-root, generates a CMake cache script.",
+    )
+    dm_parser.add_argument(
+        "--micromegas-root", type=Path, default=None,
+        help="Path to the micrOMEGAs installation. Required together with --CalcHEP "
+             "to generate the CMake cache script.",
+    )
+    dm_parser.add_argument(
+        "--calchep-src-root", type=Path, default=None,
+        help="Path to CalcHEP_src inside the micrOMEGAs installation "
+             "(default: <--micromegas-root>/CalcHEP_src).",
+    )
+    dm_parser.add_argument(
+        "--plugin-name", default="micromegas",
+        help="Registered BSMScanner plugin name referenced in plugin_call blocks (default: micromegas).",
+    )
+    dm_parser.add_argument("--dd-pvalue-threshold", type=float, default=0.1)
+    dm_parser.add_argument(
+        "--omega-mean", type=float, default=0.12,
+        help="Relic-density central value (default: Planck 2018 Omega_c h^2).",
+    )
+    dm_parser.add_argument("--omega-sigma", type=float, default=0.0012)
+    dm_parser.add_argument("--output-dir", type=Path, required=True)
+
     return parser
 
 
@@ -183,6 +231,58 @@ def _core_library(args: argparse.Namespace) -> int:
     return 0
 
 
+def _generate_dm_config(args: argparse.Namespace) -> int:
+    from bsm_scanner.tools.micromegas_config import (
+        MicromegasConfigError,
+        generate_dm_config,
+        load_binding_map,
+        parse_vars_mdl,
+    )
+
+    try:
+        bindings = load_binding_map(args.map)
+        calchep_params = parse_vars_mdl(args.vars_mdl) if args.vars_mdl is not None else None
+        result = generate_dm_config(
+            bindings,
+            dm_target_name=args.dm_target_name,
+            plugin_name=args.plugin_name,
+            dd_pvalue_threshold=args.dd_pvalue_threshold,
+            omega_mean=args.omega_mean,
+            omega_sigma=args.omega_sigma,
+            calchep_params_for_validation=calchep_params,
+            micromegas_root=str(args.micromegas_root) if args.micromegas_root else None,
+            calchep_model_root=str(args.calchep_model_root) if args.calchep_model_root else None,
+            calchep_src_root=str(args.calchep_src_root) if args.calchep_src_root else None,
+        )
+    except (FileNotFoundError, MicromegasConfigError) as exc:
+        print(f"bsm-scanner: error: {exc}", file=sys.stderr)
+        return 2
+
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    (args.output_dir / "dm_observables.yaml").write_text(result.observables_yaml, encoding="utf-8")
+    (args.output_dir / "dm_likelihoods.yaml").write_text(result.likelihoods_yaml, encoding="utf-8")
+    (args.output_dir / "dm_theory_checks.yaml").write_text(result.theory_checks_yaml, encoding="utf-8")
+    written = ["dm_observables.yaml", "dm_likelihoods.yaml", "dm_theory_checks.yaml"]
+
+    if result.constants_yaml is not None:
+        (args.output_dir / "dm_constants.yaml").write_text(result.constants_yaml, encoding="utf-8")
+        written.append("dm_constants.yaml")
+
+    if result.cmake_cache_script is not None:
+        (args.output_dir / "micromegas_build_cache.cmake").write_text(result.cmake_cache_script, encoding="utf-8")
+        written.append("micromegas_build_cache.cmake")
+
+    print(f"Wrote {', '.join(written)} to {args.output_dir}")
+    print(f"Bound {len(bindings)} CalcHEP parameter(s) from {args.map}, unchanged.")
+    if args.dm_target_name is None:
+        print("No --dm-target-name given: micrOMEGAs will choose the dark-matter candidate itself.")
+    imports = [name for name in written if name.endswith(".yaml")]
+    print(f"\nImport {', '.join(imports)} from model.yaml.")
+    if result.cmake_cache_script is not None:
+        print(f"Build with: cmake -S . -B build -C {args.output_dir / 'micromegas_build_cache.cmake'}")
+    return 0
+
+
 def _run(args: argparse.Namespace) -> int:
     try:
         if args.example:
@@ -228,6 +328,8 @@ def main(argv: list[str] | None = None) -> int:
         return _core_library(args)
     if args.command == "new-model":
         return _new_model(args)
+    if args.command == "generate-dm-config":
+        return _generate_dm_config(args)
     parser.print_help()
     return 0
 

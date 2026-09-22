@@ -1,0 +1,64 @@
+1LRNM-1N1P
+ Parameters
+  Name         | Value       |> Comment                                                                <|
+aEWM1          |127.9        |Inverse of the EW coupling constant at the Z pole                         |
+Gf             |0.0000116637 |Fermi constant                                                            |
+aS             |0.1172       |Strong coupling constant at the Z pole.                                   |
+QS             |100.         |QCD scale for running quark masses in CalcHEP                             |
+thetah         |0.3          |Theta_h                                                                   |
+thetaa         |0.3          |Theta_a                                                                   |
+l1             |0.05         |SM Higgs doublet quartic self-coupling                                    |
+l2             |0.05         |Inert doublet quartic self-coupling                                       |
+l3             |0.05         |Inert singlet quartic self-coupling                                       |
+k1             |0.05         |Inert doublet - Higgs doublet quartic coupling                            |
+k4             |0.05         |Inert singlet - Higgs doublet quartic coupling                            |
+k5             |0.05         |Inert singlet - Higgs doublet quartic coupling                            |
+ypr11          |0.5          |real-Yuk                                                                  |
+ypi11          |0.2          |im-Yuk                                                                    |
+Y1r1           |0.001        |Y1r1                                                                      |
+Y1r2           |0.002        |Y1r2                                                                      |
+Y1r3           |0.003        |Y1r3                                                                      |
+Y1i1           |0.001        |Y1i1                                                                      |
+Y1i2           |0.002        |Y1i2                                                                      |
+Y1i3           |0.003        |Y1i3                                                                      |
+ynr1           |0.001        |ynr1                                                                      |
+ynr2           |0.002        |ynr2                                                                      |
+ynr3           |0.003        |ynr3                                                                      |
+yni1           |0.001        |yni1                                                                      |
+yni2           |0.002        |yni2                                                                      |
+yni3           |0.003        |yni3                                                                      |
+GG             |1.21358091448|Strong coupling constant   This value will be ignored and calculated from |
+MZ             |91.1876      |Mass of G0.                                                               |
+Mnue           |0.           |Mass of ve.                                                               |
+Mnum           |0.           |Mass of vm.                                                               |
+Mnut           |0.           |Mass of vt.                                                               |
+Me             |0.00511      |Mass of e.                                                                |
+MM             |0.1057       |Mass of m.                                                                |
+MTA            |1.77686      |Mass of ta.                                                               |
+MU             |0.00255      |Mass of u.                                                                |
+MC             |1.27         |Mass of c.                                                                |
+MT             |172          |Mass of t.                                                                |
+MD             |0.00504      |Mass of d.                                                                |
+MS             |0.101        |Mass of s.                                                                |
+MB             |4.7          |Mass of b.                                                                |
+MN             |500          |Mass of NN.                                                               |
+Mchi           |40           |Mass of chi.                                                              |
+Mh             |125          |Mass of h.                                                                |
+mphich         |400          |Mass of phich.                                                            |
+MH01           |200.         |Mass of H01.                                                              |
+MH02           |300.         |Mass of H02.                                                              |
+MA01           |200.         |Mass of A01.                                                              |
+MA02           |300.         |Mass of A02.                                                              |
+%WZ            |2.4952       |Width of Z.                                                               |
+%WW            |2.085        |Width of GP.                                                              |
+%WT            |1.50833649   |Width of t.                                                               |
+%WNN           |0            |Width of NN.                                                              |
+%Wchi          |0            |Width of chi.                                                             |
+%Wh            |0.00407      |Width of h.                                                               |
+%Wphich        |1.           |Width of phich.                                                           |
+%WH01          |0.2          |Width of H01.                                                             |
+%WH02          |0.5          |Width of H02.                                                             |
+%WA01          |0.5          |Width of A01.                                                             |
+%WA02          |0.5          |Width of A02.                                                             |
+E              |2.71828182845|The base of the natural logarithm.                                        |
+Pi             |3.14159265358|The circumference of a circle divided by the diameter.                    |

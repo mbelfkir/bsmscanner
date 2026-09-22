@@ -3,7 +3,7 @@ from importlib.metadata import PackageNotFoundError, version
 try:
     __version__ = version("bsm-scanner")
 except PackageNotFoundError:  # pragma: no cover - source tree without installation
-    __version__ = "0.1.5"
+    __version__ = "0.1.6"
 
 __all__ = [
     "CompiledModel",
@@ -24,13 +24,33 @@ __all__ = [
     "load_model",
     "load_results",
     "pmns_observables_from_matrix",
+    "register_plugin_function",
     "run_statistics",
     "run_scan",
     "wrap_2pi",
 ]
 
 
+def register_plugin_function(plugin: str, function: str, callback):
+    """Register a Python-implemented plugin function under (plugin, function),
+    callable from YAML via the same `plugin_call` contract a C++ plugin uses
+    (see docs/core_plugin_boundaries.md). `callback(arguments: dict, options: dict) -> value`
+    receives the resolved bindings/options as plain Python values and returns
+    a scalar (float/bool/complex/str). Must be called before compiling/running
+    any model that references this (plugin, function) in a plugin_call.
+    """
+    try:
+        from bsm_scanner import _core
+    except Exception as exc:  # pragma: no cover - native backend not built
+        raise RuntimeError(
+            "The native C++ backend is not available. Rebuild with the extension enabled."
+        ) from exc
+    _core.register_plugin_function(plugin, function, callback)
+
+
 def __getattr__(name: str):
+    if name == "register_plugin_function":
+        return register_plugin_function
     if name in __all__:
         from .api import (
             CompiledModel,

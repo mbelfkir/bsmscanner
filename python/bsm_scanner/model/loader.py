@@ -1,7 +1,11 @@
 from __future__ import annotations
 
 import copy
+import hashlib
+import importlib
+import importlib.util
 import re
+import sys
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -40,6 +44,43 @@ ScannerYamlLoader.add_implicit_resolver(
 
 
 IMPORT_KEYS = ("imports", "includes")
+PYTHON_PLUGIN_KEY = "python_plugins"
+
+
+def _import_python_plugin(spec: str, base_dir: Path) -> None:
+    """Import a Python plugin module declared in YAML, so any top-level
+    `bsm_scanner.register_plugin_function(...)` calls in it run before the
+    model that references it is compiled -- the Python-plugin analogue of a
+    compiled C++ plugin already being linked into `_core`.
+
+    `spec` is either a dotted module name (`import_module`, deduplicated by
+    Python's own `sys.modules` cache) or a path to a `.py` file, resolved
+    relative to the YAML fragment that declared it (matching how `imports:`
+    resolves relative paths) and deduplicated by its own resolved path so
+    the same file is never executed twice even if declared from multiple
+    imported fragments.
+    """
+    looks_like_path = spec.endswith(".py") or "/" in spec or "\\" in spec
+    if not looks_like_path:
+        importlib.import_module(spec)
+        return
+
+    resolved = (base_dir / spec).resolve()
+    if not resolved.exists():
+        raise FileNotFoundError(f"Python plugin file '{resolved}' does not exist.")
+
+    module_name = "bsm_scanner._yaml_python_plugins." + hashlib.sha1(
+        str(resolved).encode("utf-8")
+    ).hexdigest()
+    if module_name in sys.modules:
+        return
+
+    module_spec = importlib.util.spec_from_file_location(module_name, resolved)
+    if module_spec is None or module_spec.loader is None:
+        raise ModelValidationError(f"Could not load Python plugin file '{resolved}'.")
+    module = importlib.util.module_from_spec(module_spec)
+    sys.modules[module_name] = module
+    module_spec.loader.exec_module(module)
 NAMED_LIST_SECTIONS = {
     "parameters",
     "constants",
@@ -97,9 +138,24 @@ class ModelFragmentLoader:
                 child_path = (path.parent / import_name).resolve()
             self._merge_fragment_into(target, child_path, (*stack, path))
 
-        local = {key: value for key, value in raw.items() if key not in IMPORT_KEYS}
+        self._load_python_plugins(raw, path)
+
+        local = {key: value for key, value in raw.items() if key not in IMPORT_KEYS and key != PYTHON_PLUGIN_KEY}
         local = self._resolve_external_assets(local, path.parent)
         self._merge_mapping(target, local, path, ())
+
+    def _load_python_plugins(self, raw: Mapping[str, Any], path: Path) -> None:
+        if PYTHON_PLUGIN_KEY not in raw:
+            return
+        specs = raw[PYTHON_PLUGIN_KEY]
+        if isinstance(specs, str):
+            specs = [specs]
+        if not isinstance(specs, list) or not all(isinstance(item, str) for item in specs):
+            raise ModelValidationError(
+                f"Model fragment '{path}' requires '{PYTHON_PLUGIN_KEY}' to be a string or a list of strings."
+            )
+        for spec in specs:
+            _import_python_plugin(spec, path.parent)
 
     def _extract_imports(self, raw: Mapping[str, Any], path: Path) -> list[str]:
         values = [raw[key] for key in IMPORT_KEYS if key in raw]

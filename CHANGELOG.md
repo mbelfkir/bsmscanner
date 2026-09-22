@@ -2,6 +2,34 @@
 
 ## Unreleased
 
+## 0.1.6
+
+- Added support for plugins implemented entirely in Python:
+  `bsm_scanner.register_plugin_function(plugin, function, callback)` registers
+  a Python callable into the same global registry a compiled C++ plugin uses,
+  so `plugin_call` YAML is identical either way. A new top-level YAML key,
+  `python_plugins:` (a dotted module name or a `.py` file path, resolved like
+  `imports:`), lets a model declare which Python plugin module(s) to import
+  before compiling/running, so a Python plugin is available the same way a
+  compiled plugin already is -- no CLI flag or separate driver script needed.
+- Added a generic `micromegas` plugin (`src/plugins/micromegas.cpp`,
+  auto-discovered `cmake/plugins/micromegas.cmake`) with no model-specific
+  code: which CalcHEP-backed micrOMEGAs project it talks to is chosen once at
+  CMake configure time. The `dm_target_name` binding is now optional --
+  omitting it lets micrOMEGAs choose the dark-matter candidate itself instead
+  of requiring a target to match against.
+- Added `bsm-scanner generate-dm-config` and
+  `bsm_scanner.tools.micromegas_config`: assembles `plugin_call` YAML (and,
+  given `--CalcHEP`/`--micromegas-root`, a CMake initial-cache script) for the
+  generic `micromegas` plugin from a binding map the user supplies directly
+  (`--map`, a flat CalcHEP-parameter-name -> model-node-name mapping). No
+  auto-matching of CalcHEP names against model parameters is performed --
+  checked against a real compiled model (1LRNM-1N1P) that reuses `MS` for the
+  strange-quark mass, which would otherwise silently collide with an
+  unrelated same-named BSM parameter. An optional `--vars-mdl` still validates
+  that every mapped CalcHEP name is a real independent parameter, catching
+  typos without guessing bindings.
+
 ## 0.1.5
 
 - Removed the seven non-benchmark models (and their `examples/` and

@@ -464,6 +464,34 @@ PYBIND11_MODULE(_core, m) {
   m.def("has_plugin_support",
         [](const std::string& plugin) { return has_plugin_support(plugin); });
 
+  // Lets a plugin be implemented entirely in Python: the callback receives
+  // (arguments: dict, options: dict) -- the same PluginInvocation contents a
+  // C++ plugin sees -- and returns a scalar bsm_scanner value. Registered
+  // functions go into the same global registry as C++ plugins (plugins.cpp),
+  // so plugin_call YAML is identical either way; only how the function got
+  // registered differs. Calling back into Python from the native evaluator
+  // (potentially from a scan worker thread) requires the GIL, acquired here
+  // per call -- fine for a cheap callback (e.g. a table lookup), but a slow
+  // Python plugin would serialize scan evaluation on the GIL.
+  m.def("register_plugin_function",
+        [](const std::string& plugin, const std::string& function, py::function callback) {
+          register_plugin_function(
+              plugin, function,
+              [callback](const PluginInvocation& invocation) -> Value {
+                py::gil_scoped_acquire acquire;
+                py::dict arguments;
+                for (const auto& [name, value] : invocation.arguments) {
+                  arguments[py::str(name)] = value_to_python(value);
+                }
+                py::dict options;
+                for (const auto& [name, value] : invocation.options) {
+                  options[py::str(name)] = value_to_python(value);
+                }
+                py::object result = callback(arguments, options);
+                return parse_python_value(result);
+              });
+        });
+
   m.def("evaluate_scan_point",
         [](const py::dict& plan_dict, const py::dict& request_dict,
            const std::vector<double>& point_vector) {
