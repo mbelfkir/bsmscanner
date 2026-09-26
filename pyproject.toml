@@ -14,10 +14,10 @@ requires-python = ">=3.10"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [
-  { name = "Mohamed Belfkir", email = "mohamed.belfkir@cern.ch" },
+  { name = "Mohamed Belfkir", email = "mohamed.belfkir@udst.edu.qa" },
 ]
 maintainers = [
-  { name = "Mohamed Belfkir", email = "mohamed.belfkir@cern.ch" },
+  { name = "Mohamed Belfkir", email = "mohamed.belfkir@udst.edu.qa" },
 ]
 keywords = ["bsm", "physics", "parameter-scan", "likelihood", "neutrino"]
 classifiers = [
