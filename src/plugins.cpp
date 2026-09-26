@@ -48,6 +48,12 @@ void register_plugin_function(const std::string& plugin,
   state.registry[plugin][function] = std::move(callback);
 }
 
+void clear_plugin_registry() noexcept {
+  auto& state = registry_state();
+  std::lock_guard<std::mutex> lock(state.mutex);
+  state.registry.clear();
+}
+
 bool has_plugin_support(std::string_view plugin) noexcept {
   auto& state = registry_state();
   std::lock_guard<std::mutex> lock(state.mutex);

@@ -29,6 +29,16 @@
   unrelated same-named BSM parameter. An optional `--vars-mdl` still validates
   that every mapped CalcHEP name is a real independent parameter, catching
   typos without guessing bindings.
+- Fixed a crash (`SIGSEGV`) at Python interpreter shutdown whenever any model
+  in the process had called `register_plugin_function`. The registered Python
+  callback was captured into `bsm::core`'s plugin registry, a global with
+  ordinary C++ static storage duration (`src/plugins.cpp`); its destructor
+  could run after `Py_Finalize`, so destroying the captured `py::function`
+  touched an already-finalized interpreter. `src/pybind_module.cpp` now
+  attaches a module-destructor capsule (pybind11's documented idiom for this)
+  that clears the registry while the interpreter is still alive, via a new
+  `bsm::core::clear_plugin_registry()` (`include/bsm/core/plugins.hpp`,
+  `src/plugins.cpp`).
 
 ## 0.1.5
 

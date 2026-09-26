@@ -511,4 +511,18 @@ PYBIND11_MODULE(_core, m) {
     py::gil_scoped_acquire acquire;
     return scan_run_result_to_python(result);
   });
+
+  // register_plugin_function() lets a plugin_call resolve to a Python
+  // callback, stored inside bsm::core's plugin registry -- a global with
+  // ordinary C++ static storage duration (plugins.cpp), independent of this
+  // module object. That registry's own destructor runs at C++
+  // static-destruction time, which for a loaded extension module is not
+  // guaranteed to happen before CPython finalizes; destroying a captured
+  // py::function after Py_Finalize segfaults (observed as an interpreter-exit
+  // crash following an otherwise-clean pytest run once any test registered a
+  // Python plugin). This capsule's destructor runs when this module object
+  // itself is torn down -- guaranteed to still be inside a live interpreter --
+  // and clears the registry there instead, per pybind11's documented
+  // "module destructors" idiom.
+  m.add_object("_plugin_registry_cleanup", py::capsule([]() { clear_plugin_registry(); }));
 }
