@@ -11,7 +11,6 @@ from pathlib import Path
 
 import pytest
 import yaml
-
 from bsm_scanner.tools.micromegas_config import (
     MicromegasConfigError,
     generate_dm_config,
