@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## 0.1.7
+
+- Split `core:neutrino/observables_common.yaml`'s `deltaCP_deg` into
+  `deltaCP_deg_0_360` (the NuFIT publication convention, `[0,360)`) and
+  `deltaCP_deg_m180_180` (`[-180,180]`, the domain `core:data/nufit/*/
+  deltaCP.csv`'s `table_lookup` likelihood actually needs) -- a model that
+  fed the old single `deltaCP_deg` to that table would silently mis-score
+  near the wrap-around. `deltaCP_deg` stays as a backward-compatible alias
+  of `deltaCP_deg_0_360`. `deltaCP_deg_m180_180` returns `nan()` when
+  `Jmax` is too small (PMNS extraction near a CP-conserving/degenerate
+  point, where the phase is ill-defined) instead of a numerically unstable
+  value.
+
 ## 0.1.6
 
 - Added support for plugins implemented entirely in Python:

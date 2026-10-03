@@ -3,7 +3,7 @@ from importlib.metadata import PackageNotFoundError, version
 try:
     __version__ = version("bsm-scanner")
 except PackageNotFoundError:  # pragma: no cover - source tree without installation
-    __version__ = "0.1.6"
+    __version__ = "0.1.7"
 
 __all__ = [
     "CompiledModel",
