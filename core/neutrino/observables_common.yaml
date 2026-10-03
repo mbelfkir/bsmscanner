@@ -246,9 +246,27 @@ observables:
 - name: d_over_pi
   value_type: real
   expression: deltaCP_over_pi
-- name: deltaCP_deg
+# Dirac CP phase in degrees, PDG convention. Two explicit ranges:
+#   deltaCP_deg_0_360     in [0, 360)    -- NuFIT publication convention
+#   deltaCP_deg_m180_180  in [-180, 180] -- domain of core:data/nufit/*/deltaCP.csv
+# A table_lookup likelihood must use the observable whose range matches the
+# table abscissa; values outside the table get the out-of-range penalty.
+- name: deltaCP_deg_0_360
   value_type: real
   expression: deltaCP * 180 / pi
+- name: deltaCP_deg_m180_180
+  value_type: real
+  expression: >
+    if_else(
+      Jmax > neutrino_observable_epsilon,
+      deltaCP_raw * 180 / pi,
+      nan()
+    )
+# Backward-compatible alias of deltaCP_deg_0_360. Do NOT feed it to
+# core:data/nufit/*/deltaCP.csv (use deltaCP_deg_m180_180).
+- name: deltaCP_deg
+  value_type: real
+  expression: deltaCP_deg_0_360
 - name: eta1
   value_type: real
   expression: fmod(fmod(arg(Ue1 / Ue3) - deltaCP, 2*pi) + 2*pi, 2*pi) / pi

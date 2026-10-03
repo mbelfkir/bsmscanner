@@ -118,6 +118,8 @@ def _write_model(
         "    - theta23_angle\n"
         "    - deltaCP\n"
         "    - deltaCP_deg\n"
+        "    - deltaCP_deg_0_360\n"
+        "    - deltaCP_deg_m180_180\n"
         "    - J\n"
         "    - Jmax\n"
         "    - Ue1\n"
@@ -155,7 +157,7 @@ def _expected_mbetabeta(pmns: np.ndarray, masses: np.ndarray) -> float:
     return float(abs(sum(pmns[0, idx] ** 2 * masses[idx] for idx in range(3))))
 
 
-@pytest.mark.parametrize("delta_deg", [60.0, 240.0])
+@pytest.mark.parametrize("delta_deg", [60.0, 179.0, 181.0, 240.0, 330.0])
 def test_core_pmns_pdg_extraction_preserves_delta_quadrant(tmp_path: Path, delta_deg: float):
     masses = np.array([0.011, 0.014, 0.052])
     pmns = _pdg_pmns(
@@ -177,6 +179,9 @@ def test_core_pmns_pdg_extraction_preserves_delta_quadrant(tmp_path: Path, delta
     assert out["s13"] == pytest.approx(0.02215, abs=2.0e-10)
     assert out["s23"] == pytest.approx(0.470, abs=2.0e-10)
     assert out["deltaCP_deg"] == pytest.approx(delta_deg, abs=2.0e-7)
+    assert out["deltaCP_deg_0_360"] == pytest.approx(delta_deg, abs=2.0e-7)
+    signed = delta_deg - 360.0 if delta_deg > 180.0 else delta_deg
+    assert out["deltaCP_deg_m180_180"] == pytest.approx(signed, abs=2.0e-7)
     assert out["alpha21"] == pytest.approx(0.7, abs=2.0e-10)
     assert out["alpha31"] == pytest.approx(2.1, abs=2.0e-10)
     extracted = pmns_observables_from_matrix(
