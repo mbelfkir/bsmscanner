@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+## 0.1.8
+
+- Evaluation order now schedules every node that has a `plugin_call` after all
+  other ready nodes (including fatal `theory_checks`), instead of before them.
+  A plugin call (e.g. a micrOMEGAs relic-density solve, ~0.1-0.3 s) can be many
+  orders of magnitude costlier than any expression, and a failing fatal check
+  already short-circuits the point, so cheap checks now run first and an
+  invalid point no longer pays for the plugin. Results are unchanged (an
+  invalid point returns no outputs either way); `tests/test_plugin_evaluation_order.py`
+  covers both directions.
+
 ## 0.1.7
 
 - Split `core:neutrino/observables_common.yaml`'s `deltaCP_deg` into

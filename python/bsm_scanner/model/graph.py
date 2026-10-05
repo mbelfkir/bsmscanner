@@ -45,8 +45,20 @@ class ModelGraph:
             "output": 7,
         }
 
-        def sort_key(name: str) -> tuple[int, str]:
-            return priority.get(self.nodes[name].kind, 99), name
+        # A plugin_call can be orders of magnitude costlier than any expression
+        # (e.g. a micrOMEGAs relic-density solve vs. a closed-form check), and a
+        # fatal theory check short-circuits the whole point. Schedule plugin-call
+        # nodes after every cheap node that is ready, so a point that fails a
+        # cheap fatal check never pays for the plugin. Evaluation results are
+        # unchanged -- an invalid point returns no outputs either way.
+        expensive_rank = priority["theory_check"] + 0.5
+
+        def sort_key(name: str) -> tuple[float, str]:
+            node = self.nodes[name]
+            rank = priority.get(node.kind, 99)
+            if "plugin_call" in node.payload:
+                rank = max(rank, expensive_rank)
+            return rank, name
 
         indegree = {name: 0 for name in self.nodes}
         outgoing = {name: set() for name in self.nodes}
