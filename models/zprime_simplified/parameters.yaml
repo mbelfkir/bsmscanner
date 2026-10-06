@@ -1,0 +1,9 @@
+# DM Forum vector model (arXiv:1507.00966 Eq. 2.1): L = g_q Z'_mu sum_q qbar gamma^mu q + g_chi Z'_mu chibar gamma^mu chi.
+# Leptophobic, as in the Forum benchmark ("the vector mediator does not couple to leptons"): the
+# upstream g_l parameter is removed (no constraint in this tutorial uses leptons; it would be flat).
+# Ranges unchanged from BSMScanner models/zprime_simplified v0.1.0.
+parameters:
+- {name: MZp, value_type: real, scan: true, lower: 100.0, upper: 10000.0, default: 3000.0, prior: log}
+- {name: mchi, value_type: real, scan: true, lower: 1.0, upper: 5000.0, default: 500.0, prior: log}
+- {name: gq, value_type: real, scan: true, lower: 0.001, upper: 2.0, default: 0.25, prior: log}
+- {name: gchi, value_type: real, scan: true, lower: 0.001, upper: 2.0, default: 1.0, prior: log}

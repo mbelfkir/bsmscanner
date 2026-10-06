@@ -1,0 +1,15 @@
+observables:
+- {name: LeptoquarkMass, value_type: real, expression: MS1}
+- {name: RD, value_type: real, expression: RD_pred}
+- {name: RDst, value_type: real, expression: RDst_pred}
+- {name: gVL_obs, value_type: real, expression: gVL}
+- {name: gSL_mb_obs, value_type: real, expression: gSL_mb}
+- {name: gT_mb_obs, value_type: real, expression: gT_mb}
+- {name: gP_mb_obs, value_type: real, expression: gP_mb}
+- {name: R_nunu_obs, value_type: real, expression: R_nunu}
+- {name: BR_BKnunu, value_type: real, expression: br_knn_pred}
+- {name: WidthFraction, value_type: real, expression: "G_tot/MS1"}
+- {name: BR_ttau_obs, value_type: real, expression: BR_ttau}
+- {name: BR_bnu_obs, value_type: real, expression: BR_bnu}
+- {name: BR_ctau_obs, value_type: real, expression: BR_ctau}
+- {name: BR_snu_obs, value_type: real, expression: BR_snu}

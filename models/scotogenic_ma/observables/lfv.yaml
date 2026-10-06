@@ -1,0 +1,32 @@
+observables:
+# l_a -> l_b gamma from eta+ - N_k loops, Toma & Vicente arXiv:1312.2840 Eqs. (13)-(14):
+#   A_D = sum_k y*_{k b} y_{k a} F2(xi_k) / (2 (4 pi)^2 m_eta+^2),  xi_k = M_k^2 / m_eta+^2,
+#   BR  = 3 (4 pi)^3 alpha_em / (4 G_F^2) |A_D|^2 BR(l_a -> l_b nu nubar).
+# Index map to this model: y_{k alpha} = h_{alpha k}. |A_D| is invariant under h -> h*,
+# so it does not depend on the h vs h* convention of the charged-lepton coupling.
+# The loop-mass normalisation issue (Ma 16 pi^2 vs 32 pi^2) does not enter A_D.
+- {name: lfv_xi1, value_type: real, expression: MN1**2/meta_charged_sq}
+- {name: lfv_xi2, value_type: real, expression: MN2**2/meta_charged_sq}
+- {name: lfv_xi3, value_type: real, expression: MN3**2/meta_charged_sq}
+- {name: lfv_F2_1, value_type: real, expression: lfv_F2(lfv_xi1)}
+- {name: lfv_F2_2, value_type: real, expression: lfv_F2(lfv_xi2)}
+- {name: lfv_F2_3, value_type: real, expression: lfv_F2(lfv_xi3)}
+- name: AD_mu_e
+  value_type: complex
+  expression: >
+    (conj(he1)*hmu1*lfv_F2_1 + conj(he2)*hmu2*lfv_F2_2 + conj(he3)*hmu3*lfv_F2_3)
+    / (32*pi*pi*meta_charged_sq)
+- name: AD_tau_e
+  value_type: complex
+  expression: >
+    (conj(he1)*htau1*lfv_F2_1 + conj(he2)*htau2*lfv_F2_2 + conj(he3)*htau3*lfv_F2_3)
+    / (32*pi*pi*meta_charged_sq)
+- name: AD_tau_mu
+  value_type: complex
+  expression: >
+    (conj(hmu1)*htau1*lfv_F2_1 + conj(hmu2)*htau2*lfv_F2_2 + conj(hmu3)*htau3*lfv_F2_3)
+    / (32*pi*pi*meta_charged_sq)
+- {name: br_mu_e_gamma, value_type: real, expression: "3*(4*pi)**3*alpha_em_0/(4*GF_gev**2)*abs(AD_mu_e)**2*br_mu_enunu"}
+- {name: br_tau_e_gamma, value_type: real, expression: "3*(4*pi)**3*alpha_em_0/(4*GF_gev**2)*abs(AD_tau_e)**2*br_tau_enunu"}
+- {name: br_tau_mu_gamma, value_type: real, expression: "3*(4*pi)**3*alpha_em_0/(4*GF_gev**2)*abs(AD_tau_mu)**2*br_tau_mununu"}
+- {name: log10_br_mu_e_gamma, value_type: real, expression: "log(max(br_mu_e_gamma, 1.0e-300))/log(10)"}

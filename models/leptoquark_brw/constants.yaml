@@ -1,0 +1,18 @@
+constants:
+- {name: v_sm, value: 246.22}
+# CKM (real approximations, PDG 2024 global-fit magnitudes; enter at the per-cent level).
+- {name: V_cs, value: 0.97349}
+- {name: V_cb, value: 0.04182}
+- {name: V_ts, value: -0.04108}
+- {name: V_tb, value: 0.999118}
+- {name: alpha_em_mz, value: 0.0078153}
+# b -> s nu nu SM: c_LL^SM = alpha lambda_t C_L^SM / pi, C_L^SM = -6.35 (Dorsner et al. 1603.04993 Sec. 3.2.4).
+- {name: CL_sm, value: -6.35}
+# B+ -> K+ nu nu SM (Belle II arXiv:2311.14647 Eq. 1): 5.58e-6 total, of which 0.61e-6 long-distance
+# B+ -> tau+(-> K+ nu) nu; the short-distance part (4.97e-6) is rescaled by new physics.
+- {name: br_knn_sd_sm, value: 4.97e-6}
+- {name: br_knn_ld, value: 0.61e-6}
+# R(D(*)) SM predictions, HFLAV arXiv:2411.18639 (text): R(D) = 0.296 +- 0.004, R(D*) = 0.254 +- 0.005.
+- {name: RD_sm, value: 0.296}
+- {name: RDst_sm, value: 0.254}
+- {name: m_top, value: 172.57}

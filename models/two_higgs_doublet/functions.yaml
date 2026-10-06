@@ -1,0 +1,10 @@
+functions:
+# Branco et al. Eq. (389), arguments are squared masses:
+#   F(x, y) = (x + y)/2 - x y/(x - y) ln(x/y),  F(x, x) = 0.
+# For |y/x - 1| < 1e-4 the series F ~ (y - x)^2/(6 x) is used (relative truncation O(eps)).
+- name: oblique_F2
+  args: [x, y]
+  expression: >
+    if_else(abs(y/x - 1.0) > 1.0e-4,
+            0.5*(x + y) - x*y/(x - y)*log(x/y),
+            (y - x)**2/(6.0*x))

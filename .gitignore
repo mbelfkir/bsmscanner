@@ -22,6 +22,8 @@ notebooks/**/runs/
 benchmarks/runs/
 artifacts/
 results/
+# Reference best-fit runs shipped with the tutorial models (best_fit/summary/metadata JSON).
+!models/*/results/
 archives/
 .coverage
 htmlcov/

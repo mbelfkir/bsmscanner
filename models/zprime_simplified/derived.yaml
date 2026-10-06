@@ -1,0 +1,17 @@
+derived_scalars:
+# Minimal width, DM Forum Eq. (2.3), vector mediator:
+#   Gamma = g_chi^2 M/(12 pi) (1 + 2 m_chi^2/M^2) beta_chi + sum_q 3 g_q^2 M/(12 pi) (1 + 2 m_q^2/M^2) beta_q
+- {name: width_chi, value_type: real, expression: "gchi**2*MZp/(12.0*pi)*vec_factor(mchi, MZp)"}
+- name: width_quarks
+  value_type: real
+  expression: >
+    3.0*gq**2*MZp/(12.0*pi)*(vec_factor(m_u, MZp) + vec_factor(m_d, MZp) + vec_factor(m_s, MZp)
+                             + vec_factor(m_c, MZp) + vec_factor(m_b, MZp) + vec_factor(m_t, MZp))
+- {name: width_total, value_type: real, expression: "width_chi + width_quarks"}
+- {name: width_fraction, value_type: real, expression: "width_total/MZp"}
+- {name: br_invisible, value_type: real, expression: "width_chi/width_total"}
+# Spin-independent DM-nucleon cross section, Boveia et al. arXiv:1603.04156 Eqs. (4.1)-(4.2):
+#   sigma_SI = f^2 g_DM^2 mu_n^2/(pi M^4), f = 3 g_q (vector), mu_n = m_n m_chi/(m_n + m_chi); sigma_p = sigma_n.
+- {name: mu_nchi, value_type: real, expression: "m_nucleon*mchi/(m_nucleon + mchi)"}
+- {name: sigma_si_gev2, value_type: real, expression: "(3.0*gq)**2*gchi**2*mu_nchi**2/(pi*MZp**4)"}
+- {name: sigma_si_cm2, value_type: real, expression: "sigma_si_gev2*gev2_to_cm2"}

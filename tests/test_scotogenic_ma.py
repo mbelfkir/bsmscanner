@@ -16,10 +16,12 @@ def default_point(model):
 def test_scotogenic_ma_model_loads_with_published_reference_metadata():
     model = load_model(MODEL)
 
-    assert model.metadata.name == "scotogenic_ma_normal"
+    assert model.metadata.name == "scotogenic_ma_normal_corrected"
     assert "ma_2006" in model.metadata.tags
     assert len(model.parameters) == 26
-    assert len(model.likelihoods) == 7
+    # 7 oscillation/mass terms + LFV (mu->e gamma, tau->e gamma, tau->mu gamma)
+    # + oblique T + LEP W/Z width and charged/neutral scalar searches.
+    assert len(model.likelihoods) == 15
 
     names = {observable.name for observable in model.observables}
     for required in (

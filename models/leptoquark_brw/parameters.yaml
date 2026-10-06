@@ -1,0 +1,11 @@
+# S1 ~ (3bar, 1, 1/3), couplings to the tau / nu_tau generation only (j = 3), real:
+#   yL33 = y_L^{b tau} (Q_3 L_3: b-nu_tau, t-tau),  yL23 = y_L^{s tau} (Q_2 L_3: s-nu_tau, c-tau),
+#   yR23 = y_R^{c tau} (u_R2 e_R3: c-tau_R).
+# This is the minimal S1 texture entering b -> c tau nu and b -> s nu nu at tree level
+# (Angelescu et al. 1808.08179 Eqs. 26-27; Dorsner et al. 1603.04993 Table 5).
+# Upstream yeq, ymuq, ytauq, ybnu had no representation and are not mappable onto S1.
+parameters:
+- {name: MS1, value_type: real, scan: true, lower: 500.0, upper: 10000.0, default: 1800.0, prior: log}
+- {name: yL33, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.5, prior: signed_log, min_abs: 1.0e-4}
+- {name: yL23, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.1, prior: signed_log, min_abs: 1.0e-4}
+- {name: yR23, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.1, prior: signed_log, min_abs: 1.0e-4}

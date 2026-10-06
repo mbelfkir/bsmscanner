@@ -1,0 +1,18 @@
+# Physical basis of the CP-conserving softly broken Z2 2HDM (Branco et al. 1106.0034):
+#   mH, mA, mHp : heavy CP-even, CP-odd and charged scalar masses [GeV]
+#   tanb        : v2/v1
+#   cos_ba      : cos(beta - alpha), with beta - alpha in [0, pi] (sin(beta - alpha) >= 0)
+#   delta_soft  : (m_H^2 - M^2) tan^2(beta) / v^2, with M^2 = m12^2/(sin(beta) cos(beta)).
+#                 Replaces upstream m12sq (flat in [0, 1e6] GeV^2): boundedness from below and
+#                 unitarity confine M^2 to a window of width ~ v^2/tan^2(beta) below m_H^2, which
+#                 the m12sq prior hits with probability 5e-6 (200k-point test). delta_soft equals
+#                 lambda_1 - m_h^2/v^2 in the alignment limit; [-0.3, 8] spans BFB (> -0.26) to
+#                 unitarity (3 lambda_1 < 8 pi). m12sq is a derived output.
+# Other ranges unchanged from BSMScanner models/two_higgs_doublet v0.1.0.
+parameters:
+- {name: mH, value_type: real, scan: true, lower: 130.0, upper: 2000.0, default: 600.0, prior: log}
+- {name: mA, value_type: real, scan: true, lower: 130.0, upper: 2000.0, default: 620.0, prior: log}
+- {name: mHp, value_type: real, scan: true, lower: 130.0, upper: 2000.0, default: 650.0, prior: log}
+- {name: tanb, value_type: real, scan: true, lower: 0.5, upper: 60.0, default: 2.0, prior: log}
+- {name: cos_ba, value_type: real, scan: true, lower: -0.3, upper: 0.3, default: 0.02, prior: flat}
+- {name: delta_soft, value_type: real, scan: true, lower: -0.3, upper: 8.0, default: 3.96, prior: flat}

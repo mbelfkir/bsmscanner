@@ -1,0 +1,15 @@
+observables:
+- {name: SMEFTExpansionParameter, value_type: real, expression: eps}
+- {name: ObliqueS, value_type: real, expression: S_smeft}
+- {name: ObliqueT, value_type: real, expression: T_smeft}
+- {name: KappaV, value_type: real, expression: kappa_V}
+- {name: KappaT, value_type: real, expression: kappa_t}
+- {name: KappaB, value_type: real, expression: kappa_b}
+- {name: KappaTau, value_type: real, expression: kappa_tau}
+- {name: KappaG, value_type: real, expression: kappa_g}
+- {name: KappaGamma, value_type: real, expression: kappa_gamma}
+- name: max_abs_dkappa
+  value_type: real
+  expression: >
+    (max(max(max(abs(kappa_V - 1.0), abs(kappa_t - 1.0)), max(abs(kappa_b - 1.0), abs(kappa_tau - 1.0))),
+         max(abs(kappa_g - 1.0), abs(kappa_gamma - 1.0))))

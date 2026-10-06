@@ -1,0 +1,50 @@
+derived_scalars:
+- {name: cos_alpha, value_type: real, expression: "sqrt(max(1.0 - sin_alpha**2, 0.0))"}
+# Masses: Eq. (2.25) M_Z' = 2 g'_1 x; Eq. (2.35) M_N = sqrt(2) y^M x.
+- {name: MZp, value_type: real, expression: "2.0*gBL*vBL"}
+- {name: MN1, value_type: real, expression: "sqrt(2.0)*yN1*vBL"}
+- {name: MN2, value_type: real, expression: "sqrt(2.0)*yN2*vBL"}
+- {name: MN3, value_type: real, expression: "sqrt(2.0)*yN3*vBL"}
+# Scalar potential V = m^2 H^dag H + mu^2 |chi|^2 + l1 (H^dag H)^2 + l2 |chi|^4 + l3 H^dag H |chi|^2,
+# Eq. (2.3), inverted from (m_h1, m_h2, alpha), Eqs. (2.31)-(2.33).
+- {name: lambdaH, value_type: real, expression: "(mh1**2*cos_alpha**2 + mH2**2*sin_alpha**2)/(2.0*v_sm**2)"}
+- {name: lambdaS, value_type: real, expression: "(mh1**2*sin_alpha**2 + mH2**2*cos_alpha**2)/(2.0*vBL**2)"}
+- {name: lambdaHS, value_type: real, expression: "(mH2**2 - mh1**2)*sin_alpha*cos_alpha/(v_sm*vBL)"}
+# LEP-II contact bound variable, Eq. (3.2): M_Z'/g'_1 (= 2x).
+- {name: lep_contact_scale, value_type: real, expression: "MZp/max(gBL, 1.0e-12)"}
+
+# Z' width, Eq. (3.7), summed over all fermions in units of M g'^2/(12 pi):
+#   quarks C_f Q^2 = 3 (1/3)^2 = 1/3 each; charged leptons 1 each;
+#   light Majorana neutrinos 1/2 each (massless); heavy Majorana neutrinos 1/2 beta^3 each.
+# Massless limit without heavy N: 13/2, i.e. Gamma/M = 13 g'^2/(24 pi); with three open N: 8.
+- name: zp_quark_sum
+  value_type: real
+  expression: >
+    (zp_dirac_factor(m_u, MZp) + zp_dirac_factor(m_d, MZp) + zp_dirac_factor(m_s, MZp)
+     + zp_dirac_factor(m_c, MZp) + zp_dirac_factor(m_b, MZp) + zp_dirac_factor(m_t, MZp))/3.0
+- name: zp_lepton_sum
+  value_type: real
+  expression: "zp_dirac_factor(m_e, MZp) + zp_dirac_factor(m_mu, MZp) + zp_dirac_factor(m_tau, MZp)"
+- {name: zp_light_nu_sum, value_type: real, expression: "1.5"}
+- name: zp_heavy_nu_sum
+  value_type: real
+  expression: "0.5*(zp_majorana_factor(MN1, MZp) + zp_majorana_factor(MN2, MZp) + zp_majorana_factor(MN3, MZp))"
+- {name: zp_channel_sum, value_type: real, expression: "zp_quark_sum + zp_lepton_sum + zp_light_nu_sum + zp_heavy_nu_sum"}
+- {name: zp_width_over_mass, value_type: real, expression: "gBL**2/(12.0*pi)*zp_channel_sum"}
+- {name: zp_width, value_type: real, expression: "zp_width_over_mass*MZp"}
+# BR into one light charged-lepton flavour (e or mu); the paper quotes 12.5-15.5 %.
+- {name: br_zp_ee, value_type: real, expression: "zp_dirac_factor(m_e, MZp)/zp_channel_sum"}
+- {name: br_zp_mumu, value_type: real, expression: "zp_dirac_factor(m_mu, MZp)/zp_channel_sum"}
+- {name: br_zp_NN, value_type: real, expression: "zp_heavy_nu_sum/zp_channel_sum"}
+
+# Higgs signal strength of h1: production and all SM partial widths scale as cos^2(alpha);
+# exotic channels h1 -> N_k N_k and h1 -> Z'Z' open through the singlet admixture.
+#   mu = cos^2(alpha) * cos^2(alpha) Gamma_SM / (cos^2(alpha) Gamma_SM + Gamma_exotic)
+- name: h1_exotic_width
+  value_type: real
+  expression: >
+    h_to_nn_width(sin_alpha, MN1, mh1, vBL) + h_to_nn_width(sin_alpha, MN2, mh1, vBL)
+    + h_to_nn_width(sin_alpha, MN3, mh1, vBL) + h_to_zpzp_width(sin_alpha, MZp, mh1, vBL)
+- {name: h1_total_width, value_type: real, expression: "cos_alpha**2*gamma_h_sm + h1_exotic_width"}
+- {name: h1_br_exotic, value_type: real, expression: "h1_exotic_width/h1_total_width"}
+- {name: h1_signal_strength, value_type: real, expression: "cos_alpha**2*(1.0 - h1_br_exotic)"}

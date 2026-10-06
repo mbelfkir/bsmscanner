@@ -1,0 +1,65 @@
+derived_scalars:
+# ---- angles: beta - alpha in [0, pi] from cos(beta - alpha), sin(beta - alpha) >= 0
+- {name: sin_ba, value_type: real, expression: "sqrt(max(1.0 - cos_ba**2, 0.0))"}
+- {name: beta, value_type: real, expression: "atan(tanb)"}
+- {name: sinb, value_type: real, expression: "sin(beta)"}
+- {name: cosb, value_type: real, expression: "cos(beta)"}
+- {name: beta_minus_alpha, value_type: real, expression: "atan2(sin_ba, cos_ba)"}
+- {name: alpha, value_type: real, expression: "beta - beta_minus_alpha"}
+- {name: sina, value_type: real, expression: "sin(alpha)"}
+- {name: cosa, value_type: real, expression: "cos(alpha)"}
+- {name: soft_M_sq, value_type: real, expression: "mH**2 - delta_soft*v_sm**2/tanb**2"}
+- {name: m12sq, value_type: real, expression: "soft_M_sq*sinb*cosb"}
+
+# ---- quartics, potential (Branco Eq. 1): l1/2 |P1|^4 + l2/2 |P2|^4 + l3 |P1|^2|P2|^2
+#      + l4 |P1^dag P2|^2 + l5/2 [(P1^dag P2)^2 + h.c.], v = 246.22 GeV, M^2 = m12^2/(s_b c_b).
+#      Standard physical-basis inversion (e.g. Gunion-Haber hep-ph/0207010):
+- name: lambda1
+  value_type: real
+  expression: "(mH**2*cosa**2 + mh**2*sina**2 - soft_M_sq*sinb**2)/(v_sm**2*cosb**2)"
+- name: lambda2
+  value_type: real
+  expression: "(mH**2*sina**2 + mh**2*cosa**2 - soft_M_sq*cosb**2)/(v_sm**2*sinb**2)"
+- name: lambda3
+  value_type: real
+  expression: "((mH**2 - mh**2)*sina*cosa/(sinb*cosb) + 2.0*mHp**2 - soft_M_sq)/v_sm**2"
+- {name: lambda4, value_type: real, expression: "(soft_M_sq + mA**2 - 2.0*mHp**2)/v_sm**2"}
+- {name: lambda5, value_type: real, expression: "(soft_M_sq - mA**2)/v_sm**2"}
+
+# ---- tree-level perturbative unitarity: eigenvalues of the 2->2 scalar scattering matrix
+#      for the Z2-symmetric quartics (Kanemura-Kubota-Takasugi; Akeroyd-Arhrib-Naimi
+#      hep-ph/0006035), condition |e_i| < 8 pi.
+- {name: unit_a_p, value_type: real, expression: "1.5*(lambda1 + lambda2) + sqrt(2.25*(lambda1 - lambda2)**2 + (2.0*lambda3 + lambda4)**2)"}
+- {name: unit_a_m, value_type: real, expression: "1.5*(lambda1 + lambda2) - sqrt(2.25*(lambda1 - lambda2)**2 + (2.0*lambda3 + lambda4)**2)"}
+- {name: unit_b_p, value_type: real, expression: "0.5*(lambda1 + lambda2) + 0.5*sqrt((lambda1 - lambda2)**2 + 4.0*lambda4**2)"}
+- {name: unit_b_m, value_type: real, expression: "0.5*(lambda1 + lambda2) - 0.5*sqrt((lambda1 - lambda2)**2 + 4.0*lambda4**2)"}
+- {name: unit_c_p, value_type: real, expression: "0.5*(lambda1 + lambda2) + 0.5*sqrt((lambda1 - lambda2)**2 + 4.0*lambda5**2)"}
+- {name: unit_c_m, value_type: real, expression: "0.5*(lambda1 + lambda2) - 0.5*sqrt((lambda1 - lambda2)**2 + 4.0*lambda5**2)"}
+- {name: unit_e1, value_type: real, expression: "lambda3 + 2.0*lambda4 - 3.0*lambda5"}
+- {name: unit_e2, value_type: real, expression: "lambda3 - lambda5"}
+- {name: unit_f_p, value_type: real, expression: "lambda3 + 2.0*lambda4 + 3.0*lambda5"}
+- {name: unit_f_m, value_type: real, expression: "lambda3 + lambda5"}
+- {name: unit_f1, value_type: real, expression: "lambda3 + lambda4"}
+- {name: unit_p1, value_type: real, expression: "lambda3 - lambda4"}
+- name: unitarity_max_eigenvalue
+  value_type: real
+  expression: >
+    (max(max(max(abs(unit_a_p), abs(unit_a_m)), max(abs(unit_b_p), abs(unit_b_m))),
+        max(max(max(abs(unit_c_p), abs(unit_c_m)), max(abs(unit_e1), abs(unit_e2))),
+            max(max(abs(unit_f_p), abs(unit_f_m)), max(abs(unit_f1), abs(unit_p1))))))
+
+# ---- oblique T, Branco Eq. (388), CP-conserving: T_1h = sin(b-a), T_1H = cos(b-a), T_1A = 0
+- name: oblique_T
+  value_type: real
+  expression: >
+    ((oblique_F2(mHp**2, mA**2) + sin_ba**2*oblique_F2(mHp**2, mH**2) + cos_ba**2*oblique_F2(mHp**2, mh**2)
+     - sin_ba**2*oblique_F2(mH**2, mA**2) - cos_ba**2*oblique_F2(mh**2, mA**2)
+     + 3.0*cos_ba**2*(oblique_F2(mZ_gev**2, mH**2) - oblique_F2(mW_gev**2, mH**2)
+                      - oblique_F2(mZ_gev**2, mh**2) + oblique_F2(mW_gev**2, mh**2)))
+     /(16.0*pi*sw2*mW_gev**2))
+
+# ---- Type II light-Higgs coupling modifiers (Branco Table 2): xi_h^u = c_a/s_b, xi_h^d = xi_h^l = -s_a/c_b
+- {name: kappa_V, value_type: real, expression: sin_ba}
+- {name: kappa_u, value_type: real, expression: "cosa/sinb"}
+- {name: kappa_d, value_type: real, expression: "-sina/cosb"}
+- {name: kappa_l, value_type: real, expression: "-sina/cosb"}

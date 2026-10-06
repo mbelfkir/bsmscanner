@@ -1,0 +1,27 @@
+functions:
+# Z' -> f fbar kinematic factor for a vector coupling, Basso-Moretti-Pruna Eq. (3.7):
+#   Gamma = (M/12pi) C_f (Q_BL g')^2 (1 + 2 m^2/M^2) sqrt(1 - 4 m^2/M^2); zero below threshold.
+- name: zp_dirac_factor
+  args: [m, M]
+  expression: >
+    if_else(4.0*m**2 < M**2, (1.0 + 2.0*m**2/M**2)*sqrt(max(1.0 - 4.0*m**2/M**2, 0.0)), 0.0)
+# Z' -> N N for a Majorana neutrino (axial coupling, identical particles):
+#   Gamma = (M/24pi) g'^2 (1 - 4 m^2/M^2)^(3/2), i.e. 1/2 of a unit-charge Dirac channel times beta^3.
+- name: zp_majorana_factor
+  args: [m, M]
+  expression: >
+    if_else(4.0*m**2 < M**2, max(1.0 - 4.0*m**2/M**2, 0.0)**1.5, 0.0)
+# h1 -> N N, Majorana N with L = -(1/2)(M_N/x) h' N N, h' = -sin(alpha) h1 + ...:
+#   Gamma = sin^2(alpha) M_N^2 m_h beta^3 / (16 pi x^2).
+- name: h_to_nn_width
+  args: [sa, MN, mh, x]
+  expression: >
+    if_else(4.0*MN**2 < mh**2, sa**2*MN**2*mh*max(1.0 - 4.0*MN**2/mh**2, 0.0)**1.5/(16.0*pi*x**2), 0.0)
+# h1 -> Z'Z' via the singlet component (as h -> ZZ with v -> x):
+#   Gamma = sin^2(alpha) m_h^3/(32 pi x^2) (1 - 4r + 12 r^2) sqrt(1 - 4r), r = M_Z'^2/m_h^2.
+- name: h_to_zpzp_width
+  args: [sa, MZp, mh, x]
+  expression: >
+    if_else(4.0*MZp**2 < mh**2,
+            sa**2*mh**3/(32.0*pi*x**2)*(1.0 - 4.0*MZp**2/mh**2 + 12.0*MZp**4/mh**4)*sqrt(max(1.0 - 4.0*MZp**2/mh**2, 0.0)),
+            0.0)

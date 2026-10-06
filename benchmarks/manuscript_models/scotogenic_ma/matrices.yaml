@@ -1,0 +1,29 @@
+matrices:
+- name: charged_lepton_mass_matrix
+  value_type: complex_matrix
+  type: dirac_mass
+  role: charged_lepton
+  diagonalize: true
+  rows:
+  - ["me_gev", "0.0", "0.0"]
+  - ["0.0", "mmu_gev", "0.0"]
+  - ["0.0", "0.0", "mtau_gev"]
+- name: neutrino_mass_matrix
+  value_type: complex_matrix
+  type: majorana_mass
+  role: neutrino
+  diagonalize: false
+  rows:
+  - - "he1*he1*loop_N1 + he2*he2*loop_N2 + he3*he3*loop_N3"
+    - "he1*hmu1*loop_N1 + he2*hmu2*loop_N2 + he3*hmu3*loop_N3"
+    - "he1*htau1*loop_N1 + he2*htau2*loop_N2 + he3*htau3*loop_N3"
+  - - "he1*hmu1*loop_N1 + he2*hmu2*loop_N2 + he3*hmu3*loop_N3"
+    - "hmu1*hmu1*loop_N1 + hmu2*hmu2*loop_N2 + hmu3*hmu3*loop_N3"
+    - "hmu1*htau1*loop_N1 + hmu2*htau2*loop_N2 + hmu3*htau3*loop_N3"
+  - - "he1*htau1*loop_N1 + he2*htau2*loop_N2 + he3*htau3*loop_N3"
+    - "hmu1*htau1*loop_N1 + hmu2*htau2*loop_N2 + hmu3*htau3*loop_N3"
+    - "htau1*htau1*loop_N1 + htau2*htau2*loop_N2 + htau3*htau3*loop_N3"
+diagonalizations:
+- name: neutrino_svd
+  input: neutrino_mass_matrix
+  method: svd_complex

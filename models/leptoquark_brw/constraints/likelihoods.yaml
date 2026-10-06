@@ -1,0 +1,18 @@
+# Objective convention: BSMScanner NLL (gaussian z^2/2, multivariate_gaussian prefactor 1/2).
+likelihoods:
+# R(D), R(D*): HFLAV arXiv:2411.18639 Fig. 27 average R(D) = 0.342 +- 0.026, R(D*) = 0.287 +- 0.012,
+# rho = -0.39; SM-prediction uncertainties (0.004, 0.005) added in quadrature to the diagonal.
+- name: hflav_RD_RDst
+  kind: multivariate_gaussian
+  observables: [RD, RDst]
+  means: [0.342, 0.287]
+  covariance:
+  - [0.000692, -0.00012168]
+  - [-0.00012168, 0.000169]
+  quadratic_form_prefactor: 0.5
+# B+ -> K+ nu nu: Belle II arXiv:2311.14647, (2.3 +- 0.5 stat +0.5/-0.4 syst) x 10^-5.
+- {name: belle2_BKnunu, kind: asymmetric_gaussian, observable: BR_BKnunu, mean: 2.3e-5, sigma_up: 0.707e-5, sigma_down: 0.640e-5}
+# B_c lifetime: g_P(m_b) in (-1.14, 0.68) from B(B_c -> tau nu) < 30 % (Angelescu et al. 1808.08179 Eq. 12).
+- {name: bc_lifetime, kind: hard_cut, observable: gP_mb_obs, lower: -1.14, upper: 0.68}
+# Narrow-width validity of the pair-production treatment.
+- {name: lq_narrow_width, kind: hard_cut, observable: WidthFraction, lower: 0.0, upper: 0.20}

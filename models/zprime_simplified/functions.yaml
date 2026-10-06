@@ -1,0 +1,6 @@
+functions:
+# Vector-coupling two-body width factor (1 + 2 m^2/M^2) beta theta(M - 2m), DM Forum Eq. (2.3).
+- name: vec_factor
+  args: [m, M]
+  expression: >
+    if_else(4.0*m**2 < M**2, (1.0 + 2.0*m**2/M**2)*sqrt(max(1.0 - 4.0*m**2/M**2, 0.0)), 0.0)

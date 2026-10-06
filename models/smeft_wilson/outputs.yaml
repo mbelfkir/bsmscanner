@@ -1,0 +1,4 @@
+outputs:
+  save: [C_Hbox, C_HD, C_HWB, C_HG, C_HW, C_HB, C_uH, C_dH, C_eH,
+         SMEFTExpansionParameter, ObliqueS, ObliqueT, KappaV, KappaT, KappaB, KappaTau, KappaG, KappaGamma,
+         A_W_sm, A_t_sm, A_gamma_sm]

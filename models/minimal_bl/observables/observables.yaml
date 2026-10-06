@@ -1,0 +1,13 @@
+observables:
+- {name: MZprime, value_type: real, expression: MZp}
+- {name: contact_scale, value_type: real, expression: lep_contact_scale}
+- {name: HiggsSignalStrength, value_type: real, expression: h1_signal_strength}
+- {name: HiggsExoticBR, value_type: real, expression: h1_br_exotic}
+- {name: ZprimeWidthOverMass, value_type: real, expression: zp_width_over_mass}
+- {name: ZprimeWidth, value_type: real, expression: zp_width}
+- {name: BRZprimeToEE, value_type: real, expression: br_zp_ee}
+- {name: BRZprimeToNN, value_type: real, expression: br_zp_NN}
+- {name: HeavyScalarMass, value_type: real, expression: mH2}
+- {name: HeavyNeutrino1Mass, value_type: real, expression: MN1}
+- {name: HeavyNeutrino2Mass, value_type: real, expression: MN2}
+- {name: HeavyNeutrino3Mass, value_type: real, expression: MN3}

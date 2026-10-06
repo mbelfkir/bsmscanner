@@ -5,6 +5,22 @@ observables:
 - {name: inert_neutral_splitting, value_type: real, expression: abs(meta_R - meta_I)}
 - {name: scalar_dm_mass, value_type: real, expression: lightest_scalar_mass}
 - {name: fermion_dm_mass, value_type: real, expression: lightest_singlet_mass}
+# Lightest Z2-odd state among NEUTRAL candidates; a charged eta+ lighter than this is
+# vetoed in theory_checks.yaml (stable charged relic).
 - {name: dm_mass_analytic, value_type: real, expression: lightest_z2_odd_mass}
 - {name: lambda_L_R, value_type: real, expression: 0.5*(lambda3 + lambda4 + lambda5)}
 - {name: lambda_L_I, value_type: real, expression: 0.5*(lambda3 + lambda4 - lambda5)}
+
+# --- LEP constraints on the inert doublet (hard cuts in likelihoods_normal.yaml) ---
+# Z and W widths: Z -> eta_R eta_I and W -> eta+ eta_{R,I} kinematically closed.
+- {name: lep_z_width_margin, value_type: real, expression: meta_R + meta_I - mZ_gev}
+- {name: lep_w_width_margin, value_type: real, expression: "meta_charged + min(meta_R, meta_I) - mW_gev"}
+# LEP II neutralino-search reinterpretation (Lundstrom, Gustafsson, Edsjo, arXiv:0810.3924):
+# excluded if m_light < 80 GeV AND m_heavy < 100 GeV AND m_heavy - m_light > 8 GeV.
+- {name: m_eta0_light, value_type: real, expression: "min(meta_R, meta_I)"}
+- {name: m_eta0_heavy, value_type: real, expression: "max(meta_R, meta_I)"}
+- name: lep2_neutral_excluded
+  value_type: real
+  expression: >
+    if_else(m_eta0_light < 80.0 and m_eta0_heavy < 100.0 and (m_eta0_heavy - m_eta0_light) > 8.0,
+            1.0, 0.0)

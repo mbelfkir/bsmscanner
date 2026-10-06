@@ -1,0 +1,15 @@
+# LHC S1 pair production, sigma(M) BR_c^2 < sigma_lim,c(M) per channel (95 % CL), see plugins/lhc_pair.py.
+# Requires data/lhc_pair/*.csv (HEPData); the plugin raises if the theory table is missing.
+python_plugins:
+- ../plugins/lhc_pair.py
+observables:
+- name: LHCPairMaxRatio
+  value_type: real
+  plugin_call:
+    plugin: lhc_pair
+    function: max_ratio
+    bindings: {M: MS1, BR_ttau: BR_ttau, BR_bnu: BR_bnu, BR_ctau: BR_ctau, BR_snu: BR_snu}
+likelihoods:
+- {name: lhc_pair_production, kind: hard_cut, observable: LHCPairMaxRatio, lower: 0.0, upper: 1.0}
+outputs:
+  save: [LHCPairMaxRatio]

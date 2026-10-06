@@ -1,0 +1,54 @@
+metadata:
+  name: smeft_warsaw_dimension6
+  version: 0.1.0
+  description: Warsaw-basis dimension-six SMEFT benchmark with electroweak and Higgs-rate proxy observables at fixed Lambda.
+  tags: [smeft, warsaw_basis, dimension_six, wilson_coefficients]
+parameters:
+- {name: LambdaTeV, value_type: real, scan: true, lower: 1.0, upper: 20.0, default: 3.0, prior: log}
+- {name: cH, value_type: real, scan: true, lower: -10.0, upper: 10.0, default: 0.0, prior: flat}
+- {name: cT, value_type: real, scan: true, lower: -2.0, upper: 2.0, default: 0.0, prior: flat}
+- {name: cWB, value_type: real, scan: true, lower: -2.0, upper: 2.0, default: 0.0, prior: flat}
+- {name: cGG, value_type: real, scan: true, lower: -5.0, upper: 5.0, default: 0.0, prior: flat}
+- {name: cWW, value_type: real, scan: true, lower: -5.0, upper: 5.0, default: 0.0, prior: flat}
+- {name: cBB, value_type: real, scan: true, lower: -5.0, upper: 5.0, default: 0.0, prior: flat}
+- {name: cy_t, value_type: real, scan: true, lower: -5.0, upper: 5.0, default: 0.0, prior: flat}
+- {name: cy_b, value_type: real, scan: true, lower: -5.0, upper: 5.0, default: 0.0, prior: flat}
+- {name: cy_tau, value_type: real, scan: true, lower: -5.0, upper: 5.0, default: 0.0, prior: flat}
+constants:
+- {name: vTeV, value: 0.24622}
+- {name: alpha_em_inv, value: 127.95}
+derived_scalars:
+- {name: epsEFT, value_type: real, expression: "(vTeV/LambdaTeV)**2"}
+- {name: S_proxy, value_type: real, expression: "4.0*epsEFT*cWB"}
+- {name: T_proxy, value_type: real, expression: "-0.5*alpha_em_inv*epsEFT*cT"}
+- {name: kappa_h_proxy, value_type: real, expression: "1.0 - 0.5*cH*epsEFT"}
+- {name: kappa_g_proxy, value_type: real, expression: "1.0 + epsEFT*(cy_t + 12.0*cGG)"}
+- {name: kappa_gamma_proxy, value_type: real, expression: "1.0 + epsEFT*(cWW + cBB - cWB)"}
+- {name: kappa_b_proxy, value_type: real, expression: "1.0 + epsEFT*cy_b"}
+- {name: kappa_tau_proxy, value_type: real, expression: "1.0 + epsEFT*cy_tau"}
+- {name: mu_ggF_proxy, value_type: real, expression: "kappa_g_proxy**2 * kappa_h_proxy**2"}
+- {name: mu_gammagamma_proxy, value_type: real, expression: "kappa_gamma_proxy**2 * kappa_h_proxy**2"}
+observables:
+- {name: SMEFTExpansionParameter, value_type: real, expression: epsEFT}
+- {name: ObliqueSProxy, value_type: real, expression: S_proxy}
+- {name: ObliqueTProxy, value_type: real, expression: T_proxy}
+- {name: HiggsMuGGFProxy, value_type: real, expression: mu_ggF_proxy}
+- {name: HiggsMuGammaGammaProxy, value_type: real, expression: mu_gammagamma_proxy}
+- {name: KappaBProxy, value_type: real, expression: kappa_b_proxy}
+- {name: KappaTauProxy, value_type: real, expression: kappa_tau_proxy}
+theory_checks:
+- {name: eft_validity, condition: "SMEFTExpansionParameter < 0.10", fatal: true, message: SMEFT expansion parameter is too large for this benchmark.}
+- {name: perturbative_wilson_proxy, condition: "abs(cH) < 16*pi and abs(cT) < 16*pi and abs(cWB) < 16*pi and abs(cGG) < 16*pi and abs(cWW) < 16*pi and abs(cBB) < 16*pi", fatal: true, message: A Wilson coefficient exceeds the perturbativity proxy.}
+likelihoods:
+- {name: S_constraint, kind: gaussian, observable: ObliqueSProxy, mean: -0.05, sigma: 0.10}
+- {name: T_constraint, kind: gaussian, observable: ObliqueTProxy, mean: 0.0, sigma: 0.12}
+- {name: mu_ggF_constraint, kind: gaussian, observable: HiggsMuGGFProxy, mean: 1.0, sigma: 0.12}
+- {name: mu_gammagamma_constraint, kind: gaussian, observable: HiggsMuGammaGammaProxy, mean: 1.0, sigma: 0.12}
+outputs:
+  save: [SMEFTExpansionParameter, ObliqueSProxy, ObliqueTProxy, HiggsMuGGFProxy, HiggsMuGammaGammaProxy, KappaBProxy, KappaTauProxy]
+scan:
+  engine: serial_random
+  save_every: 100
+  seed: 10084884
+  settings: {objective: nll, max_evaluations: 2000, invalid_penalty: 1000000000000.0, save_invalid_points: true, verbose: 1}
+statistics: {enabled: true, method: de_weighted, credible_levels: [0.68, 0.95], output_samples: true, include_observables: true}

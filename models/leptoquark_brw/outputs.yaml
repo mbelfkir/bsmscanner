@@ -1,0 +1,3 @@
+outputs:
+  save: [MS1, yL33, yL23, yR23, LeptoquarkMass, RD, RDst, gVL_obs, gSL_mb_obs, gT_mb_obs, gP_mb_obs,
+         R_nunu_obs, BR_BKnunu, WidthFraction, BR_ttau_obs, BR_bnu_obs, BR_ctau_obs, BR_snu_obs]

@@ -1,17 +1,28 @@
 metadata:
-  name: scotogenic_ma_normal
-  version: 0.1.0
-  description: Ernest Ma scotogenic radiative-seesaw model with inert doublet scalars, three Z2-odd singlet fermions, and physical one-loop neutrino masses.
+  name: scotogenic_ma_normal_corrected
+  version: 0.2.0
+  description: >
+    Ernest Ma scotogenic radiative-seesaw model (hep-ph/0601225) with inert doublet
+    scalars, three Z2-odd singlet fermions, and physical one-loop neutrino masses.
+    Corrected copy of BSMScanner models/scotogenic_ma v0.1.0: one-loop prefactor
+    1/(32 pi^2) (Merle & Platscher, arXiv:1507.06314, text after Eq. 6), Takagi
+    factorization of the Majorana mass matrix, signed delta_CP for the NuFIT table,
+    plus LFV (mu->e gamma, tau->l gamma), oblique T, LEP and charged-relic constraints.
+    See CHANGES.md for conventions and sources.
   ordering: normal
-  tags: [scotogenic, ma_2006, radiative_neutrino_mass, inert_doublet, dark_matter, normal_ordering]
+  tags: [scotogenic, ma_2006, radiative_neutrino_mass, inert_doublet, dark_matter, normal_ordering, lfv]
 imports:
 - parameters.yaml
 - constants.yaml
 - functions.yaml
 - derived.yaml
 - matrices.yaml
-- observables/neutrino_normal.yaml
+- core:neutrino/constants_normal.yaml
+- core:neutrino/observables_common.yaml
+- core:neutrino/observables_normal.yaml
 - observables/scalar_sector.yaml
+- observables/lfv.yaml
+- observables/electroweak.yaml
 - constraints/theory_checks.yaml
 - constraints/likelihoods_normal.yaml
 - outputs.yaml

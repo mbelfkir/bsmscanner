@@ -4,4 +4,13 @@ constants:
 - {name: me_gev, value: 0.00051099895}
 - {name: mmu_gev, value: 0.1056583755}
 - {name: mtau_gev, value: 1.77686}
-- {name: loop_eps, value: 1.0e-10}
+# Electroweak inputs (PDG 2024).
+- {name: mZ_gev, value: 91.1876}
+- {name: mW_gev, value: 80.3692}
+- {name: GF_gev, value: 1.1663788e-5}      # Fermi constant, GeV^-2
+- {name: alpha_em_0, value: 0.0072973525693}  # alpha(0), on-shell photon in l -> l' gamma
+- {name: alpha_em_mz, value: 0.0078153}       # 1/127.951, MSbar alpha(MZ) for the T parameter
+# Leptonic branching fractions normalising l_a -> l_b gamma (PDG 2024).
+- {name: br_mu_enunu, value: 1.0}
+- {name: br_tau_enunu, value: 0.1782}
+- {name: br_tau_mununu, value: 0.1739}

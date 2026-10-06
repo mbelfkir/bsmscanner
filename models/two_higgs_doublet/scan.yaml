@@ -1,0 +1,58 @@
+# Upstream used `serial_random` (2000 evaluations). The valid region (boundedness from below,
+# perturbative unitarity, M_H+- > 800 GeV) occupies ~1.4e-4 of the prior volume even after the
+# delta_soft reparameterisation (50k-point test), so a plain adaptive_diver run starts with no
+# valid population member and stalls (observed: 0/1418 valid). basin_scan explores the full box,
+# selects the valid points, and runs adaptive_diver inside focused boxes seeded with them.
+scan:
+  engine: basin_scan
+  seed: 11060034
+  save_every: 1000
+  settings:
+    objective: nll
+    invalid_penalty: 1.0e+12
+    save_invalid_points: true
+    verbose: 0
+    progress_interval: 50000
+  basin_scan:
+    exploration:
+      method: latin_hypercube
+      n_points: 400000
+      keep_fraction: 0.02
+    selection:
+      mode: top_fraction
+      top_fraction: 0.5
+      max_points: 2000
+      near_miss:
+        enabled: false
+    clustering:
+      method: dbscan
+      enabled: true
+      eps_fraction: 0.15
+      min_samples: 5
+      max_clusters: 6
+    boxes:
+      construction: quantile
+      q_low: 0.0
+      q_high: 1.0
+      padding_fraction: 0.25
+      min_width_fraction: 0.02
+      clip_to_original_bounds: true
+      merge_overlapping: false
+      max_boxes: 0
+    progressive_exploration: {enabled: false}
+    proposals: {enabled: false}
+    staged_evaluation: {enabled: false}
+    refinement: {enabled: false}
+    ml_focus: {enabled: false}
+    focused_engine:
+      name: adaptive_diver
+      population_size: 128
+      max_generations: 400
+      p_best_fraction: 0.2
+      convergence: {patience: 100, population_std_tol: 1.0e-8, min_delta_chi2: 1.0e-8}
+      local_refinement: {enabled: true, method: Powell, n_elites: 6, maxiter: 1200}
+    output:
+      save_exploration_points: true
+      save_clusters: true
+      save_focused_boxes: true
+statistics: {enabled: true, method: de_weighted, credible_levels: [0.68, 0.95], output_samples: true, include_observables: true}

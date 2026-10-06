@@ -1,0 +1,46 @@
+scan:
+  engine: adaptive_diver
+  save_every: 100
+  seed: 20060127
+  settings:
+    objective: nll
+    invalid_penalty: 1.0e+12
+    save_invalid_points: true
+    verbose: 1
+  adaptive_diver:
+    population_size: 96
+    max_generations: 300
+    p_best_fraction: 0.2
+    mutation:
+      adaptive: true
+      F_min: 0.05
+      F_max: 0.7
+      initial_mean: 0.35
+      learning_rate: 0.1
+    crossover:
+      adaptive: true
+      CR_min: 0.1
+      CR_max: 0.9
+      initial_mean: 0.55
+      learning_rate: 0.1
+    bounds:
+      handling: reflect
+    convergence:
+      patience: 60
+      population_std_tol: 1.0e-8
+      min_delta_chi2: 1.0e-8
+    local_refinement:
+      enabled: true
+      method: Powell
+      n_elites: 6
+      maxiter: 1200
+    output:
+      save_history: true
+      save_population: true
+      save_elites: true
+statistics:
+  enabled: true
+  method: de_weighted
+  credible_levels: [0.68, 0.95]
+  output_samples: true
+  include_observables: true

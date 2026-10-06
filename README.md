@@ -84,7 +84,8 @@ A model is one or more YAML files under a schema with a fixed set of top-level
 sections -- `parameters`, `constants`, `functions`, `derived_scalars`,
 `derived_complex`, `matrices`, `diagonalizations`, `observables`,
 `theory_checks`, `likelihoods`, `outputs`, and `scan`. A trimmed real example
-(from `models/minimal_bl/model.yaml`, a gauged B-L benchmark):
+(trimmed from the original single-file
+`benchmarks/manuscript_models/minimal_bl/model.yaml`, a gauged B-L benchmark):
 
 ```yaml
 metadata:
@@ -312,7 +313,7 @@ Models are expected to keep their own:
 - plugins or custom likelihood terms when they are genuinely model-specific
 
 `models/scotogenic_ma` is a full-scale example of this split, and
-`models/minimal_bl` the simplest single-file case. See
+`benchmarks/manuscript_models/minimal_bl` the simplest single-file case. See
 `docs/core_model_split.md` for the full rationale.
 
 ## Remote Sync And Build
@@ -332,26 +333,35 @@ Both variables are required; the scripts exit with a message if either is unset.
 
 ## Benchmark Models
 
-`models/` includes exactly the seven published benchmark models used in a
-companion methodology study comparing the four scan engines at matched
-budget:
+`models/` holds the tutorial models. Six were reviewed against their source
+papers and corrected (each directory has a `CHANGES.md` listing every fix with
+its source, a `tests/` directory, and a `run_best_fit.py`); the seventh is the
+original benchmark, not yet reviewed:
 
-- `scotogenic_ma` -- radiative (one-loop) neutrino mass with dark matter
-- `minimal_bl` -- gauged U(1)_B-L with a seesaw and a Z'
-- `two_higgs_doublet` -- CP-conserving two-Higgs-doublet model
-- `smeft_wilson` -- SMEFT, Warsaw basis, 10 Wilson coefficients
-- `zprime_simplified` -- Z' simplified dark matter (LHC DM Forum benchmark)
-- `leptoquark_brw` -- Buchmuller-Ruckl-Wyler scalar leptoquark
-- `alp_effective` -- axion-like-particle effective couplings
+- `scotogenic_ma` -- radiative (one-loop) neutrino mass with dark matter; corrected
+- `minimal_bl` -- gauged U(1)_B-L with a seesaw and a Z'; corrected
+- `two_higgs_doublet` -- Type II two-Higgs-doublet model; corrected
+- `smeft_wilson` -- SMEFT, Warsaw basis, 9 Wilson coefficients; corrected
+- `zprime_simplified` -- Z' simplified dark matter (LHC DM Forum benchmark); corrected
+- `leptoquark_brw` -- S1 scalar leptoquark (flavour anomalies); replaces the original BRW proxy
+- `alp_effective` -- axion-like-particle effective couplings (original benchmark)
 
-Each ships as a standalone model directory under `models/<name>/` with a
-matching runnable example under `examples/<name>/`. See
-`docs/published_benchmark_validation.md` for what is validated
-formula-by-formula against the cited reference versus what remains a
-simplified analytic proxy for each benchmark.
+Some corrected models use external HEPData tables that are not redistributed
+here. For `minimal_bl`, `zprime_simplified` and `leptoquark_brw`, `model.yaml`
+runs without that constraint and `model_with_*.yaml` adds it once the tables are
+placed in `data/` (see each `data/README.md`); two more constraints are marked
+INTERIM or PENDING in their `CHANGES.md`. Shared references are in
+`models/references.bib`.
 
-Tutorial notebooks (one per published benchmark model, pre-executed) are under
-`notebooks/` -- see `notebooks/README.md`.
+`benchmarks/manuscript_models/` keeps the seven **original** benchmark models
+used by the companion methodology study (four scan engines at matched budget),
+unchanged, so that study and `tests/test_published_benchmark_validation.py`
+remain reproducible. Runnable examples are under `examples/<name>/`; see
+`docs/published_benchmark_validation.md` for what the original benchmarks
+validate formula-by-formula versus what is a simplified analytic proxy.
+
+Tutorial notebooks (one per model, pre-executed) are under `notebooks/` -- see
+`notebooks/README.md`.
 
 ## Repository Layout
 
@@ -369,12 +379,17 @@ BSMScanner/
 │   └── <name>/
 │       ├── model.yaml
 │       └── run_scan.py
-├── models/                  # standalone model directories (see Benchmark Models)
+├── models/                  # tutorial models (see Benchmark Models)
 │   └── <name>/
 │       ├── model.yaml
 │       ├── parameters.yaml
 │       ├── constraints/
-│       └── outputs.yaml
+│       ├── outputs.yaml
+│       ├── CHANGES.md       # corrected models: every fix with its source
+│       ├── tests/           # validation against independent re-implementations
+│       └── run_best_fit.py
+├── benchmarks/
+│   └── manuscript_models/   # the original seven benchmark models (methodology study)
 ├── fortran/
 │   └── kernels/
 ├── include/

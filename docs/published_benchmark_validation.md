@@ -1,7 +1,9 @@
 # Published Benchmark Validation
 
 This note records the validation status of the published benchmark models added
-for the BSMScanner manuscript study. It separates formula-level validation from
+for the BSMScanner manuscript study. These are the **original** models, kept
+unchanged in `benchmarks/manuscript_models/`; the tutorial models in `models/`
+are the corrected versions and carry their own `CHANGES.md` and tests. It separates formula-level validation from
 future external-backend validation.
 
 ## Scope

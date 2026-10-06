@@ -1,0 +1,12 @@
+constants:
+# Quark masses for the Z' -> q qbar thresholds (PDG 2024; light quarks MSbar at 2 GeV, c, b MSbar, top pole).
+- {name: m_u, value: 0.00216}
+- {name: m_d, value: 0.00470}
+- {name: m_s, value: 0.0935}
+- {name: m_c, value: 1.2730}
+- {name: m_b, value: 4.183}
+- {name: m_t, value: 172.57}
+# Nucleon mass used by Boveia et al. (arXiv:1603.04156, below Eq. 4.1).
+- {name: m_nucleon, value: 0.939}
+# 1 GeV^-2 = 0.3893794 mb = 3.893794e-28 cm^2 (hbar c)^2.
+- {name: gev2_to_cm2, value: 3.893794e-28}

@@ -1,0 +1,10 @@
+observables:
+- {name: m_eta_charged, value_type: real, expression: meta_charged}
+- {name: m_eta_R, value_type: real, expression: meta_R}
+- {name: m_eta_I, value_type: real, expression: meta_I}
+- {name: inert_neutral_splitting, value_type: real, expression: abs(meta_R - meta_I)}
+- {name: scalar_dm_mass, value_type: real, expression: lightest_scalar_mass}
+- {name: fermion_dm_mass, value_type: real, expression: lightest_singlet_mass}
+- {name: dm_mass_analytic, value_type: real, expression: lightest_z2_odd_mass}
+- {name: lambda_L_R, value_type: real, expression: 0.5*(lambda3 + lambda4 + lambda5)}
+- {name: lambda_L_I, value_type: real, expression: 0.5*(lambda3 + lambda4 - lambda5)}

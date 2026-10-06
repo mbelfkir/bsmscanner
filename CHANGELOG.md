@@ -2,6 +2,34 @@
 
 ## Unreleased
 
+## 0.1.9
+
+- **Tutorial models replaced by corrected versions.** `models/` now holds the six models that
+  were reviewed against their source papers -- `scotogenic_ma`, `minimal_bl`, `two_higgs_doublet`,
+  `smeft_wilson`, `zprime_simplified` and `leptoquark_brw` (an explicit S1 leptoquark that
+  replaces the original proxy benchmark). Each has a `CHANGES.md` listing every fix with its source
+  and how it was verified, a `tests/` directory (collected by the repository `pytest`) and a
+  `run_best_fit.py`. `alp_effective` is the original benchmark, not yet reviewed. Shared
+  references are in `models/references.bib`. The corrected scotogenic model needs the
+  `deltaCP_deg_m180_180` observable, so it requires bsm-scanner >= 0.1.7.
+- **The original benchmark models are preserved** unchanged in
+  `benchmarks/manuscript_models/` (the companion methodology study's models);
+  `tests/test_published_benchmark_validation.py` and
+  `benchmarks/run_minimal_bl_basin_manifold_ml.py` now point there.
+- **Optional external-data constraints.** `minimal_bl`, `zprime_simplified` and `leptoquark_brw`
+  depend on HEPData tables that are not redistributed. Their `model.yaml` runs without that
+  constraint; `model_with_*.yaml` adds it once the tables are placed in `data/` (see each
+  `data/README.md`). Without the tables the opt-in model fails with an explicit
+  `FileNotFoundError`, never a silent fallback.
+- **Tutorial notebooks regenerated** for the six corrected models by
+  `scripts/build_tutorial_notebooks.py`: they load the model, show its `CHANGES.md`, run a live scan,
+  and read the reference best-fit runs stored in `models/<name>/results/` (13 small
+  `best_fit/summary/metadata` JSON sets) instead of hard-coded study tables. The new figures are in
+  `notebooks/figures/`. `tests/test_tutorial_reference_results.py` re-evaluates every stored best fit
+  through the shipped model and requires the stored objective to be reproduced.
+- `examples/` READMEs describe the corrected models. `pytest` now also collects `models/`
+  (`testpaths`), and `mpmath` was added to the `dev` extra (used by the scotogenic tests).
+
 ## 0.1.8
 
 - Evaluation order now schedules every node that has a `plugin_call` after all

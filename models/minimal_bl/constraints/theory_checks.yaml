@@ -1,0 +1,7 @@
+theory_checks:
+- {name: positive_masses, condition: "MZp > 0 and MN1 > 0 and MN2 > 0 and MN3 > 0 and mH2 > mh1", fatal: true, message: B-L masses must be positive and ordered (m_h1 < m_h2).}
+- {name: perturbative_gauge_yukawa, condition: "gBL < sqrt(4*pi) and yN1 < sqrt(4*pi) and yN2 < sqrt(4*pi) and yN3 < sqrt(4*pi)", fatal: true, message: A B-L gauge or Majorana Yukawa coupling is non-perturbative.}
+- {name: perturbative_quartics, condition: "lambdaH < 4*pi and lambdaS < 4*pi and abs(lambdaHS) < 4*pi", fatal: true, message: A scalar quartic exceeds the perturbativity guard.}
+# Eqs. (2.11)-(2.12): 4 l1 l2 - l3^2 > 0, l1, l2 > 0. With couplings inverted from physical masses
+# 4 l1 l2 - l3^2 = m_h1^2 m_h2^2/(v^2 x^2) > 0 identically; kept as a numerical guard.
+- {name: bounded_from_below, condition: "lambdaH > 0 and lambdaS > 0 and 4.0*lambdaH*lambdaS - lambdaHS**2 > 0", fatal: true, message: B-L scalar potential bounded-from-below / minimum condition failed.}

@@ -1,0 +1,11 @@
+theory_checks:
+- {name: positive_physical_masses, condition: "mH > mh and mA > 0 and mHp > 0 and tanb > 0 and soft_M_sq > 0", fatal: true, message: 2HDM physical masses, tan beta or M^2 are invalid.}
+# Branco et al. Eq. (176): necessary and sufficient for lambda6 = lambda7 = 0, real lambda5.
+- name: bounded_from_below
+  condition: >
+    lambda1 > 0 and lambda2 > 0
+    and lambda3 > -sqrt(lambda1*lambda2)
+    and lambda3 + lambda4 - abs(lambda5) > -sqrt(lambda1*lambda2)
+  fatal: true
+  message: 2HDM potential is unbounded from below (Branco Eq. 176).
+- {name: perturbative_unitarity, condition: "unitarity_max_eigenvalue < 8*pi", fatal: true, message: Tree-level perturbative unitarity violated (|e_i| >= 8 pi).}

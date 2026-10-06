@@ -27,31 +27,31 @@ def evaluate(model_path: str, overrides: dict[str, float] | None = None):
     "model_path, required_outputs",
     [
         (
-            "models/scotogenic_ma/model_no.yaml",
+            "benchmarks/manuscript_models/scotogenic_ma/model_no.yaml",
             ["m_eta_R", "m_eta_I", "m1", "m2", "m3", "dm21", "dm3l"],
         ),
         (
-            "models/minimal_bl/model.yaml",
+            "benchmarks/manuscript_models/minimal_bl/model.yaml",
             ["MZprime", "contact_scale", "HeavyNeutrino1Mass", "HiggsSignalStrength"],
         ),
         (
-            "models/two_higgs_doublet/model.yaml",
+            "benchmarks/manuscript_models/two_higgs_doublet/model.yaml",
             ["HeavyCPEvenMass", "CPoddMass", "ChargedHiggsMass", "HiggsSignalStrength"],
         ),
         (
-            "models/smeft_wilson/model.yaml",
+            "benchmarks/manuscript_models/smeft_wilson/model.yaml",
             ["SMEFTExpansionParameter", "ObliqueSProxy", "HiggsMuGGFProxy"],
         ),
         (
-            "models/zprime_simplified/model.yaml",
+            "benchmarks/manuscript_models/zprime_simplified/model.yaml",
             ["MediatorMass", "DarkMatterMass", "WidthFractionProxy"],
         ),
         (
-            "models/leptoquark_brw/model.yaml",
+            "benchmarks/manuscript_models/leptoquark_brw/model.yaml",
             ["LeptoquarkMass", "WidthFractionProxy", "ElectronContactProxy"],
         ),
         (
-            "models/alp_effective/model.yaml",
+            "benchmarks/manuscript_models/alp_effective/model.yaml",
             ["ALPMass", "PhotonCoupling", "LifetimeProxyInvGeV"],
         ),
     ],
@@ -65,8 +65,8 @@ def test_published_benchmark_defaults_evaluate(model_path, required_outputs):
 
 
 def test_scotogenic_ma_neutrino_mass_scales_with_lambda5():
-    reference = evaluate("models/scotogenic_ma/model_no.yaml", {"lambda5": 1.0e-8})
-    suppressed = evaluate("models/scotogenic_ma/model_no.yaml", {"lambda5": 1.0e-12})
+    reference = evaluate("benchmarks/manuscript_models/scotogenic_ma/model_no.yaml", {"lambda5": 1.0e-8})
+    suppressed = evaluate("benchmarks/manuscript_models/scotogenic_ma/model_no.yaml", {"lambda5": 1.0e-12})
 
     expected_ratio = 1.0e-4
     assert suppressed["inert_neutral_splitting"] / reference["inert_neutral_splitting"] == pytest.approx(
@@ -82,7 +82,7 @@ def test_scotogenic_ma_neutrino_mass_scales_with_lambda5():
 
 def test_minimal_bl_mass_and_lep_contact_identities():
     outputs = evaluate(
-        "models/minimal_bl/model.yaml",
+        "benchmarks/manuscript_models/minimal_bl/model.yaml",
         {"gBL": 0.2, "vBL": 10000.0, "sin_alpha": 0.0},
     )
 
@@ -94,7 +94,7 @@ def test_minimal_bl_mass_and_lep_contact_identities():
 
 def test_two_higgs_doublet_alignment_limit():
     outputs = evaluate(
-        "models/two_higgs_doublet/model.yaml",
+        "benchmarks/manuscript_models/two_higgs_doublet/model.yaml",
         {"cos_ba": 0.0, "mH": 300.0, "mA": 500.0, "mHp": 500.0, "m12sq": 10000.0},
     )
 
@@ -103,7 +103,7 @@ def test_two_higgs_doublet_alignment_limit():
 
 
 def test_smeft_zero_wilson_coefficients_return_sm_limit():
-    outputs = evaluate("models/smeft_wilson/model.yaml")
+    outputs = evaluate("benchmarks/manuscript_models/smeft_wilson/model.yaml")
 
     assert outputs["ObliqueSProxy"] == pytest.approx(0.0)
     assert outputs["ObliqueTProxy"] == pytest.approx(0.0)
@@ -115,7 +115,7 @@ def test_smeft_zero_wilson_coefficients_return_sm_limit():
 
 def test_zprime_forum_coupling_benchmark_width_and_rates():
     outputs = evaluate(
-        "models/zprime_simplified/model.yaml",
+        "benchmarks/manuscript_models/zprime_simplified/model.yaml",
         {"MZp": 1000.0, "mchi": 10.0, "gq": 0.25, "gchi": 1.0, "gl": 0.0},
     )
 
@@ -128,7 +128,7 @@ def test_zprime_forum_coupling_benchmark_width_and_rates():
 
 def test_leptoquark_zero_couplings_decouple_contact_and_lfv_proxies():
     outputs = evaluate(
-        "models/leptoquark_brw/model.yaml",
+        "benchmarks/manuscript_models/leptoquark_brw/model.yaml",
         {"yeq": 0.0, "ymuq": 0.0, "ytauq": 0.0, "ybnu": 0.0},
     )
 
@@ -140,7 +140,7 @@ def test_leptoquark_zero_couplings_decouple_contact_and_lfv_proxies():
 
 def test_alp_zero_couplings_decouple_visible_proxies():
     outputs = evaluate(
-        "models/alp_effective/model.yaml",
+        "benchmarks/manuscript_models/alp_effective/model.yaml",
         {"cgam": 0.0, "cgg": 0.0, "cee": 0.0, "cmumu": 0.0},
     )
 

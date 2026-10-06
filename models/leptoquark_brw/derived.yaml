@@ -1,0 +1,43 @@
+derived_scalars:
+# ---- b -> c tau nu, matching at mu = M_S1 (Angelescu et al. 1808.08179 Eqs. 26-27; g_i normalised as
+#      their Eq. 9 = Blanke et al. 1811.09603 Eq. 11):
+#   g_VL = v^2 y_L^{b tau} (V y_L^*)^{c tau}/(4 V_cb M^2),  (V y_L^*)^{c tau} = V_cs y_L^{s tau} + V_cb y_L^{b tau}
+#   g_SL = -4 g_T = -v^2 y_L^{b tau} y_R^{c tau *}/(4 V_cb M^2)
+- {name: gVL, value_type: real, expression: "v_sm**2*yL33*(V_cs*yL23 + V_cb*yL33)/(4.0*V_cb*MS1**2)"}
+- {name: gSL_hi, value_type: real, expression: "-v_sm**2*yL33*yR23/(4.0*V_cb*MS1**2)"}
+- {name: gT_hi, value_type: real, expression: "-0.25*gSL_hi"}
+# Running to mu = m_b (Blanke et al. Eq. 13, from 1 TeV; applied from M_S1, log(M/1 TeV) running neglected):
+- {name: gSL_mb, value_type: real, expression: "1.752*gSL_hi - 0.287*gT_hi"}
+- {name: gT_mb, value_type: real, expression: "-0.004*gSL_hi + 0.842*gT_hi"}
+# R(D(*)) / R(D(*))_SM, Blanke et al. Eqs. (16)-(17), C_SR = 0, real coefficients:
+- name: RD_ratio
+  value_type: real
+  expression: >
+    (1.0 + gVL)**2 + 1.54*(1.0 + gVL)*gSL_mb + 1.09*gSL_mb**2 + 1.04*(1.0 + gVL)*gT_mb + 0.75*gT_mb**2
+- name: RDst_ratio
+  value_type: real
+  expression: >
+    (1.0 + gVL)**2 - 0.13*(1.0 + gVL)*gSL_mb + 0.05*gSL_mb**2 - 5.0*(1.0 + gVL)*gT_mb + 16.27*gT_mb**2
+- {name: RD_pred, value_type: real, expression: "RD_sm*RD_ratio"}
+- {name: RDst_pred, value_type: real, expression: "RDst_sm*RDst_ratio"}
+# B_c -> tau nu: g_P = g_SR - g_SL at m_b (Angelescu et al. Eq. 12 bound from B(B_c -> tau nu) < 30 %).
+- {name: gP_mb, value_type: real, expression: "-gSL_mb"}
+
+# ---- b -> s nu nu (Dorsner et al. 1603.04993 Table 5 and Sec. 3.2.4), L = sqrt2 G_F c (sbar g b)(nubar g nu'):
+#   S1: c_{sb; tau tau} = v^2/(2 M^2) y_L^{b tau} y_L^{s tau *};  SM: c = alpha lambda_t C_L^SM/pi (diagonal).
+#   R_nunu = sum_{nu nu'} |c_SM delta + c_NP|^2 / (3 |c_SM|^2) = [2 + (1 + c_NP/c_SM)^2]/3   (tau-only, real).
+- {name: c_nunu_sm, value_type: real, expression: "alpha_em_mz*V_tb*V_ts*CL_sm/pi"}
+- {name: c_nunu_np, value_type: real, expression: "v_sm**2*yL33*yL23/(2.0*MS1**2)"}
+- {name: R_nunu, value_type: real, expression: "(2.0 + (1.0 + c_nunu_np/c_nunu_sm)**2)/3.0"}
+- {name: br_knn_pred, value_type: real, expression: "br_knn_sd_sm*R_nunu + br_knn_ld"}
+
+# ---- S1 decays (CKM ~ 1 in the decay vertices): t tau, b nu (yL33); c tau, s nu (yL23); c tau_R (yR23).
+- {name: G_ttau, value_type: real, expression: "lq_width(yL33, MS1, m_top)"}
+- {name: G_bnu, value_type: real, expression: "lq_width(yL33, MS1, 0.0)"}
+- {name: G_ctau, value_type: real, expression: "lq_width(yL23, MS1, 0.0) + lq_width(yR23, MS1, 0.0)"}
+- {name: G_snu, value_type: real, expression: "lq_width(yL23, MS1, 0.0)"}
+- {name: G_tot, value_type: real, expression: "G_ttau + G_bnu + G_ctau + G_snu"}
+- {name: BR_ttau, value_type: real, expression: "G_ttau/G_tot"}
+- {name: BR_bnu, value_type: real, expression: "G_bnu/G_tot"}
+- {name: BR_ctau, value_type: real, expression: "G_ctau/G_tot"}
+- {name: BR_snu, value_type: real, expression: "G_snu/G_tot"}

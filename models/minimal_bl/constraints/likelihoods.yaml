@@ -1,0 +1,11 @@
+# Objective convention: BSMScanner NLL ('gaussian' returns z^2/2); hard cuts are vetoes.
+likelihoods:
+# LEP-II contact interactions, Eq. (3.2) (99 % CL): M_Z'/g'_1 >= 7 TeV.
+- {name: lep_contact_bound, kind: hard_cut, observable: contact_scale, lower: 7000.0, upper: 1.0e+12}
+# Global h1 signal strength, LHC Run 2 (139 fb^-1):
+#   ATLAS, Nature 607 (2022) 52: mu = 1.05 +- 0.06;  CMS, Nature 607 (2022) 60: mu = 1.002 +- 0.057.
+# Inverse-variance mean 1.025; the uncertainty is kept at 0.06 (not 0.041) because the dominant
+# signal-theory systematics are common to both experiments and no official combination exists.
+- {name: higgs_signal_strength, kind: gaussian, observable: HiggsSignalStrength, mean: 1.025, sigma: 0.06}
+# Narrow-width validity of the Z' treatment (full Eq. 3.7 width).
+- {name: zprime_narrow_width, kind: hard_cut, observable: ZprimeWidthOverMass, lower: 0.0, upper: 0.10}

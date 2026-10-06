@@ -1,0 +1,190 @@
+{
+  "model_name": "smeft_warsaw_dim6_corrected",
+  "model_version": "0.2.0",
+  "framework_version": "0.1.0",
+  "run_id": "smeft_warsaw_dim6_corrected-8624f30ee2aa",
+  "timestamp_utc": "2026-10-03T12:12:12.397704+00:00",
+  "engine": "adaptive_diver",
+  "objective_mode": "nll",
+  "maximize": false,
+  "seed": 10084884,
+  "save_every": 100,
+  "parameter_order": [
+    "C_Hbox",
+    "C_HD",
+    "C_HWB",
+    "C_HG",
+    "C_HW",
+    "C_HB",
+    "C_uH",
+    "C_dH",
+    "C_eH"
+  ],
+  "scanned_parameters": [
+    {
+      "name": "C_Hbox",
+      "index": 0,
+      "lower": -5.0,
+      "upper": 5.0,
+      "prior": "flat",
+      "default": 0.0,
+      "min_abs": null
+    },
+    {
+      "name": "C_HD",
+      "index": 1,
+      "lower": -0.1,
+      "upper": 0.1,
+      "prior": "flat",
+      "default": 0.0,
+      "min_abs": null
+    },
+    {
+      "name": "C_HWB",
+      "index": 2,
+      "lower": -0.035,
+      "upper": 0.035,
+      "prior": "flat",
+      "default": 0.0,
+      "min_abs": null
+    },
+    {
+      "name": "C_HG",
+      "index": 3,
+      "lower": -0.03,
+      "upper": 0.03,
+      "prior": "flat",
+      "default": 0.0,
+      "min_abs": null
+    },
+    {
+      "name": "C_HW",
+      "index": 4,
+      "lower": -0.06,
+      "upper": 0.06,
+      "prior": "flat",
+      "default": 0.0,
+      "min_abs": null
+    },
+    {
+      "name": "C_HB",
+      "index": 5,
+      "lower": -0.02,
+      "upper": 0.02,
+      "prior": "flat",
+      "default": 0.0,
+      "min_abs": null
+    },
+    {
+      "name": "C_uH",
+      "index": 6,
+      "lower": -5.0,
+      "upper": 5.0,
+      "prior": "flat",
+      "default": 0.0,
+      "min_abs": null
+    },
+    {
+      "name": "C_dH",
+      "index": 7,
+      "lower": -0.2,
+      "upper": 0.2,
+      "prior": "flat",
+      "default": 0.0,
+      "min_abs": null
+    },
+    {
+      "name": "C_eH",
+      "index": 8,
+      "lower": -0.08,
+      "upper": 0.08,
+      "prior": "flat",
+      "default": 0.0,
+      "min_abs": null
+    }
+  ],
+  "fixed_parameters": [],
+  "selected_outputs": [
+    "C_Hbox",
+    "C_HD",
+    "C_HWB",
+    "C_HG",
+    "C_HW",
+    "C_HB",
+    "C_uH",
+    "C_dH",
+    "C_eH",
+    "SMEFTExpansionParameter",
+    "ObliqueS",
+    "ObliqueT",
+    "KappaV",
+    "KappaT",
+    "KappaB",
+    "KappaTau",
+    "KappaG",
+    "KappaGamma",
+    "A_W_sm",
+    "A_t_sm",
+    "A_gamma_sm"
+  ],
+  "likelihood_terms": [
+    "atlas_kappa_V",
+    "oblique_ST_pdg"
+  ],
+  "point_component_columns": [
+    "like__atlas_kappa_V",
+    "like__oblique_ST_pdg"
+  ],
+  "raw_settings": {
+    "bounds": "{\"handling\": \"reflect\"}",
+    "convergence": "{\"patience\": 100, \"population_std_tol\": 1e-08, \"min_delta_chi2\": 1e-08}",
+    "crossover": "{\"adaptive\": true, \"CR_min\": 0.1, \"CR_max\": 0.9, \"initial_mean\": 0.55, \"learning_rate\": 0.1}",
+    "invalid_penalty": "1000000000000.0",
+    "local_refinement": "{\"enabled\": true, \"method\": \"Powell\", \"n_elites\": 6, \"maxiter\": 1200}",
+    "max_generations": "400",
+    "mutation": "{\"adaptive\": true, \"F_min\": 0.05, \"F_max\": 0.7, \"initial_mean\": 0.35, \"learning_rate\": 0.1}",
+    "objective": "nll",
+    "output": "{\"save_history\": true, \"save_population\": true, \"save_elites\": true}",
+    "p_best_fraction": "0.2",
+    "population_size": "128",
+    "save_invalid_points": "true",
+    "verbose": "0"
+  },
+  "engine_options": {
+    "strategy": "current_to_pbest",
+    "population_size": 128,
+    "max_generations": 400,
+    "max_evaluations": 0,
+    "p_best_fraction": 0.2,
+    "archive": true,
+    "F_min": 0.05,
+    "F_max": 0.7,
+    "F_initial": 0.35,
+    "F_learning_rate": 0.1,
+    "CR_min": 0.1,
+    "CR_max": 0.9,
+    "CR_initial": 0.55,
+    "CR_learning_rate": 0.1,
+    "bounds_handling": "reflect",
+    "patience": 100,
+    "min_delta_chi2": 1e-08,
+    "population_std_tol": 1e-08,
+    "local_refinement_enabled": true,
+    "local_method": "Powell",
+    "local_n_elites": 6,
+    "local_maxiter": 1200,
+    "adaptive_statistics": false,
+    "confidence_levels": [
+      0.68,
+      0.95
+    ],
+    "elite_size": 10,
+    "save_history": true,
+    "save_population": true,
+    "save_elites": true,
+    "progress_interval": 100,
+    "seed": 10084884,
+    "invalid_penalty": 1000000000000.0
+  },
+  "history_path": "history.json"
+}

@@ -8,6 +8,8 @@ outputs:
   - m_eta_I
   - inert_neutral_splitting
   - lambda1
+  - lambda1_ma
+  - lambda2_ma
   - lambda2
   - lambda3
   - lambda4
@@ -17,6 +19,10 @@ outputs:
   - loop_N1
   - loop_N2
   - loop_N3
+  - m1_raw
+  - m2_raw
+  - m3_raw
+  - scale
   - m1
   - m2
   - m3
@@ -28,6 +34,8 @@ outputs:
   - s23
   - deltaCP
   - deltaCP_deg
+  - deltaCP_deg_0_360
+  - deltaCP_deg_m180_180
   - alpha21_deg
   - alpha31_deg
   - mbeta
@@ -36,3 +44,30 @@ outputs:
   - fermion_dm_mass
   - dm_mass_analytic
   - yukawa_norm_sq
+  - he1_re
+  - he1_im
+  - he2_re
+  - he2_im
+  - he3_re
+  - he3_im
+  - hmu1_re
+  - hmu1_im
+  - hmu2_re
+  - hmu2_im
+  - hmu3_re
+  - hmu3_im
+  - htau1_re
+  - htau1_im
+  - htau2_re
+  - htau2_im
+  - htau3_re
+  - htau3_im
+  - m_eta_sq
+  - br_mu_e_gamma
+  - br_tau_e_gamma
+  - br_tau_mu_gamma
+  - log10_br_mu_e_gamma
+  - oblique_T
+  - lep_z_width_margin
+  - lep_w_width_margin
+  - lep2_neutral_excluded

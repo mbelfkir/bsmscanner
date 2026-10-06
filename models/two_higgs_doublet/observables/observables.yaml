@@ -1,0 +1,11 @@
+observables:
+- {name: HeavyCPEvenMass, value_type: real, expression: mH}
+- {name: CPoddMass, value_type: real, expression: mA}
+- {name: ChargedHiggsMass, value_type: real, expression: mHp}
+- {name: SoftMass, value_type: real, expression: "sqrt(max(soft_M_sq, 0.0))"}
+- {name: ObliqueT, value_type: real, expression: oblique_T}
+- {name: UnitarityMaxEigenvalue, value_type: real, expression: unitarity_max_eigenvalue}
+- {name: KappaV, value_type: real, expression: kappa_V}
+- {name: KappaU, value_type: real, expression: kappa_u}
+- {name: KappaD, value_type: real, expression: kappa_d}
+- {name: KappaL, value_type: real, expression: kappa_l}

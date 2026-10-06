@@ -1,0 +1,50 @@
+metadata:
+  name: alp_effective_couplings
+  version: 0.1.0
+  description: Axion-like-particle effective benchmark with photon, gluon, lepton, and quark couplings, lifetime proxy, and astrophysical/collider-inspired limits.
+  tags: [alp, axion_like_particle, effective_field_theory]
+parameters:
+- {name: ma, value_type: real, scan: true, lower: 0.000001, upper: 1000.0, default: 1.0, prior: log}
+- {name: fa, value_type: real, scan: true, lower: 1000.0, upper: 10000000000.0, default: 1000000.0, prior: log}
+- {name: cgg, value_type: real, scan: true, lower: -10.0, upper: 10.0, default: 0.0, prior: flat}
+- {name: cgam, value_type: real, scan: true, lower: -10.0, upper: 10.0, default: 1.0, prior: flat}
+- {name: cee, value_type: real, scan: true, lower: -10.0, upper: 10.0, default: 0.0, prior: flat}
+- {name: cmumu, value_type: real, scan: true, lower: -10.0, upper: 10.0, default: 0.0, prior: flat}
+constants:
+- {name: pi_ref, value: 3.141592653589793}
+- {name: alpha_em, value: 0.0078125}
+- {name: alpha_s_proxy, value: 0.118}
+derived_scalars:
+- {name: g_agammagamma, value_type: real, expression: "alpha_em*cgam/(2.0*pi_ref*fa)"}
+- {name: g_agg, value_type: real, expression: "alpha_s_proxy*cgg/(2.0*pi_ref*fa)"}
+- {name: g_aee, value_type: real, expression: "cee*0.00051099895/fa"}
+- {name: g_amumu, value_type: real, expression: "cmumu*0.1056583755/fa"}
+- {name: gamma_gammagamma, value_type: real, expression: "g_agammagamma**2*ma**3/(64.0*pi_ref)"}
+- {name: lifetime_proxy_invgev, value_type: real, expression: "1.0/max(gamma_gammagamma, 1.0e-300)"}
+- {name: beamdump_coupling_proxy, value_type: real, expression: "abs(g_agammagamma)"}
+- {name: gluon_collider_proxy, value_type: real, expression: "abs(g_agg)**2*(ma/100.0)**3"}
+- {name: eft_validity_ratio, value_type: real, expression: "ma/fa"}
+observables:
+- {name: ALPMass, value_type: real, expression: ma}
+- {name: ALPDecayConstant, value_type: real, expression: fa}
+- {name: PhotonCoupling, value_type: real, expression: g_agammagamma}
+- {name: GluonCoupling, value_type: real, expression: g_agg}
+- {name: ElectronCoupling, value_type: real, expression: g_aee}
+- {name: MuonCoupling, value_type: real, expression: g_amumu}
+- {name: LifetimeProxyInvGeV, value_type: real, expression: lifetime_proxy_invgev}
+- {name: EFTValidityRatio, value_type: real, expression: eft_validity_ratio}
+- {name: GluonColliderProxy, value_type: real, expression: gluon_collider_proxy}
+theory_checks:
+- {name: positive_alp_scales, condition: "ma > 0 and fa > 0", fatal: true, message: ALP mass and decay constant must be positive.}
+- {name: eft_validity, condition: "EFTValidityRatio < 1.0", fatal: true, message: ALP mass exceeds the EFT decay scale.}
+likelihoods:
+- {name: photon_coupling_proxy_limit, kind: hard_cut, observable: PhotonCoupling, lower: -0.000001, upper: 0.000001}
+- {name: gluon_collider_proxy_limit, kind: hard_cut, observable: GluonColliderProxy, lower: 0.0, upper: 0.000001}
+outputs:
+  save: [ALPMass, ALPDecayConstant, PhotonCoupling, GluonCoupling, ElectronCoupling, MuonCoupling, LifetimeProxyInvGeV, EFTValidityRatio, GluonColliderProxy]
+scan:
+  engine: serial_random
+  save_every: 100
+  seed: 10020329
+  settings: {objective: nll, max_evaluations: 2000, invalid_penalty: 1000000000000.0, save_invalid_points: true, verbose: 1}
+statistics: {enabled: true, method: de_weighted, credible_levels: [0.68, 0.95], output_samples: true, include_observables: true}

@@ -1,0 +1,5 @@
+# Objective convention: BSMScanner NLL; hard cuts are vetoes.
+likelihoods:
+# Validity of the narrow-resonance simplified-model description (kept from upstream; the DM Forum
+# discusses widths up to Gamma = M/3 in Sec. 2.5.2).
+- {name: width_validity, kind: hard_cut, observable: WidthFraction, lower: 0.0, upper: 0.30}

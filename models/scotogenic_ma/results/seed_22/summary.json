@@ -1,0 +1,45 @@
+{
+  "evaluations": 32696,
+  "saved_points": 32696,
+  "valid_points": 15757,
+  "interrupted": false,
+  "has_best_point": true,
+  "best_metric_value": 21.308152794774596,
+  "best_scanner_target": 21.308152794774596,
+  "failure_counters": {
+    "ok": 32696,
+    "missing_input": 0,
+    "invalid_point": 16939,
+    "numerical_error": 0,
+    "evaluation_error": 0,
+    "non_finite_objective": 0
+  },
+  "failure_reasons": {
+    "likelihood_input_invalid: babar_tau_e_gamma": 33,
+    "likelihood_input_invalid: belle_tau_mu_gamma": 102,
+    "likelihood_input_invalid: meg2_mu_e_gamma": 1101,
+    "likelihood_input_invalid: sum_mnu_limit": 11205,
+    "non_finite_node: deltaCP": 89,
+    "non_finite_node: meta_I": 46,
+    "non_finite_node: meta_charged": 19,
+    "theory_check_failed: A quartic or Yukawa coupling exceeds the perturbativity guard.": 140,
+    "theory_check_failed: Inert-doublet bounded-from-below conditions failed.": 391,
+    "theory_check_failed: The charged inert scalar is the lightest Z2-odd state (stable charged relic).": 3813
+  },
+  "engine_details": {
+    "native_backend": "adaptive_diver",
+    "success": false,
+    "stop_reason": "max_generations",
+    "generations": 300,
+    "population_size": 96,
+    "initial_seed_count": 0,
+    "mu_F": 0.5033333338741394,
+    "mu_CR": 0.12308105166023528,
+    "archive_size": 96,
+    "local_refinement_enabled": true,
+    "local_refinement_attempts": 6,
+    "history_path": "history.json",
+    "final_population_path": "final_population.csv",
+    "elite_points_path": "elite_points.csv"
+  }
+}

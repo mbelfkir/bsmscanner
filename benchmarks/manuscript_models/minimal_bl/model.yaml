@@ -1,0 +1,55 @@
+metadata:
+  name: minimal_bl_gauge
+  version: 0.1.0
+  description: Minimal gauged B-L benchmark with a Zprime, singlet-breaking scalar, three right-handed neutrinos, Higgs mixing, and scan-ready precision/collider proxy observables.
+  tags: [minimal_bl, b_minus_l, zprime, right_handed_neutrinos, higgs_mixing]
+parameters:
+- {name: gBL, value_type: real, scan: true, lower: 0.001, upper: 1.0, default: 0.1, prior: log}
+- {name: vBL, value_type: real, scan: true, lower: 1000.0, upper: 100000.0, default: 70000.0, prior: log}
+- {name: mH2, value_type: real, scan: true, lower: 130.0, upper: 5000.0, default: 800.0, prior: log}
+- {name: sin_alpha, value_type: real, scan: true, lower: -0.35, upper: 0.35, default: 0.05, prior: flat}
+- {name: yN1, value_type: real, scan: true, lower: 0.000001, upper: 3.0, default: 0.01, prior: log}
+- {name: yN2, value_type: real, scan: true, lower: 0.000001, upper: 3.0, default: 0.02, prior: log}
+- {name: yN3, value_type: real, scan: true, lower: 0.000001, upper: 3.0, default: 0.03, prior: log}
+constants:
+- {name: v_sm, value: 246.22}
+- {name: mh1, value: 125.25}
+- {name: pi_ref, value: 3.141592653589793}
+derived_scalars:
+- {name: cos_alpha, value_type: real, expression: "sqrt(max(1.0 - sin_alpha**2, 0.0))"}
+- {name: MZp, value_type: real, expression: "2.0*gBL*vBL"}
+- {name: MN1, value_type: real, expression: "sqrt(2.0)*yN1*vBL"}
+- {name: MN2, value_type: real, expression: "sqrt(2.0)*yN2*vBL"}
+- {name: MN3, value_type: real, expression: "sqrt(2.0)*yN3*vBL"}
+- {name: lambdaH, value_type: real, expression: "(mh1**2*cos_alpha**2 + mH2**2*sin_alpha**2)/(2.0*v_sm**2)"}
+- {name: lambdaS, value_type: real, expression: "(mh1**2*sin_alpha**2 + mH2**2*cos_alpha**2)/(2.0*vBL**2)"}
+- {name: lambdaHS, value_type: real, expression: "(mH2**2 - mh1**2)*sin_alpha*cos_alpha/(v_sm*vBL)"}
+- {name: lep_contact_scale, value_type: real, expression: "MZp/max(gBL, 1.0e-12)"}
+- {name: h1_signal_strength, value_type: real, expression: "cos_alpha**2"}
+- {name: zprime_width_fraction_proxy, value_type: real, expression: "gBL**2/(12.0*pi_ref)"}
+- {name: h2_to_zpzp_open, value_type: real, expression: "if_else(mH2 > 2.0*MZp, 1.0, 0.0)"}
+observables:
+- {name: MZprime, value_type: real, expression: MZp}
+- {name: contact_scale, value_type: real, expression: lep_contact_scale}
+- {name: HiggsSignalStrength, value_type: real, expression: h1_signal_strength}
+- {name: ZprimeWidthFractionProxy, value_type: real, expression: zprime_width_fraction_proxy}
+- {name: HeavyScalarMass, value_type: real, expression: mH2}
+- {name: HeavyNeutrino1Mass, value_type: real, expression: MN1}
+- {name: HeavyNeutrino2Mass, value_type: real, expression: MN2}
+- {name: HeavyNeutrino3Mass, value_type: real, expression: MN3}
+theory_checks:
+- {name: positive_masses, condition: "MZp > 0 and MN1 > 0 and MN2 > 0 and MN3 > 0 and mH2 > mh1", fatal: true, message: B-L masses must be positive and ordered.}
+- {name: perturbative_gauge_yukawa, condition: "gBL < sqrt(4*pi_ref) and yN1 < sqrt(4*pi_ref) and yN2 < sqrt(4*pi_ref) and yN3 < sqrt(4*pi_ref)", fatal: true, message: A B-L gauge or Majorana Yukawa coupling is non-perturbative.}
+- {name: stable_scalar_proxy, condition: "lambdaH > 0 and lambdaS > 0 and lambdaHS > -2.0*sqrt(lambdaH*lambdaS)", fatal: true, message: B-L scalar bounded-from-below proxy failed.}
+likelihoods:
+- {name: lep_contact_bound, kind: hard_cut, observable: contact_scale, lower: 7000.0, upper: 1000000000.0}
+- {name: higgs_signal_strength, kind: gaussian, observable: HiggsSignalStrength, mean: 1.0, sigma: 0.08}
+- {name: zprime_narrow_width, kind: hard_cut, observable: ZprimeWidthFractionProxy, lower: 0.0, upper: 0.10}
+outputs:
+  save: [MZprime, contact_scale, HiggsSignalStrength, ZprimeWidthFractionProxy, HeavyScalarMass, HeavyNeutrino1Mass, HeavyNeutrino2Mass, HeavyNeutrino3Mass, lambdaH, lambdaS, lambdaHS]
+scan:
+  engine: serial_random
+  save_every: 100
+  seed: 11064462
+  settings: {objective: nll, max_evaluations: 2000, invalid_penalty: 1000000000000.0, save_invalid_points: true, verbose: 1}
+statistics: {enabled: true, method: de_weighted, credible_levels: [0.68, 0.95], output_samples: true, include_observables: true}

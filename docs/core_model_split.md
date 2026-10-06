@@ -187,12 +187,14 @@ imports:
 - model-owned parameters, constants, and analytic matrices split into their
   own files (`parameters.yaml`, `constants.yaml`, `matrices.yaml`, ...)
 - matrix metadata with automatic diagonalization
-  (`diagonalize: true` on the charged-lepton mass matrix, an explicit
-  `diagonalizations` entry for the neutrino sector)
+  (`diagonalize: true` on both mass matrices; the complex Majorana neutrino
+  matrix is diagonalized by a Takagi factorization)
 - imported model-side likelihood and observable blocks
   (`observables/`, `constraints/`)
 - normal-ordering and other manifests assembled from the same shared files
   with minimal duplication
 
-`models/minimal_bl` is the simplest complete example when a single-file
-model is enough -- see the Quickstart in the top-level `README.md`.
+`benchmarks/manuscript_models/minimal_bl` is the simplest complete example when
+a single-file model is enough -- see the Quickstart in the top-level
+`README.md`. (The tutorial `models/minimal_bl` is the corrected version and is
+split across several files.)

@@ -1,0 +1,26 @@
+{
+  "has_best_point": true,
+  "best_metric_value": 0.0,
+  "best_scanner_target": 0.0,
+  "parameters": {
+    "MZp": 1229.9461575717803,
+    "mchi": 369.90905441080724,
+    "gq": 0.10235981937753365,
+    "gchi": 0.16049839814857608
+  },
+  "outputs": {
+    "mchi": 369.90905441080724,
+    "log10_SigmaSI_cm2": -42.93774926723788,
+    "gq": 0.10235981937753365,
+    "WidthFraction": 0.005645276637608356,
+    "gchi": 0.16049839814857608,
+    "SigmaSI_cm2": 1.154119377319063e-43,
+    "MZp": 1229.9461575717803,
+    "InvisibleBR": 0.11418666461777213,
+    "MediatorMass": 1229.9461575717803,
+    "DarkMatterMass": 369.90905441080724
+  },
+  "likelihood_terms": {
+    "width_validity": 0.0
+  }
+}

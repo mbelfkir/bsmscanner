@@ -1,0 +1,3 @@
+theory_checks:
+- {name: positive_lq_mass, condition: "MS1 > 0", fatal: true, message: Leptoquark mass must be positive.}
+- {name: perturbative_lq_yukawas, condition: "abs(yL33) < sqrt(4*pi) and abs(yL23) < sqrt(4*pi) and abs(yR23) < sqrt(4*pi)", fatal: true, message: A leptoquark Yukawa is non-perturbative.}

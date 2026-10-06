@@ -9,7 +9,12 @@ derived_complex:
 - {name: htau2, value_type: complex, expression: htau2_re + 1j*htau2_im}
 - {name: htau3, value_type: complex, expression: htau3_re + 1j*htau3_im}
 derived_scalars:
+# Quartic convention: V = ... + lambda1 |Phi|^4 + lambda2 |eta|^4 + lambda3 ... + lambda4 ... + (lambda5/2)[...]
+# (lambda1, lambda2 WITHOUT Ma's factor 1/2; lambda3..5 identical to Ma Eq. 6). v = 246.22 GeV,
+# so Ma's v_Ma = v/sqrt(2) and Ma Eqs. (8)-(10) become m^2 = m_2^2 + (1/2)(...) v^2.
 - {name: lambda1, value_type: real, expression: mh_sm**2/(2*v_sm**2)}
+- {name: lambda1_ma, value_type: real, expression: 2*lambda1}
+- {name: lambda2_ma, value_type: real, expression: 2*lambda2}
 - {name: meta_charged_sq, value_type: real, expression: m_eta_sq + 0.5*lambda3*v_sm**2}
 - {name: meta_R_sq, value_type: real, expression: m_eta_sq + 0.5*(lambda3 + lambda4 + lambda5)*v_sm**2}
 - {name: meta_I_sq, value_type: real, expression: m_eta_sq + 0.5*(lambda3 + lambda4 - lambda5)*v_sm**2}

@@ -1,0 +1,3 @@
+outputs:
+  save: [MZp, mchi, gq, gchi, MediatorMass, DarkMatterMass, WidthFraction, InvisibleBR,
+         SigmaSI_cm2, log10_SigmaSI_cm2]

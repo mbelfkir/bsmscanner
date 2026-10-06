@@ -1,12 +1,14 @@
 parameters:
-- {name: m_eta_sq, value_type: real, scan: true, lower: 10000.0, upper: 4000000.0, default: 100000.0, prior: log, description: Inert-doublet quadratic mass parameter in GeV^2.}
-- {name: lambda2, value_type: real, scan: true, lower: 0.00001, upper: 4.0, default: 0.1, prior: log, description: Inert-doublet self quartic.}
-- {name: lambda3, value_type: real, scan: true, lower: -4.0, upper: 4.0, default: 0.2, prior: flat}
-- {name: lambda4, value_type: real, scan: true, lower: -4.0, upper: 4.0, default: -0.1, prior: flat}
-- {name: lambda5, value_type: real, scan: true, lower: -0.01, upper: 0.01, default: 0.00000001, prior: signed_log, min_abs: 0.000000000001, description: Lepton-number-violating inert-doublet quartic.}
+- {name: m_eta_sq, value_type: real, scan: true, lower: 10000.0, upper: 4000000.0, default: 100000.0, prior: log, description: 'Inert-doublet quadratic mass parameter m_2^2 of Ma Eq. (6), GeV^2.'}
+- {name: lambda2, value_type: real, scan: true, lower: 0.00001, upper: 4.0, default: 0.1, prior: log, description: 'Inert self quartic in the convention V ⊃ lambda2 (eta^dag eta)^2 (NO factor 1/2); Ma Eq. (6) lambda2 = 2*lambda2 (output lambda2_ma).'}
+- {name: lambda3, value_type: real, scan: true, lower: -4.0, upper: 4.0, default: 0.2, prior: flat, description: 'lambda3 (Phi^dag Phi)(eta^dag eta), identical to Ma Eq. (6).'}
+- {name: lambda4, value_type: real, scan: true, lower: -4.0, upper: 4.0, default: -0.1, prior: flat, description: 'lambda4 (Phi^dag eta)(eta^dag Phi), identical to Ma Eq. (6).'}
+- {name: lambda5, value_type: real, scan: true, lower: -0.01, upper: 0.01, default: 0.00000001, prior: signed_log, min_abs: 0.000000000001, description: 'Lepton-number-violating quartic (lambda5/2)[(Phi^dag eta)^2 + h.c.], identical to Ma Eq. (6); m_R^2 - m_I^2 = lambda5 v^2 with v = 246.22 GeV.'}
 - {name: MN1, value_type: real, scan: true, lower: 10.0, upper: 100000.0, default: 900.0, prior: log}
 - {name: MN2, value_type: real, scan: true, lower: 10.0, upper: 100000.0, default: 1400.0, prior: log}
 - {name: MN3, value_type: real, scan: true, lower: 10.0, upper: 100000.0, default: 2600.0, prior: log}
+# Yukawas h_{alpha k} of Ma Eq. (5), h_{alpha k} (nu_alpha eta^0 - l_alpha eta^+) N_k; alpha = flavour, k = N index.
+# Physical normalisation (1/(32 pi^2) loop), i.e. sqrt(2) larger than in the uncorrected v0.1.0 model for the same M_nu.
 - {name: he1_re, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.018, prior: signed_log, min_abs: 0.00000001}
 - {name: he1_im, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: 0.004, prior: signed_log, min_abs: 0.00000001}
 - {name: he2_re, value_type: real, scan: true, lower: -3.0, upper: 3.0, default: -0.011, prior: signed_log, min_abs: 0.00000001}

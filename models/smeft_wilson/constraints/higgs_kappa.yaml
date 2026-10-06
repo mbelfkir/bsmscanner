@@ -1,0 +1,10 @@
+# Higgs coupling measurements, kappa framework.
+#
+# INTERIM (same status as the Type II 2HDM tutorial): only the ATLAS kappa_V result quoted in the text
+# of ATLAS, Nature 607 (2022) 52, arXiv:2207.00092 (kappa_V = 1.035 +- 0.031 from the kappa_V-kappa_F
+# fit, kappa_F profiled). The universal kappa_F is not used (the SMEFT does not predict a universal
+# fermion modifier). Until the resolved kappa fit (kappa_W, kappa_Z, kappa_t, kappa_b, kappa_tau,
+# kappa_g, kappa_gamma; B_inv = B_u = 0) with correlations is provided from HEPData, C_HG, C_HW, C_HB
+# and C_fH are constrained only by the linear-EFT validity guard.
+likelihoods:
+- {name: atlas_kappa_V, kind: gaussian, observable: KappaV, mean: 1.035, sigma: 0.031}

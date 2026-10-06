@@ -1,0 +1,43 @@
+{
+  "has_best_point": true,
+  "best_metric_value": 0.08680555555555494,
+  "best_scanner_target": 0.08680555555555494,
+  "parameters": {
+    "gBL": 0.38263715655827957,
+    "vBL": 99999.99816729526,
+    "mH2": 4999.999857840582,
+    "sin_alpha": -4.163336342344337e-17,
+    "yN1": 0.001480287554928497,
+    "yN2": 0.015361176058877298,
+    "yN3": 0.0017768998085641464
+  },
+  "outputs": {
+    "yN3": 0.0017768998085641464,
+    "yN2": 0.015361176058877298,
+    "lambdaS": 0.0012499999747379092,
+    "sin_alpha": -4.163336342344337e-17,
+    "lambdaHS": -4.224599624210026e-17,
+    "ZprimeWidthOverMass": 0.031059826221360436,
+    "ZprimeWidth": 2376.9286741450446,
+    "yN1": 0.001480287554928497,
+    "vBL": 99999.99816729526,
+    "HiggsExoticBR": 0.0,
+    "HiggsSignalStrength": 1.0,
+    "HeavyScalarMass": 4999.999857840582,
+    "mH2": 4999.999857840582,
+    "gBL": 0.38263715655827957,
+    "MZprime": 76527.42990913405,
+    "HeavyNeutrino2Mass": 2172.398311832869,
+    "HeavyNeutrino1Mass": 209.34426980253645,
+    "contact_scale": 199999.9963345905,
+    "BRZprimeToEE": 0.12503861105559883,
+    "HeavyNeutrino3Mass": 251.29157621952453,
+    "lambdaH": 0.12938347743146458,
+    "BRZprimeToNN": 0.18724902814507402
+  },
+  "likelihood_terms": {
+    "zprime_narrow_width": 0.0,
+    "lep_contact_bound": 0.0,
+    "higgs_signal_strength": 0.08680555555555494
+  }
+}

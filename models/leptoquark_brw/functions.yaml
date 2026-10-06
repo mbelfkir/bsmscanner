@@ -1,0 +1,6 @@
+functions:
+# Scalar LQ -> quark + massless lepton through one chiral coupling y:
+#   Gamma = |y|^2 M/(16 pi) (1 - m_q^2/M^2)^2   (massless quark: |y|^2 M/(16 pi)).
+- name: lq_width
+  args: [y, M, mq]
+  expression: "if_else(mq < M, y**2*M/(16.0*pi)*(1.0 - mq**2/M**2)**2, 0.0)"

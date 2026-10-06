@@ -1,0 +1,12 @@
+observables:
+# Inert-doublet oblique T parameter (Barbieri, Hall, Rychkov hep-ph/0603188):
+#   T = [F(m+, m_R) + F(m+, m_I) - F(m_R, m_I)] / (16 pi s_W^2 m_W^2)
+#     = [F(m+, m_R) + F(m+, m_I) - F(m_R, m_I)] / (16 pi^2 alpha v^2),  v = 246.22 GeV,
+# using m_W = g v / 2 and e = g s_W. Check: for small splittings F ~ (2/3)(m1-m2)^2, giving
+# T ~ (m+ - m_R)(m+ - m_I) / (12 pi^2 alpha v^2) = BHR's 1/(24 pi^2 alpha v_174^2) form.
+# The inert-doublet S is O(1e-2) and is not included (approximation, see CHANGES.md).
+- name: oblique_T
+  value_type: real
+  expression: >
+    (oblique_F(meta_charged, meta_R) + oblique_F(meta_charged, meta_I) - oblique_F(meta_R, meta_I))
+    / (16*pi*pi*alpha_em_mz*v_sm**2)

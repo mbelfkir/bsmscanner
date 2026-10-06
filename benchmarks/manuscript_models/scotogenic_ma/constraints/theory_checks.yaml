@@ -1,0 +1,34 @@
+theory_checks:
+- name: physical_inert_masses
+  condition: meta_charged_sq > 0 and meta_R_sq > 0 and meta_I_sq > 0
+  fatal: true
+  message: An inert scalar squared mass is non-positive.
+- name: finite_loop_denominators
+  condition: >
+    abs(meta_R_sq - MN1**2) > loop_eps and abs(meta_I_sq - MN1**2) > loop_eps
+    and abs(meta_R_sq - MN2**2) > loop_eps and abs(meta_I_sq - MN2**2) > loop_eps
+    and abs(meta_R_sq - MN3**2) > loop_eps and abs(meta_I_sq - MN3**2) > loop_eps
+  fatal: true
+  message: A scotogenic loop denominator is numerically singular.
+- name: bounded_from_below
+  condition: >
+    lambda1 > 0 and lambda2 > 0
+    and lambda3 + 2*sqrt(lambda1*lambda2) > 0
+    and lambda3 + lambda4 - abs(lambda5) + 2*sqrt(lambda1*lambda2) > 0
+  fatal: true
+  message: Inert-doublet bounded-from-below conditions failed.
+- name: perturbative_couplings
+  condition: >
+    abs(lambda1) < 4*pi and abs(lambda2) < 4*pi and abs(lambda3) < 4*pi
+    and abs(lambda4) < 4*pi and abs(lambda5) < 4*pi
+    and yukawa_norm_sq < 36*pi
+  fatal: true
+  message: A quartic or Yukawa coupling exceeds the perturbativity guard.
+- name: finite_physical_observables
+  condition: >
+    isfinite(m1) and isfinite(m2) and isfinite(m3)
+    and isfinite(dm21) and isfinite(dm3l)
+    and isfinite(s12) and isfinite(s13) and isfinite(s23)
+    and isfinite(deltaCP) and isfinite(dm_mass_analytic)
+  fatal: true
+  message: A scotogenic observable is non-finite.

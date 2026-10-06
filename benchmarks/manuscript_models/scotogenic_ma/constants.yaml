@@ -1,0 +1,7 @@
+constants:
+- {name: v_sm, value: 246.22}
+- {name: mh_sm, value: 125.25}
+- {name: me_gev, value: 0.00051099895}
+- {name: mmu_gev, value: 0.1056583755}
+- {name: mtau_gev, value: 1.77686}
+- {name: loop_eps, value: 1.0e-10}

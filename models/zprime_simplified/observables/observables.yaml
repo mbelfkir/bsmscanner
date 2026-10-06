@@ -1,0 +1,7 @@
+observables:
+- {name: MediatorMass, value_type: real, expression: MZp}
+- {name: DarkMatterMass, value_type: real, expression: mchi}
+- {name: WidthFraction, value_type: real, expression: width_fraction}
+- {name: InvisibleBR, value_type: real, expression: br_invisible}
+- {name: SigmaSI_cm2, value_type: real, expression: sigma_si_cm2}
+- {name: log10_SigmaSI_cm2, value_type: real, expression: "log(max(sigma_si_cm2, 1.0e-300))/log(10.0)"}

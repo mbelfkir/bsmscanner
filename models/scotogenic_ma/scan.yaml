@@ -8,8 +8,8 @@ scan:
     save_invalid_points: true
     verbose: 1
   adaptive_diver:
-    population_size: 96
-    max_generations: 300
+    population_size: 256
+    max_generations: 4000
     p_best_fraction: 0.2
     mutation:
       adaptive: true
@@ -26,7 +26,7 @@ scan:
     bounds:
       handling: reflect
     convergence:
-      patience: 60
+      patience: 1000
       population_std_tol: 1.0e-8
       min_delta_chi2: 1.0e-8
     local_refinement:

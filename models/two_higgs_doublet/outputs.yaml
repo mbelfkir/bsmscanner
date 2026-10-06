@@ -1,0 +1,4 @@
+outputs:
+  save: [mH, mA, mHp, tanb, cos_ba, delta_soft, m12sq, HeavyCPEvenMass, CPoddMass, ChargedHiggsMass, SoftMass,
+         ObliqueT, UnitarityMaxEigenvalue, KappaV, KappaU, KappaD, KappaL,
+         lambda1, lambda2, lambda3, lambda4, lambda5, alpha]

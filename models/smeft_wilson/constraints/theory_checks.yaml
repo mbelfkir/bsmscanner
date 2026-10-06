@@ -1,0 +1,5 @@
+theory_checks:
+- {name: eft_validity, condition: "SMEFTExpansionParameter < 0.10", fatal: true, message: SMEFT expansion parameter v^2/Lambda^2 is too large.}
+# Linear (O(1/Lambda^2)) maps are only trusted for moderate shifts; beyond |delta kappa| = 0.5 the
+# neglected O(1/Lambda^4) terms are comparable to the kept ones.
+- {name: linear_eft_regime, condition: "max_abs_dkappa < 0.5", fatal: true, message: A coupling shift exceeds the linear-EFT validity guard |delta kappa| < 0.5.}

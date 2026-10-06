@@ -1,0 +1,6 @@
+constants:
+- {name: mh, value: 125.25}
+- {name: v_sm, value: 246.22}
+- {name: mZ_gev, value: 91.1876}
+- {name: mW_gev, value: 80.3692}
+- {name: sw2, value: 0.23122}     # MSbar sin^2(theta_W)(M_Z), PDG 2024

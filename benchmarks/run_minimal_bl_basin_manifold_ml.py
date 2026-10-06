@@ -22,7 +22,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 from bsm_scanner import compile_model, load_model, run_scan  # noqa: E402
 
-MODEL = ROOT / "models" / "minimal_bl" / "model.yaml"
+MODEL = ROOT / "benchmarks" / "manuscript_models" / "minimal_bl" / "model.yaml"
 
 
 def configure_scan(model: Any, args: argparse.Namespace) -> None:

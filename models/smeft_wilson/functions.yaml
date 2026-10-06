@@ -1,0 +1,15 @@
+functions:
+# h -> gamma gamma LO loop functions (Djouadi, Phys. Rept. 457 (2008) 1), tau = m_h^2/(4 m^2) <= 1:
+#   f(tau) = arcsin^2(sqrt(tau)),
+#   A_1/2(tau) = 2 [tau + (tau - 1) f(tau)] / tau^2       (-> 4/3 for tau -> 0)
+#   A_1(tau)   = -[2 tau^2 + 3 tau + 3 (2 tau - 1) f(tau)] / tau^2   (-> -7 for tau -> 0)
+# Gamma_SM(h -> gamma gamma) = G_F alpha^2 m_h^3/(128 sqrt2 pi^3) |A_1(tau_W) + N_c Q_t^2 A_1/2(tau_t)|^2.
+- name: loop_f
+  args: [tau]
+  expression: "asin(sqrt(tau))**2"
+- name: A_half
+  args: [tau]
+  expression: "2.0*(tau + (tau - 1.0)*loop_f(tau))/tau**2"
+- name: A_one
+  args: [tau]
+  expression: "-(2.0*tau**2 + 3.0*tau + 3.0*(2.0*tau - 1.0)*loop_f(tau))/tau**2"

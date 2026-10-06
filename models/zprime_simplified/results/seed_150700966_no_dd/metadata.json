@@ -1,0 +1,127 @@
+{
+  "model_name": "zprime_simplified_dm_corrected",
+  "model_version": "0.2.0",
+  "framework_version": "0.1.0",
+  "run_id": "zprime_simplified_dm_corrected-244201b0bed5",
+  "timestamp_utc": "2026-10-03T13:11:35.719492+00:00",
+  "engine": "adaptive_diver",
+  "objective_mode": "nll",
+  "maximize": false,
+  "seed": 150700966,
+  "save_every": 100,
+  "parameter_order": [
+    "MZp",
+    "mchi",
+    "gq",
+    "gchi"
+  ],
+  "scanned_parameters": [
+    {
+      "name": "MZp",
+      "index": 0,
+      "lower": 100.0,
+      "upper": 10000.0,
+      "prior": "log",
+      "default": 3000.0,
+      "min_abs": null
+    },
+    {
+      "name": "mchi",
+      "index": 1,
+      "lower": 1.0,
+      "upper": 5000.0,
+      "prior": "log",
+      "default": 500.0,
+      "min_abs": null
+    },
+    {
+      "name": "gq",
+      "index": 2,
+      "lower": 0.001,
+      "upper": 2.0,
+      "prior": "log",
+      "default": 0.25,
+      "min_abs": null
+    },
+    {
+      "name": "gchi",
+      "index": 3,
+      "lower": 0.001,
+      "upper": 2.0,
+      "prior": "log",
+      "default": 1.0,
+      "min_abs": null
+    }
+  ],
+  "fixed_parameters": [],
+  "selected_outputs": [
+    "MZp",
+    "mchi",
+    "gq",
+    "gchi",
+    "MediatorMass",
+    "DarkMatterMass",
+    "WidthFraction",
+    "InvisibleBR",
+    "SigmaSI_cm2",
+    "log10_SigmaSI_cm2"
+  ],
+  "likelihood_terms": [
+    "width_validity"
+  ],
+  "point_component_columns": [
+    "like__width_validity"
+  ],
+  "raw_settings": {
+    "bounds": "{\"handling\": \"reflect\"}",
+    "convergence": "{\"patience\": 100, \"population_std_tol\": 1e-08, \"min_delta_chi2\": 1e-08}",
+    "crossover": "{\"adaptive\": true, \"CR_min\": 0.1, \"CR_max\": 0.9, \"initial_mean\": 0.55, \"learning_rate\": 0.1}",
+    "invalid_penalty": "1000000000000.0",
+    "local_refinement": "{\"enabled\": true, \"method\": \"Powell\", \"n_elites\": 6, \"maxiter\": 1200}",
+    "max_generations": "400",
+    "mutation": "{\"adaptive\": true, \"F_min\": 0.05, \"F_max\": 0.7, \"initial_mean\": 0.35, \"learning_rate\": 0.1}",
+    "objective": "nll",
+    "output": "{\"save_history\": true, \"save_population\": true, \"save_elites\": true}",
+    "p_best_fraction": "0.2",
+    "population_size": "128",
+    "save_invalid_points": "true",
+    "verbose": "0"
+  },
+  "engine_options": {
+    "strategy": "current_to_pbest",
+    "population_size": 128,
+    "max_generations": 400,
+    "max_evaluations": 0,
+    "p_best_fraction": 0.2,
+    "archive": true,
+    "F_min": 0.05,
+    "F_max": 0.7,
+    "F_initial": 0.35,
+    "F_learning_rate": 0.1,
+    "CR_min": 0.1,
+    "CR_max": 0.9,
+    "CR_initial": 0.55,
+    "CR_learning_rate": 0.1,
+    "bounds_handling": "reflect",
+    "patience": 100,
+    "min_delta_chi2": 1e-08,
+    "population_std_tol": 1e-08,
+    "local_refinement_enabled": true,
+    "local_method": "Powell",
+    "local_n_elites": 6,
+    "local_maxiter": 1200,
+    "adaptive_statistics": false,
+    "confidence_levels": [
+      0.68,
+      0.95
+    ],
+    "elite_size": 10,
+    "save_history": true,
+    "save_population": true,
+    "save_elites": true,
+    "progress_interval": 100,
+    "seed": 150700966,
+    "invalid_penalty": 1000000000000.0
+  },
+  "history_path": "history.json"
+}

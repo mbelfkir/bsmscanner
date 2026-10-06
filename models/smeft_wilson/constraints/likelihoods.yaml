@@ -1,0 +1,14 @@
+# Objective convention: BSMScanner NLL ('gaussian' z^2/2; multivariate_gaussian with prefactor 1/2).
+# Oblique parameters, PDG 2024 electroweak review Eq. (10.98) (S, T, U fit): S = -0.04 +- 0.10,
+# T = 0.01 +- 0.12, corr(S, T) = 0.93 (text below Eq. 10.99). U is dimension-8 in the SMEFT power counting
+# and is profiled in this fit; the tighter U = 0 numbers (Eq. 10.99) are not used because their S-T
+# correlation is not quoted.
+likelihoods:
+- name: oblique_ST_pdg
+  kind: multivariate_gaussian
+  observables: [ObliqueS, ObliqueT]
+  means: [-0.04, 0.01]
+  covariance:
+  - [0.0100, 0.01116]
+  - [0.01116, 0.0144]
+  quadratic_form_prefactor: 0.5

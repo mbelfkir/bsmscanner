@@ -11,3 +11,6 @@ Ann. Rev. Nucl. Part. Sci. 60, 405-437 (2010).
 This benchmark implements axion-like-particle effective couplings to photons,
 gluons, electrons, and muons with lifetime, EFT-validity, and search-proxy
 observables.
+
+This is the original benchmark and has not yet been reviewed against its
+source paper, unlike the other six models.

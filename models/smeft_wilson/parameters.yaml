@@ -1,0 +1,21 @@
+# Warsaw-basis Wilson coefficients C_i, L = L_SM + sum_i (C_i / Lambda^2) Q_i, at fixed Lambda = 1 TeV
+# (results scale as C_i / Lambda^2; the upstream LambdaTeV parameter was an exact flat direction).
+#   C_Hbox : Q_H□  = (H^dag H) □ (H^dag H)
+#   C_HD   : Q_HD  = (H^dag D_mu H)^* (H^dag D^mu H)
+#   C_HWB  : Q_HWB = H^dag tau^I H W^I_{mu nu} B^{mu nu}
+#   C_HG, C_HW, C_HB : Q_HX = H^dag H X_{mu nu} X^{mu nu}
+#   C_uH, C_dH, C_eH : (Q_fH)_33 = (H^dag H)(fbar_L f_R H~ or H), third generation, real
+# Ranges: each coefficient alone moves its most sensitive observable by about |delta kappa| <= 0.5 or
+# |S|, |T| <= 0.4 at the range edge (sensitivities per unit C at Lambda = 1 TeV: kappa_g 17 (C_HG),
+# kappa_gamma 25/7.4/13.5 (C_HB/C_HW/C_HWB), S 13 (C_HWB), T 3.9 (C_HD), kappa_b 2.5, kappa_tau 5.9).
+# Wider ranges leave the linear-EFT guard region at a negligible prior fraction (0/1420 valid).
+parameters:
+- {name: C_Hbox, value_type: real, scan: true, lower: -5.0, upper: 5.0, default: 0.0, prior: flat}
+- {name: C_HD, value_type: real, scan: true, lower: -0.1, upper: 0.1, default: 0.0, prior: flat}
+- {name: C_HWB, value_type: real, scan: true, lower: -0.035, upper: 0.035, default: 0.0, prior: flat}
+- {name: C_HG, value_type: real, scan: true, lower: -0.03, upper: 0.03, default: 0.0, prior: flat}
+- {name: C_HW, value_type: real, scan: true, lower: -0.06, upper: 0.06, default: 0.0, prior: flat}
+- {name: C_HB, value_type: real, scan: true, lower: -0.02, upper: 0.02, default: 0.0, prior: flat}
+- {name: C_uH, value_type: real, scan: true, lower: -5.0, upper: 5.0, default: 0.0, prior: flat}
+- {name: C_dH, value_type: real, scan: true, lower: -0.2, upper: 0.2, default: 0.0, prior: flat}
+- {name: C_eH, value_type: real, scan: true, lower: -0.08, upper: 0.08, default: 0.0, prior: flat}

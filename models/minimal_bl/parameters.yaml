@@ -1,0 +1,14 @@
+# Notation of Basso-Moretti-Pruna (arXiv:1106.4462):
+#   gBL      = g'_1, the U(1)_{B-L} gauge coupling (pure B-L: no Z-Z' kinetic mixing, g~ = 0)
+#   vBL      = x, with <chi> = x/sqrt(2)                                   [GeV]
+#   mH2      = m_h2 > m_h1 (heavy scalar mass)                               [GeV]
+#   sin_alpha: scalar mixing, (h1, h2) = R(alpha) (h, h'), Eq. (2.28)
+#   yN_k     = y^M_k, diagonal real Majorana Yukawas, M_Nk = sqrt(2) y^M_k x, Eq. (2.35)
+parameters:
+- {name: gBL, value_type: real, scan: true, lower: 0.001, upper: 1.0, default: 0.1, prior: log}
+- {name: vBL, value_type: real, scan: true, lower: 1000.0, upper: 100000.0, default: 70000.0, prior: log}
+- {name: mH2, value_type: real, scan: true, lower: 130.0, upper: 5000.0, default: 800.0, prior: log}
+- {name: sin_alpha, value_type: real, scan: true, lower: -0.35, upper: 0.35, default: 0.05, prior: flat}
+- {name: yN1, value_type: real, scan: true, lower: 0.000001, upper: 3.0, default: 0.01, prior: log}
+- {name: yN2, value_type: real, scan: true, lower: 0.000001, upper: 3.0, default: 0.02, prior: log}
+- {name: yN3, value_type: real, scan: true, lower: 0.000001, upper: 3.0, default: 0.03, prior: log}

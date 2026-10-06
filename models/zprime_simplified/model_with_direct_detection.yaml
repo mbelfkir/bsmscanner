@@ -1,0 +1,6 @@
+# Full model including the LZ direct-detection constraint (constraints/direct_detection.yaml).
+# Requires the external data tables under data/ (see CHANGES.md); `model.yaml` is the
+# same model without this constraint and runs out of the box.
+imports:
+- model.yaml
+- constraints/direct_detection.yaml

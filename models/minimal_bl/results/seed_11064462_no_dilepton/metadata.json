@@ -1,0 +1,173 @@
+{
+  "model_name": "minimal_bl_gauge_corrected",
+  "model_version": "0.2.0",
+  "framework_version": "0.1.0",
+  "run_id": "minimal_bl_gauge_corrected-9f6d41f2894b",
+  "timestamp_utc": "2026-10-02T10:33:49.720984+00:00",
+  "engine": "adaptive_diver",
+  "objective_mode": "nll",
+  "maximize": false,
+  "seed": 11064462,
+  "save_every": 100,
+  "parameter_order": [
+    "gBL",
+    "vBL",
+    "mH2",
+    "sin_alpha",
+    "yN1",
+    "yN2",
+    "yN3"
+  ],
+  "scanned_parameters": [
+    {
+      "name": "gBL",
+      "index": 0,
+      "lower": 0.001,
+      "upper": 1.0,
+      "prior": "log",
+      "default": 0.1,
+      "min_abs": null
+    },
+    {
+      "name": "vBL",
+      "index": 1,
+      "lower": 1000.0,
+      "upper": 100000.0,
+      "prior": "log",
+      "default": 70000.0,
+      "min_abs": null
+    },
+    {
+      "name": "mH2",
+      "index": 2,
+      "lower": 130.0,
+      "upper": 5000.0,
+      "prior": "log",
+      "default": 800.0,
+      "min_abs": null
+    },
+    {
+      "name": "sin_alpha",
+      "index": 3,
+      "lower": -0.35,
+      "upper": 0.35,
+      "prior": "flat",
+      "default": 0.05,
+      "min_abs": null
+    },
+    {
+      "name": "yN1",
+      "index": 4,
+      "lower": 1e-06,
+      "upper": 3.0,
+      "prior": "log",
+      "default": 0.01,
+      "min_abs": null
+    },
+    {
+      "name": "yN2",
+      "index": 5,
+      "lower": 1e-06,
+      "upper": 3.0,
+      "prior": "log",
+      "default": 0.02,
+      "min_abs": null
+    },
+    {
+      "name": "yN3",
+      "index": 6,
+      "lower": 1e-06,
+      "upper": 3.0,
+      "prior": "log",
+      "default": 0.03,
+      "min_abs": null
+    }
+  ],
+  "fixed_parameters": [],
+  "selected_outputs": [
+    "gBL",
+    "vBL",
+    "mH2",
+    "sin_alpha",
+    "yN1",
+    "yN2",
+    "yN3",
+    "MZprime",
+    "contact_scale",
+    "HiggsSignalStrength",
+    "HiggsExoticBR",
+    "ZprimeWidthOverMass",
+    "ZprimeWidth",
+    "BRZprimeToEE",
+    "BRZprimeToNN",
+    "HeavyScalarMass",
+    "HeavyNeutrino1Mass",
+    "HeavyNeutrino2Mass",
+    "HeavyNeutrino3Mass",
+    "lambdaH",
+    "lambdaS",
+    "lambdaHS"
+  ],
+  "likelihood_terms": [
+    "higgs_signal_strength",
+    "lep_contact_bound",
+    "zprime_narrow_width"
+  ],
+  "point_component_columns": [
+    "like__higgs_signal_strength",
+    "like__lep_contact_bound",
+    "like__zprime_narrow_width"
+  ],
+  "raw_settings": {
+    "bounds": "{\"handling\": \"reflect\"}",
+    "convergence": "{\"patience\": 100, \"population_std_tol\": 1e-08, \"min_delta_chi2\": 1e-08}",
+    "crossover": "{\"adaptive\": true, \"CR_min\": 0.1, \"CR_max\": 0.9, \"initial_mean\": 0.55, \"learning_rate\": 0.1}",
+    "invalid_penalty": "1000000000000.0",
+    "local_refinement": "{\"enabled\": true, \"method\": \"Powell\", \"n_elites\": 6, \"maxiter\": 1200}",
+    "max_generations": "400",
+    "mutation": "{\"adaptive\": true, \"F_min\": 0.05, \"F_max\": 0.7, \"initial_mean\": 0.35, \"learning_rate\": 0.1}",
+    "objective": "nll",
+    "output": "{\"save_history\": true, \"save_population\": true, \"save_elites\": true}",
+    "p_best_fraction": "0.2",
+    "population_size": "128",
+    "save_invalid_points": "true",
+    "verbose": "0"
+  },
+  "engine_options": {
+    "strategy": "current_to_pbest",
+    "population_size": 128,
+    "max_generations": 400,
+    "max_evaluations": 0,
+    "p_best_fraction": 0.2,
+    "archive": true,
+    "F_min": 0.05,
+    "F_max": 0.7,
+    "F_initial": 0.35,
+    "F_learning_rate": 0.1,
+    "CR_min": 0.1,
+    "CR_max": 0.9,
+    "CR_initial": 0.55,
+    "CR_learning_rate": 0.1,
+    "bounds_handling": "reflect",
+    "patience": 100,
+    "min_delta_chi2": 1e-08,
+    "population_std_tol": 1e-08,
+    "local_refinement_enabled": true,
+    "local_method": "Powell",
+    "local_n_elites": 6,
+    "local_maxiter": 1200,
+    "adaptive_statistics": false,
+    "confidence_levels": [
+      0.68,
+      0.95
+    ],
+    "elite_size": 10,
+    "save_history": true,
+    "save_population": true,
+    "save_elites": true,
+    "progress_interval": 100,
+    "seed": 11064462,
+    "invalid_penalty": 1000000000000.0
+  },
+  "history_path": "history.json"
+}

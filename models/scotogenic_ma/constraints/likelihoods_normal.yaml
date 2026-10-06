@@ -1,8 +1,24 @@
+# Objective convention: every term is a Delta chi^2 contribution, matching the NuFIT
+# one-dimensional Delta chi^2 tables. BSMScanner's 'gaussian' kind returns z^2/2, so
+# Gaussian terms below use sigma_eff = sigma/sqrt(2) to contribute z^2. The sum is
+# stored in the scanner's 'total_nll' field but is a chi^2 (see CHANGES.md).
 likelihoods:
-- {name: s12_nufit, kind: table_lookup, observable: s12, table_file: ../data/Normal/Theta12.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
-- {name: s13_nufit, kind: table_lookup, observable: s13, table_file: ../data/Normal/Theta13.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
-- {name: s23_nufit, kind: table_lookup, observable: s23, table_file: ../data/Normal/Theta23.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
-- {name: delta_cp_nufit, kind: table_lookup, observable: deltaCP_deg, table_file: ../data/Normal/deltaCP.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
-- {name: dm21_nufit, kind: table_lookup, observable: log10_dm21, table_file: ../data/Normal/dm21.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
-- {name: dm3l_nufit, kind: table_lookup, observable: dm3l_meV, table_file: ../data/Normal/dm3l.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
+- {name: s12_nufit, kind: table_lookup, observable: s12, table_file: core:data/nufit/Normal/Theta12.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
+- {name: s13_nufit, kind: table_lookup, observable: s13, table_file: core:data/nufit/Normal/Theta13.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
+- {name: s23_nufit, kind: table_lookup, observable: s23, table_file: core:data/nufit/Normal/Theta23.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
+# Signed delta_CP in [-180, 180] deg, same domain as the table.
+- {name: delta_cp_nufit, kind: table_lookup, observable: deltaCP_deg_m180_180, table_file: core:data/nufit/Normal/deltaCP.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
+- {name: dm21_nufit, kind: table_lookup, observable: log10_dm21, table_file: core:data/nufit/Normal/dm21.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
+- {name: dm3l_nufit, kind: table_lookup, observable: dm3l_meV, table_file: core:data/nufit/Normal/dm3l.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
 - {name: sum_mnu_limit, kind: hard_cut, observable: sum_m, lower: 0.0, upper: 0.12}
+# Charged LFV, 90% CL upper limits applied as hard cuts.
+- {name: meg2_mu_e_gamma, kind: hard_cut, observable: br_mu_e_gamma, lower: 0.0, upper: 1.5e-13}    # MEG II 2025, arXiv:2504.15711
+- {name: babar_tau_e_gamma, kind: hard_cut, observable: br_tau_e_gamma, lower: 0.0, upper: 3.3e-8}  # BaBar 2010, arXiv:0908.2381
+- {name: belle_tau_mu_gamma, kind: hard_cut, observable: br_tau_mu_gamma, lower: 0.0, upper: 4.2e-8} # Belle 2021, arXiv:2103.12994
+# Oblique T: PDG 2024 (U = 0) T = 0.00 +- 0.06, Eq. (10.99b); sigma_eff = 0.06/sqrt(2).
+- {name: oblique_T_pdg, kind: gaussian, observable: oblique_T, mean: 0.0, sigma: 0.042426}
+# LEP constraints on the inert scalars.
+- {name: lep_z_width, kind: hard_cut, observable: lep_z_width_margin, lower: 0.0, upper: 1.0e+30}
+- {name: lep_w_width, kind: hard_cut, observable: lep_w_width_margin, lower: 0.0, upper: 1.0e+30}
+- {name: lep_charged_scalar, kind: hard_cut, observable: m_eta_charged, lower: 70.0, upper: 1.0e+30}   # Pierce & Thaler, hep-ph/0703056
+- {name: lep2_neutral_scalars, kind: hard_cut, observable: lep2_neutral_excluded, lower: -0.5, upper: 0.5}

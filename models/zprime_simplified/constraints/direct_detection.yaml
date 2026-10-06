@@ -1,0 +1,17 @@
+# LZ spin-independent limit (90 % CL; LZ, arXiv:2410.17036), applied as sigma_SI / sigma_limit <= 1.
+# Below the tabulated DM mass range no constraint is applied (plugin returns +inf); above it the
+# limit is extrapolated proportionally to m_chi. Requires data/lz_si_limit.csv (see plugins/si_limit.py).
+python_plugins:
+- ../plugins/si_limit.py
+observables:
+- name: SigmaSILimit_cm2
+  value_type: real
+  plugin_call:
+    plugin: si_limit
+    function: sigma_limit_cm2
+    bindings: {m: mchi}
+- {name: SigmaSIOverLimit, value_type: real, expression: "sigma_si_cm2/SigmaSILimit_cm2"}
+likelihoods:
+- {name: lz_si_90cl, kind: hard_cut, observable: SigmaSIOverLimit, lower: 0.0, upper: 1.0}
+outputs:
+  save: [SigmaSILimit_cm2, SigmaSIOverLimit]

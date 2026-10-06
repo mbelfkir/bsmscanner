@@ -1,0 +1,5 @@
+outputs:
+  save: [gBL, vBL, mH2, sin_alpha, yN1, yN2, yN3,
+         MZprime, contact_scale, HiggsSignalStrength, HiggsExoticBR, ZprimeWidthOverMass, ZprimeWidth,
+         BRZprimeToEE, BRZprimeToNN, HeavyScalarMass, HeavyNeutrino1Mass, HeavyNeutrino2Mass, HeavyNeutrino3Mass,
+         lambdaH, lambdaS, lambdaHS]

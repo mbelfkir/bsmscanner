@@ -1,0 +1,36 @@
+{
+  "evaluations": 1202,
+  "saved_points": 1202,
+  "valid_points": 1163,
+  "interrupted": false,
+  "has_best_point": true,
+  "best_metric_value": 0.0,
+  "best_scanner_target": 0.0,
+  "failure_counters": {
+    "ok": 1202,
+    "missing_input": 0,
+    "invalid_point": 39,
+    "numerical_error": 0,
+    "evaluation_error": 0,
+    "non_finite_objective": 0
+  },
+  "failure_reasons": {
+    "likelihood_input_invalid: width_validity": 39
+  },
+  "engine_details": {
+    "native_backend": "adaptive_diver",
+    "success": true,
+    "stop_reason": "population_std_tol",
+    "generations": 3,
+    "population_size": 128,
+    "initial_seed_count": 0,
+    "mu_F": 0.358028610507226,
+    "mu_CR": 0.5473825769730952,
+    "archive_size": 128,
+    "local_refinement_enabled": true,
+    "local_refinement_attempts": 6,
+    "history_path": "history.json",
+    "final_population_path": "final_population.csv",
+    "elite_points_path": "elite_points.csv"
+  }
+}

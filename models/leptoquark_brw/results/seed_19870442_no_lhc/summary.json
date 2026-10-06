@@ -1,0 +1,37 @@
+{
+  "evaluations": 51698,
+  "saved_points": 51698,
+  "valid_points": 47951,
+  "interrupted": false,
+  "has_best_point": true,
+  "best_metric_value": 1.6898463611583116e-11,
+  "best_scanner_target": 1.6898463611583116e-11,
+  "failure_counters": {
+    "ok": 51698,
+    "missing_input": 0,
+    "invalid_point": 3747,
+    "numerical_error": 0,
+    "evaluation_error": 0,
+    "non_finite_objective": 0
+  },
+  "failure_reasons": {
+    "likelihood_input_invalid: bc_lifetime": 1681,
+    "likelihood_input_invalid: lq_narrow_width": 2066
+  },
+  "engine_details": {
+    "native_backend": "adaptive_diver",
+    "success": false,
+    "stop_reason": "max_generations",
+    "generations": 400,
+    "population_size": 128,
+    "initial_seed_count": 0,
+    "mu_F": 0.4719654693919137,
+    "mu_CR": 0.8410110342736732,
+    "archive_size": 128,
+    "local_refinement_enabled": true,
+    "local_refinement_attempts": 6,
+    "history_path": "history.json",
+    "final_population_path": "final_population.csv",
+    "elite_points_path": "elite_points.csv"
+  }
+}

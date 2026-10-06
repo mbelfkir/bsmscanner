@@ -1,0 +1,10 @@
+# Higgs coupling measurements, kappa framework.
+#
+# INTERIM: only the ATLAS kappa_V measurement quoted in the text of ATLAS, Nature 607 (2022) 52,
+# arXiv:2207.00092: "kappa_V = 1.035 +- 0.031 and kappa_F = 0.95 +- 0.05" (2-parameter fit,
+# correlation +39 %). kappa_V is used as its 1D result with kappa_F profiled; a universal kappa_F
+# cannot be compared with Type II (kappa_u != kappa_d), so it is NOT used.
+# To be replaced by the resolved kappa fit (kappa_W, kappa_Z, kappa_t, kappa_b, kappa_tau,
+# B_inv = B_u = 0) with its correlation matrix from HEPData, as a multivariate_gaussian.
+likelihoods:
+- {name: atlas_kappa_V, kind: gaussian, observable: KappaV, mean: 1.035, sigma: 0.031}

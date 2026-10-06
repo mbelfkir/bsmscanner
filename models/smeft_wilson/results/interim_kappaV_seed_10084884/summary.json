@@ -1,0 +1,36 @@
+{
+  "evaluations": 15051,
+  "saved_points": 15051,
+  "valid_points": 14283,
+  "interrupted": false,
+  "has_best_point": true,
+  "best_metric_value": 2.32919706735669e-12,
+  "best_scanner_target": 2.32919706735669e-12,
+  "failure_counters": {
+    "ok": 15051,
+    "missing_input": 0,
+    "invalid_point": 768,
+    "numerical_error": 0,
+    "evaluation_error": 0,
+    "non_finite_objective": 0
+  },
+  "failure_reasons": {
+    "theory_check_failed: A coupling shift exceeds the linear-EFT validity guard |delta kappa| < 0.5.": 768
+  },
+  "engine_details": {
+    "native_backend": "adaptive_diver",
+    "success": true,
+    "stop_reason": "population_std_tol",
+    "generations": 92,
+    "population_size": 128,
+    "initial_seed_count": 0,
+    "mu_F": 0.4709292729233435,
+    "mu_CR": 0.5343222432894406,
+    "archive_size": 128,
+    "local_refinement_enabled": true,
+    "local_refinement_attempts": 6,
+    "history_path": "history.json",
+    "final_population_path": "final_population.csv",
+    "elite_points_path": "elite_points.csv"
+  }
+}

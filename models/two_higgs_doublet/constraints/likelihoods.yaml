@@ -1,0 +1,8 @@
+# Objective convention: BSMScanner NLL ('gaussian' returns z^2/2); hard cuts are vetoes.
+likelihoods:
+# Oblique T: PDG 2024 electroweak review (U = 0 fit), T = 0.00 +- 0.06, Eq. (10.99b).
+# S is not computed (Branco Eq. 387 functions G, G^ not implemented); see CHANGES.md.
+- {name: oblique_T_pdg, kind: gaussian, observable: ObliqueT, mean: 0.0, sigma: 0.06}
+# Type II B -> X_s gamma: M_H+- > 800 GeV at 95 % CL, Misiak-Rehman-Steinhauser,
+# JHEP 06 (2020) 175, arXiv:2002.01548, Sec. 3 (approximately tan(beta)-independent for tanb >~ 2).
+- {name: bsgamma_charged_higgs, kind: hard_cut, observable: ChargedHiggsMass, lower: 800.0, upper: 1.0e+12}

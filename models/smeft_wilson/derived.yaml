@@ -1,0 +1,36 @@
+derived_scalars:
+- {name: eps, value_type: real, expression: "v_sm**2/Lambda_GeV**2"}
+- {name: sw, value_type: real, expression: "sqrt(sw2)"}
+- {name: cw, value_type: real, expression: "sqrt(1.0 - sw2)"}
+
+# ---- Oblique parameters, Han-Skiba hep-ph/0412166 Eq. (16) / App. B (O_WB = Q_HWB, O_h = Q_HD, v = 246):
+#      S = 4 s c v^2 C_HWB/(alpha Lambda^2),   T = - v^2 C_HD/(2 alpha Lambda^2)
+- {name: S_smeft, value_type: real, expression: "4.0*sw*cw*eps*C_HWB/alpha_em_mz"}
+- {name: T_smeft, value_type: real, expression: "-0.5*eps*C_HD/alpha_em_mz"}
+
+# ---- Higgs coupling modifiers, tree level / LO, linear in C_i/Lambda^2.
+# Field normalisation: h -> (1 + eps (C_Hbox - C_HD/4)) h (Brivio-Trott Eq. 9.7; Wells-Zhang Table 2).
+# Four-fermion / C_Hl^(3) input-scheme shifts are not in this operator set; kappa_W = kappa_Z (custodial
+# C_HD, C_HWB effects in the Z/W normalisation neglected, documented in CHANGES.md).
+- {name: dk_norm, value_type: real, expression: "eps*(C_Hbox - 0.25*C_HD)"}
+- {name: kappa_V, value_type: real, expression: "1.0 + dk_norm"}
+# Yukawas, Brivio-Trott Eq. (9.7): Delta kappa_f^2 = 2 v^2 (C_Hbox - C_HD/4 - C_fH/[Y_f]),
+# [Y_f] = sqrt(2) m_f / v  ->  delta kappa_f = eps (C_Hbox - C_HD/4) - eps v C_fH/(sqrt(2) m_f).
+- {name: kappa_t, value_type: real, expression: "1.0 + dk_norm - eps*v_sm*C_uH/(sqrt(2.0)*m_top)"}
+- {name: kappa_b, value_type: real, expression: "1.0 + dk_norm - eps*v_sm*C_dH/(sqrt(2.0)*m_bot)"}
+- {name: kappa_tau, value_type: real, expression: "1.0 + dk_norm - eps*v_sm*C_eH/(sqrt(2.0)*m_tau)"}
+# Gluon fusion, Brivio-Trott Eq. (A.80): amplitude shift 16 pi^2 v^2 C_HG/(g_s^2 I_g) = 4 pi eps C_HG/(alpha_s I_g),
+# on top of the top-loop rescaling (bottom loop neglected).
+- {name: kappa_g, value_type: real, expression: "kappa_t + 4.0*pi*eps*C_HG/(alpha_s_mz*I_g)"}
+# h -> gamma gamma: SM L_eff = (alpha A_SM/(8 pi v)) h F F; Q_HB, Q_HW, Q_HWB give
+# (v/Lambda^2)(c^2 C_HB + s^2 C_HW - s c C_HWB) h F F, i.e. delta A = (8 pi/alpha) eps (...).
+# Equivalent to Brivio-Trott Eq. (9.9) with I_gamma = A_SM/4.
+- {name: tau_W, value_type: real, expression: "mh**2/(4.0*mW_gev**2)"}
+- {name: tau_t, value_type: real, expression: "mh**2/(4.0*m_top**2)"}
+- {name: A_W_sm, value_type: real, expression: "A_one(tau_W)"}
+- {name: A_t_sm, value_type: real, expression: "3.0*(4.0/9.0)*A_half(tau_t)"}
+- {name: A_gamma_sm, value_type: real, expression: "A_W_sm + A_t_sm"}
+- name: dA_gamma_contact
+  value_type: real
+  expression: "8.0*pi/alpha_em_0*eps*(cw**2*C_HB + sw2*C_HW - sw*cw*C_HWB)"
+- {name: kappa_gamma, value_type: real, expression: "(kappa_V*A_W_sm + kappa_t*A_t_sm + dA_gamma_contact)/A_gamma_sm"}

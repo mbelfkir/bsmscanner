@@ -1,0 +1,35 @@
+# LHC Run-2 dilepton resonance limit on the B-L Z' (ATLAS 139 fb^-1, arXiv:1903.06248),
+# obtained by rescaling the published Z'_SSM theory curve and observed sigma x B(ll) limit.
+#
+# LO narrow-width production ratio (q qbar -> Z', vector B-L couplings g'/3 to u and d):
+#   sigma_BL / sigma_SSM = (4 g'^2 / 9 g_Z^2) (L_u + L_d) / (c_u L_u + c_d L_d),
+#   c_q = v_q^2 + a_q^2 of the SM Z (v = T3 - 2 Q s_W^2, a = T3): c_u = 0.2867, c_d = 0.3697.
+# For L_u/L_d in [2, 5] (full M_Z' range at 13 TeV) the last factor is 3.18-3.33, so
+# R_ud = 3 (factor 3.25) is used; the residual is a +-2.5 % systematic (documented, not fitted).
+# Limitations: ATLAS limits assume an SSM-like width (~3 %); B-L widths up to 10 % are allowed by
+# the narrow-width cut. Below/above the tabulated mass range (250 GeV - 6 TeV) no constraint is applied.
+python_plugins:
+- ../plugins/lhc_dilepton.py
+constants:
+- {name: dilepton_g_z, value: 0.740696}        # g_Z = 2 m_Z / v
+- {name: dilepton_c_u, value: 0.28675}
+- {name: dilepton_c_d, value: 0.36961}
+- {name: dilepton_r_ud, value: 3.0}
+derived_scalars:
+- name: dilepton_prod_ratio
+  value_type: real
+  expression: >
+    4.0*gBL**2/(9.0*dilepton_g_z**2)*(dilepton_r_ud + 1.0)/(dilepton_c_u*dilepton_r_ud + dilepton_c_d)
+observables:
+- name: dilepton_ssm_sigma_over_limit
+  value_type: real
+  plugin_call:
+    plugin: lhc_dilepton
+    function: ssm_sigma_over_limit
+    bindings: {M: MZp}
+# sigma x B(Z'_BL -> l l) in units of the ATLAS observed 95 % CL limit (<= 1 allowed).
+- {name: dilepton_signal_over_limit, value_type: real, expression: "dilepton_prod_ratio*br_zp_ee*dilepton_ssm_sigma_over_limit"}
+likelihoods:
+- {name: atlas_dilepton_139, kind: hard_cut, observable: dilepton_signal_over_limit, lower: 0.0, upper: 1.0}
+outputs:
+  save: [dilepton_signal_over_limit]

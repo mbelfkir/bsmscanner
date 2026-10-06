@@ -1,8 +1,35 @@
 functions:
+# r ln(r)/(r-1) with its removable singularity at r = 1 handled by the Taylor
+# series 1 + d/2 - d^2/6 (d = r-1, truncation O(d^3) < 1e-18 for |d| < 1e-6).
+- name: ma_term
+  args: [r]
+  expression: >
+    if_else(abs(r - 1.0) > 1.0e-6,
+            r/(r - 1.0)*log(r),
+            1.0 + 0.5*(r - 1.0) - (r - 1.0)**2/6.0)
+# One-loop scotogenic kernel Lambda_k, (M_nu)_ij = sum_k h_ik h_jk Lambda_k.
+# Prefactor 1/(32 pi^2): Ma's Eq. (11) has 1/(16 pi^2), which misses the factor
+# 1/2 from eta^0 = (eta_R + i eta_I)/sqrt(2) (Merle & Platscher 1507.06314).
 - name: ma_loop
   args: [MN, mR, mI]
   expression: >
-    MN/(16*pi*pi) * (
-      (mR**2/(mR**2 - MN**2))*log((mR**2)/(MN**2))
-      - (mI**2/(mI**2 - MN**2))*log((mI**2)/(MN**2))
-    )
+    MN/(32*pi*pi) * (ma_term(mR**2/MN**2) - ma_term(mI**2/MN**2))
+# Dipole loop function F2(x) of Toma & Vicente (1312.2840, Eq. A1).
+# Near x = 1 the direct form loses ~1e-16/(x-1)^4 relative precision, so the
+# series 1/12 - d/30 + d^2/60 - d^3/105 (d = x-1) is used for |d| < 0.02
+# (truncation ~ d^4/168 < 1e-9 relative).
+- name: lfv_F2
+  args: [x]
+  expression: >
+    if_else(abs(x - 1.0) > 0.02,
+            (1.0 - 6.0*x + 3.0*x**2 + 2.0*x**3 - 6.0*x**2*log(x))/(6.0*(1.0 - x)**4),
+            1.0/12.0 - (x - 1.0)/30.0 + (x - 1.0)**2/60.0 - (x - 1.0)**3/105.0)
+# Oblique function F(m1, m2) = (m1^2+m2^2)/2 - m1^2 m2^2/(m1^2-m2^2) ln(m1^2/m2^2)
+# (Barbieri, Hall, Rychkov hep-ph/0603188). F(m,m) = 0; for |eps| < 1e-4,
+# eps = (m2^2-m1^2)/m1^2, use F ~ m1^2 eps^2/6 (relative truncation O(eps)).
+- name: oblique_F
+  args: [m1, m2]
+  expression: >
+    if_else(abs(m2**2/m1**2 - 1.0) > 1.0e-4,
+            0.5*(m1**2 + m2**2) - m1**2*m2**2/(m1**2 - m2**2)*log(m1**2/m2**2),
+            (m2**2 - m1**2)**2/(6.0*m1**2))

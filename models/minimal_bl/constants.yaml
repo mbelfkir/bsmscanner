@@ -1,0 +1,16 @@
+constants:
+- {name: v_sm, value: 246.22}
+- {name: mh1, value: 125.25}
+- {name: mZ_gev, value: 91.1876}
+# SM Higgs total width: LHC Higgs XS WG YR4, 4.088 MeV at m_H = 125.09 GeV (used for h1 -> exotic BR).
+- {name: gamma_h_sm, value: 4.088e-3}
+# Fermion masses for Z' decay thresholds (PDG 2024; light quarks MSbar at 2 GeV, heavy quarks MSbar, top pole).
+- {name: m_u, value: 0.00216}
+- {name: m_d, value: 0.00470}
+- {name: m_s, value: 0.0935}
+- {name: m_c, value: 1.2730}
+- {name: m_b, value: 4.183}
+- {name: m_t, value: 172.57}
+- {name: m_e, value: 0.00051099895}
+- {name: m_mu, value: 0.1056583755}
+- {name: m_tau, value: 1.77686}

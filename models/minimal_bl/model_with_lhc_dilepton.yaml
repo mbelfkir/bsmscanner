@@ -1,0 +1,6 @@
+# Full model including the LHC dilepton constraint (constraints/lhc_dilepton.yaml).
+# Requires the external data tables under data/ (see CHANGES.md); `model.yaml` is the
+# same model without this constraint and runs out of the box.
+imports:
+- model.yaml
+- constraints/lhc_dilepton.yaml

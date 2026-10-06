@@ -3,13 +3,11 @@ theory_checks:
   condition: meta_charged_sq > 0 and meta_R_sq > 0 and meta_I_sq > 0
   fatal: true
   message: An inert scalar squared mass is non-positive.
-- name: finite_loop_denominators
-  condition: >
-    abs(meta_R_sq - MN1**2) > loop_eps and abs(meta_I_sq - MN1**2) > loop_eps
-    and abs(meta_R_sq - MN2**2) > loop_eps and abs(meta_I_sq - MN2**2) > loop_eps
-    and abs(meta_R_sq - MN3**2) > loop_eps and abs(meta_I_sq - MN3**2) > loop_eps
-  fatal: true
-  message: A scotogenic loop denominator is numerically singular.
+# The former 'finite_loop_denominators' check (absolute 1e-10 GeV^2 guard, which never
+# fired) is removed: the r = 1 singularity of ma_term is removable and handled by its
+# Taylor branch in functions.yaml.
+# Bounded from below in this file's convention (lambda1 |Phi|^4 + lambda2 |eta|^4, no 1/2).
+# Equivalent to Ma's convention: lambda3 > -sqrt(lambda1_ma lambda2_ma), etc.
 - name: bounded_from_below
   condition: >
     lambda1 > 0 and lambda2 > 0
@@ -17,18 +15,26 @@ theory_checks:
     and lambda3 + lambda4 - abs(lambda5) + 2*sqrt(lambda1*lambda2) > 0
   fatal: true
   message: Inert-doublet bounded-from-below conditions failed.
+# Perturbativity guard |lambda| < 4 pi applied in Ma's Eq. (6) normalisation.
 - name: perturbative_couplings
   condition: >
-    abs(lambda1) < 4*pi and abs(lambda2) < 4*pi and abs(lambda3) < 4*pi
+    abs(lambda1_ma) < 4*pi and abs(lambda2_ma) < 4*pi and abs(lambda3) < 4*pi
     and abs(lambda4) < 4*pi and abs(lambda5) < 4*pi
     and yukawa_norm_sq < 36*pi
   fatal: true
   message: A quartic or Yukawa coupling exceeds the perturbativity guard.
+# Exact Z2 makes the lightest Z2-odd particle stable; it must be neutral.
+- name: neutral_lightest_z2_odd
+  condition: meta_charged > lightest_z2_odd_mass
+  fatal: true
+  message: The charged inert scalar is the lightest Z2-odd state (stable charged relic).
 - name: finite_physical_observables
   condition: >
     isfinite(m1) and isfinite(m2) and isfinite(m3)
     and isfinite(dm21) and isfinite(dm3l)
     and isfinite(s12) and isfinite(s13) and isfinite(s23)
     and isfinite(deltaCP) and isfinite(dm_mass_analytic)
+    and isfinite(br_mu_e_gamma) and isfinite(br_tau_e_gamma) and isfinite(br_tau_mu_gamma)
+    and isfinite(oblique_T)
   fatal: true
   message: A scotogenic observable is non-finite.

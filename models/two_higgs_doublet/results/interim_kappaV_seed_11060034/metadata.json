@@ -1,0 +1,357 @@
+{
+  "model_name": "two_higgs_doublet_type2_corrected",
+  "model_version": "0.2.0",
+  "framework_version": "0.1.0",
+  "run_id": "two_higgs_doublet_type2_corrected-ee5b46fb9c2b",
+  "timestamp_utc": "2026-10-02T19:57:41.285229+00:00",
+  "engine": "basin_scan",
+  "objective_mode": "nll",
+  "maximize": false,
+  "seed": 11060034,
+  "save_every": 1000,
+  "parameter_order": [
+    "mH",
+    "mA",
+    "mHp",
+    "tanb",
+    "cos_ba",
+    "delta_soft"
+  ],
+  "scanned_parameters": [
+    {
+      "name": "mH",
+      "index": 0,
+      "lower": 130.0,
+      "upper": 2000.0,
+      "prior": "log",
+      "default": 600.0,
+      "min_abs": null
+    },
+    {
+      "name": "mA",
+      "index": 1,
+      "lower": 130.0,
+      "upper": 2000.0,
+      "prior": "log",
+      "default": 620.0,
+      "min_abs": null
+    },
+    {
+      "name": "mHp",
+      "index": 2,
+      "lower": 130.0,
+      "upper": 2000.0,
+      "prior": "log",
+      "default": 650.0,
+      "min_abs": null
+    },
+    {
+      "name": "tanb",
+      "index": 3,
+      "lower": 0.5,
+      "upper": 60.0,
+      "prior": "log",
+      "default": 2.0,
+      "min_abs": null
+    },
+    {
+      "name": "cos_ba",
+      "index": 4,
+      "lower": -0.3,
+      "upper": 0.3,
+      "prior": "flat",
+      "default": 0.02,
+      "min_abs": null
+    },
+    {
+      "name": "delta_soft",
+      "index": 5,
+      "lower": -0.3,
+      "upper": 8.0,
+      "prior": "flat",
+      "default": 3.96,
+      "min_abs": null
+    }
+  ],
+  "fixed_parameters": [],
+  "selected_outputs": [
+    "mH",
+    "mA",
+    "mHp",
+    "tanb",
+    "cos_ba",
+    "delta_soft",
+    "m12sq",
+    "HeavyCPEvenMass",
+    "CPoddMass",
+    "ChargedHiggsMass",
+    "SoftMass",
+    "ObliqueT",
+    "UnitarityMaxEigenvalue",
+    "KappaV",
+    "KappaU",
+    "KappaD",
+    "KappaL",
+    "lambda1",
+    "lambda2",
+    "lambda3",
+    "lambda4",
+    "lambda5",
+    "alpha"
+  ],
+  "likelihood_terms": [
+    "atlas_kappa_V",
+    "bsgamma_charged_higgs",
+    "oblique_T_pdg"
+  ],
+  "point_component_columns": [
+    "like__atlas_kappa_V",
+    "like__bsgamma_charged_higgs",
+    "like__oblique_T_pdg"
+  ],
+  "raw_settings": {
+    "boxes": "{\"construction\": \"quantile\", \"q_low\": 0.0, \"q_high\": 1.0, \"padding_fraction\": 0.25, \"min_width_fraction\": 0.02, \"clip_to_original_bounds\": true, \"merge_overlapping\": false, \"max_boxes\": 0}",
+    "clustering": "{\"method\": \"dbscan\", \"enabled\": true, \"eps_fraction\": 0.15, \"min_samples\": 5, \"max_clusters\": 6}",
+    "exploration": "{\"method\": \"latin_hypercube\", \"n_points\": 400000, \"keep_fraction\": 0.02}",
+    "focused_engine": "{\"name\": \"adaptive_diver\", \"population_size\": 128, \"max_generations\": 400, \"p_best_fraction\": 0.2, \"convergence\": {\"patience\": 100, \"population_std_tol\": 1e-08, \"min_delta_chi2\": 1e-08}, \"local_refinement\": {\"enabled\": true, \"method\": \"Powell\", \"n_elites\": 6, \"maxiter\": 1200}}",
+    "invalid_penalty": "1000000000000.0",
+    "ml_focus": "{\"enabled\": false}",
+    "objective": "nll",
+    "output": "{\"save_exploration_points\": true, \"save_clusters\": true, \"save_focused_boxes\": true}",
+    "progress_interval": "50000",
+    "progressive_exploration": "{\"enabled\": false}",
+    "proposals": "{\"enabled\": false}",
+    "refinement": "{\"enabled\": false}",
+    "save_invalid_points": "true",
+    "selection": "{\"mode\": \"top_fraction\", \"top_fraction\": 0.5, \"max_points\": 2000, \"near_miss\": {\"enabled\": false}}",
+    "staged_evaluation": "{\"enabled\": false}",
+    "verbose": "0"
+  },
+  "engine_options": {
+    "seed": 11060034,
+    "invalid_penalty": 1000000000000.0,
+    "exploration": {
+      "method": "latin_hypercube",
+      "n_points": 400000,
+      "keep_fraction": 0.02
+    },
+    "selection": {
+      "mode": "top_fraction",
+      "top_fraction": 0.5,
+      "max_points": 2000,
+      "chi2_window": 0.0,
+      "total_top_fraction": 0.5,
+      "term_quantile_cut": 0.3,
+      "min_points": 1,
+      "terms": "auto",
+      "exclude_terms": [],
+      "combine_with_top_fraction": true,
+      "fallback_mode": "top_fraction",
+      "near_miss": {
+        "enabled": false,
+        "keep_accepted": true,
+        "keep_per_term_best": true,
+        "include_invalid": false,
+        "max_hard_failures": 0,
+        "max_fit_failures": 3,
+        "objective_cap": 1000000000000.0,
+        "include_full_eval_points": true,
+        "max_accepted_points": 100,
+        "max_near_miss_points": 100
+      }
+    },
+    "clustering": {
+      "enabled": true,
+      "method": "dbscan",
+      "eps_fraction": 0.15,
+      "min_samples": 5,
+      "max_clusters": 6
+    },
+    "boxes": {
+      "construction": "quantile",
+      "q_low": 0.0,
+      "q_high": 1.0,
+      "padding_fraction": 0.25,
+      "min_width_fraction": 0.02,
+      "clip_to_original_bounds": true,
+      "merge_overlapping": false,
+      "max_boxes": 0
+    },
+    "progressive_exploration": {
+      "enabled": false
+    },
+    "proposals": {
+      "enabled": false,
+      "stages": []
+    },
+    "staged_evaluation": {
+      "enabled": false,
+      "cheap_terms": [],
+      "cheap_exclude_terms": [],
+      "cheap_include_theory_checks": [],
+      "cheap_exclude_theory_checks": [],
+      "cheap_include_outputs": [],
+      "cheap_exclude_outputs": [],
+      "expensive_terms": [],
+      "max_cheap_objective": 1000000000000.0,
+      "require_no_hard_failures": true,
+      "save_rejected_cheap_points": true,
+      "save_full_eval_points": true
+    },
+    "refinement": {
+      "enabled": false,
+      "n_rounds": 1,
+      "points_per_seed": 10,
+      "max_seeds": 20,
+      "seed_source": "selected_plus_elite",
+      "jitter_fraction": 0.08,
+      "apply_proposals": true,
+      "keep_near_miss": true
+    },
+    "ml_focus": {
+      "enabled": false,
+      "seed": 11060034,
+      "model": {
+        "type": "extra_trees_regressor",
+        "n_estimators": 300,
+        "min_samples_leaf": 3,
+        "max_features": "sqrt"
+      },
+      "training": {
+        "max_train_points": 50000,
+        "min_train_points": 100,
+        "require_valid": true,
+        "finite_objective_only": true,
+        "target_transform": "log10_1p",
+        "top_fraction_for_training": null
+      },
+      "candidate_generation": {
+        "n_candidates": 100000,
+        "sources": {
+          "selected_box_fraction": 0.5,
+          "elite_local_fraction": 0.3,
+          "global_fraction": 0.2
+        }
+      },
+      "selection": {
+        "n_ml_selected": 5000,
+        "include_best_real_points": true,
+        "n_best_real_points": 500,
+        "include_elite_archive": true
+      },
+      "focused_box": {
+        "enabled": true,
+        "quantile_low": 0.02,
+        "quantile_high": 0.98,
+        "padding_fraction": 1.0,
+        "min_width_fraction": 0.05,
+        "max_shrink_factor": 50.0,
+        "clip_to_original_bounds": true
+      },
+      "seeds": {
+        "enabled": true,
+        "max_seeds": 1000,
+        "composition": {
+          "best_real_fraction": 0.4,
+          "ml_selected_fraction": 0.4,
+          "local_mutation_fraction": 0.2
+        },
+        "local_mutation": {
+          "relative_sigma": 0.05,
+          "log_sigma": 0.25
+        }
+      }
+    },
+    "manifold_refocus": {
+      "enabled": false,
+      "method": "covariance",
+      "seed": 11060034,
+      "source": "selected",
+      "max_train_points": 5000,
+      "min_train_points": 20,
+      "top_fraction_for_training": 1.0,
+      "n_candidates": 50000,
+      "inflate": 1.5,
+      "diagonal_jitter": 1e-06,
+      "include_training_points": true,
+      "box": {
+        "enabled": true,
+        "quantile_low": 0.02,
+        "quantile_high": 0.98,
+        "padding_fraction": 0.35,
+        "min_width_fraction": 0.02,
+        "max_shrink_factor": 100.0,
+        "clip_to_original_bounds": true
+      }
+    },
+    "focused_engine": {
+      "name": "adaptive_diver",
+      "settings": {
+        "population_size": 128,
+        "max_generations": 400,
+        "p_best_fraction": 0.2,
+        "convergence": {
+          "patience": 100,
+          "population_std_tol": 1e-08,
+          "min_delta_chi2": 1e-08
+        },
+        "local_refinement": {
+          "enabled": true,
+          "method": "Powell",
+          "n_elites": 6,
+          "maxiter": 1200
+        },
+        "archive": true,
+        "invalid_penalty": 1000000000000.0,
+        "seed": 11060034,
+        "verbose": 0,
+        "save_invalid_points": false,
+        "objective": "nll"
+      },
+      "options": {
+        "strategy": "current_to_pbest",
+        "population_size": 128,
+        "max_generations": 400,
+        "max_evaluations": 0,
+        "p_best_fraction": 0.2,
+        "archive": true,
+        "F_min": 0.1,
+        "F_max": 1.0,
+        "F_initial": 0.5,
+        "F_learning_rate": 0.1,
+        "CR_min": 0.0,
+        "CR_max": 1.0,
+        "CR_initial": 0.9,
+        "CR_learning_rate": 0.1,
+        "bounds_handling": "reflect",
+        "patience": 100,
+        "min_delta_chi2": 1e-08,
+        "population_std_tol": 1e-08,
+        "local_refinement_enabled": true,
+        "local_method": "Powell",
+        "local_n_elites": 6,
+        "local_maxiter": 1200,
+        "adaptive_statistics": false,
+        "confidence_levels": [
+          0.68,
+          0.95
+        ],
+        "elite_size": 10,
+        "save_history": true,
+        "save_population": true,
+        "save_elites": true,
+        "progress_interval": 100,
+        "seed": 11060034,
+        "invalid_penalty": 1000000000000.0
+      }
+    },
+    "output": {
+      "save_exploration_points": true,
+      "save_selected_points": true,
+      "save_clusters": true,
+      "save_focused_boxes": true
+    },
+    "progress_interval": 50000
+  },
+  "history_path": "history.json"
+}
