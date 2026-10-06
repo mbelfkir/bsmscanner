@@ -176,7 +176,7 @@ def test_casas_ibarra_reference_point(compiled, free, delta_deg, a21_deg, a31_de
     scale = math.sqrt((bf21 / dm21_raw + bf3l / dm3l_raw) / 2)
     assert o["scale"] == pytest.approx(scale, rel=1e-9)
     m_core = scale * m_eV * 1e-9
-    np.testing.assert_allclose([o["m1"], o["m2"], o["m3"]], m_core, rtol=1e-9)
+    np.testing.assert_allclose([o["m1_scaled"], o["m2_scaled"], o["m3_scaled"]], m_core, rtol=1e-9)
     assert o["s12"] == pytest.approx(s12, abs=1e-10)
     assert o["s13"] == pytest.approx(s13, abs=1e-10)
     assert o["s23"] == pytest.approx(s23, abs=1e-10)
@@ -187,7 +187,7 @@ def test_casas_ibarra_reference_point(compiled, free, delta_deg, a21_deg, a31_de
     assert wrap(o["alpha21_deg"] - a21_deg) == pytest.approx(0.0, abs=1e-6)
     assert wrap(o["alpha31_deg"] - a31_deg) == pytest.approx(0.0, abs=1e-6)
     mbb = abs(np.sum(U[0, :] ** 2 * m_core))
-    assert o["mbetabeta"] == pytest.approx(mbb, rel=1e-9)
+    assert o["mbetabeta_scaled"] == pytest.approx(mbb, rel=1e-9)
     # B1: the table term is finite for every delta (no 1e6 out-of-range penalty).
     assert r["likelihood_terms"]["delta_cp_nufit"] < 50.0
 

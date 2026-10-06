@@ -42,7 +42,7 @@ PLANES = {
                 IDENT, IDENT, IDENT, IDENT),
     # NuFIT tabulates log10(dm21/eV^2) and dm31 in 1e-3 eV^2; plot dm21 in 1e-5 eV^2, dm31 in 1e-3 eV^2.
     "dm21_dm31": ("Log10(Delta_m21^2/[eV^2]) Delta_m31^2/[1e-3_eV^2] Delta_chi^2", 0, 1,
-                  r"$\Delta m^2_{21}$ [$10^{-5}$ eV$^2$]", r"$\Delta m^2_{31}$ [$10^{-3}$ eV$^2$]", ("dm21", "dm3l"),
+                  r"$\Delta m^2_{21}$ [$10^{-5}$ eV$^2$]", r"$\Delta m^2_{31}$ [$10^{-3}$ eV$^2$]", ("dm21_scaled", "dm3l_scaled"),
                   lambda v: 10.0**v * 1e5, IDENT, lambda v: v * 1e5, lambda v: v * 1e3),
 }
 

@@ -7,8 +7,8 @@ import sys
 from pathlib import Path
 
 RUNS = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parent / "runs"
-OBS = ["m1_raw", "m2_raw", "m3_raw", "scale", "m1", "m2", "m3", "sum_m", "dm21", "dm3l", "s12", "s13", "s23",
-       "deltaCP_deg_m180_180", "mbetabeta", "br_mu_e_gamma", "br_tau_mu_gamma", "oblique_T",
+OBS = ["m1_raw", "m2_raw", "m3_raw", "scale", "m1_scaled", "m2_scaled", "m3_scaled", "sum_m_scaled", "dm21_scaled", "dm3l_scaled", "s12", "s13", "s23",
+       "deltaCP_deg_m180_180", "mbetabeta_scaled", "br_mu_e_gamma", "br_tau_mu_gamma", "oblique_T",
        "m_eta_charged", "m_eta_R", "m_eta_I", "dm_mass_analytic", "yukawa_norm_sq"]
 PAR = ["m_eta_sq", "lambda2", "lambda3", "lambda4", "lambda5", "MN1", "MN2", "MN3"]
 

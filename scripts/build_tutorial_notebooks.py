@@ -193,7 +193,7 @@ SPECS: dict[str, dict] = {
             "$[-180^\\circ,180^\\circ]$ domain, and the fit includes $\\mu\\to e\\gamma$, $\\tau\\to e\\gamma$, "
             "$\\tau\\to\\mu\\gamma$, the oblique $T$ parameter and LEP constraints."
         ),
-        observables=["s12", "s13", "s23", "deltaCP_deg_m180_180", "dm21", "dm3l", "sum_m", "mbetabeta",
+        observables=["s12", "s13", "s23", "deltaCP_deg_m180_180", "dm21_scaled", "dm3l_scaled", "sum_m_scaled", "mbetabeta_scaled",
                      "br_mu_e_gamma", "br_tau_e_gamma", "br_tau_mu_gamma", "oblique_T",
                      "m_eta_charged", "m_eta_R", "m_eta_I", "yukawa_norm_sq"],
         result_text=(
@@ -210,8 +210,8 @@ SPECS: dict[str, dict] = {
             ("scotogenic_ma_oblique_T.png", "The oblique $T$ parameter of the sampled points."),
         ],
         caveats=(
-            "- **Mass scale.** The core anchors the overall neutrino mass scale to the NuFIT best fit, so `dm21`, "
-            "`dm3l`, `sum_m` and `mbetabeta` are anchored values; the fit constrains the mixing and the ratio "
+            "- **Mass scale.** The core anchors the overall neutrino mass scale to the NuFIT best fit, so `dm21_scaled`, "
+            "`dm3l_scaled`, `sum_m_scaled` and `mbetabeta_scaled` are anchored values; the fit constrains the mixing and the ratio "
             "$\\Delta m^2_{21}/\\Delta m^2_{3\\ell}$, not the absolute scale (see the *Mass-scale convention* in the "
             "changes above).\n"
             "- **Objective units.** Every term is a $\\Delta\\chi^2$; Gaussian `sigma` values in the YAML are "

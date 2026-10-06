@@ -287,38 +287,32 @@ observables:
   expression: alpha31 * 180 / pi
 - name: scale
   value_type: real
-  # The overall absolute neutrino mass scale. A general mass matrix only
-  # predicts *ratios* between the three masses (m1_raw, m2_raw, m3_raw are
-  # dimensionless/relative); this fixes the missing overall factor by
-  # matching dm21_raw/dm3l_raw to NuFit's best-fit dm21/dm3l. This is the
-  # right default for a model whose mass matrix has no independent
-  # prediction for the absolute scale. A model that DOES predict the
-  # absolute scale itself (e.g. from a one-loop function of couplings
-  # already in the scan) has an independent, falsifiable prediction here --
-  # reusing this best-fit-anchored `scale`/`m1`/`m2`/`m3`/`dm21`/`dm3l`/
-  # `mbeta`/`mbetabeta` for such a model would be tautological (it would
-  # always fit NuFit exactly, by construction). That kind of model should
-  # define its own scale and its own mass observables locally, under their
-  # own names, instead of importing this chain.
+  # Overall mass-scale factor of the ANCHORED ("_scaled") quantities below. A general
+  # mass matrix only predicts *ratios* between the three masses, so `scale` fixes the
+  # missing overall factor by matching dm21_raw/dm3l_raw to NuFit's best-fit dm21/dm3l
+  # (same convention as FlavorPy's `nscale`). The unsuffixed quantities (m1, m2, m3,
+  # dm21, dm3l, sum_m, mbeta, mbetabeta, ...) are the model's own, UNSCALED values,
+  # in the unit of the neutrino mass matrix.
+  # Which to use: a model whose overall scale is a free parameter (flavour models)
+  # uses the `_scaled` ones; a model that predicts the absolute scale itself tests it
+  # with the unsuffixed ones (the `_scaled` ones would always fit NuFit by construction).
   expression: sqrt((bf_dm21 / dm21_raw + bf_dm3l / dm3l_raw) / 2)
+# --- unscaled: the model's own values (matrix unit) -------------------------------
 - name: m1
   value_type: real
-  expression: m1_raw * scale
+  expression: m1_raw
 - name: m2
   value_type: real
-  expression: m2_raw * scale
+  expression: m2_raw
 - name: m3
   value_type: real
-  expression: m3_raw * scale
+  expression: m3_raw
 - name: dm21
   value_type: real
-  expression: scale**2 * dm21_raw
+  expression: dm21_raw
 - name: dm3l
   value_type: real
-  expression: scale**2 * dm3l_raw
-- name: r
-  value_type: real
-  expression: dm21 / dm3l
+  expression: dm3l_raw
 - name: sum_m
   value_type: real
   expression: m1 + m2 + m3
@@ -337,3 +331,41 @@ observables:
 - name: m_bb
   value_type: real
   expression: mbetabeta
+# --- scaled: anchored to the NuFit best-fit splittings (eV) -----------------------
+- name: m1_scaled
+  value_type: real
+  expression: m1_raw * scale
+- name: m2_scaled
+  value_type: real
+  expression: m2_raw * scale
+- name: m3_scaled
+  value_type: real
+  expression: m3_raw * scale
+- name: dm21_scaled
+  value_type: real
+  expression: scale**2 * dm21_raw
+- name: dm3l_scaled
+  value_type: real
+  expression: scale**2 * dm3l_raw
+- name: sum_m_scaled
+  value_type: real
+  expression: m1_scaled + m2_scaled + m3_scaled
+- name: sum_mnu_scaled
+  value_type: real
+  expression: sum_m_scaled
+- name: log10_dm21_scaled
+  value_type: real
+  expression: log(max(dm21_scaled, 1.0e-30)) / log(10)
+- name: dm3l_meV_scaled
+  value_type: real
+  expression: dm3l_scaled * 1.0e+3
+- name: m_b_scaled
+  value_type: real
+  expression: mbeta_scaled
+- name: m_bb_scaled
+  value_type: real
+  expression: mbetabeta_scaled
+# Scale-independent: the ratio of the splittings is the same raw or scaled.
+- name: r
+  value_type: real
+  expression: dm21 / dm3l

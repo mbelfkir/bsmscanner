@@ -85,3 +85,11 @@ observables:
   value_type: real
   expression: >
     abs(Ue1**2 * m1 + Ue2**2 * m2 + Ue3**2 * m3)
+- name: mbeta_scaled
+  value_type: real
+  expression: >
+    sqrt(abs(Ue1)**2 * m1_scaled**2 + abs(Ue2)**2 * m2_scaled**2 + abs(Ue3)**2 * m3_scaled**2)
+- name: mbetabeta_scaled
+  value_type: real
+  expression: >
+    abs(Ue1**2 * m1_scaled + Ue2**2 * m2_scaled + Ue3**2 * m3_scaled)

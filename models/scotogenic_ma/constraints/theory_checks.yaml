@@ -30,8 +30,8 @@ theory_checks:
   message: The charged inert scalar is the lightest Z2-odd state (stable charged relic).
 - name: finite_physical_observables
   condition: >
-    isfinite(m1) and isfinite(m2) and isfinite(m3)
-    and isfinite(dm21) and isfinite(dm3l)
+    isfinite(m1_scaled) and isfinite(m2_scaled) and isfinite(m3_scaled)
+    and isfinite(dm21_scaled) and isfinite(dm3l_scaled)
     and isfinite(s12) and isfinite(s13) and isfinite(s23)
     and isfinite(deltaCP) and isfinite(dm_mass_analytic)
     and isfinite(br_mu_e_gamma) and isfinite(br_tau_e_gamma) and isfinite(br_tau_mu_gamma)

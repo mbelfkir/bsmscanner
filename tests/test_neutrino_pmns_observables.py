@@ -133,14 +133,25 @@ def _write_model(
         "    - Utau3\n"
         "    - alpha21\n"
         "    - alpha31\n"
+        "    - m1_scaled\n"
+        "    - m2_scaled\n"
+        "    - m3_scaled\n"
+        "    - dm21_scaled\n"
+        "    - dm3l_scaled\n"
+        "    - mbeta_scaled\n"
+        "    - mbetabeta_scaled\n"
+        "    - m1_raw\n"
         "    - m1\n"
         "    - m2\n"
         "    - m3\n"
         "    - dm21\n"
         "    - dm3l\n"
+        "    - sum_m\n"
+        "    - sum_m_scaled\n"
+        "    - scale\n"
         "    - mbeta\n"
-        "    - mbetabeta\n",
-        encoding="utf-8",
+        "    - mbetabeta\n"
+        "    - r\n",        encoding="utf-8",
     )
     return model_path
 
@@ -198,9 +209,9 @@ def test_core_pmns_pdg_extraction_preserves_delta_quadrant(tmp_path: Path, delta
     assert extracted["s23"] == pytest.approx(out["s23"], abs=1.0e-12)
     assert extracted["delta_cp_rad"] == pytest.approx(out["deltaCP"], abs=1.0e-12)
     assert extracted["jarlskog"] == pytest.approx(out["J"], abs=1.0e-12)
-    scaled_masses = np.array([out["m1"], out["m2"], out["m3"]])
-    assert out["mbeta"] == pytest.approx(_expected_mbeta(pmns, scaled_masses), rel=1.0e-10)
-    assert out["mbetabeta"] == pytest.approx(
+    scaled_masses = np.array([out["m1_scaled"], out["m2_scaled"], out["m3_scaled"]])
+    assert out["mbeta_scaled"] == pytest.approx(_expected_mbeta(pmns, scaled_masses), rel=1.0e-10)
+    assert out["mbetabeta_scaled"] == pytest.approx(
         _expected_mbetabeta(pmns, scaled_masses),
         rel=1.0e-10,
     )
@@ -289,3 +300,30 @@ def test_core_pmns_marks_undefined_dirac_phase_invalid(tmp_path: Path):
     assert result["status"] == "ok"
     assert result["valid"] is False
     assert result["failure_reason"] == "non_finite_node: deltaCP"
+
+
+def test_unscaled_masses_are_raw_and_scaled_masses_are_anchored(tmp_path: Path):
+    masses = np.array([0.011, 0.014, 0.052])
+    pmns = _pdg_pmns(s12_sq=0.308, s13_sq=0.02215, s23_sq=0.470, delta=1.0)
+    out = _evaluate_model(
+        _write_model(tmp_path, ordering="normal", pmns=pmns, masses_physical_order=masses)
+    )["outputs"]
+    raw = np.array([out["m1"], out["m2"], out["m3"]])
+    scaled = np.array([out["m1_scaled"], out["m2_scaled"], out["m3_scaled"]])
+    # Unsuffixed = the model's own singular values; scaled = scale * raw.
+    assert raw == pytest.approx(np.sort(masses), rel=1.0e-10)
+    assert out["m1"] == out["m1_raw"]
+    assert scaled == pytest.approx(out["scale"] * raw, rel=1.0e-12)
+    assert out["sum_m"] == pytest.approx(raw.sum(), rel=1.0e-12)
+    assert out["sum_m_scaled"] == pytest.approx(scaled.sum(), rel=1.0e-12)
+    assert out["dm21"] == pytest.approx(raw[1] ** 2 - raw[0] ** 2, rel=1.0e-10)
+    assert out["dm3l"] == pytest.approx(raw[2] ** 2 - raw[0] ** 2, rel=1.0e-10)
+    assert out["dm21_scaled"] == pytest.approx(out["scale"] ** 2 * out["dm21"], rel=1.0e-12)
+    assert out["mbeta"] == pytest.approx(_expected_mbeta(pmns, raw), rel=1.0e-10)
+    assert out["mbetabeta"] == pytest.approx(_expected_mbetabeta(pmns, raw), rel=1.0e-10)
+    # The anchoring is a pure rescaling: the splitting ratio does not depend on it.
+    assert out["r"] == pytest.approx(out["dm21_scaled"] / out["dm3l_scaled"], rel=1.0e-12)
+    # scale^2 = (a + b)/2 with a = bf_dm21/dm21_raw, b = bf_dm3l/dm3l_raw.
+    assert 7.49e-05 / out["dm21_scaled"] + 0.002513 / out["dm3l_scaled"] == pytest.approx(
+        2.0, rel=1.0e-10
+    )

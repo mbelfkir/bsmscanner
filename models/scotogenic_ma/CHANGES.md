@@ -19,14 +19,14 @@ The model defines no neutrino observables of its own. Like `radiative_neutrino`,
 `core:neutrino/constants_normal.yaml`, `core:neutrino/observables_common.yaml` and
 `core:neutrino/observables_normal.yaml`, and the likelihoods read the core NuFIT tables
 `core:data/nufit/Normal/*.csv` (byte-identical to the former local copies, which were removed).
-Core names used: `s12`, `s13`, `s23`, `deltaCP_deg_m180_180`, `log10_dm21`, `dm3l_meV`, `sum_m`,
+Core names used: `s12`, `s13`, `s23`, `deltaCP_deg_m180_180`, `log10_dm21_scaled`, `dm3l_meV_scaled`, `sum_m_scaled`,
 `mbeta`, `mbetabeta`, `alpha21_deg`, `alpha31_deg`.
 
-**Mass-scale convention (read before interpreting fits).** The core defines
-`m_i = scale · m_i_raw` with `scale = sqrt((bf_dm21/dm21_raw + bf_dm3l/dm3l_raw)/2)`, i.e. the
+**Mass-scale convention (read before interpreting fits).** The core defines the anchored (`_scaled`) quantities
+`m_i_scaled = scale · m_i_raw` with `scale = sqrt((bf_dm21/dm21_raw + bf_dm3l/dm3l_raw)/2)`, i.e. the
 overall mass scale is anchored to the NuFIT best fit. The scotogenic prediction itself is
-`m*_raw` (GeV singular values, saved as outputs). Consequently `dm21`, `dm3l`, `sum_m`, `mbeta`,
-`mbetabeta` are the anchored values; the oscillation likelihood constrains the mixing and the
+`m*_raw` (GeV singular values, saved as outputs). Consequently `dm21_scaled`, `dm3l_scaled`, `sum_m_scaled`, `mbeta_scaled`,
+`mbetabeta_scaled` (used by the likelihoods and saved as outputs) are the anchored values; the unsuffixed `m1`, `dm21`, `sum_m`, ... are the raw ones; the oscillation likelihood constrains the mixing and the
 ratio dm21/dm3l, not the absolute scale set by λ5, h and M_k (see the comment on `scale` in
 `observables_common.yaml`). The loop normalisation (B3) therefore matters for the Yukawa-dependent
 terms (LFV) and for `m*_raw`, not for the oscillation χ².

@@ -8,9 +8,9 @@ likelihoods:
 - {name: s23_nufit, kind: table_lookup, observable: s23, table_file: core:data/nufit/Normal/Theta23.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
 # Signed delta_CP in [-180, 180] deg, same domain as the table.
 - {name: delta_cp_nufit, kind: table_lookup, observable: deltaCP_deg_m180_180, table_file: core:data/nufit/Normal/deltaCP.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
-- {name: dm21_nufit, kind: table_lookup, observable: log10_dm21, table_file: core:data/nufit/Normal/dm21.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
-- {name: dm3l_nufit, kind: table_lookup, observable: dm3l_meV, table_file: core:data/nufit/Normal/dm3l.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
-- {name: sum_mnu_limit, kind: hard_cut, observable: sum_m, lower: 0.0, upper: 0.12}
+- {name: dm21_nufit, kind: table_lookup, observable: log10_dm21_scaled, table_file: core:data/nufit/Normal/dm21.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
+- {name: dm3l_nufit, kind: table_lookup, observable: dm3l_meV_scaled, table_file: core:data/nufit/Normal/dm3l.csv, interpolation: cubic_spline, out_of_range_penalty_scale: 4.0e+4, out_of_range_penalty_cap: 1.0e+6}
+- {name: sum_mnu_limit, kind: hard_cut, observable: sum_m_scaled, lower: 0.0, upper: 0.12}
 # Charged LFV, 90% CL upper limits applied as hard cuts.
 - {name: meg2_mu_e_gamma, kind: hard_cut, observable: br_mu_e_gamma, lower: 0.0, upper: 1.5e-13}    # MEG II 2025, arXiv:2504.15711
 - {name: babar_tau_e_gamma, kind: hard_cut, observable: br_tau_e_gamma, lower: 0.0, upper: 3.3e-8}  # BaBar 2010, arXiv:0908.2381

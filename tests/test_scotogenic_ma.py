@@ -29,16 +29,16 @@ def test_scotogenic_ma_model_loads_with_published_reference_metadata():
         "m_eta_I",
         "m_eta_charged",
         "dm_mass_analytic",
-        "m1",
-        "m2",
-        "m3",
-        "dm21",
-        "dm3l",
+        "m1_scaled",
+        "m2_scaled",
+        "m3_scaled",
+        "dm21_scaled",
+        "dm3l_scaled",
         "s12",
         "s13",
         "s23",
         "deltaCP",
-        "mbetabeta",
+        "mbetabeta_scaled",
     ):
         assert required in names
 
@@ -54,4 +54,4 @@ def test_scotogenic_ma_default_point_evaluates():
     assert result["outputs"]["m_eta_R"] > 0
     assert result["outputs"]["m_eta_I"] > 0
     assert result["outputs"]["dm_mass_analytic"] > 0
-    assert result["outputs"]["sum_m"] < 0.12
+    assert result["outputs"]["sum_m_scaled"] < 0.12

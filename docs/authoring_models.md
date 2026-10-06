@@ -36,6 +36,22 @@ imports:
 Never write `../../core/...` — that only works inside the source checkout and
 will break for anyone who installs your model elsewhere.
 
+### Raw and scaled neutrino masses
+
+A mass matrix gives the three masses in its own unit. The core provides both versions of every mass quantity:
+
+| Unsuffixed (raw) | `_scaled` |
+|---|---|
+| `m1`, `m2`, `m3` (= `m1_raw`, ...) | `m1_scaled` = `scale * m1_raw`, ... |
+| `dm21`, `dm3l`, `sum_m`, `sum_mnu`, `mbeta`, `mbetabeta`, `m_b`, `m_bb` | same names + `_scaled` |
+| `log10_dm21`, `dm3l_meV` | `log10_dm21_scaled`, `dm3l_meV_scaled` |
+
+`scale = sqrt((bf_dm21/dm21_raw + bf_dm3l/dm3l_raw)/2)` anchors the splittings to the NuFit best fit
+(FlavorPy's `nscale`). Use the `_scaled` quantities when the overall mass factor is a free parameter of the
+model (they are in eV, and the NuFit tables and the sum-of-masses limit apply to them). Use the raw ones when the
+model predicts the absolute scale: the `_scaled` ones then always fit NuFit by construction. The raw ones are in
+the unit of the matrix, so convert to eV before comparing with data. `r = dm21/dm3l` is the same in both.
+
 ### Discovering what is available
 
 ```bash
@@ -52,7 +68,7 @@ block contributes, so you can see what names become available before importing.
 | Block | Provides |
 |---|---|
 | `core:constants/physics_constants.yaml` | shared charged-lepton mass ratios |
-| `core:neutrino/observables_common.yaml` | PMNS extraction, mixing angles, `deltaCP`, masses, `mbeta`, `mbetabeta`, `sum_m` |
+| `core:neutrino/observables_common.yaml` | PMNS extraction, mixing angles, `deltaCP`, unscaled masses (`m1`..`sum_m`, `dm21`, `dm3l`, `mbeta`, `mbetabeta`) and NuFit-anchored `*_scaled` ones |
 | `core:neutrino/observables_normal.yaml` / `_inverted.yaml` | ordering-aware mass mapping |
 | `core:neutrino/constants_normal.yaml` / `_inverted.yaml` | best-fit splittings used for mass normalization |
 | `core:quark/ckm_observables.yaml` | CKM elements, angles, `deltaCKM`, Jarlskog, Wolfenstein parameters |
@@ -137,6 +153,6 @@ corresponding CMake options; see the README.
 
 - Record which NuFIT release the bundled tables correspond to, and cite it.
 - Check the mass-scale normalization convention in
-  `core:neutrino/observables_common.yaml` (`scale`) matches the one your
+  `core:neutrino/observables_common.yaml` (`scale`, the `_scaled` quantities) matches the one your
   reference uses — normalizing to Δm²₃ₗ alone and to the average of both
   splittings differ at the sub-percent level in every mass output.
