@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## 0.2.0
+
+- **BREAKING: raw and `_scaled` neutrino masses in `core:neutrino`.** `m1`, `m2`, `m3`, `dm21`, `dm3l`,
+  `sum_m`, `sum_mnu`, `mbeta`, `mbetabeta`, `m_b`, `m_bb`, `log10_dm21`, `dm3l_meV` are now the model's
+  **unscaled** values (`m_i = m_i_raw`), and the NuFit-anchored values that used to carry these names are
+  `m1_scaled`, ..., `sum_m_scaled`, `mbeta_scaled`, `mbetabeta_scaled`, `log10_dm21_scaled`, `dm3l_meV_scaled`
+  (`scale` and the formula are unchanged). `r` is unchanged. **Models that used the old names for NuFit terms
+  or the `sum_m` cut must rename them to the `_scaled` ones**, otherwise they silently test the raw masses.
+  `models/scotogenic_ma` (outputs, likelihoods, checks, scripts, tests, stored reference results) is migrated.
+
 ## 0.1.9
 
 - **Tutorial models replaced by corrected versions.** `models/` now holds the six models that
