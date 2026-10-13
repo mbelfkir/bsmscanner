@@ -12,7 +12,6 @@ copyright: >
 
 docs_dir: docs
 exclude_docs: |
-  site/
   hooks/
   requirements.txt
   refactoring/
