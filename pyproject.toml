@@ -38,7 +38,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/mbelfkir/BSMScanner"
+Homepage = "https://mbelfkir.github.io/bsmscanner/"
+Documentation = "https://mbelfkir.github.io/bsmscanner/"
 Repository = "https://github.com/mbelfkir/BSMScanner"
 Issues = "https://github.com/mbelfkir/BSMScanner/issues"
 Changelog = "https://github.com/mbelfkir/BSMScanner/blob/main/CHANGELOG.md"
