@@ -1,0 +1,116 @@
+site_name: BSMScanner
+site_description: Declarative YAML framework for beyond-the-Standard-Model parameter scans.
+site_url: https://mbelfkir.github.io/bsmscanner/
+repo_url: https://github.com/mbelfkir/bsmscanner
+repo_name: mbelfkir/bsmscanner
+edit_uri: edit/main/docs/
+site_author: Mohamed Belfkir
+copyright: >
+  &copy; Mohamed Belfkir &middot;
+  <a href="mailto:mohamed.belfkir@udst.edu.qa">mohamed.belfkir@udst.edu.qa</a> &middot;
+  released under the MIT licence
+
+docs_dir: docs
+exclude_docs: |
+  site/
+  hooks/
+  requirements.txt
+  refactoring/
+  project_technical_report_current.md
+  scan_engines_manuscript.md
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle: {icon: material/weather-night, name: Switch to dark mode}
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle: {icon: material/weather-sunny, name: Switch to light mode}
+  icon:
+    repo: fontawesome/brands/github
+
+# Copies notebooks/*.ipynb and CHANGELOG.md into docs/ before every build,
+# so the notebooks stay the single source (the copies are gitignored).
+hooks:
+  - docs/hooks/copy_sources.py
+
+plugins:
+  - search
+  - mkdocs-jupyter:
+      include: ["*.ipynb"]
+      execute: false          # notebooks are shipped pre-executed
+      include_source: true    # "Download notebook" link on each tutorial page
+      ignore_h1_titles: false
+
+extra:
+  social:
+    - icon: fontawesome/solid/envelope
+      link: mailto:mohamed.belfkir@udst.edu.qa
+      name: Contact Mohamed Belfkir
+    - icon: fontawesome/brands/github
+      link: https://github.com/mbelfkir/bsmscanner
+      name: BSMScanner on GitHub
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/bsm-scanner/
+      name: bsm-scanner on PyPI
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc: {permalink: true}
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight: {anchor_linenums: true}
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed: {alternate_style: true}
+  - pymdownx.arithmatex: {generic: true}
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - Home: index.md
+  - Getting started: getting_started.md
+  - User guide:
+      - Writing a model: authoring_models.md
+      - Core library and model split: core_model_split.md
+      - Matrix diagonalisation: matrix_diagonalization.md
+      - CKM observables: ckm_observables.md
+      - Statistics: statistics.md
+      - Posterior sampling (MCMC): posterior_mcmc.md
+  - Scan engines:
+      - adaptive_diver: adaptive_diver.md
+      - basin_scan: basin_scan.md
+      - Guided sampling: guided_sampling.md
+  - Tutorials:
+      - Overview: tutorials/index.md
+      - 1. Scotogenic model: tutorials/notebooks/scotogenic_ma.ipynb
+      - 2. Minimal B−L: tutorials/notebooks/minimal_bl.ipynb
+      - 3. Two-Higgs-doublet model: tutorials/notebooks/two_higgs_doublet.ipynb
+      - 4. SMEFT (Warsaw basis): tutorials/notebooks/smeft_wilson.ipynb
+      - 5. Z′ simplified dark matter: tutorials/notebooks/zprime_simplified.ipynb
+      - 6. S1 leptoquark: tutorials/notebooks/leptoquark_brw.ipynb
+      - 7. ALP effective theory: tutorials/notebooks/alp_effective.ipynb
+  - Validation: published_benchmark_validation.md
+  - Changelog: changelog.md
