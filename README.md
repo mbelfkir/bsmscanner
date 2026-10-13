@@ -20,6 +20,9 @@ YAML, optionally import the reusable physics blocks the package ships (shared
 constants, neutrino/quark observable definitions, oscillation data tables),
 and run.
 
+**Documentation and tutorials:** <https://mbelfkir.github.io/bsmscanner/>
+· **Package:** <https://pypi.org/project/bsm-scanner/>
+
 ## Installation
 
 ### From a published wheel (recommended)
@@ -28,13 +31,9 @@ and run.
 pip install bsm-scanner
 ```
 
-While the package is only published to TestPyPI (a real PyPI release is not out
-yet), dependencies have to come from the real index instead, since TestPyPI does
-not mirror them:
-
-```bash
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ bsm-scanner
-```
+The package is published on [PyPI](https://pypi.org/project/bsm-scanner/).
+Optional extras: `bsm-scanner[analysis]` (pandas, matplotlib), `bsm-scanner[de]`
+(SciPy engines and local refinement), `bsm-scanner[posterior]` (emcee).
 
 CI publishes prebuilt wheels via `cibuildwheel` for:
 
@@ -408,6 +407,11 @@ BSMScanner/
 ```
 
 ## Documentation
+
+The full documentation, a getting-started guide and the rendered tutorial
+notebooks are published at **<https://mbelfkir.github.io/bsmscanner/>**
+(built from `docs/` and `notebooks/` by `.github/workflows/docs.yml`). The
+individual pages:
 
 - [Core / model split](docs/core_model_split.md)
 - [Authoring your own model](docs/authoring_models.md)
