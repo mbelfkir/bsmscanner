@@ -33,3 +33,9 @@ output/
 _to_delete/
 tmp/
 .git_lock_holding/
+
+# MkDocs site (generated)
+/site/
+docs/tutorials/notebooks/
+docs/changelog.md
+.cache/

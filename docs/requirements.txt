@@ -1,0 +1,4 @@
+# Documentation site (MkDocs Material + pre-executed notebooks). Not needed to use the package.
+mkdocs>=1.6,<2   # MkDocs 2.0 removes the plugin system this site relies on
+mkdocs-material>=9.5
+mkdocs-jupyter>=0.25
